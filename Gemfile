@@ -61,6 +61,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'hotwire-livereload'
+  gem 'letter_opener'
   gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
   gem 'web-console'

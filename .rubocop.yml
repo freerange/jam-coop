@@ -10,3 +10,7 @@ Style/Documentation:
 
 Rails/I18nLocaleTexts:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - config/environments/development.rb
