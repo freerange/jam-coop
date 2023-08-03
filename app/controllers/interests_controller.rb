@@ -8,7 +8,7 @@ class InterestsController < ApplicationController
 
   # POST /interests or /interests.json
   def create
-    @interest = Interest.new(interest_params)
+    @interest = Interest.find_or_create_by(interest_params)
 
     respond_to do |format|
       if @interest.save

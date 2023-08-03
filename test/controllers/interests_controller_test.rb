@@ -19,4 +19,14 @@ class InterestsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to thankyou_url
   end
+
+  test 'should find an existing record if one exists' do
+    @interest.save
+
+    assert_no_difference('Interest.count') do
+      post interests_url, params: { interest: { email: @interest.email } }
+    end
+
+    assert_redirected_to thankyou_url
+  end
 end
