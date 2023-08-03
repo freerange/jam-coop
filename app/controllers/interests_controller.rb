@@ -12,10 +12,22 @@ class InterestsController < ApplicationController
 
     respond_to do |format|
       if @interest.save
+        InterestsMailer.confirm(@interest).deliver_now
         format.html { redirect_to thankyou_url }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def confirm_email
+    interest = Interest.find_by(confirm_token: params[:id])
+
+    if interest
+      interest.email_activate
+      redirect_to thankyou_url
+    else
+      redirect_to root_url
     end
   end
 

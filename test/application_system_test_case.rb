@@ -9,5 +9,7 @@ Capybara.register_driver(:cuprite) do |app|
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include ActionMailer::TestHelper
+
   driven_by :cuprite
 end

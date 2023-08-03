@@ -1,0 +1,10 @@
+<p>Hello!</p>
+
+<p>Thank you for registering interest in our new project. To confirm
+    your email address please click the link below:</p>
+
+<%= link_to "Confirm my email address" , confirm_email_interest_url(@interest.confirm_token) %>
+
+<p>Speak to you again soon,</p>
+
+<p>Chris</p>
