@@ -9,7 +9,7 @@ class InterestsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit root_url
-    assert_selector 'h1', text: 'New interest'
+    assert_selector 'h1', text: 'Hello!'
   end
 
   test 'should create interest and send a confirmation email' do
@@ -18,7 +18,7 @@ class InterestsTest < ApplicationSystemTestCase
     fill_in 'Email', with: @interest.email
 
     assert_emails 1 do
-      click_on 'Create Interest'
+      click_on 'Submit'
     end
 
     assert_text "We've sent you an email"

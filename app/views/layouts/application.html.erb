@@ -12,9 +12,7 @@
     <%= hotwire_livereload_tags if Rails.env.development? %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5">
-      <%= yield %>
-    </main>
+  <body class="bg-slate-100">
+    <%= yield %>
   </body>
 </html>
