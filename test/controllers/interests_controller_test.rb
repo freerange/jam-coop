@@ -45,7 +45,7 @@ class InterestsControllerTest < ActionDispatch::IntegrationTest
       get confirm_email_interest_url(@interest.confirm_token)
     end
 
-    assert_redirected_to thankyou_url
+    assert_redirected_to confirmation_url
   end
 
   test '#confirm_email should handle unknown confirmation tokens' do

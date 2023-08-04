@@ -22,5 +22,15 @@ class InterestsTest < ApplicationSystemTestCase
     end
 
     assert_text "We've sent you an email"
+
+    visit confirmation_url
+    assert_text 'Thank you for registering your interest'
+  end
+
+  private
+
+  def confirmation_url
+    mail = ActionMailer::Base.deliveries.last
+    mail.to_s[/http.*confirm_email/].gsub('http://example.com/', root_url)
   end
 end

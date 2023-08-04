@@ -25,13 +25,15 @@ class InterestsController < ApplicationController
 
     if interest
       interest.email_activate
-      redirect_to thankyou_url
+      redirect_to confirmation_url
     else
       redirect_to root_url
     end
   end
 
   def thankyou; end
+
+  def confirmation; end
 
   private
 

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   get 'thankyou', to: 'interests#thankyou'
+  get 'confirmation', to: 'interests#confirmation'
 
   root 'interests#new'
 end
