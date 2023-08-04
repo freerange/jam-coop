@@ -21,6 +21,6 @@ class InterestsTest < ApplicationSystemTestCase
       click_on 'Create Interest'
     end
 
-    assert_text 'Thank you'
+    assert_text "We've sent you an email"
   end
 end
