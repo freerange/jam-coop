@@ -69,7 +69,6 @@ GEM
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
-    bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -91,6 +90,10 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
     ferrum (0.13)
       addressable (~> 2.5)
@@ -253,11 +256,6 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
-    web-console (4.2.0)
-      actionview (>= 6.0.0)
-      activemodel (>= 6.0.0)
-      bindex (>= 0.4.0)
-      railties (>= 6.0.0)
     webrick (1.8.1)
     websocket (1.2.9)
     websocket-driver (0.7.6)
@@ -276,6 +274,7 @@ DEPENDENCIES
   capybara
   cuprite
   debug
+  dotenv-rails
   hotwire-livereload
   importmap-rails
   jbuilder
@@ -293,7 +292,6 @@ DEPENDENCIES
   tailwindcss-rails
   turbo-rails
   tzinfo-data
-  web-console
 
 RUBY VERSION
    ruby 3.2.2p53
