@@ -1,24 +1,34 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Development
 
-Things you may want to cover:
+This is a Rails app running on the version of ruby specified in `.ruby-version`. There's also a `.tool-versions` file, so if you're using `asdf` you can install the correct version of ruby locally with
 
-* Ruby version
+    asdf install
 
-* System dependencies
+We're using PostgreSQL 15 in production, so it's recommended you run that in development too. On OS X you can use homebrew
 
-* Configuration
+    brew install postgresql@15
 
-* Database creation
+From there proceed as usual for local rails app development
 
-* Database initialization
+    rails db:setup
+    ./bin/dev
 
-* How to run the test suite
+The app should be running on [http://localhost:3000/](http://localhost:3000/)
 
-* Services (job queues, cache servers, search engines, etc.)
+## Testing
 
-* Deployment instructions
+Linters and test can be run using the default `rake` task.
 
-* ...
+## Credentials
+
+Environment specific API keys etc. are stored under `/config/credentials/{development,production}.yml.enc`. You'll need to create `config/credentials/{development,production}.key` to encrypt and decrypt them. The contents of these two key files are in our 1P vault.
+
+## Sending email in development
+
+If you need to send email via Postmark in development you can set the `USE_POSTMARK_IN_DEVELOPMENT` variable to `true` in `.env`.
+
+## Deployment
+
+All commits to `main` are deployed to [render](https://dashboard.render.com/) (the login credentials for which are available in 1P). They're not currently gated by the CI build that runs in a github action.
