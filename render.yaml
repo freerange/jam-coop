@@ -1,18 +1,18 @@
 databases:
-  - name: music-coop
-    databaseName: music-coop
-    user: music-coop
+  - name: musiccoop
+    databaseName: musiccoop
+    user: musiccoop
 
 services:
   - type: web
-    name: music-coop
+    name: musiccoop
     runtime: ruby
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: music-coop
+          name: musiccoop
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
