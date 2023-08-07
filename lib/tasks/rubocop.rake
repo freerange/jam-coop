@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new
+desc 'Run Rubocop'
+task rubocop: :environment do
+  sh 'bundle exec rubocop'
+end
