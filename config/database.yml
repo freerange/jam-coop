@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: music_coop_production
-  username: music_coop
-  password: <%= ENV["MUSIC_COOP_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
