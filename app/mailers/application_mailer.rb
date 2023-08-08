@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: 'accounts+postmark@gofreerange.com'
+  default from: 'contact@jam.coop'
 
   layout 'mailer'
 end
