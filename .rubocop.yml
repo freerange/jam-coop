@@ -1,6 +1,7 @@
 require:
   - rubocop-rails
   - rubocop-capybara
+  - rubocop-factory_bot
 
 AllCops:
   NewCops: enable
