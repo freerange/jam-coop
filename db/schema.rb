@@ -19,7 +19,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_163316) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.bigint "artist_id", default: 1, null: false
+    t.index ["artist_id"], name: "index_albums_on_artist_id"
     t.index ["slug"], name: "index_albums_on_slug", unique: true
+  end
+
+  create_table "artists", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "email_verification_tokens", force: :cascade do |t|
@@ -59,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_163316) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "albums", "artists"
   add_foreign_key "email_verification_tokens", "users"
   add_foreign_key "password_reset_tokens", "users"
   add_foreign_key "sessions", "users"
