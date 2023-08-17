@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :albums, only: %i[show]
+  resources :artists, only: [] do
+    resources :albums, only: %i[show]
+  end
 
   get 'thankyou', to: 'interests#thankyou'
   get 'confirmation', to: 'interests#confirmation'
