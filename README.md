@@ -10,6 +10,10 @@ We're using PostgreSQL 15 in production, so it's recommended you run that in dev
 
     brew install postgresql@15
 
+We're using Rails 7's default image processor library `vips`, which you need to install
+
+    brew install libvips
+
 From there proceed as usual for local rails app development
 
     rails db:setup

@@ -16,6 +16,7 @@ Rails/CreateTableWithTimestamps:
   Exclude:
     - db/migrate/20230818163315_create_password_reset_tokens.rb
     - db/migrate/20230818163316_create_email_verification_tokens.rb
+    - db/migrate/20230817173059_create_active_storage_tables.active_storage.rb
 
 Metrics/BlockLength:
   Exclude:

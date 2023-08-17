@@ -7,4 +7,6 @@ class Album < ApplicationRecord
   validates :title, presence: true
 
   belongs_to :artist
+
+  has_one_attached :cover
 end
