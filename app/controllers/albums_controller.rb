@@ -2,6 +2,6 @@
 
 class AlbumsController < ApplicationController
   def show
-    @album = Album.find(params[:id])
+    @album = Album.friendly.find(params[:id])
   end
 end
