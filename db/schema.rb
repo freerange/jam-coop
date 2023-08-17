@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_163316) do
     t.string "slug"
     t.bigint "artist_id", default: 1, null: false
     t.index ["artist_id"], name: "index_albums_on_artist_id"
-    t.index ["slug"], name: "index_albums_on_slug", unique: true
+    t.index ["slug", "artist_id"], name: "index_albums_on_slug_and_artist_id", unique: true
   end
 
   create_table "artists", force: :cascade do |t|

@@ -12,4 +12,17 @@ class AlbumTest < ActiveSupport::TestCase
 
     assert_equal album, Album.friendly.find('who-what-where')
   end
+
+  test 'scopes the slug to the parent artist' do
+    artist = create(:artist, name: 'Artist 1')
+    different_artist = create(:artist, name: 'Artist 2')
+    title = 'Same Title'
+
+    album = create(:album, artist:, title:)
+    album_by_different_artist = create(:album, artist: different_artist, title:)
+    album_with_same_title_by_same_artist = create(:album, artist:, title:)
+
+    assert_equal album.slug, album_by_different_artist.slug
+    assert_not_equal album.slug, album_with_same_title_by_same_artist.slug
+  end
 end
