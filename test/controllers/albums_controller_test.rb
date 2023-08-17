@@ -8,7 +8,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#show' do
-    get album_url(@album)
+    get artist_album_url(@album.artist, @album)
 
     assert_response :success
   end

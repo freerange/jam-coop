@@ -4,6 +4,7 @@ class AlbumsController < ApplicationController
   skip_before_action :authenticate
 
   def show
-    @album = Album.friendly.find(params[:id])
+    artist = Artist.friendly.find(params[:artist_id])
+    @album = artist.albums.friendly.find(params[:id])
   end
 end
