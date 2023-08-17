@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.2'
 
 gem 'authentication-zero', '~> 2.16'
+gem 'aws-sdk-s3'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', require: false
 gem 'friendly_id', '~> 5.4.0'
