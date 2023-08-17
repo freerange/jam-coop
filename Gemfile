@@ -35,5 +35,6 @@ end
 group :test do
   gem 'capybara'
   gem 'cuprite'
+  gem 'rubocop-factory_bot'
   gem 'selenium-webdriver'
 end
