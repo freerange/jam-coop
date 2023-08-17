@@ -9,7 +9,7 @@ class InterestsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit root_url
-    assert_selector 'h1', text: 'Hello!'
+    assert_selector 'h1', text: 'A new music platform'
   end
 
   test 'should create interest and send a confirmation email' do
