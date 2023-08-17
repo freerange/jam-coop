@@ -4,7 +4,7 @@ require 'test_helper'
 
 class InterestsMailerTest < ActionMailer::TestCase
   test 'confirm' do
-    interest = Interest.create(email: 'chris@example.com')
+    interest = create(:interest)
     mail = InterestsMailer.confirm(interest)
     assert_equal 'Confirm your email address', mail.subject
     assert_equal ['chris@example.com'], mail.to
