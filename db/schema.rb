@@ -28,6 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_163316) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_artists_on_slug", unique: true
   end
 
   create_table "email_verification_tokens", force: :cascade do |t|
