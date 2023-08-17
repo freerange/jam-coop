@@ -12,5 +12,12 @@ FactoryBot.define do
         content_type: 'image/png'
       )
     end
+
+    factory :album_with_tracks do
+      after(:create) do |album|
+        create_list(:track, 2, album:)
+        album.reload
+      end
+    end
   end
 end

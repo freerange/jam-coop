@@ -25,4 +25,16 @@ class AlbumTest < ActiveSupport::TestCase
     assert_equal album.slug, album_by_different_artist.slug
     assert_not_equal album.slug, album_with_same_title_by_same_artist.slug
   end
+
+  test 'orders tracks by their position' do
+    album = create(:album)
+
+    first_track = create(:track, position: 1, album:)
+    second_track = create(:track, position: 2, album:)
+
+    album.tracks << second_track
+    album.tracks << first_track
+
+    assert_equal album.tracks, [first_track, second_track]
+  end
 end
