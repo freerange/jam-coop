@@ -4,7 +4,7 @@ require 'test_helper'
 
 class InterestsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @interest = Interest.new(email: 'chris@example.com')
+    @interest = build(:interest)
   end
 
   test '#new should get new' do

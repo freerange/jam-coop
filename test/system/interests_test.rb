@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class InterestsTest < ApplicationSystemTestCase
   setup do
-    @interest = Interest.new(email: 'chris@example.com')
+    @interest = build(:interest)
   end
 
   test 'visiting the index' do
