@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :albums, only: %i[show]
+
   get 'thankyou', to: 'interests#thankyou'
   get 'confirmation', to: 'interests#confirmation'
 
