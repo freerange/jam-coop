@@ -2,7 +2,7 @@
 
 class Album < ApplicationRecord
   extend FriendlyId
-  friendly_id :title, use: :slugged
+  friendly_id :title, use: :scoped, scope: :artist
 
   validates :title, presence: true
 
