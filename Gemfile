@@ -7,6 +7,7 @@ ruby '3.2.2'
 
 gem 'bootsnap', require: false
 gem 'friendly_id', '~> 5.4.0'
+gem 'image_processing'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'pg', '~> 1.1'
