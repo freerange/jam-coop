@@ -108,6 +108,8 @@ GEM
       webrick (~> 1.7)
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
+    friendly_id (5.4.2)
+      activerecord (>= 4.0.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
     hotwire-livereload (1.2.3)
@@ -287,6 +289,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   factory_bot_rails
+  friendly_id (~> 5.4.0)
   hotwire-livereload
   importmap-rails
   jbuilder
