@@ -88,6 +88,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_163316) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "tracks", force: :cascade do |t|
+    t.string "title"
+    t.integer "position"
+    t.bigint "album_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_tracks_on_album_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
