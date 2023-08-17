@@ -5,4 +5,6 @@ class Album < ApplicationRecord
   friendly_id :title, use: :slugged
 
   validates :title, presence: true
+
+  belongs_to :artist
 end
