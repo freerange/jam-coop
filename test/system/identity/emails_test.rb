@@ -1,26 +1,30 @@
-require "application_system_test_case"
+# frozen_string_literal: true
 
-class Identity::EmailsTest < ApplicationSystemTestCase
-  setup do
-    @user = sign_in_as(users(:lazaro_nixon))
-  end
+require 'application_system_test_case'
 
-  test "updating the email" do
-    click_on "Change email address"
+module Identity
+  class EmailsTest < ApplicationSystemTestCase
+    setup do
+      @user = sign_in_as(users(:lazaro_nixon))
+    end
 
-    fill_in "New email", with: "new_email@hey.com"
-    fill_in "Current password", with: "Secret1*3*5*"
-    click_on "Save changes"
+    test 'updating the email' do
+      click_on 'Change email address'
 
-    assert_text "Your email has been changed"
-  end
+      fill_in 'New email', with: 'new_email@hey.com'
+      fill_in 'Current password', with: 'Secret1*3*5*'
+      click_on 'Save changes'
 
-  test "sending a verification email" do
-    @user.update! verified: false
+      assert_text 'Your email has been changed'
+    end
 
-    click_on "Change email address"
-    click_on "Re-send verification email"
+    test 'sending a verification email' do
+      @user.update! verified: false
 
-    assert_text "We sent a verification email to your email address"
+      click_on 'Change email address'
+      click_on 'Re-send verification email'
+
+      assert_text 'We sent a verification email to your email address'
+    end
   end
 end
