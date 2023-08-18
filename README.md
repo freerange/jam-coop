@@ -36,3 +36,15 @@ If you need to send email via Postmark in development you can set the `USE_POSTM
 ## Deployment
 
 All commits to `main` are deployed to [render](https://dashboard.render.com/) (the login credentials for which are available in 1P). They're not currently gated by the CI build that runs in a github action.
+
+## Troubleshooting
+
+### Generating image varients fails locally
+
+I saw this error locally on my M2 Macbook Air
+
+    [__NSCFConstantString initialize] may have been in progress in another thread when fork() was called
+
+The [solution](https://dev.to/wusher/active-storage-variants-failing-locally-1glm) was to add the following to my `.zshrc`
+
+    export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
