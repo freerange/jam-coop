@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class InterestsController < ApplicationController
+  skip_before_action :authenticate
+
   def new
     @interest = Interest.new
   end

@@ -70,6 +70,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     authentication-zero (2.16.36)
+    bcrypt (3.1.19)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -279,6 +280,7 @@ PLATFORMS
 
 DEPENDENCIES
   authentication-zero (~> 2.16)
+  bcrypt (~> 3.1.7)
   bootsnap
   capybara
   cuprite

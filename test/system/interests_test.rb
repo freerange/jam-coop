@@ -8,12 +8,12 @@ class InterestsTest < ApplicationSystemTestCase
   end
 
   test 'visiting the index' do
-    visit root_url
+    visit new_interest_url
     assert_selector 'h1', text: 'A new music platform'
   end
 
   test 'should create interest and send a confirmation email' do
-    visit root_url
+    visit new_interest_url
 
     fill_in 'Email', with: @interest.email
 
