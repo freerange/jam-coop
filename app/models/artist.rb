@@ -5,4 +5,6 @@ class Artist < ApplicationRecord
   friendly_id :name, use: :slugged
 
   has_many :albums, dependent: :destroy
+
+  validates :name, presence: true
 end

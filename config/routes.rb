@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :artists, only: [] do
+  resources :artists do
     resources :albums, only: %i[show]
   end
 
