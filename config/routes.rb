@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   post 'sign_in', to: 'sessions#create'
   get  'sign_up', to: 'registrations#new'
   post 'sign_up', to: 'registrations#create'
+
+  get  'home', to: 'home#index'
+
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
   namespace :identity do
@@ -12,7 +15,7 @@ Rails.application.routes.draw do
     resource :email_verification, only: %i[show create]
     resource :password_reset,     only: %i[new edit create update]
   end
-  root 'home#index'
+
   resources :interests, only: %i[new create] do
     member do
       get :confirm_email
@@ -22,5 +25,5 @@ Rails.application.routes.draw do
   get 'thankyou', to: 'interests#thankyou'
   get 'confirmation', to: 'interests#confirmation'
 
-  # root 'interests#new'
+  root 'interests#new'
 end

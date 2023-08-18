@@ -14,6 +14,6 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
            params: { email: 'lazaronixon@hey.com', password: 'Secret1*3*5*', password_confirmation: 'Secret1*3*5*' }
     end
 
-    assert_redirected_to root_url
+    assert_redirected_to home_url
   end
 end

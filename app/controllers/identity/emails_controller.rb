@@ -25,9 +25,9 @@ module Identity
     def redirect_to_root
       if @user.email_previously_changed?
         resend_email_verification
-        redirect_to root_path, notice: 'Your email has been changed'
+        redirect_to home_path, notice: 'Your email has been changed'
       else
-        redirect_to root_path
+        redirect_to home_path
       end
     end
 
