@@ -13,19 +13,11 @@
 </div>
 <% end %>
 
-<div class="mb-3">
-  <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full" %>
-</div>
-
-<div class="mb-3">
-  <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full" %>
-</div>
-
-<div class="mb-6">
-  <%= form.submit "Sign in", class: "w-full" %>
-</div>
+  <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full mb-3" %>
+  <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full mb-3" %>
+  <%= form.submit "Sign in", class: "w-full mt-3" %>
 <% end %>
 
-<div>
+<div class="mt-6">
   <%= link_to "Forgot your password?", new_identity_password_reset_path, class: "underline decoration-amber-600 hover:bg-amber-500" %>
 </div>
