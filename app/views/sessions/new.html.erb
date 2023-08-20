@@ -1,6 +1,6 @@
 <h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">Sign in</h1>
 
-<%= form_with(url: sign_in_path) do |form| %>
+<%= form_with(url: sign_in_path, builder: TailwindFormBuilder) do |form| %>
 <% if alert %>
 <div class="w-full border border-red-600 p-4 my-4">
   <%= alert %>
@@ -14,17 +14,15 @@
 <% end %>
 
 <div class="mb-3">
-  <%= form.label :email, style: "display: block" %>
-  <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full border border-slate-200 outline-none px-3 py-2" %>
+  <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full" %>
 </div>
 
 <div class="mb-3">
-  <%= form.label :password, style: "display: block" %>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full border border-slate-200 outline-none px-3 py-2" %>
+  <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full" %>
 </div>
 
 <div class="mb-6">
-  <%= form.submit "Sign in", class: "w-full py-3 px-5 bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer" %>
+  <%= form.submit "Sign in", class: "w-full" %>
 </div>
 <% end %>
 
