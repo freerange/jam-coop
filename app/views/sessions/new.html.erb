@@ -1,4 +1,4 @@
-<h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">Sign in</h1>
+<%= render 'shared/page_header', text: 'Sign in' %>
 
 <%= form_with(url: sign_in_path, builder: TailwindFormBuilder) do |form| %>
 <% if alert %>

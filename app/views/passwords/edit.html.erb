@@ -4,7 +4,7 @@
 </div>
 <% end %>
 
-<h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">Change your password</h1>
+<%= render 'shared/page_header', text: 'Change your password' %>
 
 <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
   <% if @user.errors.any? %>
