@@ -1,11 +1,17 @@
-<p style="color: red"><%= alert %></p>
+<% if alert %>
+<div class="w-full border border-red-600 p-4 my-4">
+  <%= alert %>
+</div>
+<% end %>
 
-<h1>Change your password</h1>
+<h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">Change your password</h1>
 
-<%= form_with(url: password_path, method: :patch) do |form| %>
+<%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
   <% if @user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <div class="w-full border border-red-600 p-4 my-4">
+      <h2 class="font-bold mb-3">
+        <%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:
+      </h2>
 
       <ul>
         <% @user.errors.each do |error| %>
@@ -15,29 +21,12 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :current_password, style: "display: block" %>
-    <%= form.password_field :current_password, required: true, autofocus: true, autocomplete: "current-password" %>
-  </div>
-
-  <div>
-    <%= form.label :password, "New password", style: "display: block" %>
-    <%= form.password_field :password, required: true, autocomplete: "new-password" %>
-    <div>12 characters minimum.</div>
-  </div>
-
-  <div>
-    <%= form.label :password_confirmation, "Confirm new password", style: "display: block" %>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= form.submit "Save changes" %>
-  </div>
+  <%= form.password_field :current_password, required: true, autofocus: true, autocomplete: "current-password", class: "w-full mb-3" %>
+  <%= form.password_field :password, label: { text: "New password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
+  <%= form.password_field :password_confirmation, label: { text: "Confirm new password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
+  <%= form.submit "Save changes", class: "w-full mt-3" %>
 <% end %>
 
-<br>
-
-<div>
-  <%= link_to "Back", root_path %>
+<div class="mt-6">
+  <%= link_to "Back", root_path, class: "underline decoration-amber-600 hover:bg-amber-500" %>
 </div>
