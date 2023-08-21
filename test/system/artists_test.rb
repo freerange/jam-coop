@@ -12,6 +12,7 @@ class ArtistsTest < ApplicationSystemTestCase
     visit artists_url
     click_on 'New artist'
     fill_in 'Name', with: @artist.name
+    attach_file 'Profile picture', Rails.root.join('test/fixtures/files/cover.png')
     click_on 'Save'
     assert_selector 'h1', text: @artist.name
   end
