@@ -1,6 +1,8 @@
 <%= form_with(model: artist, class: "contents", builder: TailwindFormBuilder) do |form| %>
   <%= render('shared/errors', model: artist) %>
   <%= form.text_field :name, class: 'w-full mb-3' %>
+  <%= form.text_field :location, class: 'w-full mb-3' %>
+  <%= form.text_field :description, class: 'w-full mb-3' %>
   <%= form.label :profile_picture %>
   <% if artist.profile_picture.representable? %>
   <%= image_tag @artist.profile_picture.representation(resize_to_limit: [100, 100]) %>
