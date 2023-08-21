@@ -1,14 +1,10 @@
 <%= render('shared/alert_box', message: alert) if alert %>
+<%= render('shared/page_header', text: 'Forgot your password?') %>
 
-<h1>Forgot your password?</h1>
-
-<%= form_with(url: identity_password_reset_path) do |form| %>
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.email_field :email, required: true, autofocus: true %>
-  </div>
+<%= form_with(url: identity_password_reset_path, builder: TailwindFormBuilder) do |form| %>
+  <%= form.email_field :email, required: true, autofocus: true, class: 'w-full mb-3' %>
 
   <div>
-    <%= form.submit "Send password reset email" %>
+    <%= form.submit "Send password reset email", class: 'w-full' %>
   </div>
 <% end %>
