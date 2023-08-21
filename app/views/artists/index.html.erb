@@ -2,8 +2,8 @@
 
 <ul>
   <% @artists.each do |artist| %>
-  <li><%= link_to(artist.name, edit_artist_path(artist)) %></li>
+  <li><%= text_link_to(artist.name, edit_artist_path(artist)) %></li>
   <% end %>
 </ul>
 
-<%= link_to('New artist', new_artist_path) %></li>
+<%= text_link_to('New artist', new_artist_path) %></li>
