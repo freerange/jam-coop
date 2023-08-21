@@ -1,21 +1,12 @@
 <%= render('shared/notice_box', message: notice) if notice %>
+<%= render('shared/page_header', text: 'Admin') %>
 
-<h2>Login and verification</h2>
+<ul class="list-disc">
+  <li><%= link_to "Change password", edit_password_path, class: "underline decoration-amber-600 hover:bg-amber-500" %></li>
+  <li><%= link_to "Change email address", edit_identity_email_path, class: "underline decoration-amber-600 hover:bg-amber-500" %></li>
+  <li><%= link_to "Access log", sessions_path, class: "underline decoration-amber-600 hover:bg-amber-500" %></li>
+</ul>
 
-<div>
-  <%= link_to "Change password", edit_password_path %>
+<div class="mt-6 text-slate-300">
+  <%= button_to "Log out", Current.session, method: :delete %>
 </div>
-
-<div>
-  <%= link_to "Change email address", edit_identity_email_path %>
-</div>
-
-<h2>Access history</h2>
-
-<div>
-  <%= link_to "Devices & Sessions", sessions_path %>
-</div>
-
-<br>
-
-<%= button_to "Log out", Current.session, method: :delete %>
