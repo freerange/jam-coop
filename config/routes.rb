@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :artists do
-    resources :albums, only: %i[show]
+    resources :albums, only: %i[show new edit create update]
   end
 
   get 'thankyou', to: 'interests#thankyou'

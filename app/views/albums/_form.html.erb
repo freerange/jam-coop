@@ -1,0 +1,11 @@
+<%= form_for([album.artist, album], builder: TailwindFormBuilder) do |form| %>
+  <%= render('shared/errors', model: album) %>
+  <%= form.text_field :title, class: 'w-full mb-3' %>
+  <%= form.label :cover %>
+  <% if album.cover.representable? %>
+  <%= image_tag album.cover.representation(resize_to_limit: [100, 100]) %>
+  <% end %>
+  <br />
+  <%= form.file_field :cover, class: 'mb-3' %>
+  <%= form.submit "Save", class: 'w-full'%>
+<% end %>
