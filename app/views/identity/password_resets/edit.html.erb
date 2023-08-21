@@ -1,21 +1,9 @@
-<h1>Reset your password</h1>
+<%= render('shared/page_header', text: 'Reset your password') %>
 
-<%= form_with(url: identity_password_reset_path, method: :patch) do |form| %>
+<%= form_with(url: identity_password_reset_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
   <%= render 'shared/errors', model: @user %>
   <%= form.hidden_field :sid, value: params[:sid] %>
-
-  <div>
-    <%= form.label :password, "New password", style: "display: block" %>
-    <%= form.password_field :password, required: true, autofocus: true, autocomplete: "new-password" %>
-    <div>12 characters minimum.</div>
-  </div>
-
-  <div>
-    <%= form.label :password_confirmation, "Confirm new password", style: "display: block" %>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= form.submit "Save changes" %>
-  </div>
+  <%= form.password_field :password, label: { text: 'New password' }, required: true, autofocus: true, autocomplete: "new-password", class: 'w-full mb-3' %>
+  <%= form.password_field :password_confirmation, label: { text: 'Confirm new password' }, required: true, autocomplete: "new-password", class: 'w-full mb-3' %>
+  <%= form.submit "Save changes", class: 'w-full mt-3' %>
 <% end %>
