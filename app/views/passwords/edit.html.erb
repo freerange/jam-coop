@@ -7,20 +7,7 @@
 <%= render 'shared/page_header', text: 'Change your password' %>
 
 <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
-  <% if @user.errors.any? %>
-    <div class="w-full border border-red-600 p-4 my-4">
-      <h2 class="font-bold mb-3">
-        <%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:
-      </h2>
-
-      <ul>
-        <% @user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render 'shared/errors', model: @user %>
   <%= form.password_field :current_password, required: true, autofocus: true, autocomplete: "current-password", class: "w-full mb-3" %>
   <%= form.password_field :password, label: { text: "New password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
   <%= form.password_field :password_confirmation, label: { text: "Confirm new password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
