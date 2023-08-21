@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AlbumsController < ApplicationController
-  skip_before_action :authenticate
+  skip_before_action :authenticate, only: [:show]
   before_action :set_album, only: %i[show edit update]
 
   def show; end
@@ -23,8 +23,8 @@ class AlbumsController < ApplicationController
   end
 
   def update
-    if @lbum.update(album_params)
-      redirect_to artist_url(@artist), notice: 'Artist was successfully updated.'
+    if @album.update(album_params)
+      redirect_to artist_url(@album.artist), notice: 'Artist was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
