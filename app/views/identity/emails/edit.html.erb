@@ -1,33 +1,27 @@
-<p style="color: red"><%= alert %></p>
+<% if alert %>
+<div class="w-full border border-red-600 p-4 my-4">
+  <%= alert %>
+</div>
+<% end %>
 
 <% if Current.user.verified? %>
-  <h1>Change your email</h1>
+  <%= render 'shared/page_header', text: 'Change your email' %>
 <% else %>
-  <h1>Verify your email</h1>
-  <p>We sent a verification email to the address below. Check that email and follow those instructions to confirm it's your email address.</p>
-  <p><%= button_to "Re-send verification email", identity_email_verification_path %></p>
+  <%= render 'shared/page_header', text: 'Verify your email' %>
+
+  <div class="my-6 border border-slate-300 p-4">
+    <p>We sent a verification email to the address below. Check that email and follow those instructions to confirm it's your email address.</p>
+    <p><%= button_to "Re-send verification email", identity_email_verification_path, class: 'py-3 px-5 bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer my-3' %></p>
+  </div>
 <% end %>
 
-<%= form_with(url: identity_email_path, method: :patch) do |form| %>
+<%= form_with(url: identity_email_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
   <%= render 'shared/errors', model: @user %>
-
-  <div>
-    <%= form.label :email, "New email", style: "display: block" %>
-    <%= form.email_field :email, required: true, autofocus: true %>
-  </div>
-
-  <div>
-    <%= form.label :current_password, style: "display: block" %>
-    <%= form.password_field :current_password, required: true, autocomplete: "current-password" %>
-  </div>
-
-  <div>
-    <%= form.submit "Save changes" %>
-  </div>
+  <%= form.email_field :email, label: { text: "New email" }, required: true, autofocus: true, class: 'w-full mb-3' %>
+  <%= form.password_field :current_password, required: true, autocomplete: "current-password", class: 'w-full mb-3' %>
+  <%= form.submit "Save changes", class: 'w-full mt-3' %>
 <% end %>
 
-<br>
-
-<div>
-  <%= link_to "Back", root_path %>
+<div class="mt-6">
+  <%= link_to "Back", root_path, class: "underline decoration-amber-600 hover:bg-amber-500" %>
 </div>
