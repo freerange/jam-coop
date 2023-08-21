@@ -1,17 +1,8 @@
 <%= render 'shared/page_header', text: 'Sign in' %>
 
 <%= form_with(url: sign_in_path, builder: TailwindFormBuilder) do |form| %>
-<% if alert %>
-<div class="w-full border border-red-600 p-4 my-4">
-  <%= alert %>
-</div>
-<% end %>
-
-<% if notice %>
-<div class="w-full border border-green-600 p-4 my-4">
-  <%= notice %>
-</div>
-<% end %>
+  <%= render('shared/alert_box', message: alert) if alert %>
+  <%= render('shared/notice_box', message: notice) if notice %>
 
   <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full mb-3" %>
   <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full mb-3" %>

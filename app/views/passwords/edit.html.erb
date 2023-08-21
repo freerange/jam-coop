@@ -1,8 +1,4 @@
-<% if alert %>
-<div class="w-full border border-red-600 p-4 my-4">
-  <%= alert %>
-</div>
-<% end %>
+<%= render('shared/alert_box', message: alert) if alert %>
 
 <%= render 'shared/page_header', text: 'Change your password' %>
 
