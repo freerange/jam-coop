@@ -14,15 +14,23 @@
 <div class="pt-4 grid grid-cols-3 gap-4">
   <% @artist.albums.each do |album| %>
     <%= original_link_to(artist_album_path(album.artist, album)) do %>
-    <div class="border border-slate-200">
-      <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'w-full' %>
+    <div>
+      <div class="border border-slate-200">
+        <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'w-full' %>
+      </div>
+      <p class='text-sm text-slate-500'><%= album.title %></p>
     </div>
     <% end %>
   <% end %>
 
-  <%= button_to new_artist_album_path(@artist), method: :get, class: "border border-slate-200 bg-amber-600 hover:bg-amber-500" do %>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-full aspect-square">
-    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
-  </svg>
-  <% end %>
+  <div>
+    <div class="border border-slate-200">
+      <%= original_link_to new_artist_album_path(@artist) do %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-full aspect-square bg-amber-600 hover:bg-amber-500">
+        <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+      </svg>
+      <% end %>
+    </div>
+    <p class='text-sm text-slate-500'>Add album</p>
+  </div>
 </div>
