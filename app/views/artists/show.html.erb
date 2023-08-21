@@ -1,5 +1,5 @@
 <div class="flex flex-row">
-  <div class="basis-1/4">
+  <div class="basis-1/4 mr-4 m:mr-0">
     <% if @artist.profile_picture.representable? %>
     <%= image_tag @artist.profile_picture.representation(resize_to_limit: [150, 150]), class: 'm-auto' %>
     <% end %>
