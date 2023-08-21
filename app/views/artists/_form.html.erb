@@ -1,0 +1,5 @@
+<%= form_with(model: artist, class: "contents", builder: TailwindFormBuilder) do |form| %>
+  <%= render('shared/errors', model: artist) %>
+  <%= form.text_field :name, class: 'w-full mb-3' %>
+  <%= form.submit "Save", class: 'w-full'%>
+<% end %>
