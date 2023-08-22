@@ -4,7 +4,7 @@
 
 <ol>
   <% @album.tracks.each_with_index do |track, index| %>
-  <li><%= index + 1 %>. <%= track.title %></li>
+  <li><%= index + 1 %>. <%= track.title %> <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %></li>
   <% end %>
 </ol>
 

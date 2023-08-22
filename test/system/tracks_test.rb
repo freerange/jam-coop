@@ -17,4 +17,15 @@ class TracksTest < ApplicationSystemTestCase
 
     assert_text "2. #{@track.title}"
   end
+
+  test 'editing a track' do
+    visit artist_album_url(@track.artist, @track.album)
+    assert_text "1. #{@track.title}"
+
+    click_on 'Edit'
+    fill_in 'Title', with: 'New title'
+    click_on 'Save'
+
+    assert_text '1. New title'
+  end
 end
