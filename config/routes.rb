@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   end
 
   resources :artists do
-    resources :albums, only: %i[show new edit create update]
+    resources :albums, only: %i[show new edit create update] do
+      resources :tracks, only: %i[new edit create update destroy]
+    end
   end
 
   get 'thankyou', to: 'interests#thankyou'

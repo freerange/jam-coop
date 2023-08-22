@@ -7,3 +7,5 @@
   <li><%= index + 1 %>. <%= track.title %></li>
   <% end %>
 </ol>
+
+<%= text_link_to 'Add track', new_artist_album_track_path(@album.artist, @album) %>

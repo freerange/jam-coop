@@ -1,0 +1,5 @@
+<%= form_for([track.artist, track.album, track], builder: TailwindFormBuilder) do |form| %>
+  <%= render('shared/errors', model: track) %>
+  <%= form.text_field :title, class: 'w-full mb-6' %>
+  <%= form.submit "Save", class: 'w-full' %>
+<% end %>
