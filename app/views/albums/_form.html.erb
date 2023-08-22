@@ -2,10 +2,6 @@
   <%= render('shared/errors', model: album) %>
   <%= form.text_field :title, class: 'w-full mb-3' %>
   <%= form.label :cover %>
-  <% if album.cover.representable? %>
-  <%= image_tag album.cover.representation(resize_to_limit: [100, 100]) %>
-  <% end %>
-  <br />
-  <%= form.file_field :cover, class: 'mb-3' %>
+  <%= form.file_field :cover, class: 'block border border-slate-200 mb-6 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
   <%= form.submit "Save", class: 'w-full'%>
 <% end %>
