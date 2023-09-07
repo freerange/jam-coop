@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AlbumsController < ApplicationController
-  skip_before_action :authenticate, only: [:show]
   before_action :set_album, only: %i[show edit update]
 
   def show; end
