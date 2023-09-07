@@ -1,7 +1,11 @@
-<h1><%= @album.title %></h1>
-<h2><%= @album.artist.name %></h2>
-<%= image_tag @album.cover.representation(resize_to_limit: [400, 400]) %>
+<div class="mb-3">
+  <h1 class="text-lg font-medium leading-tight"><%= @album.title %></h1>
+  <h2 class="text-sm text-slate-600"><%= @album.artist.name %></h2>
+</div>
 
+<%= image_tag @album.cover.representation(resize_to_limit: [400, 400]), class: 'w-full' %>
+
+<h3 class="text-lg my-3">Tracklist</h3>
 <ol>
   <% @album.tracks.each_with_index do |track, index| %>
   <li><%= index + 1 %>. <%= track.title %> <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %></li>
