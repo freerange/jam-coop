@@ -13,6 +13,7 @@ class TracksTest < ApplicationSystemTestCase
     click_on 'Add track'
 
     fill_in 'Title', with: @track.title
+    attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
     click_on 'Save'
 
     assert_text "2. #{@track.title}"

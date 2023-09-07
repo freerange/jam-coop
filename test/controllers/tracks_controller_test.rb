@@ -16,7 +16,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   test 'should create track' do
     assert_difference('Track.count') do
       post artist_album_tracks_url(@track.artist, @track.album), params: {
-        track: { title: @track.title }
+        track: { title: @track.title, original: fixture_file_upload('track.wav', 'audio/x-wav') }
       }
     end
 
