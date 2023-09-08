@@ -17,3 +17,5 @@ module ActiveSupport
     end
   end
 end
+
+require 'mocha/minitest'

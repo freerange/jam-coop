@@ -41,6 +41,7 @@ end
 group :test do
   gem 'capybara'
   gem 'cuprite'
+  gem 'mocha', '~> 2.1'
   gem 'rubocop-factory_bot'
   gem 'selenium-webdriver'
 end
