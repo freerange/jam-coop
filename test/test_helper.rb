@@ -9,7 +9,7 @@ module ActiveSupport
     include FactoryBot::Syntax::Methods
 
     # Run tests in parallel with specified workers
-    parallelize(workers: :number_of_processors)
+    # parallelize(workers: :number_of_processors)
 
     def sign_in_as(user)
       post(sign_in_url, params: { email: user.email, password: 'Secret1*3*5*' })
