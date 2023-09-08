@@ -5,6 +5,12 @@
 
 <%= image_tag @album.cover.representation(resize_to_limit: [400, 400]), class: 'w-full' %>
 
+<% if @album.preview %>
+<audio controls>
+  <source src="<%= url_for(@album.preview) %>">
+</audio>
+<% end %>
+
 <h3 class="text-lg my-3">Tracklist</h3>
 <ol>
   <% @album.tracks.each_with_index do |track, index| %>

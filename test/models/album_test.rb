@@ -37,4 +37,28 @@ class AlbumTest < ActiveSupport::TestCase
 
     assert_equal album.tracks, [first_track, second_track]
   end
+
+  test 'preview returns a transcode' do
+    album = create(:album)
+    track = create(:track, album:)
+    transcode = create(:transcode, track:)
+
+    assert_equal album.preview, transcode
+  end
+
+  test 'preview with multiple tracks returns first with a transcode' do
+    album = create(:album)
+    create(:track, album:)
+    track = create(:track, album:)
+    transcode = create(:transcode, track:)
+
+    assert_equal album.preview, transcode
+  end
+
+  test 'preview returns false if there are no transcodes' do
+    album = create(:album)
+    create(:track, album:)
+
+    assert_not album.preview
+  end
 end
