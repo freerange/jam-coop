@@ -1,21 +1,31 @@
-<div class="mb-3">
+<div class="mb-3 sm:mb-6 border-l-4 pl-3 border-slate-200">
   <h1 class="text-lg font-medium leading-tight"><%= @album.title %></h1>
   <h2 class="text-sm text-slate-600"><%= @album.artist.name %></h2>
 </div>
 
-<%= image_tag @album.cover.representation(resize_to_limit: [400, 400]), class: 'w-full' %>
+<div class="flex flex-col justify-between sm:flex-row">
+  <div class="sm:order-2 sm:px-3">
+    <%= image_tag @album.cover.representation(resize_to_limit: [400, 400]), class: 'w-full sm:max-w-sm border border-slate-200 mb-3' %>
+  </div>
+  <div class="sm:order-1">
+    <% if @album.preview %>
+    <audio controls class='w-full'>
+      <source src="<%= url_for(@album.preview.file) %>">
+    </audio>
+    <% end %>
+  </div>
+</div>
 
-<% if @album.preview %>
-<audio controls>
-  <source src="<%= url_for(@album.preview) %>">
-</audio>
+<h3 class="text-lg font-medium my-3">Tracklist</h3>
+<% @album.tracks.each_with_index do |track, index| %>
+<div class="flex flex-row justify-between mb-2">
+  <div>
+    <%= index + 1 %>. <%= track.title %>
+  </div>
+  <div>
+    <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %>
+  </div>
+</div>
 <% end %>
-
-<h3 class="text-lg my-3">Tracklist</h3>
-<ol>
-  <% @album.tracks.each_with_index do |track, index| %>
-  <li><%= index + 1 %>. <%= track.title %> <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %></li>
-  <% end %>
-</ol>
 
 <%= text_link_to 'Add track', new_artist_album_track_path(@album.artist, @album) %>
