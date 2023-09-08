@@ -8,6 +8,7 @@ class TranscodeJob < ApplicationJob
 
     Tempfile.create('transcode') do |output|
       track.original.open { |file| transcode(file, output) }
+      track.transcodes.where(format: :mp3v0).destroy_all
       transcode = track.transcodes.create(format: :mp3v0)
       transcode.file.attach(io: File.open(output.path), filename: output_fn, content_type: 'audio/mpeg')
     end
