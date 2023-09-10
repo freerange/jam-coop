@@ -23,7 +23,7 @@ services:
     region: oregon
     maxmemoryPolicy: noeviction
     ipAllowList: [] # only allow internal connections
- - type: worker
+  - type: worker
     name: sidekiq-worker
     runtime: ruby
     region: oregon
