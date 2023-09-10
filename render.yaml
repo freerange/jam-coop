@@ -6,7 +6,7 @@ databases:
 
 services:
   - type: web
-    name: musiccoop
+    name: jam
     region: oregon
     runtime: ruby
     buildCommand: "./bin/render-build.sh"
