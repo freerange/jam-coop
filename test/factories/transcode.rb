@@ -4,5 +4,13 @@ FactoryBot.define do
   factory :transcode do
     track
     format { 0 }
+
+    after(:build) do |transcode|
+      transcode.file.attach(
+        io: Rails.root.join('test/fixtures/files/track.mp3').open,
+        filename: 'track.mp3',
+        content_type: 'audio/mpeg'
+      )
+    end
   end
 end

@@ -6,7 +6,7 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
   setup do
     sign_in_as(create(:user))
     @album = create(:album_with_tracks)
-    TranscodeJob.perform_now(@album.tracks.first)
+    @album.tracks.first.transcodes << create(:transcode)
   end
 
   test 'viewing the album' do
