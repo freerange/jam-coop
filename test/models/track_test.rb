@@ -12,6 +12,11 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal track.artist, track.album.artist
   end
 
+  test 'validates presence of title' do
+    track = build(:track, title: '')
+    assert_not track.valid?
+  end
+
   test 'enqueues transcoding on save' do
     track = build(:track)
     TranscodeJob.expects(:perform_later).with(track)

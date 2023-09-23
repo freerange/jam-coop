@@ -8,6 +8,7 @@ class Track < ApplicationRecord
 
   has_one_attached :original
   validates :original, attached: true, content_type: { in: 'audio/x-wav', message: 'must be a WAV file' }
+  validates :title, presence: true
 
   after_save :transcode, if: proc { |track| track.attachment_changes.any? }
 
