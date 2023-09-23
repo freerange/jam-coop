@@ -1,4 +1,4 @@
-<%= form_for([track.artist, track.album, track], builder: TailwindFormBuilder) do |form| %>
+<%= form_for([track.artist, track.album, track], builder: TailwindFormBuilder, data: { controller: 'upload', action: 'direct-upload:initialize->upload#init direct-upload:progress->upload#progress' }) do |form| %>
   <%= render('shared/errors', model: track) %>
   <%= form.text_field :title, class: 'w-full mb-6' %>
   <% if track.original.present? %>
@@ -7,5 +7,6 @@
   <%= form.label :original, "File", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
   <% end %>
   <%= form.file_field :original, direct_upload: true, class: 'block border border-slate-200 mb-6 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+  <p data-upload-target="progress" class="hidden">Uploading: 0%</p>
   <%= form.submit "Save", class: 'w-full' %>
 <% end %>
