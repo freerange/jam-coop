@@ -2,6 +2,8 @@
 
 class Track < ApplicationRecord
   belongs_to :album
+  acts_as_list scope: :album
+
   has_many :transcodes, dependent: :destroy
 
   delegate :artist, to: :album

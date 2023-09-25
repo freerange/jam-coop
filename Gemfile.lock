@@ -71,6 +71,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts_as_list (1.1.0)
+      activerecord (>= 4.2)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
@@ -322,6 +324,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_storage_validations (~> 1.0)
+  acts_as_list
   authentication-zero (~> 2.16)
   aws-sdk-s3
   bcrypt (~> 3.1.7)
