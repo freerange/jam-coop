@@ -29,4 +29,15 @@ class TracksTest < ApplicationSystemTestCase
 
     assert_text '1. New title'
   end
+
+  test 'deleting a track' do
+    visit artist_album_url(@track.artist, @track.album)
+    assert_text "1. #{@track.title}"
+
+    accept_confirm do
+      click_on 'Delete'
+    end
+
+    assert_no_text "1. #{@track.title}"
+  end
 end

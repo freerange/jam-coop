@@ -24,6 +24,10 @@
   </div>
   <div>
     <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %>
+    <%= text_link_to 'Delete', artist_album_track_path(track.artist, track.album, track), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: 'Are you sure?'
+        } %>
   </div>
 </div>
 <% end %>
