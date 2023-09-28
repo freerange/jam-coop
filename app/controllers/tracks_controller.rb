@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TracksController < ApplicationController
-  before_action :set_track, only: %i[edit update destroy]
+  before_action :set_track, only: %i[edit update destroy move_higher move_lower]
 
   def new
     @track = Track.new(album:)
@@ -31,6 +31,18 @@ class TracksController < ApplicationController
     @track.destroy
 
     redirect_to artist_album_path(@track.artist, @track.album), notice: 'Track was successfully destroyed.'
+  end
+
+  def move_higher
+    @track.move_higher
+
+    redirect_to artist_album_path(@track.artist, @track.album)
+  end
+
+  def move_lower
+    @track.move_lower
+
+    redirect_to artist_album_path(@track.artist, @track.album)
   end
 
   private

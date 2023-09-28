@@ -21,6 +21,7 @@ Rails/CreateTableWithTimestamps:
 Metrics/BlockLength:
   Exclude:
     - config/environments/development.rb
+    - config/routes.rb
 
 Metrics/AbcSize:
   Exclude:

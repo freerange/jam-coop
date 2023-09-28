@@ -22,7 +22,12 @@ Rails.application.routes.draw do
 
   resources :artists do
     resources :albums, only: %i[show new edit create update] do
-      resources :tracks, only: %i[new edit create update destroy]
+      resources :tracks, only: %i[new edit create update destroy] do
+        member do
+          post 'move_higher'
+          post 'move_lower'
+        end
+      end
     end
   end
 
