@@ -2,13 +2,14 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="player"
 export default class extends Controller {
-  static targets = ["playButton", "pauseButton", "audio", "track"]
+  static targets = ["playButton", "pauseButton", "audio", "track", "trackTitle"]
 
   play() {
     this.playButtonTarget.classList.add("hidden");
     this.pauseButtonTarget.classList.remove("hidden");
 
     this.audioTarget.play();
+    this.showTrackTitle();
   }
 
   pause() {
@@ -16,14 +17,17 @@ export default class extends Controller {
     this.playButtonTarget.classList.remove("hidden");
 
     this.audioTarget.pause();
+    this.hideTrackTitle();
   }
 
   playNext() {
     if (this.nextTrack()) {
       this.audioTarget.src = this.nextTrack();
       this.audioTarget.play();
+      this.showTrackTitle();
     } else {
       this.pause();
+      this.hideTrackTitle();
       this.audioTarget.src = this.firstTrack();
     }
   }
@@ -32,14 +36,26 @@ export default class extends Controller {
     if (this.prevTrack()) {
       this.audioTarget.src = this.prevTrack();
       this.audioTarget.play();
+      this.showTrackTitle();
     } else {
       this.pause();
+      this.hideTrackTitle();
       this.audioTarget.src = this.firstTrack();
     }
   }
 
   ended() {
     this.playNext();
+  }
+
+  showTrackTitle() {
+    const title = this.trackTargets[this.currentIndex()].querySelector("span").innerText;
+    this.trackTitleTarget.classList.remove("invisible");
+    this.trackTitleTarget.innerText = title;
+  }
+
+  hideTrackTitle() {
+    this.trackTitleTarget.classList.add("invisible");
   }
 
   trackList() {
@@ -56,16 +72,18 @@ export default class extends Controller {
     return url.pathname
   }
 
+  currentIndex() {
+    return this.trackList().indexOf(this.currentTrack())
+  }
+
   nextTrack() {
-    const currentIndex = this.trackList().indexOf(this.currentTrack());
-    const nextIndex = currentIndex + 1;
+    const nextIndex = this.currentIndex() + 1;
 
     return this.trackList()[nextIndex]
   }
 
   prevTrack() {
-    const currentIndex = this.trackList().indexOf(this.currentTrack());
-    const prevIndex = currentIndex - 1;
+    const prevIndex = this.currentIndex() - 1;
 
     return this.trackList()[prevIndex]
   }

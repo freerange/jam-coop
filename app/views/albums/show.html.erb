@@ -7,6 +7,7 @@
       <div class="mb-3">
         <h1 class="text-lg font-medium leading-tight"><%= @album.title %></h1>
         <h2 class="text-sm text-slate-600"><%= @album.artist.name %></h2>
+        <h3 data-player-target="trackTitle" class="invisible text-sm italic text-slate-500">one</h3>
       </div>
 
       <% if @album.preview %>
@@ -43,7 +44,7 @@
   <% @album.tracks.each_with_index do |track, index| %>
   <div class="flex flex-row justify-between mb-2">
     <div data-player-target="track" data-track-url="<%= url_for(track.preview.file) %>">
-      <%= index + 1 %>. <%= track.title %>
+      <%= index + 1 %>. <span><%= track.title %></span>
     </div>
     <div>
       <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %>
