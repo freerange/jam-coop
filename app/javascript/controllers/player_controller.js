@@ -17,4 +17,8 @@ export default class extends Controller {
 
     this.audioTarget.pause();
   }
+
+  ended() {
+    this.pause();
+  }
 }

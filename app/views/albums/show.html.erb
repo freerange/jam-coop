@@ -10,7 +10,7 @@
       </div>
 
       <% if @album.preview %>
-      <audio controls class='w-full hidden' data-player-target="audio" src="<%= url_for(@album.preview.file) %>">
+      <audio controls class='w-full hidden' data-player-target="audio" data-action="ended->player#ended" src="<%= url_for(@album.preview.file) %>">
       </audio>
       <% end %>
 
