@@ -44,6 +44,11 @@ export default class extends Controller {
     }
   }
 
+  playTrack(event) {
+    this.audioTarget.src = event.currentTarget.dataset.trackUrl;
+    this.play();
+  }
+
   ended() {
     this.playNext();
   }

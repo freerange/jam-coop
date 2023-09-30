@@ -43,8 +43,8 @@
   <h3 class="text-lg font-medium my-3">Tracklist</h3>
   <% @album.tracks.each_with_index do |track, index| %>
   <div class="flex flex-row justify-between mb-2">
-    <div data-player-target="track" data-track-url="<%= url_for(track.preview.file) %>">
-      <%= index + 1 %>. <span><%= track.title %></span>
+    <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= url_for(track.preview.file) %>">
+      <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span>
     </div>
     <div>
       <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %>
