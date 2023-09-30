@@ -18,7 +18,7 @@ export default class extends Controller {
     this.audioTarget.pause();
   }
 
-  ended() {
+  playNext() {
     if (this.nextTrack()) {
       this.audioTarget.src = this.nextTrack();
       this.audioTarget.play();
@@ -26,6 +26,20 @@ export default class extends Controller {
       this.pause();
       this.audioTarget.src = this.firstTrack();
     }
+  }
+
+  playPrev() {
+    if (this.prevTrack()) {
+      this.audioTarget.src = this.prevTrack();
+      this.audioTarget.play();
+    } else {
+      this.pause();
+      this.audioTarget.src = this.firstTrack();
+    }
+  }
+
+  ended() {
+    this.playNext();
   }
 
   trackList() {
@@ -47,5 +61,12 @@ export default class extends Controller {
     const nextIndex = currentIndex + 1;
 
     return this.trackList()[nextIndex]
+  }
+
+  prevTrack() {
+    const currentIndex = this.trackList().indexOf(this.currentTrack());
+    const prevIndex = currentIndex - 1;
+
+    return this.trackList()[prevIndex]
   }
 }
