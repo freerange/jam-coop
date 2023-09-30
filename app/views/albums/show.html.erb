@@ -42,7 +42,7 @@
   <h3 class="text-lg font-medium my-3">Tracklist</h3>
   <% @album.tracks.each_with_index do |track, index| %>
   <div class="flex flex-row justify-between mb-2">
-    <div data-track-url="<%= url_for(track.preview.file) %>">
+    <div data-player-target="track" data-track-url="<%= url_for(track.preview.file) %>">
       <%= index + 1 %>. <%= track.title %>
     </div>
     <div>
