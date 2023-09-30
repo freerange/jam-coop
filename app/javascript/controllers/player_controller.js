@@ -23,11 +23,9 @@ export default class extends Controller {
   playNext() {
     if (this.nextTrack()) {
       this.audioTarget.src = this.nextTrack();
-      this.audioTarget.play();
-      this.showTrackTitle();
+      this.play();
     } else {
       this.pause();
-      this.hideTrackTitle();
       this.audioTarget.src = this.firstTrack();
     }
   }
@@ -35,11 +33,9 @@ export default class extends Controller {
   playPrev() {
     if (this.prevTrack()) {
       this.audioTarget.src = this.prevTrack();
-      this.audioTarget.play();
-      this.showTrackTitle();
+      this.play();
     } else {
       this.pause();
-      this.hideTrackTitle();
       this.audioTarget.src = this.firstTrack();
     }
   }
