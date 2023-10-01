@@ -232,6 +232,10 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails_autolink (1.1.8)
+      actionview (> 3.1)
+      activesupport (> 3.1)
+      railties (> 3.1)
     railties (7.0.6)
       actionpack (= 7.0.6)
       activesupport (= 7.0.6)
@@ -345,6 +349,7 @@ DEPENDENCIES
   postmark-rails
   puma (~> 5.6)
   rails (~> 7.0.6)
+  rails_autolink (~> 1.1)
   redis (~> 5.0)
   rubocop-capybara
   rubocop-factory_bot
