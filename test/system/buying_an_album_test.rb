@@ -17,5 +17,6 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
     assert_text "1. #{@album.tracks.first.title}"
 
     assert_text @album.about.gsub(/^\s+/, '')
+    assert_text @album.credits.gsub(/^\s+/, '')
   end
 end

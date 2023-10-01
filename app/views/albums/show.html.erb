@@ -71,8 +71,14 @@
   </section>
 
   <% if @album.about %>
-  <section>
+  <section class="mb-6">
     <%= simple_format(@album.about, class: 'mb-2') %>
+  </section>
+  <% end %>
+
+  <% if @album.credits %>
+  <section>
+    <%= simple_format(@album.credits, class: 'mb-2') %>
   </section>
   <% end %>
 </div>

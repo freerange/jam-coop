@@ -9,6 +9,9 @@ FactoryBot.define do
        singer Rick Astley, released on 16 November 1987 by RCA
        Records.'
     end
+    credits do
+      'Rick Astley - vocals.'
+    end
 
     after(:build) do |album|
       album.cover.attach(
