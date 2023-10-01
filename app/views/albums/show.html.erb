@@ -40,34 +40,35 @@
     </div>
   </div>
 
-  <h3 class="text-lg font-medium my-3">Tracklist</h3>
-  <% @album.tracks.each_with_index do |track, index| %>
-  <div class="flex flex-row justify-between mb-2">
-    <% if track.preview %>
-    <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= url_for(track.preview.file) %>">
-      <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span>
-    </div>
-    <% else %>
-    <div>
-      <%= index + 1 %>. <%= track.title %>
+  <section class="my-6">
+    <% @album.tracks.each_with_index do |track, index| %>
+    <div class="flex flex-row justify-between mb-2">
+      <% if track.preview %>
+      <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= url_for(track.preview.file) %>">
+        <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span>
+      </div>
+      <% else %>
+      <div>
+        <%= index + 1 %>. <%= track.title %>
+      </div>
+      <% end %>
+
+      <div>
+        <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %>
+        <%= text_link_to 'Delete', artist_album_track_path(track.artist, track.album, track), data: {
+            turbo_method: :delete,
+            turbo_confirm: 'Are you sure?'
+            } %>
+        <%= text_link_to 'Up', move_higher_artist_album_track_path(track.artist, track.album, track), data: {
+            turbo_method: :post } %>
+        <%= text_link_to 'Down', move_lower_artist_album_track_path(track.artist, track.album, track), data: {
+            turbo_method: :post } %>
+      </div>
     </div>
     <% end %>
 
-    <div>
-      <%= text_link_to 'Edit', edit_artist_album_track_url(track.artist, track.album, track) %>
-      <%= text_link_to 'Delete', artist_album_track_path(track.artist, track.album, track), data: {
-          turbo_method: :delete,
-          turbo_confirm: 'Are you sure?'
-          } %>
-      <%= text_link_to 'Up', move_higher_artist_album_track_path(track.artist, track.album, track), data: {
-          turbo_method: :post } %>
-      <%= text_link_to 'Down', move_lower_artist_album_track_path(track.artist, track.album, track), data: {
-          turbo_method: :post } %>
-    </div>
-  </div>
-  <% end %>
-
-  <%= text_link_to 'Add track', new_artist_album_track_path(@album.artist, @album) %>
+    <%= text_link_to 'Add track', new_artist_album_track_path(@album.artist, @album) %>
+  </section>
 
   <% if @album.about %>
   <section>
