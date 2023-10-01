@@ -1,6 +1,7 @@
 <%= form_for([album.artist, album], builder: TailwindFormBuilder) do |form| %>
   <%= render('shared/errors', model: album) %>
   <%= form.text_field :title, class: 'w-full mb-3' %>
+  <%= form.text_area :about, class: 'w-full mb-3' %>
   <%= form.label :cover %>
   <%= form.file_field :cover, class: 'block border border-slate-200 mb-6 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
   <%= form.submit "Save", class: 'w-full'%>

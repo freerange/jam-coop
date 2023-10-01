@@ -15,5 +15,7 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
     assert_selector 'h2', text: @album.artist.name
 
     assert_text "1. #{@album.tracks.first.title}"
+
+    assert_text @album.about.gsub(/^\s+/, '')
   end
 end

@@ -68,4 +68,10 @@
   <% end %>
 
   <%= text_link_to 'Add track', new_artist_album_track_path(@album.artist, @album) %>
+
+  <% if @album.about %>
+  <section>
+    <%= simple_format(@album.about, class: 'mb-2') %>
+  </section>
+  <% end %>
 </div>
