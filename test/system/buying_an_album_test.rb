@@ -4,7 +4,6 @@ require 'application_system_test_case'
 
 class BuyingAnAlbumTest < ApplicationSystemTestCase
   setup do
-    sign_in_as(create(:user))
     @album = create(:album_with_tracks)
     create(:transcode, track: @album.tracks.first)
   end

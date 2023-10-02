@@ -2,6 +2,7 @@
 
 class AlbumsController < ApplicationController
   before_action :set_album, only: %i[show edit update]
+  skip_before_action :authenticate, only: %i[show]
 
   def show; end
 
