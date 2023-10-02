@@ -6,11 +6,14 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
   setup do
     sign_in_as(create(:user))
     @album = create(:album_with_tracks)
-    @album.tracks.first.transcodes << create(:transcode)
+    create(:transcode, track: @album.tracks.first)
   end
 
   test 'viewing the album' do
-    visit artist_album_url(@album.artist, @album)
+    visit artists_url
+    click_on @album.artist.name
+    click_on @album.title
+
     assert_selector 'h1', text: @album.title
     assert_selector 'h2', text: @album.artist.name
 
