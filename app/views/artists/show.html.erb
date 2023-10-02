@@ -23,6 +23,7 @@
     <% end %>
   <% end %>
 
+  <% if Current.user %>
   <div>
     <div class="border border-amber-600">
       <%= link_to new_artist_album_path(@artist) do %>
@@ -33,4 +34,5 @@
     </div>
     <p class='text-sm text-slate-500'>Add album</p>
   </div>
+  <% end %>
 </div>
