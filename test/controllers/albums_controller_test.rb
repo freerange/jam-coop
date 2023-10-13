@@ -14,6 +14,7 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
   end
 
   test '#show shows the published state of the album' do
+    @album.update(published: false)
     get artist_album_url(@album.artist, @album)
     assert_select 'p', 'This album is currently unpublished'
 

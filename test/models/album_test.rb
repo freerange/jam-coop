@@ -61,4 +61,11 @@ class AlbumTest < ActiveSupport::TestCase
 
     assert_not album.preview
   end
+
+  test '.published' do
+    create(:album)
+    create(:album, published: false)
+
+    assert_equal 1, Album.published.count
+  end
 end
