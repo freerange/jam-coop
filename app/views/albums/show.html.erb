@@ -1,3 +1,9 @@
+<% if Current.user %>
+<div class='w-full bg-amber-100 mb-4 p-4'>
+  <p>This album is currently <strong><%= @album.published? ? 'published' : 'unpublished' %></strong></p>
+</div>
+<% end %>
+
 <div data-controller="player">
   <div class="flex flex-row gap-4">
     <div class="w-1/2">

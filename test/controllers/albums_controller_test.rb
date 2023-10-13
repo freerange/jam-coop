@@ -13,6 +13,15 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test '#show shows the published state of the album' do
+    get artist_album_url(@album.artist, @album)
+    assert_select 'p', 'This album is currently unpublished'
+
+    @album.update(published: true)
+    get artist_album_url(@album.artist, @album)
+    assert_select 'p', 'This album is currently published'
+  end
+
   test '#new' do
     get new_artist_album_url(@album.artist)
     assert_response :success
@@ -45,6 +54,11 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#show' do
     get artist_album_url(@album.artist, @album)
     assert_response :success
+  end
+
+  test '#show does not indicate published state' do
+    get artist_album_url(@album.artist, @album)
+    assert_select 'p', text: 'This album is currently unpublished', count: 0
   end
 
   test '#new' do
