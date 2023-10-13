@@ -15,7 +15,7 @@ class Track < ApplicationRecord
   after_save :transcode, if: proc { |track| track.attachment_changes.any? }
 
   def preview
-    transcodes.where(format: 'mp3v0').first
+    transcodes.mp3v0.first
   end
 
   private
