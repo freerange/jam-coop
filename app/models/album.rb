@@ -12,6 +12,7 @@ class Album < ApplicationRecord
   has_one_attached :cover
 
   scope :published, -> { where(published: true) }
+  scope :unpublished, -> { where(published: false) }
 
   def preview
     first_track_with_transcode = tracks.detect { |t| t.transcodes.any? }
