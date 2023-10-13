@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_111950) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_13_145058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_111950) do
     t.integer "format", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["format", "track_id"], name: "index_transcodes_on_format_and_track_id", unique: true
     t.index ["track_id"], name: "index_transcodes_on_track_id"
   end
 
