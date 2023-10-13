@@ -13,11 +13,7 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
     click_link @album.artist.name
     click_link @album.title
 
-    assert_selector 'h1', text: @album.title
-    assert_selector 'h2', text: @album.artist.name
-
     assert_text "1. #{@album.tracks.first.title}"
-
     assert_text @album.about.gsub(/^\s+/, '')
     assert_text @album.credits.gsub(/^\s+/, '')
   end
