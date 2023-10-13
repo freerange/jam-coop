@@ -18,7 +18,7 @@ class InterestsTest < ApplicationSystemTestCase
     fill_in 'Email', with: @interest.email
 
     assert_emails 1 do
-      click_on 'Submit'
+      click_button 'Submit'
     end
 
     assert_text "We've sent you an email"

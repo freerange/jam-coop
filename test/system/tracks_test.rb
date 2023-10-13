@@ -10,11 +10,11 @@ class TracksTest < ApplicationSystemTestCase
 
   test 'should create track' do
     visit artist_album_url(@track.artist, @track.album)
-    click_on 'Add track'
+    click_link 'Add track'
 
     fill_in 'Title', with: @track.title
     attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
-    click_on 'Save'
+    click_button 'Save'
 
     assert_text "2. #{@track.title}"
   end
@@ -23,9 +23,9 @@ class TracksTest < ApplicationSystemTestCase
     visit artist_album_url(@track.artist, @track.album)
     assert_text "1. #{@track.title}"
 
-    click_on 'Edit'
+    click_link 'Edit'
     fill_in 'Title', with: 'New title'
-    click_on 'Save'
+    click_button 'Save'
 
     assert_text '1. New title'
   end
@@ -35,7 +35,7 @@ class TracksTest < ApplicationSystemTestCase
     assert_text "1. #{@track.title}"
 
     accept_confirm do
-      click_on 'Delete'
+      click_link 'Delete'
     end
 
     assert_no_text "1. #{@track.title}"

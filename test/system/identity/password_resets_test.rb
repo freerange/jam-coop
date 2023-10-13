@@ -11,10 +11,10 @@ module Identity
 
     test 'sending a password reset email' do
       visit sign_in_url
-      click_on 'Forgot your password?'
+      click_link 'Forgot your password?'
 
       fill_in 'Email', with: @user.email
-      click_on 'Send password reset email'
+      click_button 'Send password reset email'
 
       assert_text 'Check your email for reset instructions'
     end
@@ -24,7 +24,7 @@ module Identity
 
       fill_in 'New password', with: 'Secret6*4*2*'
       fill_in 'Confirm new password', with: 'Secret6*4*2*'
-      click_on 'Save changes'
+      click_button 'Save changes'
 
       assert_text 'Your password was reset successfully. Please sign in'
     end

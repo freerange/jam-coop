@@ -10,7 +10,7 @@ class SessionsTest < ApplicationSystemTestCase
   test 'visiting the index' do
     sign_in_as @user
 
-    click_on 'Access log'
+    click_link 'Access log'
     assert_selector 'h1', text: 'Sessions'
   end
 
@@ -18,7 +18,7 @@ class SessionsTest < ApplicationSystemTestCase
     visit sign_in_url
     fill_in 'Email', with: @user.email
     fill_in 'Password', with: 'Secret1*3*5*'
-    click_on 'Sign in'
+    click_button 'Sign in'
 
     assert_text 'Signed in successfully'
   end
@@ -26,7 +26,7 @@ class SessionsTest < ApplicationSystemTestCase
   test 'signing out' do
     sign_in_as @user
 
-    click_on 'Log out'
+    click_button 'Log out'
     assert_text 'That session has been logged out'
   end
 end

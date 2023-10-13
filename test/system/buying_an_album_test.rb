@@ -10,8 +10,8 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
 
   test 'viewing the album' do
     visit artists_url
-    click_on @album.artist.name
-    click_on @album.title
+    click_link @album.artist.name
+    click_link @album.title
 
     assert_selector 'h1', text: @album.title
     assert_selector 'h2', text: @album.artist.name
