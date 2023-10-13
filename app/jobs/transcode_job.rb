@@ -3,6 +3,7 @@
 class TranscodeJob < ApplicationJob
   queue_as :default
 
+  # rubocop:disable Metrics/AbcSize
   def perform(track, format: :mp3v0)
     output_fn = "#{track.original.filename.base}.mp3"
 
@@ -10,9 +11,10 @@ class TranscodeJob < ApplicationJob
       track.original.open { |file| transcode(file, output, format) }
       track.transcodes.where(format:).destroy_all
       transcode = track.transcodes.create(format:)
-      transcode.file.attach(io: File.open(output.path), filename: output_fn, content_type: 'audio/mpeg')
+      transcode.file.attach(io: File.open(output.path), filename: output_fn, content_type: content_type(format))
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -27,5 +29,14 @@ class TranscodeJob < ApplicationJob
     end
 
     system(cmd)
+  end
+
+  def content_type(format)
+    case format
+    when :mp3v0, :mp3128k
+      'audio/mpeg'
+    else
+      raise ArgumentError, "unsupported format: #{format}"
+    end
   end
 end
