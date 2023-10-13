@@ -5,7 +5,7 @@ class TranscodeJob < ApplicationJob
 
   # rubocop:disable Metrics/AbcSize
   def perform(track, format: :mp3v0)
-    output_fn = "#{track.original.filename.base}.mp3"
+    output_fn = "#{track.original.filename.base}.#{file_extension(format)}"
 
     Tempfile.create('transcode') do |output|
       track.original.open { |file| transcode(file, output, format) }
@@ -35,6 +35,15 @@ class TranscodeJob < ApplicationJob
     case format
     when :mp3v0, :mp3128k
       'audio/mpeg'
+    else
+      raise ArgumentError, "unsupported format: #{format}"
+    end
+  end
+
+  def file_extension(format)
+    case format
+    when :mp3v0, :mp3128k
+      'mp3'
     else
       raise ArgumentError, "unsupported format: #{format}"
     end
