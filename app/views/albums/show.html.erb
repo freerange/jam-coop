@@ -1,6 +1,9 @@
 <% if Current.user %>
-<div class='w-full bg-amber-100 mb-4 p-4'>
+<div class='flex justify-between items-center w-full border border-amber-500 mb-4 p-4'>
   <p>This album is currently <strong><%= @album.published? ? 'published' : 'unpublished' %></strong></p>
+  <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer p-2' do %>
+  <%= @album.published? ? 'Unpublish' : 'Publish' %>
+  <% end %>
 </div>
 <% end %>
 

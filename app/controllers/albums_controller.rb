@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AlbumsController < ApplicationController
-  before_action :set_album, only: %i[show edit update]
+  before_action :set_album, only: %i[show edit update publish unpublish]
   skip_before_action :authenticate, only: %i[show]
 
   def show; end
@@ -28,6 +28,16 @@ class AlbumsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def publish
+    @album.update(published: true)
+    redirect_to artist_album_url(@album.artist, @album)
+  end
+
+  def unpublish
+    @album.update(published: false)
+    redirect_to artist_album_url(@album.artist, @album)
   end
 
   private

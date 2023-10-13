@@ -44,6 +44,20 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
     patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
     assert_redirected_to artist_url(@album.artist)
   end
+
+  test '#publish' do
+    patch publish_artist_album_url(@album.artist, @album)
+    assert_redirected_to artist_album_url(@album.artist, @album)
+    @album.reload
+    assert @album.published?
+  end
+
+  test '#unpublish' do
+    patch unpublish_artist_album_url(@album.artist, @album)
+    assert_redirected_to artist_album_url(@album.artist, @album)
+    @album.reload
+    assert_not @album.published?
+  end
 end
 
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
@@ -78,6 +92,16 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#update' do
     patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
+    assert_redirected_to sign_in_url
+  end
+
+  test '#publish' do
+    patch publish_artist_album_url(@album.artist, @album)
+    assert_redirected_to sign_in_url
+  end
+
+  test '#unpublish' do
+    patch unpublish_artist_album_url(@album.artist, @album)
     assert_redirected_to sign_in_url
   end
 end
