@@ -19,6 +19,14 @@ class TranscodeJobTest < ActiveJob::TestCase
     assert 1, track.transcodes.mp3128k.count
   end
 
+  test 'it supports transcoding the file to flac' do
+    track = create(:track)
+
+    TranscodeJob.perform_now(track, format: :flac)
+
+    assert 1, track.transcodes.flac.count
+  end
+
   test 'it removes an old transcode before creating a new one' do
     track = create(:track)
     TranscodeJob.perform_now(track)
