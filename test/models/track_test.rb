@@ -19,7 +19,10 @@ class TrackTest < ActiveSupport::TestCase
 
   test 'enqueues transcoding on save' do
     track = build(:track)
-    TranscodeJob.expects(:perform_later).with(track)
+
+    Transcode.formats.each_key do |format|
+      TranscodeJob.expects(:perform_later).with(track, format: format.to_sym)
+    end
 
     track.save
   end

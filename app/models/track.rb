@@ -21,6 +21,8 @@ class Track < ApplicationRecord
   private
 
   def transcode
-    TranscodeJob.perform_later(self)
+    Transcode.formats.each_key do |format|
+      TranscodeJob.perform_later(self, format: format.to_sym)
+    end
   end
 end
