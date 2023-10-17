@@ -3,12 +3,28 @@
 require 'test_helper'
 
 class TranscodeJobTest < ActiveJob::TestCase
-  test 'it transcodes the file' do
+  test 'it transcodes the file to mp3v0 by default' do
     track = create(:track)
 
     TranscodeJob.perform_now(track)
 
-    assert track.transcodes.last.file.present?
+    assert 1, track.transcodes.mp3v0.count
+  end
+
+  test 'it supports transcoding the file to mp3128k' do
+    track = create(:track)
+
+    TranscodeJob.perform_now(track, format: :mp3128k)
+
+    assert 1, track.transcodes.mp3128k.count
+  end
+
+  test 'it supports transcoding the file to flac' do
+    track = create(:track)
+
+    TranscodeJob.perform_now(track, format: :flac)
+
+    assert 1, track.transcodes.flac.count
   end
 
   test 'it removes an old transcode before creating a new one' do

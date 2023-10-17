@@ -8,6 +8,7 @@ class Album < ApplicationRecord
 
   belongs_to :artist
   has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
+  has_many :downloads, dependent: :destroy
 
   has_one_attached :cover
 
@@ -15,7 +16,22 @@ class Album < ApplicationRecord
   scope :unpublished, -> { where(published: false) }
 
   def preview
-    first_track_with_transcode = tracks.detect { |t| t.transcodes.any? }
-    first_track_with_transcode&.transcodes&.first
+    first_track_with_preview = tracks.detect(&:preview)
+    first_track_with_preview&.preview
+  end
+
+  def retranscode!
+    tracks.each(&:transcode)
+  end
+
+  def publish
+    update(published: true)
+
+    ZipDownloadJob.perform_later(self, format: :mp3v0)
+    ZipDownloadJob.perform_later(self, format: :flac)
+  end
+
+  def unpublish
+    update(published: false)
   end
 end

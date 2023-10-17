@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class AlbumTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   test 'fixture is valid' do
     assert build(:album).valid?
   end
@@ -60,6 +62,45 @@ class AlbumTest < ActiveSupport::TestCase
     create(:track, album:)
 
     assert_not album.preview
+  end
+
+  test 'retranscode!' do
+    album = create(:album)
+    create(:track, album:)
+
+    assert_enqueued_with(job: TranscodeJob) do
+      album.retranscode!
+    end
+  end
+
+  test 'publish sets published state' do
+    album = create(:album, published: false)
+    album.publish
+    assert album.published?
+  end
+
+  test 'publish enqueues ZipDownloadJob to prepare mp3v0 download' do
+    album = create(:album, published: false)
+
+    args_matcher = ->(job_args) { job_args[1][:format] == :mp3v0 }
+    assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
+      album.publish
+    end
+  end
+
+  test 'publish enqueues ZipDownloadJob to prepare flac download' do
+    album = create(:album, published: false)
+
+    args_matcher = ->(job_args) { job_args[1][:format] == :flac }
+    assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
+      album.publish
+    end
+  end
+
+  test 'unpublish' do
+    album = create(:album, published: true)
+    album.unpublish
+    assert_not album.published?
   end
 
   test '.published' do

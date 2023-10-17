@@ -46,6 +46,14 @@
           </svg>
         </button>
       </div>
+
+      <% if Current.user %>
+      <ul>
+        <% @album.downloads.each do |download| %>
+        <li><%= text_link_to "Download (#{download.format})", rails_blob_path(download.file) %></li>
+        <% end %>
+      </ul>
+      <% end %>
     </div>
   </div>
 

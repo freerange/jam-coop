@@ -15,12 +15,12 @@ class Track < ApplicationRecord
   after_save :transcode, if: proc { |track| track.attachment_changes.any? }
 
   def preview
-    transcodes.mp3v0.first
+    transcodes.mp3128k.first
   end
 
-  private
-
   def transcode
-    TranscodeJob.perform_later(self)
+    Transcode.formats.each_key do |format|
+      TranscodeJob.perform_later(self, format: format.to_sym)
+    end
   end
 end
