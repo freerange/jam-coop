@@ -15,7 +15,8 @@ class Album < ApplicationRecord
   scope :unpublished, -> { where(published: false) }
 
   def preview
-    first_track_with_transcode = tracks.detect { |t| t.transcodes.any? }
-    first_track_with_transcode&.transcodes&.first
+    first_track_with_preview = tracks.detect(&:preview)
+    first_track_with_preview&.preview
+  end
   end
 end
