@@ -26,6 +26,9 @@ class Album < ApplicationRecord
 
   def publish
     update(published: true)
+
+    ZipDownloadJob.perform_later(self, format: :mp3v0)
+    ZipDownloadJob.perform_later(self, format: :flac)
   end
 
   def unpublish
