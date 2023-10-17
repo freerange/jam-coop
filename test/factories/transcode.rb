@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :transcode do
     track
-    format { :mp3v0 }
+    format { :mp3128k }
 
     after(:build) do |transcode|
       transcode.file.attach(
