@@ -18,5 +18,8 @@ class Album < ApplicationRecord
     first_track_with_preview = tracks.detect(&:preview)
     first_track_with_preview&.preview
   end
+
+  def retranscode!
+    tracks.each(&:transcode)
   end
 end

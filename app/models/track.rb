@@ -18,8 +18,6 @@ class Track < ApplicationRecord
     transcodes.mp3128k.first
   end
 
-  private
-
   def transcode
     Transcode.formats.each_key do |format|
       TranscodeJob.perform_later(self, format: format.to_sym)

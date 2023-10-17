@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class AlbumTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   test 'fixture is valid' do
     assert build(:album).valid?
   end
@@ -60,6 +62,15 @@ class AlbumTest < ActiveSupport::TestCase
     create(:track, album:)
 
     assert_not album.preview
+  end
+
+  test 'retranscode!' do
+    album = create(:album)
+    create(:track, album:)
+
+    assert_enqueued_with(job: TranscodeJob) do
+      album.retranscode!
+    end
   end
 
   test '.published' do
