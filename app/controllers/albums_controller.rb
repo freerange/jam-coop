@@ -31,12 +31,12 @@ class AlbumsController < ApplicationController
   end
 
   def publish
-    @album.update(published: true)
+    @album.publish
     redirect_to artist_album_url(@album.artist, @album)
   end
 
   def unpublish
-    @album.update(published: false)
+    @album.unpublish
     redirect_to artist_album_url(@album.artist, @album)
   end
 

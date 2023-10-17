@@ -23,4 +23,12 @@ class Album < ApplicationRecord
   def retranscode!
     tracks.each(&:transcode)
   end
+
+  def publish
+    update(published: true)
+  end
+
+  def unpublish
+    update(published: false)
+  end
 end
