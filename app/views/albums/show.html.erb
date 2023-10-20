@@ -1,12 +1,3 @@
-<% if Current.user %>
-<div class='flex justify-between items-center w-full border border-amber-500 mb-4 p-4'>
-  <p>This album is currently <strong><%= @album.published? ? 'published' : 'unpublished' %></strong></p>
-  <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer p-2' do %>
-  <%= @album.published? ? 'Unpublish' : 'Publish' %>
-  <% end %>
-</div>
-<% end %>
-
 <div data-controller="player">
   <div class="flex flex-row gap-4">
     <div class="w-1/2">
@@ -46,14 +37,6 @@
           </svg>
         </button>
       </div>
-
-      <% if Current.user %>
-      <ul>
-        <% @album.downloads.each do |download| %>
-        <li><%= text_link_to "Download (#{download.format})", rails_blob_path(download.file) %></li>
-        <% end %>
-      </ul>
-      <% end %>
     </div>
   </div>
 
@@ -103,3 +86,20 @@
   </section>
   <% end %>
 </div>
+
+<% content_for :admin do %>
+<div>
+  <h2 class="text-2xl mb-3">Published state</h2>
+  <p>This album is currently <strong><%= @album.published? ? 'published' : 'unpublished' %></strong></p>
+  <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'underline' do %>
+    <%= @album.published? ? 'Unpublish' : 'Publish' %>
+  <% end %>
+
+  <h2 class="text-2xl my-3">Downloads</h2>
+  <ul>
+    <% @album.downloads.each do |download| %>
+    <li><%= text_link_to "Download (#{download.format})", rails_blob_path(download.file) %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

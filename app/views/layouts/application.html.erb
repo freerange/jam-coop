@@ -22,6 +22,11 @@
 
         <p>A <a class="underline" href="https://gofreerange.com">Go Free Range</a> project</p>
       </footer>
+      <% if Current.user && content_for(:admin) %>
+      <div class="bg-slate-200 p-2 mb-4 sm:p-6 sm:mt-4 sm:shadow-sm rounded">
+        <%= content_for :admin %>
+      </div>
+      <% end %>
     </div>
   </body>
 </html>
