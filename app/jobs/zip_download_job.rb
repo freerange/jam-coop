@@ -5,7 +5,6 @@ require 'zip'
 class ZipDownloadJob < ApplicationJob
   queue_as :default
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def perform(album, format: :mp3v0)
     Dir.mktmpdir do |dir|
       filenames = download_all_tracks(album, format, dir)

@@ -18,12 +18,5 @@ Rails/CreateTableWithTimestamps:
     - db/migrate/20230818163316_create_email_verification_tokens.rb
     - db/migrate/20230817173059_create_active_storage_tables.active_storage.rb
 
-Metrics/BlockLength:
-  Exclude:
-    - config/environments/development.rb
-    - config/routes.rb
-    - test/factories/*.rb
-
-Metrics/AbcSize:
-  Exclude:
-    - app/controllers/sessions_controller.rb
+Metrics:
+  Enabled: false

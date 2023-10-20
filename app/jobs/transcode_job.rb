@@ -3,7 +3,6 @@
 class TranscodeJob < ApplicationJob
   queue_as :default
 
-  # rubocop:disable Metrics/AbcSize
   def perform(track, format: :mp3v0)
     output_fn = "#{track.original.filename.base}.#{file_extension(format)}"
 
@@ -18,7 +17,6 @@ class TranscodeJob < ApplicationJob
 
   private
 
-  # rubocop:disable Metrics/MethodLength
   def transcode(input, output, format)
     case format
     when :mp3v0
