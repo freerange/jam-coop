@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post 'sign_in', to: 'sessions#create'
 
   get  'home', to: 'home#index'
+  get  'about', to: 'pages#about'
 
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
