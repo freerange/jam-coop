@@ -28,6 +28,8 @@ Rails.application.routes.draw do
         patch 'unpublish'
       end
 
+      resources :purchases, only: %i[new]
+
       resources :tracks, only: %i[new edit create update destroy] do
         member do
           post 'move_higher'
