@@ -8,13 +8,10 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
     create(:transcode, track: @album.tracks.first)
   end
 
-  test 'viewing the album' do
-    visit artists_url
-    click_link @album.artist.name
-    click_link @album.title
+  test 'purchasing an album' do
+    visit artist_album_url(@album.artist, @album)
+    click_button 'Buy'
 
-    assert_text "1. #{@album.tracks.first.title}"
-    assert_text @album.about.gsub(/^\s+/, '')
-    assert_text @album.credits.gsub(/^\s+/, '')
+    assert_selector 'button', text: 'Checkout'
   end
 end

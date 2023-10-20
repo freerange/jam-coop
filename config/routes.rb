@@ -28,7 +28,7 @@ Rails.application.routes.draw do
         patch 'unpublish'
       end
 
-      resources :purchases, only: %i[new]
+      resources :purchases, only: %i[new create]
 
       resources :tracks, only: %i[new edit create update destroy] do
         member do
