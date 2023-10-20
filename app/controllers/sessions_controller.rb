@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       @session = user.sessions.create!
       cookies.signed.permanent[:session_token] = { value: @session.id, httponly: true }
 
-      redirect_to home_path, notice: 'Signed in successfully'
+      redirect_to_previous_or_home
     else
       redirect_to sign_in_path(email_hint: params[:email]), alert: 'That email or password is incorrect'
     end
@@ -33,5 +33,13 @@ class SessionsController < ApplicationController
 
   def set_session
     @session = Current.user.sessions.find(params[:id])
+  end
+
+  def redirect_to_previous_or_home
+    if (return_url = session[:return_url])
+      redirect_to return_url
+    else
+      redirect_to home_path, notice: 'Signed in successfully'
+    end
   end
 end

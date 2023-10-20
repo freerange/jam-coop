@@ -27,6 +27,17 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should redirect to page we came from if set' do
+    artist = create(:artist)
+    get edit_artist_url(artist)
+
+    post sign_in_url, params: { email: @user.email, password: 'Secret1*3*5*' }
+    assert_redirected_to edit_artist_url(artist)
+
+    get home_url
+    assert_response :success
+  end
+
   test 'should not sign in with wrong credentials' do
     post sign_in_url, params: { email: @user.email, password: 'SecretWrong1*3' }
     assert_redirected_to sign_in_url(email_hint: @user.email)

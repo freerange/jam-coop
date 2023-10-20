@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate
+    session[:return_url] = request.url
     redirect_to sign_in_path unless Current.user
   end
 
