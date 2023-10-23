@@ -3,16 +3,15 @@
 class StripeService
   include Rails.application.routes.url_helpers
 
-  def initialize(purchase, cancel_url:)
+  def initialize(purchase)
     @purchase = purchase
-    @cancel_url = cancel_url
   end
 
   def create_checkout_session
     session = Stripe::Checkout::Session.create(
       {
         success_url: purchase_url(@purchase),
-        cancel_url: @cancel_url,
+        cancel_url: artist_album_url(@purchase.album.artist, @purchase.album),
         payment_method_types: ['card'],
         client_reference_id: @purchase.album.id,
         allow_promotion_codes: false,

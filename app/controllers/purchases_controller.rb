@@ -12,8 +12,7 @@ class PurchasesController < ApplicationController
 
   def create
     purchase = Purchase.create(album: @album)
-
-    resp = StripeService.new(purchase, cancel_url:).create_checkout_session
+    resp = StripeService.new(purchase).create_checkout_session
 
     if resp.success?
       redirect_to resp.url, allow_other_host: true
@@ -31,9 +30,5 @@ class PurchasesController < ApplicationController
 
   def artist
     Artist.friendly.find(params[:artist_id])
-  end
-
-  def cancel_url
-    artist_album_url(artist, @album)
   end
 end
