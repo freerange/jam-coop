@@ -2,6 +2,8 @@
 
 require 'active_support/core_ext/integer/time'
 
+Rails.application.routes.default_url_options = { host: 'jam.coop', protocol: 'https:' }
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
