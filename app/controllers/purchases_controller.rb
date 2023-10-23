@@ -2,11 +2,18 @@
 
 class PurchasesController < ApplicationController
   skip_before_action :authenticate
-  before_action :set_album
+  before_action :set_album, except: :show
+
+  def show
+    @purchase = Purchase.find(params[:id])
+  end
 
   def new; end
 
   def create
+    purchase = Purchase.create(album: @album)
+    success_url = purchase_url(purchase)
+
     resp = StripeService.create_checkout_session(Current.user, @album, success_url:, cancel_url:)
 
     if resp.success?
@@ -25,10 +32,6 @@ class PurchasesController < ApplicationController
 
   def artist
     Artist.friendly.find(params[:artist_id])
-  end
-
-  def success_url
-    artist_album_url(artist, @album)
   end
 
   def cancel_url

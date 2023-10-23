@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :purchases, only: %i[show]
+
   resources :artists do
     resources :albums, only: %i[show new edit create update] do
       member do

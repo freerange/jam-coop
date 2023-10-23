@@ -8,6 +8,11 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
   end
 
+  test 'show' do
+    get purchase_url(create(:purchase))
+    assert_response :success
+  end
+
   test 'should get new' do
     album = create(:album)
 
@@ -18,12 +23,14 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create redirects to stripe if checkout session successfully created' do
     album = create(:album)
+    purchase = create(:purchase, album:)
+    Purchase.expects(:create).with(album:).returns(purchase)
     StripeService
       .expects(:create_checkout_session)
       .with(
         @user,
         album,
-        success_url: artist_album_url(album.artist, album),
+        success_url: purchase_url(purchase),
         cancel_url: artist_album_url(album.artist, album)
       ).returns(stub(success?: true, url: 'https://stripe.example.com'))
 
@@ -40,5 +47,14 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 'error message', flash[:alert]
     assert_redirected_to new_artist_album_purchase_url(album.artist, album)
+  end
+
+  test 'create creates a new purchase' do
+    album = create(:album)
+    StripeService.expects(:create_checkout_session).returns(stub(success?: true, url: 'https://stripe.example.com'))
+
+    assert_difference('Purchase.count') do
+      post artist_album_purchases_url(album.artist, album)
+    end
   end
 end

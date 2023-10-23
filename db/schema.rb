@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_23_131642) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_23_134601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_131642) do
   create_table "purchases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "album_id"
+    t.index ["album_id"], name: "index_purchases_on_album_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -140,5 +142,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_131642) do
   add_foreign_key "downloads", "albums"
   add_foreign_key "email_verification_tokens", "users"
   add_foreign_key "password_reset_tokens", "users"
+  add_foreign_key "purchases", "albums"
   add_foreign_key "sessions", "users"
 end
