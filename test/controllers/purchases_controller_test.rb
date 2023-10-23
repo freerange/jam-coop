@@ -3,11 +3,6 @@
 require 'test_helper'
 
 class PurchasesControllerTest < ActionDispatch::IntegrationTest
-  def setup
-    @user = create(:user)
-    sign_in_as(@user)
-  end
-
   test 'show' do
     get purchase_url(create(:purchase))
     assert_response :success
@@ -28,7 +23,6 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     StripeService
       .expects(:create_checkout_session)
       .with(
-        @user,
         album,
         success_url: purchase_url(purchase),
         cancel_url: artist_album_url(album.artist, album)

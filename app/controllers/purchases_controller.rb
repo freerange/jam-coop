@@ -14,7 +14,7 @@ class PurchasesController < ApplicationController
     purchase = Purchase.create(album: @album)
     success_url = purchase_url(purchase)
 
-    resp = StripeService.create_checkout_session(Current.user, @album, success_url:, cancel_url:)
+    resp = StripeService.create_checkout_session(@album, success_url:, cancel_url:)
 
     if resp.success?
       redirect_to resp.url, allow_other_host: true

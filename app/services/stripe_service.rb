@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StripeService
-  def self.create_checkout_session(user, album, success_url:, cancel_url:)
+  def self.create_checkout_session(album, success_url:, cancel_url:)
     session = Stripe::Checkout::Session.create(
       {
         success_url:,
