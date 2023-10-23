@@ -20,13 +20,12 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     album = create(:album)
     purchase = create(:purchase, album:)
     Purchase.expects(:create).with(album:).returns(purchase)
-    StripeService
-      .expects(:create_checkout_session)
-      .with(
-        album,
-        success_url: purchase_url(purchase),
-        cancel_url: artist_album_url(album.artist, album)
-      ).returns(stub(success?: true, url: 'https://stripe.example.com'))
+    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
+    StripeService.expects(:new).with(
+      album,
+      success_url: purchase_url(purchase),
+      cancel_url: artist_album_url(album.artist, album)
+    ).returns(service)
 
     post artist_album_purchases_url(album.artist, album)
 
@@ -35,7 +34,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create redirects to purchase path if checkout session not successfully created' do
     album = create(:album)
-    StripeService.expects(:create_checkout_session).returns(stub(success?: false, error: 'error message'))
+    service = stub(create_checkout_session: stub(success?: false, error: 'error message'))
+    StripeService.expects(:new).returns(service)
 
     post artist_album_purchases_url(album.artist, album)
 
@@ -45,7 +45,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create creates a new purchase' do
     album = create(:album)
-    StripeService.expects(:create_checkout_session).returns(stub(success?: true, url: 'https://stripe.example.com'))
+    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
+    StripeService.expects(:new).returns(service)
 
     assert_difference('Purchase.count') do
       post artist_album_purchases_url(album.artist, album)

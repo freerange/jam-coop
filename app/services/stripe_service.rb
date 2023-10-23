@@ -1,13 +1,19 @@
 # frozen_string_literal: true
 
 class StripeService
-  def self.create_checkout_session(album, success_url:, cancel_url:)
+  def initialize(album, success_url:, cancel_url:)
+    @album = album
+    @success_url = success_url
+    @cancel_url = cancel_url
+  end
+
+  def create_checkout_session
     session = Stripe::Checkout::Session.create(
       {
-        success_url:,
-        cancel_url:,
+        success_url: @success_url,
+        cancel_url: @cancel_url,
         payment_method_types: ['card'],
-        client_reference_id: album.id,
+        client_reference_id: @album.id,
         allow_promotion_codes: false,
         mode: 'payment',
         line_items: [
@@ -16,10 +22,10 @@ class StripeService
               currency: 'gbp',
               unit_amount: 700,
               product_data: {
-                name: album.title,
-                description: "#{album.title} by #{album.artist.name}",
+                name: @album.title,
+                description: "#{@album.title} by #{@album.artist.name}",
                 metadata: {
-                  productId: album.id
+                  productId: @album.id
                 }
               }
             },

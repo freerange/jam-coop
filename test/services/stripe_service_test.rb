@@ -10,19 +10,19 @@ class StripeServiceTest < ActiveSupport::TestCase
   test 'creates stripe checkout session with provided success_url' do
     Stripe::Checkout::Session.expects(:create).with(has_entry(success_url: 'example.com'))
 
-    StripeService.create_checkout_session(@album, success_url: 'example.com', cancel_url: '')
+    StripeService.new(@album, success_url: 'example.com', cancel_url: '').create_checkout_session
   end
 
   test 'creates stripe checkout session with provided cancel_url' do
     Stripe::Checkout::Session.expects(:create).with(has_entry(cancel_url: 'example.com'))
 
-    StripeService.create_checkout_session(@album, success_url: '', cancel_url: 'example.com')
+    StripeService.new(@album, success_url: '', cancel_url: 'example.com').create_checkout_session
   end
 
   test 'creates stripe checkout session using album id as client_reference_id' do
     Stripe::Checkout::Session.expects(:create).with(has_entry(client_reference_id: @album.id))
 
-    StripeService.create_checkout_session(@album, success_url: '', cancel_url: '')
+    StripeService.new(@album, success_url: '', cancel_url: 'example.com').create_checkout_session
   end
 
   test 'creates stripe checkout session with the correct line items' do
@@ -42,13 +42,13 @@ class StripeServiceTest < ActiveSupport::TestCase
     }
     Stripe::Checkout::Session.expects(:create).with(has_entry(line_items: [expected_line_item]))
 
-    StripeService.create_checkout_session(@album, success_url: '', cancel_url: '')
+    StripeService.new(@album, success_url: '', cancel_url: '').create_checkout_session
   end
 
   test 'returns an ok status if session created successfully' do
     Stripe::Checkout::Session.expects(:create).returns(stub(url: 'example.com'))
 
-    response = StripeService.create_checkout_session(@album, success_url: '', cancel_url: '')
+    response = StripeService.new(@album, success_url: '', cancel_url: '').create_checkout_session
 
     assert_equal 'ok', response.status
     assert_nil response.error
@@ -58,7 +58,7 @@ class StripeServiceTest < ActiveSupport::TestCase
   test 'returns an error status if session creation raises an error' do
     Stripe::Checkout::Session.expects(:create).raises(StandardError, 'message')
 
-    response = StripeService.create_checkout_session(@album, success_url: '', cancel_url: '')
+    response = StripeService.new(@album, success_url: '', cancel_url: '').create_checkout_session
 
     assert_equal 'error', response.status
     assert_equal 'message', response.error
