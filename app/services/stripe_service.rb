@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 class StripeService
-  def initialize(purchase, success_url:, cancel_url:)
+  include Rails.application.routes.url_helpers
+
+  def initialize(purchase, cancel_url:)
     @purchase = purchase
-    @success_url = success_url
     @cancel_url = cancel_url
   end
 
   def create_checkout_session
     session = Stripe::Checkout::Session.create(
       {
-        success_url: @success_url,
+        success_url: purchase_url(@purchase),
         cancel_url: @cancel_url,
         payment_method_types: ['card'],
         client_reference_id: @purchase.album.id,

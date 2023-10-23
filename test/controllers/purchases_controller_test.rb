@@ -23,7 +23,6 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
     StripeService.expects(:new).with(
       purchase,
-      success_url: purchase_url(purchase),
       cancel_url: artist_album_url(album.artist, album)
     ).returns(service)
 
