@@ -39,6 +39,25 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     labels + field
   end
 
+  def currency_field(object_method, options = {})
+    custom_opts, opts = partition_custom_opts(options)
+
+    classes = apply_style_classes(TEXT_FIELD_STYLE, custom_opts, object_method)
+
+    field = send(:text_field, object_method, {
+      class: classes,
+      title: errors_for(object_method)&.join(' ')
+    }.compact.merge(opts).merge({ tailwindified: true }))
+
+    labels = labels(object_method, custom_opts[:label], options)
+
+    symbol = @template.content_tag('span', opts[:symbol] || '£')
+    prefix = @template.content_tag('div', symbol, class: 'flex justify-center items-center mb-2 px-2 bg-slate-200')
+    field_wrapper = @template.content_tag('div', prefix + field, class: 'flex')
+
+    labels + field_wrapper
+  end
+
   private
 
   def text_like_field(field_method, object_method, options = {})
