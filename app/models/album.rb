@@ -5,6 +5,7 @@ class Album < ApplicationRecord
   friendly_id :title, use: :scoped, scope: :artist
 
   validates :title, presence: true
+  validates :price, presence: true, numericality: true
 
   belongs_to :artist
   has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album

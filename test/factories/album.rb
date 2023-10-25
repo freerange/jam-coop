@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :album do
     artist
     title { 'Whenever You Need Somebody' }
+    price { 700 }
     about do
       'Whenever You Need Somebody is the debut studio album by English
        singer Rick Astley, released on 16 November 1987 by RCA

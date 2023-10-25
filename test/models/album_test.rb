@@ -116,4 +116,9 @@ class AlbumTest < ActiveSupport::TestCase
 
     assert_equal 1, Album.unpublished.count
   end
+
+  test 'is invalid with a non-numeric price' do
+    album = build(:album, price: 'foo')
+    assert_not album.valid?
+  end
 end
