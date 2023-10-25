@@ -10,7 +10,7 @@ module Identity
     end
 
     test 'should send a verification email' do
-      assert_enqueued_email_with UserMailer, :email_verification, args: { user: @user } do
+      assert_enqueued_email_with UserMailer, :email_verification, params: { user: @user } do
         post identity_email_verification_url
       end
 
