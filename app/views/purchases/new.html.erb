@@ -1,5 +1,6 @@
 <%= render('shared/alert_box', message: alert) if alert %>
 
+<%= form_for([@album.artist, @album , @purchase], builder: TailwindFormBuilder) do |form| %>
 <div class="flex justify-center">
   <div class="w-1/2 border">
     <%= image_tag @album.cover.representation(resize_to_limit: [750, 750]), class: 'w-full border border-slate-200' %>
@@ -13,5 +14,6 @@
 </div>
 
 <div class="mt-3">
-  <%= button_to 'Checkout', artist_album_purchases_path, data: { turbo: false }, class: 'w-full py-3 bg-amber-500 hover:bg-amber-400 text-white font-medium cursor-pointer' %>
+  <%= form.submit 'Checkout', data: { turbo: false }, class: 'w-full' %>
 </div>
+<% end %>

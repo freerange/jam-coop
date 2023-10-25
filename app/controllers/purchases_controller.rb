@@ -8,17 +8,24 @@ class PurchasesController < ApplicationController
     @purchase = Purchase.find(params[:id])
   end
 
-  def new; end
+  def new
+    @purchase = Purchase.new(album: @album)
+  end
 
   def create
-    purchase = Purchase.create(album: @album)
-    resp = StripeService.new(purchase).create_checkout_session
+    purchase = Purchase.new(album: @album)
 
-    if resp.success?
-      redirect_to resp.url, allow_other_host: true
+    if purchase.save
+      resp = StripeService.new(purchase).create_checkout_session
+
+      if resp.success?
+        redirect_to resp.url, allow_other_host: true
+      else
+        flash[:alert] = resp.error
+        redirect_to new_artist_album_purchase_path(artist, @album)
+      end
     else
-      flash[:alert] = resp.error
-      redirect_to new_artist_album_purchase_path(artist, @album)
+      render :new, status: :unprocessable_entity
     end
   end
 

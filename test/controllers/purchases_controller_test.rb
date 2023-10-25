@@ -18,10 +18,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create redirects to stripe if checkout session successfully created' do
     album = create(:album)
-    purchase = create(:purchase, album:)
-    Purchase.expects(:create).with(album:).returns(purchase)
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
-    StripeService.expects(:new).with(purchase).returns(service)
+    StripeService.expects(:new).returns(service)
 
     post artist_album_purchases_url(album.artist, album)
 
