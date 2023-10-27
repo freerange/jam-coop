@@ -6,8 +6,7 @@ class StripeServiceTest < ActiveSupport::TestCase
   include Rails.application.routes.url_helpers
 
   def setup
-    album = create(:album)
-    @purchase = create(:purchase, album:)
+    @purchase = create(:purchase)
   end
 
   test 'creates stripe checkout session with provided success_url' do
@@ -34,7 +33,7 @@ class StripeServiceTest < ActiveSupport::TestCase
     expected_line_item = {
       price_data: {
         currency: 'gbp',
-        unit_amount: 700,
+        unit_amount: @purchase.price_in_pence,
         product_data: {
           name: @purchase.album.title,
           description: "#{@purchase.album.title} by #{@purchase.album.artist.name}",

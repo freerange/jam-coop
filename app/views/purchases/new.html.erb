@@ -7,9 +7,12 @@
   </div>
 
   <div class="w-1/2 ml-3">
-    <p>You are purchasing <strong><%= @album.title %></strong> by
+    <p class="mb-3">You are purchasing <strong><%= @album.title %></strong> by
     <%= @album.artist.name %> in MP3 V0 and FLAC (lossless)
     formats.</p>
+
+    <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2', autofocus: true %>
+    <p class="text-xs text-slate-600">Futher support <%= @album.artist.name %> by paying more than the suggested price of <%= number_to_currency(@album.price, unit: '£') %></p>
   </div>
 </div>
 

@@ -20,7 +20,7 @@ class StripeService
           {
             price_data: {
               currency: 'gbp',
-              unit_amount: 700,
+              unit_amount: @purchase.price_in_pence,
               product_data: {
                 name: @purchase.album.title,
                 description: "#{@purchase.album.title} by #{@purchase.album.artist.name}",

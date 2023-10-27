@@ -21,7 +21,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album)
+    post artist_album_purchases_url(album.artist, album), params: { purchase: { price: album.price } }
 
     assert_redirected_to 'https://stripe.example.com'
   end
@@ -31,7 +31,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: false, error: 'error message'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album)
+    post artist_album_purchases_url(album.artist, album), params: { purchase: { price: album.price } }
 
     assert_equal 'error message', flash[:alert]
     assert_redirected_to new_artist_album_purchase_url(album.artist, album)
@@ -43,7 +43,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     StripeService.expects(:new).returns(service)
 
     assert_difference('Purchase.count') do
-      post artist_album_purchases_url(album.artist, album)
+      post artist_album_purchases_url(album.artist, album), params: { purchase: { price: album.price } }
     end
   end
 end

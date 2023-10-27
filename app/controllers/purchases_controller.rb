@@ -13,10 +13,10 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    purchase = Purchase.new(album: @album)
+    @purchase = Purchase.new(album: @album, price: purchase_params[:price])
 
-    if purchase.save
-      resp = StripeService.new(purchase).create_checkout_session
+    if @purchase.save
+      resp = StripeService.new(@purchase).create_checkout_session
 
       if resp.success?
         redirect_to resp.url, allow_other_host: true
@@ -37,5 +37,9 @@ class PurchasesController < ApplicationController
 
   def artist
     Artist.friendly.find(params[:artist_id])
+  end
+
+  def purchase_params
+    params.require(:purchase).permit(:price)
   end
 end
