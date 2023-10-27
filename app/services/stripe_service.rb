@@ -16,6 +16,7 @@ class StripeService
         client_reference_id: @purchase.album.id,
         allow_promotion_codes: false,
         mode: 'payment',
+        automatic_tax: { enabled: true },
         line_items: [
           {
             price_data: {
