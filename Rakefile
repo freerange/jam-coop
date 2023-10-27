@@ -7,4 +7,7 @@ require_relative 'config/application'
 
 Rails.application.load_tasks
 
-task default: %i[rubocop test:all]
+Rake::Task['test'].enhance(%i[rubocop])
+Rake::Task['test'].enhance do
+  Rake::Task['test:system'].invoke
+end
