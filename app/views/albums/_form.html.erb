@@ -1,6 +1,7 @@
 <%= form_for([album.artist, album], builder: TailwindFormBuilder) do |form| %>
   <%= render('shared/errors', model: album) %>
   <%= form.text_field :title, class: 'w-full mb-3' %>
+  <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2' %>
   <%= form.text_area :about, class: 'w-full mb-3' %>
   <%= form.text_area :credits, class: 'w-full mb-3' %>
   <%= form.label :cover %>
