@@ -60,6 +60,16 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test '#index should only show listed artists' do
+    get artists_url
+    assert_select 'p', @artist.name
+
+    @artist.update(listed: false)
+
+    get artists_url
+    assert_select 'p', { count: 0, text: @artist.name }
+  end
+
   test '#show' do
     get artist_url(@artist)
     assert_response :success

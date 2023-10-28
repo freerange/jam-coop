@@ -8,4 +8,6 @@ class Artist < ApplicationRecord
   has_one_attached :profile_picture
 
   validates :name, presence: true
+
+  scope :listed, -> { where(listed: true) }
 end
