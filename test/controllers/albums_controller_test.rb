@@ -23,6 +23,15 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_select 'p', 'This album is currently published'
   end
 
+  test '#show shows the transcode state of each track' do
+    track = create(:track, album: @album)
+    create(:transcode, track:, format: :mp3v0)
+
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'li', "#{track.title} mp3v0"
+  end
+
   test '#new' do
     get new_artist_album_url(@album.artist)
     assert_response :success
