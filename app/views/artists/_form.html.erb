@@ -5,5 +5,7 @@
   <%= form.text_field :description, class: 'w-full mb-3' %>
   <%= form.label :profile_picture %>
   <%= form.file_field :profile_picture, class: 'mb-3 block border border-slate-200 mb-6 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
-  <%= form.submit "Save", class: 'w-full'%>
+  <%= form.label :listed, "List this artist on /artists ?" %>
+  <%= form.check_box :listed %>
+  <%= form.submit "Save", class: 'mt-3 w-full'%>
 <% end %>
