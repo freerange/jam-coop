@@ -10,4 +10,5 @@ class Artist < ApplicationRecord
   validates :name, presence: true
 
   scope :listed, -> { where(listed: true) }
+  scope :unlisted, -> { where(listed: false) }
 end

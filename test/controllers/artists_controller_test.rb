@@ -13,6 +13,16 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test '#index should show both listed and unlisted artist' do
+    get artists_url
+    assert_select 'p', @artist.name
+
+    @artist.update(listed: false)
+
+    get artists_url
+    assert_select 'p', "#{@artist.name} (unlisted)"
+  end
+
   test '#show' do
     get artist_url(@artist)
     assert_response :success
