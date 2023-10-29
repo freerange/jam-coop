@@ -20,6 +20,12 @@ class Track < ApplicationRecord
     transcodes.mp3128k.first
   end
 
+  def preview_duration
+    return nil unless preview
+
+    preview.file.metadata['duration']
+  end
+
   def transcode
     Transcode.formats.each_key do |format|
       TranscodeJob.perform_later(self, format: format.to_sym)

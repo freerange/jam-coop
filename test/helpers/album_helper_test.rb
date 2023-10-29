@@ -15,4 +15,9 @@ class AlbumHelperTest < ActionView::TestCase
     assert_includes format_metadata('http://example.com'), '<a class="underline" href="http://example.com">example.com</a>'
     assert_includes format_metadata('https://example.com'), '<a class="underline" href="https://example.com">example.com</a>'
   end
+
+  test 'seconds_to_formated_track_time' do
+    assert_equal '03:05', seconds_to_formated_track_time(185)
+    assert_equal '', seconds_to_formated_track_time(nil)
+  end
 end

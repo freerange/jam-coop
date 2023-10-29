@@ -9,4 +9,10 @@ module AlbumHelper
     end
     simple_format(text_with_links, class: 'mb-2')
   end
+
+  def seconds_to_formated_track_time(seconds)
+    return '' unless seconds
+
+    Time.at(seconds).utc.strftime('%M:%S')
+  end
 end

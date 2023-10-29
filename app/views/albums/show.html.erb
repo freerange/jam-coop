@@ -50,7 +50,7 @@
     <div class="flex flex-row justify-between mb-2">
       <% if track.preview %>
       <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= url_for(track.preview.file) %>">
-        <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span>
+        <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span> <span class="text-slate-400"> <%= seconds_to_formated_track_time(track.preview_duration) %></span>
       </div>
       <% else %>
       <div>

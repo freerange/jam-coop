@@ -33,4 +33,26 @@ class TrackTest < ActiveSupport::TestCase
 
     track.save
   end
+
+  test '#preview_duration returns nil if no preview' do
+    track = create(:track)
+    assert_nil track.preview_duration
+  end
+
+  test '#preview_duration returns nil if transcode has not been analyzed' do
+    track = create(:track)
+    transcode = create(:transcode)
+    track.transcodes << transcode
+
+    assert_nil track.preview_duration
+  end
+
+  test '#preview_duration duration of preview in seconds' do
+    track = create(:track)
+    transcode = create(:transcode)
+    transcode.file.analyze # run analyze job to determine track duration
+    track.transcodes << transcode
+
+    assert_equal 0.24, track.preview_duration
+  end
 end
