@@ -75,6 +75,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_28_193740) do
     t.index ["album_id"], name: "index_downloads_on_album_id"
   end
 
+  create_table "email_subscription_changes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "message_id", null: false
+    t.string "origin", null: false
+    t.boolean "suppress_sending", default: false, null: false
+    t.string "suppression_reason", null: false
+    t.datetime "changed_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_email_subscription_changes_on_user_id"
+  end
+
   create_table "email_verification_tokens", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_email_verification_tokens_on_user_id"
