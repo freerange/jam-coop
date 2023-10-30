@@ -49,10 +49,9 @@ class TrackTest < ActiveSupport::TestCase
 
   test '#preview_duration duration of preview in seconds' do
     track = create(:track)
-    transcode = create(:transcode)
-    transcode.file.analyze # run analyze job to determine track duration
-    track.transcodes << transcode
+    preview = stub(file: stub(metadata: { 'duration' => 200 }))
+    track.stubs(:preview).returns(preview)
 
-    assert_equal 0.24, track.preview_duration
+    assert_equal 200, track.preview_duration
   end
 end
