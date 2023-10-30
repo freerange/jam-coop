@@ -22,4 +22,12 @@ class User < ApplicationRecord
   after_update if: :password_digest_previously_changed? do
     sessions.where.not(id: Current.session).delete_all
   end
+
+  def latest_email_subscription_change
+    email_subscription_changes.order(:changed_at).last
+  end
+
+  def suppress_sending?
+    (latest_email_subscription_change || EmailSubscriptionChange.new).suppress_sending?
+  end
 end
