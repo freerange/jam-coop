@@ -3,5 +3,6 @@
 class EmailSubscriptionChange < ApplicationRecord
   belongs_to :user
 
-  validates :message_id, :origin, :suppression_reason, :changed_at, presence: true
+  validates :message_id, :origin, :changed_at, presence: true
+  validates :suppression_reason, presence: true, if: ->(c) { c.suppress_sending? }
 end

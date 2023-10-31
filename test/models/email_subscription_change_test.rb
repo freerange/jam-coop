@@ -20,10 +20,15 @@ class EmailSubscriptionChangeTest < ActiveSupport::TestCase
     assert_includes change.errors[:origin], "can't be blank"
   end
 
-  test 'is invalid if suppression_reason is blank' do
-    change = build(:email_subscription_change, suppression_reason: nil)
+  test 'is invalid if suppression_reason is blank when suppress_sending is true' do
+    change = build(:email_subscription_change, suppression_reason: nil, suppress_sending: true)
     assert_not change.valid?
     assert_includes change.errors[:suppression_reason], "can't be blank"
+  end
+
+  test 'is valid if suppression_reason is blank when suppress_sending is false' do
+    change = build(:email_subscription_change, suppression_reason: nil, suppress_sending: false)
+    assert change.valid?
   end
 
   test 'is invalid if changed_at is blank' do
