@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :email_subscription_changes, only: %i[create]
+
   get 'thankyou', to: 'interests#thankyou'
   get 'confirmation', to: 'interests#confirmation'
 
