@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_28_193740) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_31_194717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_28_193740) do
     t.string "message_id", null: false
     t.string "origin", null: false
     t.boolean "suppress_sending", default: false, null: false
-    t.string "suppression_reason", null: false
+    t.string "suppression_reason"
     t.datetime "changed_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

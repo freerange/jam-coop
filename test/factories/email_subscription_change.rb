@@ -20,6 +20,6 @@ FactoryBot.define do
 
   factory :manual_reactivation, parent: :email_subscription_change do
     suppress_sending { false }
-    suppression_reason { 'ManualReactivation' }
+    suppression_reason { nil }
   end
 end
