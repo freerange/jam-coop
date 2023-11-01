@@ -32,6 +32,14 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_select 'li', "#{track.title} mp3v0"
   end
 
+  test '#show shows the release date of the album' do
+    @album.update(released_at: Date.parse('2023-06-20'))
+
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'p', 'released June 20, 2023'
+  end
+
   test '#new' do
     get new_artist_album_url(@album.artist)
     assert_response :success

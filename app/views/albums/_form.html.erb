@@ -5,6 +5,7 @@
   <%= form.text_area :about, rows: 10, class: 'w-full mb-3' %>
   <%= form.text_area :credits, rows: 10, class: 'w-full mb-3' %>
   <%= form.label :cover %>
-  <%= form.file_field :cover, class: 'block border border-slate-200 mb-6 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
-  <%= form.submit "Save", class: 'w-full'%>
+  <%= form.file_field :cover, class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+  <%= form.date_field :released_at, class: 'w-full' %>
+  <%= form.submit "Save", class: 'w-full mt-6'%>
 <% end %>

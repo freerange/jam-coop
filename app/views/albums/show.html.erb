@@ -85,6 +85,12 @@
   </section>
   <% end %>
 
+  <% if @album.released_at %>
+  <section class="mb-6">
+    <p>released <%= @album.released_at.strftime('%B %-d, %Y') %></p>
+  </section>
+  <% end %>
+
   <% if @album.credits %>
   <section>
     <%= format_metadata(@album.credits) %>
