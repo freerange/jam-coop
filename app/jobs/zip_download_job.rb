@@ -24,7 +24,6 @@ class ZipDownloadJob < ApplicationJob
                            content_type: 'application/zip')
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
 

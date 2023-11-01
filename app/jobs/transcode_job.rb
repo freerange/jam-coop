@@ -13,7 +13,6 @@ class TranscodeJob < ApplicationJob
       transcode.file.attach(io: File.open(output.path), filename: output_fn, content_type: content_type(format))
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -31,7 +30,6 @@ class TranscodeJob < ApplicationJob
 
     system(cmd)
   end
-  # rubocop:enable Metrics/MethodLength
 
   def content_type(format)
     case format

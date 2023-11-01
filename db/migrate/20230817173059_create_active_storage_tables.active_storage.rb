@@ -2,7 +2,6 @@
 
 # This migration comes from active_storage (originally 20170806125915)
 class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
-  # rubocop:disable Metrics
   def change
     # Use Active Record's configured type for primary and foreign keys
     primary_key_type, foreign_key_type = primary_and_foreign_key_types
@@ -49,7 +48,6 @@ class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
       t.foreign_key :active_storage_blobs, column: :blob_id
     end
   end
-  # rubocop:enable Metrics
 
   private
 
