@@ -12,7 +12,7 @@
 </div>
 
 <div class="pt-4 grid grid-cols-3 gap-4">
-  <% @artist.albums.published.each do |album| %>
+  <% @artist.albums.published.in_release_order.each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
     <div>
       <div class="border border-slate-200">

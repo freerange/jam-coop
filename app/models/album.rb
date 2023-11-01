@@ -15,6 +15,7 @@ class Album < ApplicationRecord
 
   scope :published, -> { where(published: true) }
   scope :unpublished, -> { where(published: false) }
+  scope :in_release_order, -> { order('released_at DESC NULLS LAST') }
 
   def preview
     first_track_with_preview = tracks.detect(&:preview)
