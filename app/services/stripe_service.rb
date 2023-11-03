@@ -39,7 +39,8 @@ class StripeService
     StripeServiceResponse.new(
       status: 'ok',
       error: nil,
-      url: session.url
+      url: session.url,
+      id: session.id
     )
   rescue StandardError => e
     StripeServiceResponse.new(
@@ -48,7 +49,7 @@ class StripeService
     )
   end
 
-  StripeServiceResponse = Struct.new(:status, :error, :url, keyword_init: true) do
+  StripeServiceResponse = Struct.new(:status, :error, :url, :id, keyword_init: true) do
     def success?
       status == 'ok'
     end

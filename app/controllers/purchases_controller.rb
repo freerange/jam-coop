@@ -20,6 +20,7 @@ class PurchasesController < ApplicationController
       resp = StripeService.new(@purchase).create_checkout_session
 
       if resp.success?
+        @purchase.update!(stripe_session_id: resp.id)
         redirect_to resp.url, allow_other_host: true
       else
         flash[:alert] = resp.error

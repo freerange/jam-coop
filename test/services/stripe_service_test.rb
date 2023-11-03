@@ -50,13 +50,14 @@ class StripeServiceTest < ActiveSupport::TestCase
   end
 
   test 'returns an ok status if session created successfully' do
-    Stripe::Checkout::Session.expects(:create).returns(stub(url: 'example.com'))
+    Stripe::Checkout::Session.expects(:create).returns(stub(url: 'example.com', id: 'cs_test_foo'))
 
     response = StripeService.new(@purchase).create_checkout_session
 
     assert_equal 'ok', response.status
     assert_nil response.error
     assert_equal 'example.com', response.url
+    assert_equal 'cs_test_foo', response.id
   end
 
   test 'returns an error status if session creation raises an error' do

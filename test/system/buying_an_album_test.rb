@@ -7,7 +7,7 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
     @album = create(:album_with_tracks)
     create(:transcode, track: @album.tracks.first)
     create(:download, album: @album)
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
+    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
   end
 
