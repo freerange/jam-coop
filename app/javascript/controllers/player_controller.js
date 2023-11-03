@@ -17,7 +17,6 @@ export default class extends Controller {
     this.playButtonTarget.classList.remove("hidden");
 
     this.audioTarget.pause();
-    this.hideTrackTitle();
   }
 
   playNext() {
