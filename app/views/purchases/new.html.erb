@@ -12,7 +12,10 @@
     formats.</p>
 
     <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2', autofocus: true %>
-    <p class="text-xs text-slate-600">Futher support <%= @album.artist.name %> by paying more than the suggested price of <%= number_to_currency(@album.price, unit: '£') %></p>
+    <p class="text-xs text-slate-600 mb-4">Futher support <%= @album.artist.name %> by paying more than the suggested price of <%= number_to_currency(@album.price, unit: '£') %></p>
+
+    <%= form.check_box :contact_opt_in, class: 'mr-2' %>
+    <%= form.label :contact_opt_in, "Add me to the mailing list for #{@album.artist.name}", class: 'text-slate-600' %>
   </div>
 </div>
 
