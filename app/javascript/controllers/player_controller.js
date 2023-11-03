@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="player"
 export default class extends Controller {
-  static targets = ["playButton", "pauseButton", "audio", "track", "trackTitle"]
+  static targets = ["playButton", "pauseButton", "audio", "track", "trackTitle", "progress", "progressContainer"]
 
   play() {
     this.playButtonTarget.classList.add("hidden");
@@ -17,7 +17,6 @@ export default class extends Controller {
     this.playButtonTarget.classList.remove("hidden");
 
     this.audioTarget.pause();
-    this.hideTrackTitle();
   }
 
   playNext() {
@@ -47,6 +46,24 @@ export default class extends Controller {
 
   ended() {
     this.playNext();
+  }
+
+  progress() {
+    let duration = this.audioTarget.duration
+    let currentTime = this.audioTarget.currentTime
+    let progress = currentTime/duration
+
+    this.progressTarget.style.width = `${progress*100}%`
+  }
+
+  setProgress(e) {
+    let x = e.clientX
+    let containerOffsetLeft = this.progressContainerTarget.offsetLeft
+    let containerOffsetWidth = this.progressContainerTarget.offsetWidth
+    let progress = (x-containerOffsetLeft) / containerOffsetWidth;
+
+    this.progressTarget.style.width = `${progress*100}%`
+    this.audioTarget.currentTime = this.audioTarget.duration * progress
   }
 
   showTrackTitle() {
