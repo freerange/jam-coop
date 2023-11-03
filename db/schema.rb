@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_01_210717) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_03_102750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -112,6 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_210717) do
     t.datetime "updated_at", null: false
     t.bigint "album_id"
     t.decimal "price", precision: 8, scale: 2
+    t.boolean "contact_opt_in", default: false, null: false
     t.index ["album_id"], name: "index_purchases_on_album_id"
   end
 

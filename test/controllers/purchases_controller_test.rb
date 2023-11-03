@@ -21,7 +21,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album), params: { purchase: { price: album.price } }
+    post artist_album_purchases_url(album.artist, album),
+         params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_redirected_to 'https://stripe.example.com'
   end
@@ -31,7 +32,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: false, error: 'error message'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album), params: { purchase: { price: album.price } }
+    post artist_album_purchases_url(album.artist, album),
+         params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_equal 'error message', flash[:alert]
     assert_redirected_to new_artist_album_purchase_url(album.artist, album)
@@ -43,7 +45,19 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     StripeService.expects(:new).returns(service)
 
     assert_difference('Purchase.count') do
-      post artist_album_purchases_url(album.artist, album), params: { purchase: { price: album.price } }
+      post artist_album_purchases_url(album.artist, album),
+           params: { purchase: { price: album.price, contact_opt_in: true } }
     end
+  end
+
+  test 'create sets the contact_opt_in on the purchase' do
+    album = create(:album)
+    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com'))
+    StripeService.expects(:new).returns(service)
+
+    post artist_album_purchases_url(album.artist, album),
+         params: { purchase: { price: album.price, contact_opt_in: true } }
+
+    assert_equal true, Purchase.last.contact_opt_in
   end
 end

@@ -13,7 +13,8 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    @purchase = Purchase.new(album: @album, price: purchase_params[:price])
+    @purchase = Purchase.new(album: @album, price: purchase_params[:price],
+                             contact_opt_in: purchase_params[:contact_opt_in])
 
     if @purchase.save
       resp = StripeService.new(@purchase).create_checkout_session
@@ -40,6 +41,6 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
-    params.require(:purchase).permit(:price)
+    params.require(:purchase).permit(:price, :contact_opt_in)
   end
 end
