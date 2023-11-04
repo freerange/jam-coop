@@ -1,4 +1,4 @@
-<%= form_for([album.artist, album], builder: TailwindFormBuilder) do |form| %>
+<%= form_for([album.artist, album], builder: TailwindFormBuilder, data: { controller: 'multiple-upload', action: 'direct-upload:initialize->multiple-upload#init direct-upload:progress->multiple-upload#progress' }) do |form| %>
   <%= render('shared/errors', model: album) %>
   <%= form.text_field :title, class: 'w-full mb-3' %>
   <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2' %>
@@ -6,6 +6,46 @@
   <%= form.text_area :credits, rows: 10, class: 'w-full mb-3' %>
   <%= form.label :cover %>
   <%= form.file_field :cover, class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
-  <%= form.date_field :released_at, class: 'w-full' %>
-  <%= form.submit "Save", class: 'w-full mt-6'%>
+  <%= form.date_field :released_at, class: 'w-full mb-3' %>
+
+  <section id="tracks">
+  <h2 class="text-2xl tracking-tight leading-10 font-extrabold my-3">Tracks</h2>
+  <%= form.fields_for :tracks do |f| %>
+    <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
+      <%= f.text_field :title, class: 'w-full mb-6', required: true %>
+
+      <% if f.object.original.attached? %>
+        <%= f.label :original, "File (#{f.object.original.filename})", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
+      <% else %>
+        <%= f.label :original, "File", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
+      <% end %>
+      <%= f.file_field :original, direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+      <div class="progressContainer hidden w-full h-4 bg-slate-200">
+        <div class="progress w-0 h-4 bg-slate-500"></div>
+      </div>
+      <% if f.object.persisted? %>
+        <%= f.label :delete %>
+        <%= f.check_box :_destroy %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div data-controller="dynamic-fields">
+    <%= text_link_to "Add track", "#", data: { action: 'dynamic-fields#add' } %>
+    <template data-dynamic-fields-target="template">
+      <%= form.fields_for :tracks, Track.new, child_index: "__CHILD_INDEX__" do |f| %>
+      <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
+        <%= f.text_field :title, class: 'w-full mb-6', required: true %>
+        <%= f.label :original, "File", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
+        <%= f.file_field :original, direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+        <div class="progressContainer hidden w-full h-4 bg-slate-200">
+          <div class="progress w-0 h-4 bg-slate-500"></div>
+        </div>
+      </div>
+      <% end %>
+    </template>
+  </div>
+  </section>
+
+  <%= form.submit "Save", class: 'w-full mt-6', data: { 'multiple-upload-target': "save" } %>
 <% end %>

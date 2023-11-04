@@ -60,7 +60,25 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
   test '#update' do
     patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
-    assert_redirected_to artist_url(@album.artist)
+    assert_redirected_to artist_album_url(@album.artist, @album)
+  end
+
+  test '#update accepts attributes for tracks' do
+    track = create(:track, album: @album, title: 'Old name')
+
+    patch artist_album_url(@album.artist, @album),
+          params: { album: { title: 'Example', tracks_attributes: { id: track.id, title: 'New name' } } }
+
+    assert_equal 'New name', track.reload.title
+  end
+
+  test '#update allows tracks to be destroyed' do
+    track = create(:track, album: @album, title: 'Old name')
+
+    assert_difference('Track.count', -1, 'A Track should be destroyed') do
+      patch artist_album_url(@album.artist, @album),
+            params: { album: { title: 'Example', tracks_attributes: { id: track.id, _destroy: true } } }
+    end
   end
 
   test '#publish' do

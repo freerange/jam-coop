@@ -31,13 +31,13 @@ Rails.application.routes.draw do
       end
 
       resources :purchases, only: %i[new create]
+    end
+  end
 
-      resources :tracks, only: %i[new edit create update destroy] do
-        member do
-          post 'move_higher'
-          post 'move_lower'
-        end
-      end
+  resources :tracks, only: %i[] do
+    member do
+      post 'move_higher'
+      post 'move_lower'
     end
   end
 
