@@ -23,7 +23,7 @@ class Album < ApplicationRecord
     first_track_with_preview&.preview
   end
 
-  def retranscode!
+  def transcode_tracks
     tracks.each(&:transcode)
   end
 

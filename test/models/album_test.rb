@@ -64,12 +64,12 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.preview
   end
 
-  test 'retranscode!' do
+  test 'transcode_tracks' do
     album = create(:album)
     create(:track, album:)
 
     assert_enqueued_with(job: TranscodeJob) do
-      album.retranscode!
+      album.transcode_tracks
     end
   end
 
