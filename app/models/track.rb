@@ -14,7 +14,7 @@ class Track < ApplicationRecord
             content_type: { in: 'audio/x-wav', message: 'must be a WAV file' }
   validates :title, presence: true
 
-  after_save :transcode, if: proc { |track| track.attachment_changes.any? }
+  after_save :transcode, if: proc { |track| track.attachment_changes['original'].present? }
 
   def preview
     transcodes.mp3128k.first
