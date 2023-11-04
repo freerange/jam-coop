@@ -11,7 +11,7 @@
   <h2 class="text-2xl tracking-tight leading-10 font-extrabold my-3">Tracks</h2>
   <%= form.fields_for :tracks do |f| %>
     <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
-      <%= f.text_field :title, class: 'w-full mb-6' %>
+      <%= f.text_field :title, class: 'w-full mb-6', required: true %>
 
       <% if f.object.original.attached? %>
         <%= f.label :original, "File (#{f.object.original.filename})", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
@@ -22,6 +22,10 @@
       <div class="progressContainer hidden w-full h-4 bg-slate-200">
         <div class="progress w-0 h-4 bg-slate-500"></div>
       </div>
+      <% if f.object.persisted? %>
+        <%= f.label :delete %>
+        <%= f.check_box :_destroy %>
+      <% end %>
     </div>
   <% end %>
 
@@ -30,7 +34,7 @@
     <template data-dynamic-fields-target="template">
       <%= form.fields_for :tracks, Track.new, child_index: "__CHILD_INDEX__" do |f| %>
       <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
-        <%= f.text_field :title, class: 'w-full mb-6' %>
+        <%= f.text_field :title, class: 'w-full mb-6', required: true %>
         <%= f.label :original, "File", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
         <%= f.file_field :original, direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
         <div class="progressContainer hidden w-full h-4 bg-slate-200">
