@@ -60,7 +60,7 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
   test '#update' do
     patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
-    assert_redirected_to artist_url(@album.artist)
+    assert_redirected_to artist_album_url(@album.artist, @album)
   end
 
   test '#update accepts attributes for tracks' do

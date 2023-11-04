@@ -24,7 +24,7 @@ class AlbumsController < ApplicationController
 
   def update
     if @album.update(album_params)
-      redirect_to artist_url(@album.artist), notice: 'Artist was successfully updated.'
+      redirect_to artist_album_url(@album.artist, @album), notice: 'Artist was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
