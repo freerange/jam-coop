@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class TracksTest < ApplicationSystemTestCase
+class ReorderingTracklistTest < ApplicationSystemTestCase
   setup do
     sign_in_as(create(:user))
     @track = create(:track)
