@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TracksController < ApplicationController
-  before_action :set_track, only: %i[destroy move_higher move_lower]
+  before_action :set_track, only: %i[move_higher move_lower]
 
   def new
     @track = Track.new(album:)
@@ -15,12 +15,6 @@ class TracksController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def destroy
-    @track.destroy
-
-    redirect_to artist_album_path(@track.artist, @track.album), notice: 'Track was successfully destroyed.'
   end
 
   def move_higher

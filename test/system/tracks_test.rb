@@ -19,17 +19,6 @@ class TracksTest < ApplicationSystemTestCase
     assert_text "2. #{@track.title}"
   end
 
-  test 'deleting a track' do
-    visit artist_album_url(@track.artist, @track.album)
-    assert_text "1. #{@track.title}"
-
-    accept_confirm do
-      click_link 'Delete'
-    end
-
-    assert_no_text "1. #{@track.title}"
-  end
-
   test 're-ordering a tracklist' do
     first_track = @track
     second_track = create(:track, album: first_track.album, title: 'Second Track')

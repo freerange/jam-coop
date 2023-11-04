@@ -23,14 +23,6 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to artist_album_url(Track.last.artist, Track.last.album)
   end
 
-  test 'should destroy track' do
-    assert_difference('Track.count', -1) do
-      delete artist_album_track_url(@track.artist, @track.album, @track)
-    end
-
-    assert_redirected_to artist_album_url(@track.artist, @track.album)
-  end
-
   test 'should move track higher' do
     post move_higher_artist_album_track_url(@track.artist, @track.album, @track)
     assert_redirected_to artist_album_url(@track.artist, @track.album)

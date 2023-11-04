@@ -65,10 +65,6 @@
 
       <% if Current.user %>
       <div>
-        <%= text_link_to 'Delete', artist_album_track_path(track.artist, track.album, track), data: {
-            turbo_method: :delete,
-            turbo_confirm: 'Are you sure?'
-            } %>
         <%= text_link_to 'Up', move_higher_artist_album_track_path(track.artist, track.album, track), data: {
             turbo_method: :post } %>
         <%= text_link_to 'Down', move_lower_artist_album_track_path(track.artist, track.album, track), data: {
