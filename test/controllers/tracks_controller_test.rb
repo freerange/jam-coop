@@ -9,12 +9,12 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should move track higher' do
-    post move_higher_artist_album_track_url(@track.artist, @track.album, @track)
+    post move_higher_track_url(@track)
     assert_redirected_to artist_album_url(@track.artist, @track.album)
   end
 
   test 'should move track lower' do
-    post move_lower_artist_album_track_url(@track.artist, @track.album, @track)
+    post move_lower_track_url(@track)
     assert_redirected_to artist_album_url(@track.artist, @track.album)
   end
 end
