@@ -37,6 +37,14 @@ class TrackTest < ActiveSupport::TestCase
     )
   end
 
+  test 'triggers transcoding if title changes' do
+    track = create(:track)
+
+    track.expects(:transcode)
+
+    track.update!(title: 'new-title')
+  end
+
   test 'does not trigger transcoding if nothing significant changes' do
     track = create(:track)
 

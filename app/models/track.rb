@@ -14,7 +14,7 @@ class Track < ApplicationRecord
             content_type: { in: 'audio/x-wav', message: 'must be a WAV file' }
   validates :title, presence: true
 
-  after_save :transcode, if: proc { |track| track.attachment_changes['original'].present? }
+  after_save :transcode, if: :metadata_or_original_changed?
 
   def preview
     transcodes.mp3128k.first
@@ -38,5 +38,9 @@ class Track < ApplicationRecord
     Transcode.formats.each_key do |format|
       TranscodeJob.perform_later(self, format: format.to_sym)
     end
+  end
+
+  def metadata_or_original_changed?
+    title_previously_changed? || attachment_changes['original'].present?
   end
 end
