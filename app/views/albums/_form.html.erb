@@ -10,8 +10,9 @@
 
   <h2 class="text-2xl tracking-tight leading-10 font-extrabold my-3">Tracks</h2>
   <%= form.fields_for :tracks do |f| %>
-    <%= f.text_field :title, class: 'w-full mb-6' %>
-    <div>
+    <div class="border-0 border-l-4 border pl-4 border-slate-200" >
+      <%= f.text_field :title, class: 'w-full mb-6' %>
+
       <% if f.object.original.attached? %>
         <%= f.label :original, "File (#{f.object.original.filename})", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
       <% else %>
