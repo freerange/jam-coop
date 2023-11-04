@@ -26,6 +26,14 @@ class Track < ApplicationRecord
     preview.file.metadata['duration']
   end
 
+  def metadata
+    {
+      track_title: title,
+      album_title: album.title,
+      artist_name: artist.name
+    }
+  end
+
   def transcode
     Transcode.formats.each_key do |format|
       TranscodeJob.perform_later(self, format: format.to_sym)

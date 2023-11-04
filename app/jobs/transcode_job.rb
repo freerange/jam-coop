@@ -10,10 +10,10 @@ class TranscodeJob < ApplicationJob
       track.original.open do |file|
         if track.album.cover.attached?
           track.album.cover.open do |image|
-            transcode(file, output, format, metadata_for(track), image)
+            transcode(file, output, format, track.metadata, image)
           end
         else
-          transcode(file, output, format, metadata_for(track))
+          transcode(file, output, format, track.metadata)
         end
       end
       track.transcodes.where(format:).destroy_all
@@ -23,14 +23,6 @@ class TranscodeJob < ApplicationJob
   end
 
   private
-
-  def metadata_for(track)
-    {
-      track_title: track.title,
-      album_title: track.album.title,
-      artist_name: track.artist.name
-    }
-  end
 
   def transcode(input, output, format, metadata, image = nil)
     TranscodeCommand.new(input, output, format, metadata, image).execute

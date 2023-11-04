@@ -54,4 +54,14 @@ class TrackTest < ActiveSupport::TestCase
 
     assert_equal 200, track.preview_duration
   end
+
+  test '#metadata' do
+    track = create(:track)
+
+    metadata = track.metadata
+
+    assert_equal track.title, metadata[:track_title]
+    assert_equal track.album.title, metadata[:album_title]
+    assert_equal track.album.artist.name, metadata[:artist_name]
+  end
 end
