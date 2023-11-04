@@ -63,6 +63,15 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_redirected_to artist_url(@album.artist)
   end
 
+  test '#update accepts attributes for tracks' do
+    track = create(:track, album: @album, title: 'Old name')
+
+    patch artist_album_url(@album.artist, @album),
+          params: { album: { title: 'Example', tracks_attributes: { id: track.id, title: 'New name' } } }
+
+    assert_equal 'New name', track.reload.title
+  end
+
   test '#publish' do
     patch publish_artist_album_url(@album.artist, @album)
     assert_redirected_to artist_album_url(@album.artist, @album)
