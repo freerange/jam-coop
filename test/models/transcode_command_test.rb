@@ -84,7 +84,7 @@ class TranscodeCommandTest < ActiveSupport::TestCase
   test 'executes generated ffmpeg command' do
     command = TranscodeCommand.new(@input, @output, :mp3v0)
     command_string = command.generate
-    command.expects(:system).with(command_string)
+    command.expects(:system).with(command_string, exception: true)
     command.execute
   end
 end

@@ -29,7 +29,7 @@ class TranscodeCommand
 
   def execute
     command = generate
-    system(command)
+    system(command, exception: true)
   end
 
   def global_options
