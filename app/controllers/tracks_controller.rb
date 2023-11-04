@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class TracksController < ApplicationController
-  before_action :set_track, only: %i[edit update destroy move_higher move_lower]
+  before_action :set_track, only: %i[destroy move_higher move_lower]
 
   def new
     @track = Track.new(album:)
   end
-
-  def edit; end
 
   def create
     @track = Track.new(track_params.merge(album:))
@@ -16,14 +14,6 @@ class TracksController < ApplicationController
       redirect_to artist_album_path(@track.artist, @track.album), notice: 'Track was successfully created.'
     else
       render :new, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @track.update(track_params)
-      redirect_to artist_album_path(@track.artist, @track.album), notice: 'Track was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
     end
   end
 
