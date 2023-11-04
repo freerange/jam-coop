@@ -8,6 +8,7 @@
   <%= form.file_field :cover, class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
   <%= form.date_field :released_at, class: 'w-full mb-3' %>
 
+  <section id="tracks">
   <h2 class="text-2xl tracking-tight leading-10 font-extrabold my-3">Tracks</h2>
   <%= form.fields_for :tracks do |f| %>
     <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
@@ -44,6 +45,7 @@
       <% end %>
     </template>
   </div>
+  </section>
 
   <%= form.submit "Save", class: 'w-full mt-6', data: { 'multiple-upload-target': "save" } %>
 <% end %>
