@@ -15,7 +15,7 @@ class TranscodeCommand
   end
 
   def generate
-    "ffmpeg #{global_options} -i #{@input.path} #{metadata_options} #{transcoding_options(@format)} #{@output.path}"
+    "ffmpeg #{global_options} #{input_options} #{metadata_options} #{transcoding_options(@format)} #{@output.path}"
   end
 
   def execute
@@ -25,6 +25,10 @@ class TranscodeCommand
 
   def global_options
     '-y -nostats -loglevel 0'
+  end
+
+  def input_options
+    "-i #{@input.path}"
   end
 
   def metadata_options
