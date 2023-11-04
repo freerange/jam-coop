@@ -8,17 +8,6 @@ class TracksTest < ApplicationSystemTestCase
     @track = create(:track)
   end
 
-  test 'should create track' do
-    visit artist_album_url(@track.artist, @track.album)
-    click_link 'Add track'
-
-    fill_in 'Title', with: @track.title
-    attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
-    click_button 'Save'
-
-    assert_text "2. #{@track.title}"
-  end
-
   test 're-ordering a tracklist' do
     first_track = @track
     second_track = create(:track, album: first_track.album, title: 'Second Track')

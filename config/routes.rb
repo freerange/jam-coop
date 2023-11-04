@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
       resources :purchases, only: %i[new create]
 
-      resources :tracks, only: %i[new create] do
+      resources :tracks, only: %i[] do
         member do
           post 'move_higher'
           post 'move_lower'

@@ -73,10 +73,6 @@
       <% end %>
     </div>
     <% end %>
-
-    <%if Current.user %>
-    <%= text_link_to 'Add track', new_artist_album_track_path(@album.artist, @album) %>
-    <% end %>
   </section>
 
   <% if @album.about %>
