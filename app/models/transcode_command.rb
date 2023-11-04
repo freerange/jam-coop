@@ -8,20 +8,28 @@ class TranscodeCommand
   end
 
   def generate
-    case @format
-    when :mp3v0
-      "ffmpeg -y -nostats -loglevel 0 -i #{@input.path} -codec:a libmp3lame -q:a 0 -f mp3 #{@output.path}"
-    when :mp3128k
-      "ffmpeg -y -nostats -loglevel 0 -i #{@input.path} -codec:a libmp3lame -b:a 128k -f mp3 #{@output.path}"
-    when :flac
-      "ffmpeg -y -nostats -loglevel 0 -i #{@input.path} -codec:a flac -f flac #{@output.path}"
-    else
-      raise ArgumentError, "unsupported format: #{@format}"
-    end
+    "ffmpeg #{global_options} -i #{@input.path} #{transcoding_options(@format)} #{@output.path}"
   end
 
   def execute
     command = generate
     system(command)
+  end
+
+  def global_options
+    '-y -nostats -loglevel 0'
+  end
+
+  def transcoding_options(format)
+    case format
+    when :mp3v0
+      '-codec:a libmp3lame -q:a 0 -f mp3'
+    when :mp3128k
+      '-codec:a libmp3lame -b:a 128k -f mp3'
+    when :flac
+      '-codec:a flac -f flac'
+    else
+      raise ArgumentError, "unsupported format: #{@format}"
+    end
   end
 end
