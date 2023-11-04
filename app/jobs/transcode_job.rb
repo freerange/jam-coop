@@ -17,18 +17,7 @@ class TranscodeJob < ApplicationJob
   private
 
   def transcode(input, output, format)
-    case format
-    when :mp3v0
-      cmd = "ffmpeg -y -nostats -loglevel 0 -i #{input.path} -codec:a libmp3lame -q:a 0 -f mp3 #{output.path}"
-    when :mp3128k
-      cmd = "ffmpeg -y -nostats -loglevel 0 -i #{input.path} -codec:a libmp3lame -b:a 128k -f mp3 #{output.path}"
-    when :flac
-      cmd = "ffmpeg -y -nostats -loglevel 0 -i #{input.path} -codec:a flac -f flac #{output.path}"
-    else
-      raise ArgumentError, "unsupported format: #{format}"
-    end
-
-    system(cmd)
+    TranscodeCommand.new(input, output, format).execute
   end
 
   def content_type(format)
