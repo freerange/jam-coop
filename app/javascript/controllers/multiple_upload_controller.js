@@ -5,17 +5,18 @@ export default class extends Controller {
   static targets = ["save"]
 
   init(event) {
-    const indicator = event.target.parentElement.querySelector('.progress')
+    const progressContainer = event.target.parentElement.querySelector('.progressContainer')
 
-    indicator.classList.remove("hidden")
+    progressContainer.classList.remove("hidden")
     this.disableSave()
   }
 
   progress(event) {
     const { id, progress } = event.detail
-    const indicator = event.target.parentElement.querySelector('.progress')
+    const progressContainer = event.target.parentElement.querySelector('.progressContainer')
+    const progressBar = progressContainer.querySelector('.progress')
 
-    indicator.innerHTML = `Uploading: ${Number.parseFloat(progress).toFixed(0)}%`
+    progressBar.style.width = `${Number.parseFloat(progress).toFixed(0)}%`
   }
 
   disableSave() {
