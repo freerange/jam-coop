@@ -7,11 +7,12 @@ class TranscodeCommand
     artist_name: 'TPE1'
   }.freeze
 
-  def initialize(input, output, format, metadata = {})
+  def initialize(input, output, format, metadata = {}, image = nil)
     @input = input
     @output = output
     @format = format
     @metadata = metadata
+    @image = image
   end
 
   def generate
@@ -19,6 +20,7 @@ class TranscodeCommand
       'ffmpeg',
       global_options,
       input_options,
+      image_options,
       metadata_options,
       transcoding_options(@format),
       @output.path
@@ -36,6 +38,12 @@ class TranscodeCommand
 
   def input_options
     "-i #{@input.path}"
+  end
+
+  def image_options
+    return if @image.blank?
+
+    "-i #{@image.path} -map 0:0 -map 1:0 -c copy"
   end
 
   def metadata_options

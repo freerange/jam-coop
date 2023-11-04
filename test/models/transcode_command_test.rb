@@ -33,6 +33,15 @@ class TranscodeCommandTest < ActiveSupport::TestCase
     assert(command_string.split.each_cons(2).any? { |pair| pair == ['-i', @input.path] })
   end
 
+  test 'adds image to output' do
+    image = Tempfile.create('transcode-image')
+    command_string = TranscodeCommand.new(@input, @output, :mp3v0, {}, image).generate
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-i', image.path] })
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-map', '0:0'] })
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-map', '1:0'] })
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-c', 'copy'] })
+  end
+
   test 'adds metadata using ID3v2.3 format' do
     metadata = { track_title: 'track-title', album_title: 'album-title', artist_name: 'artist-name' }
     command_string = TranscodeCommand.new(@input, @output, :mp3v0, metadata).generate
