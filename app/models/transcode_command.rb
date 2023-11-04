@@ -15,7 +15,14 @@ class TranscodeCommand
   end
 
   def generate
-    "ffmpeg #{global_options} #{input_options} #{metadata_options} #{transcoding_options(@format)} #{@output.path}"
+    [
+      'ffmpeg',
+      global_options,
+      input_options,
+      metadata_options,
+      transcoding_options(@format),
+      @output.path
+    ].join(' ')
   end
 
   def execute
