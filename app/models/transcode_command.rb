@@ -24,7 +24,7 @@ class TranscodeCommand
       metadata_options,
       transcoding_options(@format),
       @output.path
-    ].join(' ')
+    ].compact.join(' ')
   end
 
   def execute
