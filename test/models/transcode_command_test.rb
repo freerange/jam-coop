@@ -33,6 +33,16 @@ class TranscodeCommandTest < ActiveSupport::TestCase
     assert(command_string.split.each_cons(2).any? { |pair| pair == ['-i', @input.path] })
   end
 
+  test 'adds metadata using ID3v2.3 format' do
+    metadata = { track_title: 'track-title', album_title: 'album-title', artist_name: 'artist-name' }
+    command_string = TranscodeCommand.new(@input, @output, :mp3v0, metadata).generate
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-write_id3v2', '1'] })
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-id3v2_version', '3'] })
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-metadata', 'TIT2="track-title"'] })
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-metadata', 'TALB="album-title"'] })
+    assert(command_string.split.each_cons(2).any? { |pair| pair == ['-metadata', 'TPE1="artist-name"'] })
+  end
+
   test 'transcodes audio to mp3 using libmp3lame codec highest audio quality' do
     command_string = TranscodeCommand.new(@input, @output, :mp3v0).generate
     assert(command_string.split.each_cons(2).any? { |pair| pair == ['-codec:a', 'libmp3lame'] })

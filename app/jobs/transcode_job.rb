@@ -7,7 +7,7 @@ class TranscodeJob < ApplicationJob
     output_fn = "#{track.original.filename.base}.#{file_extension(format)}"
 
     Tempfile.create('transcode') do |output|
-      track.original.open { |file| transcode(file, output, format) }
+      track.original.open { |file| transcode(file, output, format, metadata_for(track)) }
       track.transcodes.where(format:).destroy_all
       transcode = track.transcodes.create(format:)
       transcode.file.attach(io: File.open(output.path), filename: output_fn, content_type: content_type(format))
@@ -16,8 +16,16 @@ class TranscodeJob < ApplicationJob
 
   private
 
-  def transcode(input, output, format)
-    TranscodeCommand.new(input, output, format).execute
+  def metadata_for(track)
+    {
+      track_title: track.title,
+      album_title: track.album.title,
+      artist_name: track.artist.name
+    }
+  end
+
+  def transcode(input, output, format, metadata)
+    TranscodeCommand.new(input, output, format, metadata).execute
   end
 
   def content_type(format)

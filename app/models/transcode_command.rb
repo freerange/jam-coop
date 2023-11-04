@@ -1,14 +1,21 @@
 # frozen_string_literal: true
 
 class TranscodeCommand
-  def initialize(input, output, format)
+  METADATA_KEYS_VS_ID3V23_TAGS = {
+    track_title: 'TIT2',
+    album_title: 'TALB',
+    artist_name: 'TPE1'
+  }.freeze
+
+  def initialize(input, output, format, metadata = {})
     @input = input
     @output = output
     @format = format
+    @metadata = metadata
   end
 
   def generate
-    "ffmpeg #{global_options} -i #{@input.path} #{transcoding_options(@format)} #{@output.path}"
+    "ffmpeg #{global_options} -i #{@input.path} #{metadata_options} #{transcoding_options(@format)} #{@output.path}"
   end
 
   def execute
@@ -18,6 +25,14 @@ class TranscodeCommand
 
   def global_options
     '-y -nostats -loglevel 0'
+  end
+
+  def metadata_options
+    supported_keys = @metadata.slice(*id3v23_keys)
+    return if supported_keys.empty?
+
+    entries = supported_keys.map { |k, v| %(-metadata #{id3v23_key_for(k)}="#{v}") }
+    "-write_id3v2 1 -id3v2_version 3 #{entries.join(' ')}"
   end
 
   def transcoding_options(format)
@@ -31,5 +46,13 @@ class TranscodeCommand
     else
       raise ArgumentError, "unsupported format: #{@format}"
     end
+  end
+
+  def id3v23_keys
+    METADATA_KEYS_VS_ID3V23_TAGS.keys
+  end
+
+  def id3v23_key_for(key)
+    METADATA_KEYS_VS_ID3V23_TAGS[key]
   end
 end
