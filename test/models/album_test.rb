@@ -65,10 +65,9 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'transcode_tracks' do
-    album = create(:album)
-    create(:track, album:)
+    album = create(:album_with_tracks, number_of_tracks: 2)
 
-    assert_enqueued_with(job: TranscodeJob) do
+    assert_enqueued_jobs 2 * Transcode.formats.count, only: TranscodeJob do
       album.transcode_tracks
     end
   end

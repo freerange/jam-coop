@@ -24,8 +24,12 @@ FactoryBot.define do
     end
 
     factory :album_with_tracks do
-      after(:create) do |album|
-        create_list(:track, 2, album:)
+      transient do
+        number_of_tracks { 2 }
+      end
+
+      after(:create) do |album, evaluator|
+        create_list(:track, evaluator.number_of_tracks, album:)
         album.reload
       end
     end
