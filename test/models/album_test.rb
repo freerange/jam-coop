@@ -103,6 +103,34 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.published?
   end
 
+  test 'triggers transcoding of tracks if cover changes' do
+    album = create(:album)
+
+    album.expects(:transcode_tracks)
+
+    album.cover.attach(
+      io: Rails.root.join('test/fixtures/files/cover.png').open,
+      filename: 'cover.png',
+      content_type: 'image/png'
+    )
+  end
+
+  test 'triggers transcoding of tracks if title changes' do
+    album = create(:album)
+
+    album.expects(:transcode_tracks)
+
+    album.update!(title: 'new-title')
+  end
+
+  test 'does not trigger transcoding of tracks if nothing significant changes' do
+    album = create(:album)
+
+    album.expects(:transcode_tracks).never
+
+    album.update!(updated_at: Time.current)
+  end
+
   test '.published' do
     create(:album)
     create(:album, published: false)
