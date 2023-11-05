@@ -1,7 +1,9 @@
 <div data-controller="player">
   <div class="flex flex-row gap-4">
     <div class="w-1/2">
+      <% if @album.cover.attached? %>
       <%= image_tag @album.cover.representation(resize_to_limit: [750, 750]), class: 'w-full border border-slate-200' %>
+      <% end %>
     </div>
     <div class="w-1/2">
       <div class="mb-3">
