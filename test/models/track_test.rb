@@ -17,21 +17,50 @@ class TrackTest < ActiveSupport::TestCase
     assert_not track.valid?
   end
 
-  test 'enqueues transcoding on save' do
+  test 'triggers transcoding on create' do
     track = build(:track)
+
+    track.expects(:transcode)
+
+    track.save
+  end
+
+  test 'triggers transcoding if original changes' do
+    track = create(:track)
+
+    track.expects(:transcode)
+
+    track.original.attach(
+      io: Rails.root.join('test/fixtures/files/track.wav').open,
+      filename: 'track.wav',
+      content_type: 'audio/x-wav'
+    )
+  end
+
+  test 'triggers transcoding if title changes' do
+    track = create(:track)
+
+    track.expects(:transcode)
+
+    track.update!(title: 'new-title')
+  end
+
+  test 'does not trigger transcoding if nothing significant changes' do
+    track = create(:track)
+
+    track.expects(:transcode).never
+
+    track.update!(updated_at: Time.current)
+  end
+
+  test '#transcode enqueues transcoding for each format' do
+    track = create(:track)
 
     Transcode.formats.each_key do |format|
       TranscodeJob.expects(:perform_later).with(track, format: format.to_sym)
     end
 
-    track.save
-  end
-
-  test 'enqueues transcoding only if original has changed' do
-    track = create(:track)
-    TranscodeJob.expects(:perform_later).never
-
-    track.save
+    track.transcode
   end
 
   test '#preview_duration returns nil if no preview' do
@@ -53,5 +82,15 @@ class TrackTest < ActiveSupport::TestCase
     track.stubs(:preview).returns(preview)
 
     assert_equal 200, track.preview_duration
+  end
+
+  test '#metadata' do
+    track = create(:track)
+
+    metadata = track.metadata
+
+    assert_equal track.title, metadata[:track_title]
+    assert_equal track.album.title, metadata[:album_title]
+    assert_equal track.album.artist.name, metadata[:artist_name]
   end
 end

@@ -18,12 +18,14 @@ class Album < ApplicationRecord
   scope :unpublished, -> { where(published: false) }
   scope :in_release_order, -> { order('released_at DESC NULLS LAST') }
 
+  after_update :transcode_tracks, if: :metadata_or_cover_changed?
+
   def preview
     first_track_with_preview = tracks.detect(&:preview)
     first_track_with_preview&.preview
   end
 
-  def retranscode!
+  def transcode_tracks
     tracks.each(&:transcode)
   end
 
@@ -36,5 +38,9 @@ class Album < ApplicationRecord
 
   def unpublish
     update(published: false)
+  end
+
+  def metadata_or_cover_changed?
+    title_previously_changed? || attachment_changes['cover'].present?
   end
 end

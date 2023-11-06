@@ -7,7 +7,15 @@ class TranscodeJob < ApplicationJob
     output_fn = "#{track.original.filename.base}.#{file_extension(format)}"
 
     Tempfile.create('transcode') do |output|
-      track.original.open { |file| transcode(file, output, format) }
+      track.original.open do |file|
+        if track.album.cover.attached?
+          track.album.cover.open do |image|
+            transcode(file, output, format, track.metadata, image)
+          end
+        else
+          transcode(file, output, format, track.metadata)
+        end
+      end
       track.transcodes.where(format:).destroy_all
       transcode = track.transcodes.create(format:)
       transcode.file.attach(io: File.open(output.path), filename: output_fn, content_type: content_type(format))
@@ -16,19 +24,8 @@ class TranscodeJob < ApplicationJob
 
   private
 
-  def transcode(input, output, format)
-    case format
-    when :mp3v0
-      cmd = "ffmpeg -y -nostats -loglevel 0 -i #{input.path} -codec:a libmp3lame -q:a 0 -f mp3 #{output.path}"
-    when :mp3128k
-      cmd = "ffmpeg -y -nostats -loglevel 0 -i #{input.path} -codec:a libmp3lame -b:a 128k -f mp3 #{output.path}"
-    when :flac
-      cmd = "ffmpeg -y -nostats -loglevel 0 -i #{input.path} -codec:a flac -f flac #{output.path}"
-    else
-      raise ArgumentError, "unsupported format: #{format}"
-    end
-
-    system(cmd)
+  def transcode(input, output, format, metadata, image = nil)
+    TranscodeCommand.new(input, output, format, metadata, image).execute
   end
 
   def content_type(format)
