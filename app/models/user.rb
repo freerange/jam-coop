@@ -6,7 +6,6 @@ class User < ApplicationRecord
   has_many :email_verification_tokens, dependent: :destroy
   has_many :password_reset_tokens, dependent: :destroy
   has_many :sessions, dependent: :destroy
-  has_many :email_subscription_changes, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, allow_nil: true, length: { minimum: 12 }
@@ -23,11 +22,7 @@ class User < ApplicationRecord
     sessions.where.not(id: Current.session).delete_all
   end
 
-  def latest_email_subscription_change
-    email_subscription_changes.order(:changed_at).last
-  end
-
   def suppress_sending?
-    (latest_email_subscription_change || EmailSubscriptionChange.new).suppress_sending?
+    sending_suppressed_at.present?
   end
 end

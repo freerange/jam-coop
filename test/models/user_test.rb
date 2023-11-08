@@ -11,21 +11,13 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.suppress_sending?
   end
 
-  test 'suppresses sending if hard bounce has occurred' do
-    create(:hard_bounce, user: @user)
-    assert @user.suppress_sending?
-  end
-
-  test 'suppresses sending if manual suppression has occurred' do
-    create(:manual_suppression, user: @user)
-    assert @user.suppress_sending?
-  end
-
-  test 'does not suppress sending if manual reactivation has occurred' do
-    freeze_time do
-      create(:manual_reactivation, user: @user, changed_at: 1.hour.ago)
-      create(:hard_bounce, user: @user, changed_at: 2.hours.ago)
-    end
+  test 'suppresses sending if sending_suppressed_at is blank' do
+    @user.sending_suppressed_at = nil
     assert_not @user.suppress_sending?
+  end
+
+  test 'suppresses sending if sending_suppressed_at is present' do
+    @user.sending_suppressed_at = Time.current
+    assert @user.suppress_sending?
   end
 end
