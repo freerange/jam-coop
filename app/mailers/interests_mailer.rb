@@ -2,6 +2,8 @@
 
 class InterestsMailer < ApplicationMailer
   def confirm(interest)
+    return if interest.suppress_sending?
+
     @interest = interest
 
     mail(

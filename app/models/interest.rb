@@ -10,6 +10,10 @@ class Interest < ApplicationRecord
     save!
   end
 
+  def suppress_sending?
+    sending_suppressed_at.present?
+  end
+
   private
 
   def generate_confirm_token
