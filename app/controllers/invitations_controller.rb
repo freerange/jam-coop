@@ -9,6 +9,9 @@ class InvitationsController < ApplicationController
     @user = User.create_with(user_params).find_or_initialize_by(email: params[:email])
 
     if @user.save
+      artist = Artist.find_by(id: params[:artist_id])
+      @user.artists << artist if artist
+
       send_invitation_instructions
       redirect_to home_path, notice: "An invitation email has been sent to #{@user.email}"
     else

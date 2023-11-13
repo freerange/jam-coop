@@ -5,11 +5,13 @@ require 'application_system_test_case'
 class InvitingUsersTest < ApplicationSystemTestCase
   setup do
     sign_in_as(create(:user))
+    create(:artist, name: 'The Beatles')
   end
 
   test 'should invite a user and allow them to reset their password' do
     visit new_invitation_url
     fill_in 'Email', with: 'artist@example.com'
+    select 'The Beatles', from: 'artist_id'
 
     assert_emails 1 do
       click_button 'Invite'
@@ -25,6 +27,8 @@ class InvitingUsersTest < ApplicationSystemTestCase
     click_button 'Save changes'
 
     assert_text 'Your password was reset successfully. Please sign in'
+    assert_equal 'artist@example.com', User.last.email
+    assert_equal 'The Beatles', User.last.artists.first.name
   end
 
   private

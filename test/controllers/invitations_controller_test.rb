@@ -18,6 +18,13 @@ class InvitationsControllerTestSignedIn < ActionDispatch::IntegrationTest
     end
   end
 
+  test '#create associates new user with passed in artist' do
+    artist = create(:artist)
+    post invitations_url, params: { email: 'alice@example.com', artist_id: artist.id }
+
+    assert_equal [artist], User.last.artists
+  end
+
   test '#create sends an invitation email' do
     assert_emails 1 do
       post invitations_url, params: { email: 'alice@example.com' }
