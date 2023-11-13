@@ -4,6 +4,7 @@ class Artist < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  belongs_to :user, optional: true
   has_many :albums, dependent: :destroy
   has_one_attached :profile_picture
 

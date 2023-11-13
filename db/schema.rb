@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_08_211514) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_13_134528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,7 +65,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_211514) do
     t.string "location"
     t.string "description"
     t.boolean "listed", default: true, null: false
+    t.bigint "user_id"
     t.index ["slug"], name: "index_artists_on_slug", unique: true
+    t.index ["user_id"], name: "index_artists_on_user_id"
   end
 
   create_table "downloads", force: :cascade do |t|
@@ -121,6 +123,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_211514) do
     t.bigint "album_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "original_data"
     t.index ["album_id"], name: "index_tracks_on_album_id"
   end
 
@@ -146,6 +149,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_211514) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "albums", "artists"
+  add_foreign_key "artists", "users"
   add_foreign_key "downloads", "albums"
   add_foreign_key "email_verification_tokens", "users"
   add_foreign_key "password_reset_tokens", "users"
