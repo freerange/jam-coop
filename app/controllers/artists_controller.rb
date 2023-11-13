@@ -5,19 +5,27 @@ class ArtistsController < ApplicationController
   skip_before_action :authenticate, only: %i[index show]
 
   def index
+    skip_authorization
+
     @artists = Artist.all
   end
 
-  def show; end
+  def show
+    skip_authorization
+  end
 
   def new
     @artist = Artist.new
+    authorize @artist
   end
 
-  def edit; end
+  def edit
+    authorize @artist
+  end
 
   def create
     @artist = Artist.new(artist_params)
+    authorize @artist
 
     respond_to do |format|
       if @artist.save
@@ -31,6 +39,8 @@ class ArtistsController < ApplicationController
   end
 
   def update
+    authorize @artist
+
     respond_to do |format|
       if @artist.update(artist_params)
         format.html { redirect_to artist_url(@artist), notice: 'Artist was successfully updated.' }
@@ -43,6 +53,7 @@ class ArtistsController < ApplicationController
   end
 
   def destroy
+    authorize @artist
     @artist.destroy
 
     respond_to do |format|

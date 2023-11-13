@@ -4,7 +4,7 @@ require 'test_helper'
 
 class InvitationsControllerTestSignedIn < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as(create(:user))
+    sign_in_as(create(:user, admin: true))
   end
 
   test '#new' do

@@ -6,7 +6,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @artist = create(:artist)
 
-    sign_in_as(create(:user))
+    sign_in_as(create(:user, admin: true))
   end
 
   test 'creating an album' do

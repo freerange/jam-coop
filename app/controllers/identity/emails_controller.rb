@@ -4,9 +4,13 @@ module Identity
   class EmailsController < ApplicationController
     before_action :set_user
 
-    def edit; end
+    def edit
+      authorize @user
+    end
 
     def update
+      authorize @user
+
       if !@user.authenticate(params[:current_password])
         redirect_to edit_identity_email_path, alert: 'The password you entered is incorrect'
       elsif @user.update(email: params[:email])

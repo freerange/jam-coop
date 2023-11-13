@@ -1,10 +1,17 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+
   before_action :set_current_request_details
   before_action :authenticate
+  after_action :verify_authorized
 
   private
+
+  def pundit_user
+    Current.user
+  end
 
   def authenticate
     session[:return_url] = request.url

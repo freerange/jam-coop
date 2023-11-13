@@ -6,12 +6,18 @@ class SessionsController < ApplicationController
   before_action :set_session, only: :destroy
 
   def index
+    authorize Session
+
     @sessions = Current.user.sessions.order(created_at: :desc)
   end
 
-  def new; end
+  def new
+    skip_authorization
+  end
 
   def create
+    skip_authorization
+
     user = User.find_by(email: params[:email])
 
     if user&.authenticate(params[:password])
@@ -25,6 +31,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    skip_authorization
+
     @session.destroy
     redirect_to(sessions_path, notice: 'That session has been logged out')
   end

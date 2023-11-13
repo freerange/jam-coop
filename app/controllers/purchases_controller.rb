@@ -3,6 +3,7 @@
 class PurchasesController < ApplicationController
   skip_before_action :authenticate
   before_action :set_album, except: :show
+  before_action :skip_authorization
 
   def show
     @purchase = Purchase.find(params[:id])

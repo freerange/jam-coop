@@ -3,9 +3,13 @@
 class PasswordsController < ApplicationController
   before_action :set_user
 
-  def edit; end
+  def edit
+    authorize @user
+  end
 
   def update
+    authorize @user
+
     if !@user.authenticate(params[:current_password])
       redirect_to edit_password_path, alert: 'The current password you entered is incorrect'
     elsif @user.update(user_params)

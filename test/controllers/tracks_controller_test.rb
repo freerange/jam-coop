@@ -4,7 +4,7 @@ require 'test_helper'
 
 class TracksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as(create(:user))
+    sign_in_as(create(:user, admin: true))
     @track = create(:track)
   end
 

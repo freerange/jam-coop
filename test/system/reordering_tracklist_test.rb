@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class ReorderingTracklistTest < ApplicationSystemTestCase
   setup do
-    sign_in_as(create(:user))
+    sign_in_as(create(:user, admin: true))
     @track = create(:track)
   end
 
