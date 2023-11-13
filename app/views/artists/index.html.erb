@@ -30,6 +30,8 @@
   <% end %>
 
   <% content_for :admin do %>
-  <%= text_link_to "New artist", new_artist_path %>
+    <% if policy(Artist).new? %>
+      <%= text_link_to "New artist", new_artist_path %>
+    <% end %>
   <% end %>
 </div>
