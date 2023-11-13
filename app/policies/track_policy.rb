@@ -8,4 +8,8 @@ class TrackPolicy < ApplicationPolicy
   def move_lower?
     user.admin?
   end
+
+  def reorder?
+    move_lower? && move_higher?
+  end
 end

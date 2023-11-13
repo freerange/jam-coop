@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def pundit_user
-    Current.user
+    Current.user || NullUser.new
   end
 
   def authenticate

@@ -10,6 +10,7 @@ class TrackPolicyTest < ActiveSupport::TestCase
 
     assert policy.move_higher?
     assert policy.move_lower?
+    assert policy.reorder?
   end
 
   test 'a user' do
@@ -19,5 +20,6 @@ class TrackPolicyTest < ActiveSupport::TestCase
 
     assert_not policy.move_higher?
     assert_not policy.move_lower?
+    assert_not policy.reorder?
   end
 end
