@@ -41,6 +41,8 @@
   <% end %>
 
   <% content_for :admin do %>
-  <%= link_to "Add album", new_artist_album_path(@artist), class: 'underline' %>
+    <% if policy(Album).new? %>
+      <%= link_to "Add album", new_artist_album_path(@artist), class: 'underline' %>
+    <% end %>
   <% end %>
 </div>
