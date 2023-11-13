@@ -16,6 +16,16 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert policy.publish?
   end
 
+  test 'an admin scope' do
+    user = build(:user, admin: true)
+    published_album = create(:album, published: true)
+    unpublished_album = create(:album, published: false)
+
+    scope = AlbumPolicy::Scope.new(user, Album)
+
+    assert_equal [published_album, unpublished_album], scope.resolve
+  end
+
   test 'a user' do
     user = build(:user)
     album = build(:album)
@@ -27,5 +37,15 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert_not policy.unpublish?
     assert_not policy.new?
     assert_not policy.publish?
+  end
+
+  test 'a user scope' do
+    user = build(:user)
+    published_album = create(:album, published: true)
+    create(:album, published: false)
+
+    scope = AlbumPolicy::Scope.new(user, Album)
+
+    assert_equal [published_album], scope.resolve
   end
 end
