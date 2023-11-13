@@ -7,7 +7,7 @@ class ArtistsController < ApplicationController
   def index
     skip_authorization
 
-    @artists = Artist.all
+    @artists = policy_scope(Artist)
   end
 
   def show

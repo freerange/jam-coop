@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class ArtistPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user.admin?
+        scope.all
+      else
+        scope.listed
+      end
+    end
+  end
+
   def destroy?
     user.admin?
   end

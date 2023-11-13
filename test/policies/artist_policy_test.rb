@@ -15,6 +15,16 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert policy.new?
   end
 
+  test 'an admin scope' do
+    user = build(:user, admin: true)
+    listed_artist = create(:artist)
+    unlisted_artist = create(:artist, listed: false)
+
+    scope = ArtistPolicy::Scope.new(user, Artist)
+
+    assert_equal [listed_artist, unlisted_artist], scope.resolve
+  end
+
   test 'a user' do
     user = build(:user)
     artist = build(:artist)
@@ -25,5 +35,15 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert_not policy.update?
     assert_not policy.edit?
     assert_not policy.new?
+  end
+
+  test 'a user scope' do
+    user = build(:user)
+    listed_artist = create(:artist)
+    create(:artist, listed: false)
+
+    scope = ArtistPolicy::Scope.new(user, Artist)
+
+    assert_equal [listed_artist], scope.resolve
   end
 end
