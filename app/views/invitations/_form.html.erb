@@ -1,0 +1,5 @@
+<%= form_with(url: invitations_path, class: "contents", builder: TailwindFormBuilder) do |form| %>
+  <%= render('shared/errors', model: user) %>
+  <%= form.text_field :email, class: 'w-full mb-3' %>
+  <%= form.submit "Invite", class: 'mt-3 w-full'%>
+<% end %>
