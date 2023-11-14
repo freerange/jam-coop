@@ -47,4 +47,17 @@ class ArtistPolicyTest < ActiveSupport::TestCase
 
     assert_equal [listed_artist], scope.resolve
   end
+
+  test 'a user with an artist' do
+    artist = create(:artist)
+    user = create(:user, artists: [artist])
+
+    policy = ArtistPolicy.new(user, artist)
+
+    assert_not policy.destroy?
+    assert_not policy.create?
+    assert policy.update?
+    assert policy.edit?
+    assert_not policy.new?
+  end
 end

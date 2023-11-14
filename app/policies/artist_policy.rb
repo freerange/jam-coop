@@ -20,11 +20,11 @@ class ArtistPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.admin?
+    user.admin? || user.artists.include?(record)
   end
 
   def update?
-    user.admin
+    user.admin || user.artists.include?(record)
   end
 
   def new?
