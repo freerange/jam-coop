@@ -32,6 +32,8 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get edit_artist_url(artist)
 
     post sign_in_url, params: { email: @user.email, password: 'Secret1*3*5*' }
+
+    assert_not session.key?(:return_url)
     assert_redirected_to edit_artist_url(artist)
 
     get a_url_that_requires_authentication

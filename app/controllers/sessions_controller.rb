@@ -45,6 +45,7 @@ class SessionsController < ApplicationController
 
   def redirect_to_previous_or_home
     if (return_url = session[:return_url])
+      session.delete(:return_url)
       redirect_to return_url
     else
       redirect_to root_path, notice: 'Signed in successfully'
