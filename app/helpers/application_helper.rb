@@ -7,4 +7,8 @@ module ApplicationHelper
     kwargs[:class] = "#{kwargs[:class] || ''} underline decoration-amber-600 hover:bg-amber-500"
     link_to(*, **kwargs)
   end
+
+  def avatar(user)
+    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}?d=mp"
+  end
 end
