@@ -8,7 +8,7 @@
     <div class="w-1/2">
       <div class="mb-3">
         <h1 class="text-lg font-medium leading-tight"><%= @album.title %></h1>
-        <h2 class="text-sm text-slate-600"><%= @album.artist.name %></h2>
+        <h2 class="text-sm text-slate-600"><%= link_to @album.artist.name, artist_path(@album.artist), class: "hover:underline" %></h2>
         <h3 data-player-target="trackTitle" class="invisible text-sm italic text-slate-500">one</h3>
       </div>
 
