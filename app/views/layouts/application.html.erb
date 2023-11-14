@@ -14,15 +14,23 @@
 
   <body class="bg-slate-100">
     <div class="mx-auto sm:w-2/3 w-full text-slate-800">
-      <div class="bg-white p-2 sm:p-6 sm:mt-4 sm:shadow-sm">
+      <nav class="w-full flex justify-between items-center h-10 px-2 sm:mt-2">
+        <div><a href="/" class="text-l font-semibold text-slate-500">jam.coop</a></div>
+        <div class="flex gap-4 items-center">
+          <%= content_for(:navbar) %>
+
+          <% if Current.user %>
+            <%= render partial: 'avatar_menu', locals: { user: Current.user } %>
+          <% end %>
+        </div>
+      </nav>
+      <div class="bg-white p-2 sm:p-6 sm:mt-2 sm:shadow-sm">
         <%= yield %>
       </div>
-      <footer class="flex flex-row justify-between mt-2 text-slate-400 text-sm px-2 sm:px-0">
-        <p><%= Current.user.email if Current.user %></p>
-
+      <footer class="flex flex-row justify-end mt-2 text-slate-400 text-sm px-2 sm:px-0">
         <p>A <a class="underline" href="https://gofreerange.com">Go Free Range</a> project</p>
       </footer>
-      <% if Current.user && content_for(:admin) %>
+      <% if Current.user&.admin? && content_for(:admin) %>
       <div class="bg-slate-200 p-2 mb-4 sm:p-6 sm:mt-4 sm:shadow-sm rounded">
         <%= content_for :admin %>
       </div>

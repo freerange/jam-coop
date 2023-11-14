@@ -12,7 +12,7 @@
 </div>
 
 <div class="pt-4 grid grid-cols-3 gap-4">
-  <% @artist.albums.published.in_release_order.each do |album| %>
+  <% @albums.in_release_order.each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
     <div>
       <div class="border border-slate-200">
@@ -20,27 +20,18 @@
         <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'w-full' %>
         <% end %>
       </div>
-      <p class='text-sm text-slate-500'><%= album.title %></p>
+      <p class='text-sm text-slate-500'><%= album.title %><%= album.published? ? '' : ' (unpublished)' %></p>
     </div>
     <% end %>
   <% end %>
 
-  <% if Current.user %>
-  <% @artist.albums.unpublished.each do |album| %>
-    <%= link_to(artist_album_path(album.artist, album)) do %>
-    <div>
-      <div class="border border-slate-200">
-        <% if album.cover.representable? %>
-        <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'w-full' %>
-        <% end %>
-      </div>
-      <p class='text-sm text-slate-500'><%= album.title %> (unpublished)</p>
-    </div>
+  <% content_for :navbar do %>
+    <% if policy(@artist).edit? %>
+      <%= link_to "Edit artist", edit_artist_path(@artist), class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm' %>
     <% end %>
-  <% end %>
-  <% end %>
 
-  <% content_for :admin do %>
-  <%= link_to "Add album", new_artist_album_path(@artist), class: 'underline' %>
+    <% if policy(@artist.albums.new).new? %>
+      <%= link_to "Add album", new_artist_album_path(@artist), class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm' %>
+    <% end %>
   <% end %>
 </div>

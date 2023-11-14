@@ -4,7 +4,7 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = create(:user)
+    @user = create(:user, admin: true)
   end
 
   test 'should get index' do
@@ -21,9 +21,9 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should sign in' do
     post sign_in_url, params: { email: @user.email, password: 'Secret1*3*5*' }
-    assert_redirected_to home_url
+    assert_redirected_to root_url
 
-    get home_url
+    get a_url_that_requires_authentication
     assert_response :success
   end
 
@@ -32,9 +32,11 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get edit_artist_url(artist)
 
     post sign_in_url, params: { email: @user.email, password: 'Secret1*3*5*' }
+
+    assert_not session.key?(:return_url)
     assert_redirected_to edit_artist_url(artist)
 
-    get home_url
+    get a_url_that_requires_authentication
     assert_response :success
   end
 
@@ -43,7 +45,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to sign_in_url(email_hint: @user.email)
     assert_equal 'That email or password is incorrect', flash[:alert]
 
-    get home_url
+    get a_url_that_requires_authentication
     assert_redirected_to sign_in_url
   end
 
@@ -55,5 +57,11 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_redirected_to sign_in_url
+  end
+
+  private
+
+  def a_url_that_requires_authentication
+    sessions_url
   end
 end

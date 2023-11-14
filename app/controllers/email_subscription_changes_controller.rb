@@ -16,6 +16,8 @@ class EmailSubscriptionChangesController < ApplicationController
   end
 
   def create
+    skip_authorization
+
     update_sending_suppressed_for(user)
     update_sending_suppressed_for(interest)
     render json: { user: { id: user&.id }, interest: { id: interest&.id } }, status: :created

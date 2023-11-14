@@ -2,6 +2,7 @@
 
 class InterestsController < ApplicationController
   skip_before_action :authenticate
+  before_action :skip_authorization
 
   def new
     @interest = Interest.new

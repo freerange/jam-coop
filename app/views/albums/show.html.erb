@@ -65,7 +65,7 @@
       </div>
       <% end %>
 
-      <% if Current.user %>
+      <% if policy(track).reorder? %>
       <div>
         <%= text_link_to 'Up', move_higher_track_path(track), data: { turbo_method: :post } %>
         <%= text_link_to 'Down', move_lower_track_path(track), data: { turbo_method: :post } %>
@@ -93,6 +93,12 @@
   </section>
   <% end %>
 </div>
+
+<% content_for :navbar do %>
+  <% if policy(@album).edit? %>
+    <%= link_to "Edit album", edit_artist_album_path(@album.artist, @album), class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm' %>
+  <% end %>
+<% end %>
 
 <% content_for :admin do %>
 <div>

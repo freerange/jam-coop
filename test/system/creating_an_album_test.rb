@@ -5,8 +5,9 @@ require 'application_system_test_case'
 class CreatingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @artist = create(:artist)
+    user = create(:user, artists: [@artist])
 
-    sign_in_as(create(:user))
+    sign_in_as(user)
   end
 
   test 'creating an album' do
@@ -26,5 +27,16 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     assert_text "A Hard Day's Night (unpublished)"
     click_link "A Hard Day's Night (unpublished)"
     assert_text '1. And I Love Her'
+  end
+
+  test 'editing an album' do
+    album = create(:album, artist: @artist)
+
+    visit artist_album_url(@artist, album)
+    assert_text album.title
+    click_link 'Edit album'
+    fill_in 'Title', with: 'New Title'
+    click_button 'Save'
+    assert_text 'New Title'
   end
 end

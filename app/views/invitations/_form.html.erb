@@ -1,0 +1,7 @@
+<%= form_with(url: invitations_path, class: "contents", builder: TailwindFormBuilder) do |form| %>
+  <%= render('shared/errors', model: user) %>
+  <%= form.text_field :email, autocomplete: false, class: 'w-full mb-3' %>
+  <%= form.label :artist %>
+  <%= form.collection_select :artist_id, Artist.order(:name), :id, :name, { include_blank: true }, { class: 'w-full mb-3' } %>
+  <%= form.submit "Invite", class: 'mt-3 w-full'%>
+<% end %>

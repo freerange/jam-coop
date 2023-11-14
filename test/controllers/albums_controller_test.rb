@@ -5,7 +5,7 @@ require 'test_helper'
 class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
   def setup
     @album = create(:album)
-    sign_in_as(create(:user))
+    sign_in_as(create(:user, admin: true))
   end
 
   test '#show' do

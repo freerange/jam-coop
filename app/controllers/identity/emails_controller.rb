@@ -4,9 +4,13 @@ module Identity
   class EmailsController < ApplicationController
     before_action :set_user
 
-    def edit; end
+    def edit
+      authorize @user
+    end
 
     def update
+      authorize @user
+
       if !@user.authenticate(params[:current_password])
         redirect_to edit_identity_email_path, alert: 'The password you entered is incorrect'
       elsif @user.update(email: params[:email])
@@ -25,9 +29,9 @@ module Identity
     def redirect_to_root
       if @user.email_previously_changed?
         resend_email_verification
-        redirect_to home_path, notice: 'Your email has been changed'
+        redirect_to root_path, notice: 'Your email has been changed'
       else
-        redirect_to home_path
+        redirect_to root_path
       end
     end
 

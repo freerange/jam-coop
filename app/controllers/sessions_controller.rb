@@ -6,12 +6,18 @@ class SessionsController < ApplicationController
   before_action :set_session, only: :destroy
 
   def index
+    authorize Session
+
     @sessions = Current.user.sessions.order(created_at: :desc)
   end
 
-  def new; end
+  def new
+    skip_authorization
+  end
 
   def create
+    skip_authorization
+
     user = User.find_by(email: params[:email])
 
     if user&.authenticate(params[:password])
@@ -25,6 +31,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    skip_authorization
+
     @session.destroy
     redirect_to(sessions_path, notice: 'That session has been logged out')
   end
@@ -37,9 +45,10 @@ class SessionsController < ApplicationController
 
   def redirect_to_previous_or_home
     if (return_url = session[:return_url])
+      session.delete(:return_url)
       redirect_to return_url
     else
-      redirect_to home_path, notice: 'Signed in successfully'
+      redirect_to root_path, notice: 'Signed in successfully'
     end
   end
 end

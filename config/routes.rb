@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   get  'sign_in', to: 'sessions#new'
   post 'sign_in', to: 'sessions#create'
 
-  get  'home', to: 'home#index'
   get  'about', to: 'pages#about'
 
+  resources :invitations, only: %i[new create]
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
   namespace :identity do
