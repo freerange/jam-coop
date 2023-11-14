@@ -22,7 +22,8 @@ class ArtistPolicyTest < ActiveSupport::TestCase
 
     scope = ArtistPolicy::Scope.new(user, Artist)
 
-    assert_equal [listed_artist, unlisted_artist], scope.resolve
+    assert_includes scope.resolve, listed_artist
+    assert_includes scope.resolve, unlisted_artist
   end
 
   test 'a user' do

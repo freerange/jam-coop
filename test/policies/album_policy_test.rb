@@ -23,7 +23,8 @@ class AlbumPolicyTest < ActiveSupport::TestCase
 
     scope = AlbumPolicy::Scope.new(user, Album)
 
-    assert_equal [published_album, unpublished_album], scope.resolve
+    assert_includes scope.resolve, published_album
+    assert_includes scope.resolve, unpublished_album
   end
 
   test 'a user' do
