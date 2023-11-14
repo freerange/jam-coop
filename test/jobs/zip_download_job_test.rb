@@ -38,4 +38,25 @@ class ZipDownloadJobTest < ActiveJob::TestCase
     ZipDownloadJob.perform_now(album)
     assert_equal 1, album.reload.downloads.count
   end
+
+  test 'creates a zip file when the album title contains a /' do
+    album = create(:album, title: 'Slash / Slash')
+    track = create(:track, album:, title: 'First / Track', position: 1)
+    create(:transcode, track:, format: :mp3v0)
+
+    ZipDownloadJob.perform_now(album)
+
+    assert_equal 1, album.downloads.count
+
+    entries = []
+    album.downloads.last.file.open do |zip_file|
+      Zip::File.open(zip_file) do |zip|
+        zip.each do |entry|
+          entries << entry.name
+        end
+      end
+    end
+
+    assert entries.include? '01 - First Track.mp3'
+  end
 end

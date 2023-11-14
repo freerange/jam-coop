@@ -9,7 +9,7 @@ class ZipDownloadJob < ApplicationJob
     Dir.mktmpdir do |dir|
       filenames = download_all_tracks(album, format, dir)
 
-      zipfile_name = "#{album.artist.name} - #{album.title}.zip"
+      zipfile_name = Zaru.sanitize!("#{album.artist.name} - #{album.title}.zip")
 
       Zip::File.open(File.join(dir, zipfile_name), create: true) do |zipfile|
         filenames.each do |filename|
@@ -42,7 +42,7 @@ class ZipDownloadJob < ApplicationJob
   end
 
   def track_filename(track, format)
-    "#{track.position.to_s.rjust(2, '0')} - #{track.title}.#{extension(format)}"
+    Zaru.sanitize!("#{track.position.to_s.rjust(2, '0')} - #{track.title}.#{extension(format)}")
   end
 
   def extension(format)

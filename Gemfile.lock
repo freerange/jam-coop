@@ -348,6 +348,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    zaru (1.0.0)
     zeitwerk (2.6.12)
 
 PLATFORMS
@@ -392,6 +393,7 @@ DEPENDENCIES
   tailwindcss-rails
   turbo-rails
   tzinfo-data
+  zaru (~> 1.0)
 
 RUBY VERSION
    ruby 3.2.2p53
