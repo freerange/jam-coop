@@ -5,8 +5,9 @@ require 'application_system_test_case'
 class CreatingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @artist = create(:artist)
+    user = create(:user, artists: [@artist])
 
-    sign_in_as(create(:user, admin: true))
+    sign_in_as(user)
   end
 
   test 'creating an album' do

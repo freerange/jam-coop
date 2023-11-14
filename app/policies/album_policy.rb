@@ -5,6 +5,8 @@ class AlbumPolicy < ApplicationPolicy
     def resolve
       if user.admin?
         scope.all
+      elsif user.artists.any?
+        scope.where(artist: user.artists)
       else
         scope.published
       end
@@ -12,7 +14,7 @@ class AlbumPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin?
+    user.admin? || user.artists.include?(record.artist)
   end
 
   def update?
@@ -28,7 +30,7 @@ class AlbumPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin?
+    user.admin? || user.artists.include?(record.artist)
   end
 
   def publish?

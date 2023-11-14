@@ -16,9 +16,13 @@
     <div class="mx-auto sm:w-2/3 w-full text-slate-800">
       <nav class="w-full flex justify-between items-center h-10 px-2 sm:mt-2">
         <div><a href="/" class="text-l font-semibold text-slate-500">jam.coop</a></div>
-        <% if Current.user %>
-          <%= render partial: 'avatar_menu', locals: { user: Current.user } %>
-        <% end %>
+        <div class="flex gap-4 items-center">
+          <%= content_for(:navbar) %>
+
+          <% if Current.user %>
+            <%= render partial: 'avatar_menu', locals: { user: Current.user } %>
+          <% end %>
+        </div>
       </nav>
       <div class="bg-white p-2 sm:p-6 sm:mt-2 sm:shadow-sm">
         <%= yield %>

@@ -4,4 +4,8 @@ class NullUser
   def admin?
     false
   end
+
+  def artists
+    []
+  end
 end

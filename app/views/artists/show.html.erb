@@ -25,9 +25,9 @@
     <% end %>
   <% end %>
 
-  <% content_for :admin do %>
-    <% if policy(Album).new? %>
-      <%= link_to "Add album", new_artist_album_path(@artist), class: 'underline' %>
+  <% content_for :navbar do %>
+    <% if policy(@artist.albums.new).new? %>
+      <%= link_to "Add album", new_artist_album_path(@artist), class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm' %>
     <% end %>
   <% end %>
 </div>

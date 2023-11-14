@@ -49,4 +49,30 @@ class AlbumPolicyTest < ActiveSupport::TestCase
 
     assert_equal [published_album], scope.resolve
   end
+
+  test 'a user with an album belonging to their artist' do
+    album = create(:album)
+    user = create(:user, artists: [album.artist])
+    policy = AlbumPolicy.new(user, album)
+
+    assert policy.create?
+    assert_not policy.update?
+    assert_not policy.edit?
+    assert_not policy.unpublish?
+    assert policy.new?
+    assert_not policy.publish?
+  end
+
+  test 'scope for a user with albums belonging to their artist' do
+    artist = create(:artist)
+    user = create(:user, artists: [artist])
+
+    published_album = create(:album, artist:, published: true)
+    unpublished_album = create(:album, artist:, published: false)
+
+    scope = AlbumPolicy::Scope.new(user, Album)
+
+    assert_includes scope.resolve, published_album
+    assert_includes scope.resolve, unpublished_album
+  end
 end
