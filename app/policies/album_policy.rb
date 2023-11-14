@@ -18,11 +18,11 @@ class AlbumPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    user.admin? || user.artists.include?(record.artist)
   end
 
   def edit?
-    user.admin?
+    user.admin? || user.artists.include?(record.artist)
   end
 
   def unpublish?

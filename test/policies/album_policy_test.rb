@@ -56,8 +56,8 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     policy = AlbumPolicy.new(user, album)
 
     assert policy.create?
-    assert_not policy.update?
-    assert_not policy.edit?
+    assert policy.update?
+    assert policy.edit?
     assert_not policy.unpublish?
     assert policy.new?
     assert_not policy.publish?

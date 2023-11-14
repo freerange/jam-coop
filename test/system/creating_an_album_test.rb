@@ -28,4 +28,15 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     click_link "A Hard Day's Night (unpublished)"
     assert_text '1. And I Love Her'
   end
+
+  test 'editing an album' do
+    album = create(:album, artist: @artist)
+
+    visit artist_album_url(@artist, album)
+    assert_text album.title
+    click_link 'Edit album'
+    fill_in 'Title', with: 'New Title'
+    click_button 'Save'
+    assert_text 'New Title'
+  end
 end
