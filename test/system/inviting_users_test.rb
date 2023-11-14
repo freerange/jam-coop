@@ -18,6 +18,7 @@ class InvitingUsersTest < ApplicationSystemTestCase
     end
 
     assert_text 'An invitation email has been sent to artist@example.com'
+    click_button 'avatar'
     click_button 'Log out'
 
     visit accept_invitation_url

@@ -33,7 +33,7 @@ class InvitationsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
   test '#create redirects to home' do
     post invitations_url, params: { email: 'alice@example.com' }
-    assert_redirected_to home_path
+    assert_redirected_to root_path
   end
 
   test '#create renders new if user cannot be created' do

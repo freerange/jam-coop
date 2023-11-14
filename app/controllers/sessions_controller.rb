@@ -47,7 +47,7 @@ class SessionsController < ApplicationController
     if (return_url = session[:return_url])
       redirect_to return_url
     else
-      redirect_to home_path, notice: 'Signed in successfully'
+      redirect_to root_path, notice: 'Signed in successfully'
     end
   end
 end

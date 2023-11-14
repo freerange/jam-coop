@@ -15,7 +15,7 @@ class InvitationsController < ApplicationController
       @user.artists << artist if artist
 
       send_invitation_instructions
-      redirect_to home_path, notice: "An invitation email has been sent to #{@user.email}"
+      redirect_to root_path, notice: "An invitation email has been sent to #{@user.email}"
     else
       render :new, status: :unprocessable_entity
     end

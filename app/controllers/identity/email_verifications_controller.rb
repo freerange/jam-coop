@@ -10,14 +10,14 @@ module Identity
       skip_authorization
 
       @user.update! verified: true
-      redirect_to home_path, notice: 'Thank you for verifying your email address'
+      redirect_to root_path, notice: 'Thank you for verifying your email address'
     end
 
     def create
       skip_authorization
 
       send_email_verification
-      redirect_to home_path, notice: 'We sent a verification email to your email address'
+      redirect_to root_path, notice: 'We sent a verification email to your email address'
     end
 
     private

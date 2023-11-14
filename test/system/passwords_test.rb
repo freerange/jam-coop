@@ -8,6 +8,7 @@ class PasswordsTest < ApplicationSystemTestCase
   end
 
   test 'updating the password' do
+    click_button 'avatar'
     click_link 'Change password'
 
     fill_in 'Current password', with: 'Secret1*3*5*'

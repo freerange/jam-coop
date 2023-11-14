@@ -15,7 +15,7 @@ module Identity
 
     test 'should update email' do
       patch identity_email_url, params: { email: 'new_email@hey.com', current_password: 'Secret1*3*5*' }
-      assert_redirected_to home_url
+      assert_redirected_to root_url
     end
 
     test 'should not update email with wrong current password' do
