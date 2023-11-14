@@ -24,7 +24,7 @@ class ArtistPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin || user.artists.include?(record)
+    user.admin? || user.artists.include?(record)
   end
 
   def new?
