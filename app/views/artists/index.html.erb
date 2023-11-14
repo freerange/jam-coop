@@ -14,9 +14,9 @@
   </div>
   <% end %>
 
-  <% content_for :admin do %>
+  <% content_for :navbar do %>
     <% if policy(Artist).new? %>
-      <%= text_link_to "New artist", new_artist_path %>
+      <%= link_to "New artist", new_artist_path, class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm' %>
     <% end %>
   <% end %>
 </div>
