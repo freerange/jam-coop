@@ -26,7 +26,7 @@
   <% end %>
 
   <% if policy(@artist).view_unpublished_albums? %>
-    <% @albums.unpublished.each do |album| %>
+    <% @albums.unpublished.in_release_order.each do |album| %>
       <%= link_to(artist_album_path(album.artist, album)) do %>
         <div>
           <div class="border border-slate-200">
