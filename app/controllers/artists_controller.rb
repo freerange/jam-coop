@@ -13,7 +13,7 @@ class ArtistsController < ApplicationController
   def show
     skip_authorization
 
-    @albums = policy_scope(Album).where(artist: @artist)
+    @albums = Album.where(artist: @artist)
   end
 
   def new

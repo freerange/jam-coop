@@ -30,4 +30,8 @@ class ArtistPolicy < ApplicationPolicy
   def new?
     user.admin?
   end
+
+  def view_unpublished_albums?
+    user.admin? || user.artists.include?(record)
+  end
 end
