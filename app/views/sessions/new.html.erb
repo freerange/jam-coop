@@ -1,5 +1,7 @@
 <%= render 'shared/page_header', text: 'Sign in' %>
 
+<p class="text-slate-600 mb-4"><%= text_link_to "jam.coop", root_path %> is currently invite only. If you have a user account, sign in below. If you're an artist and would like to sell your music on jam.coop please <%= text_link_to "read our FAQ page", about_path %> and <%= text_link_to "send us an email", "mailto:contact@jam.coop" %>.</p>
+
 <%= form_with(url: sign_in_path, builder: TailwindFormBuilder) do |form| %>
   <%= render('shared/alert_box', message: alert) if alert %>
   <%= render('shared/notice_box', message: notice) if notice %>
