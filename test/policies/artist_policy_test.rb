@@ -18,8 +18,9 @@ class ArtistPolicyTest < ActiveSupport::TestCase
 
   test 'an admin scope' do
     user = build(:user, admin: true)
-    listed_artist = create(:artist)
-    unlisted_artist = create(:artist, listed: false)
+    published_album = create(:album, published: true)
+    listed_artist = create(:artist, albums: [published_album])
+    unlisted_artist = create(:artist)
 
     scope = ArtistPolicy::Scope.new(user, Artist)
 
@@ -42,8 +43,9 @@ class ArtistPolicyTest < ActiveSupport::TestCase
 
   test 'a user scope' do
     user = build(:user)
-    listed_artist = create(:artist)
-    create(:artist, listed: false)
+    published_album = create(:album, published: true)
+    listed_artist = create(:artist, albums: [published_album])
+    create(:artist)
 
     scope = ArtistPolicy::Scope.new(user, Artist)
 

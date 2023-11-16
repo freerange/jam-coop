@@ -15,12 +15,12 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
   test '#index should show both listed and unlisted artist' do
     get artists_url
-    assert_select 'p', @artist.name
+    assert_select 'p', "#{@artist.name} (unlisted)"
 
-    @artist.update(listed: false)
+    @artist.albums << create(:album, published: true)
 
     get artists_url
-    assert_select 'p', "#{@artist.name} (unlisted)"
+    assert_select 'p', @artist.name
   end
 
   test '#show' do
@@ -72,12 +72,12 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#index should only show listed artists' do
     get artists_url
-    assert_select 'p', @artist.name
+    assert_select 'p', { count: 0, text: @artist.name }
 
-    @artist.update(listed: false)
+    @artist.albums << create(:album, published: true)
 
     get artists_url
-    assert_select 'p', { count: 0, text: @artist.name }
+    assert_select 'p', { text: @artist.name }
   end
 
   test '#show' do
