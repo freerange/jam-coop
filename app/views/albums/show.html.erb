@@ -1,6 +1,13 @@
 <%
   set_meta_tags(
     title: "#{@album.title} by #{@album.artist.name}",
+    og: {
+      title: :title,
+      image: (@album.cover.attached? ? url_for(@album.cover.representation(resize_to_limit: [750, 750])) : ''),
+      url: artist_album_url(@album.artist, @album),
+      type: "music.album",
+      description: "An album by #{@album.artist.name} released on jam.coop - a music platform run by and for artists",
+    }
   )
 %>
 
