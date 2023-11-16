@@ -9,18 +9,27 @@ class ArtistTest < ActiveSupport::TestCase
     assert build(:artist).valid?
   end
 
-  test '.listed' do
-    listed_artist = create(:artist, name: 'Listed', listed: true)
-    create(:artist, name: 'Unlisted', listed: false)
+  test '.listed returns artists that have any published albums' do
+    published_album = create(:album, published: true)
+    unpublished_album = create(:album, published: false)
+    listed_artist = create(:artist, name: 'Listed', albums: [published_album, unpublished_album])
+    create(:artist, name: 'Unlisted', albums: [unpublished_album])
 
     assert_equal [listed_artist], Artist.listed
   end
 
-  test '.unlisted' do
-    unlisted_artist = create(:artist, name: 'Unlisted', listed: false)
-    create(:artist, name: 'Listed', listed: true)
+  test '#listed?' do
+    published_album = create(:album, published: true)
+    unpublished_album = create(:album, published: false)
 
-    assert_equal [unlisted_artist], Artist.unlisted
+    artist = create(:artist)
+    assert_not artist.listed?
+
+    artist.albums << unpublished_album
+    assert_not artist.listed?
+
+    artist.albums << published_album
+    assert artist.listed?
   end
 
   test 'uses a friendly id' do

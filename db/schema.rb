@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_13_153733) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_16_143116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,7 +64,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_13_153733) do
     t.string "slug"
     t.string "location"
     t.string "description"
-    t.boolean "listed", default: true, null: false
     t.bigint "user_id"
     t.index ["slug"], name: "index_artists_on_slug", unique: true
     t.index ["user_id"], name: "index_artists_on_user_id"

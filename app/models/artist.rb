@@ -10,10 +10,13 @@ class Artist < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :listed, -> { where(listed: true) }
-  scope :unlisted, -> { where(listed: false) }
+  scope :listed, -> { where.associated(:albums).where('albums.published': true) }
 
   after_update :transcode_albums, if: :metadata_changed?
+
+  def listed?
+    albums.where(published: true).any?
+  end
 
   def transcode_albums
     albums.each(&:transcode_tracks)
