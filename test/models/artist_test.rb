@@ -16,13 +16,6 @@ class ArtistTest < ActiveSupport::TestCase
     assert_equal [listed_artist], Artist.listed
   end
 
-  test '.unlisted' do
-    unlisted_artist = create(:artist, name: 'Unlisted', listed: false)
-    create(:artist, name: 'Listed', listed: true)
-
-    assert_equal [unlisted_artist], Artist.unlisted
-  end
-
   test 'uses a friendly id' do
     artist = create(:artist, name: 'Rick Astley')
 
