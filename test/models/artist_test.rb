@@ -18,6 +18,14 @@ class ArtistTest < ActiveSupport::TestCase
     assert_equal [listed_artist], Artist.listed
   end
 
+  test '.listed only returns artist once if they have multiple published albums' do
+    published_album = create(:album, published: true)
+    another_published_album = create(:album, published: true)
+    listed_artist = create(:artist, name: 'Listed', albums: [published_album, another_published_album])
+
+    assert_equal [listed_artist], Artist.listed
+  end
+
   test '#listed?' do
     published_album = create(:album, published: true)
     unpublished_album = create(:album, published: false)
