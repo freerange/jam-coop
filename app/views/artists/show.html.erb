@@ -1,3 +1,10 @@
+<%
+  set_meta_tags(
+    title: @artist.name,
+    description: @artist.description,
+  )
+%>
+
 <div class="flex flex-row border-b-2 border-b-slate-100 pb-6">
   <div class="basis-1/4 mr-4 m:mr-0">
     <% if @artist.profile_picture.representable? %>

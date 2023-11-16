@@ -1,3 +1,9 @@
+<%
+  set_meta_tags(
+    title: "#{@album.title} by #{@album.artist.name}",
+  )
+%>
+
 <div data-controller="player">
   <div class="flex flex-row gap-4">
     <div class="w-1/2">
