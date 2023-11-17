@@ -7,7 +7,8 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
     purchase = create(:purchase, stripe_session_id:)
     assert_not purchase.completed
 
-    post stripe_webhook_events_path, env: { 'RAW_POST_DATA' => payload }
+    Stripe::Webhook.expects(:construct_event).with(payload, 'signature', nil).returns(stripe_event)
+    post stripe_webhook_events_path, env: { 'RAW_POST_DATA' => payload, 'HTTP_STRIPE_SIGNATURE' => 'signature' }
 
     assert purchase.reload.completed
     assert_response :success
@@ -17,7 +18,8 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
     purchase = create(:purchase, stripe_session_id:)
     assert_nil purchase.customer_email
 
-    post stripe_webhook_events_path, env: { 'RAW_POST_DATA' => payload }
+    Stripe::Webhook.expects(:construct_event).with(payload, 'signature', nil).returns(stripe_event)
+    post stripe_webhook_events_path, env: { 'RAW_POST_DATA' => payload, 'HTTP_STRIPE_SIGNATURE' => 'signature' }
 
     assert_equal customer_email, purchase.reload.customer_email
     assert_response :success
@@ -31,9 +33,9 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
 
   test 'an event that is not checkout.success.completed' do
     event = stub(type: 'an.other.event')
-    Stripe::Event.stubs(:construct_from).returns(event)
+    Stripe::Webhook.stubs(:construct_event).with(payload, 'signature', nil).returns(event)
 
-    post stripe_webhook_events_path, env: { 'RAW_POST_DATA' => payload }
+    post stripe_webhook_events_path, env: { 'RAW_POST_DATA' => payload, 'HTTP_STRIPE_SIGNATURE' => 'signature' }
 
     assert_response :created
   end
@@ -50,5 +52,9 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
 
   def customer_email
     JSON.parse(payload)['data']['object']['customer_details']['email']
+  end
+
+  def stripe_event
+    Stripe::Event.construct_from(JSON.parse(payload), symbolize_names: true)
   end
 end
