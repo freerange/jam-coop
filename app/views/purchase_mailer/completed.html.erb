@@ -1,0 +1,9 @@
+<p>Hey there,</p>
+
+<p>Thank you for purchasing <%= @purchase.album.title %> by <%= @purchase.album.artist.name %>.</p>
+
+<p>Your downloads are <%= link_to "now available", purchase_url(@purchase) %></p>
+
+<p>Thank you for supporting <%= @purchase.album.artist.name %> and jam.coop,</p>
+
+<p>The jam.coop team</p>
