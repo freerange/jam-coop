@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   end
 
   resources :email_subscription_changes, only: %i[create]
+  resources :stripe_webhook_events, only: %i[create]
 
   get 'thankyou', to: 'interests#thankyou'
   get 'confirmation', to: 'interests#confirmation'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_16_143116) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_17_072851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -104,6 +104,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_143116) do
     t.decimal "price", precision: 8, scale: 2
     t.boolean "contact_opt_in", default: false, null: false
     t.string "stripe_session_id"
+    t.boolean "completed", default: false, null: false
+    t.string "customer_email"
     t.index ["album_id"], name: "index_purchases_on_album_id"
   end
 
