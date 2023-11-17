@@ -25,4 +25,14 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
       PurchaseCompleteJob.perform_now(stripe_session_id, customer_email)
     end
   end
+
+  test 'it emails the artist' do
+    stripe_session_id = 'session-id'
+    customer_email = 'email@example.com'
+    purchase = create(:purchase, stripe_session_id:)
+
+    assert_enqueued_email_with PurchaseMailer, :notify_artist, params: { purchase: } do
+      PurchaseCompleteJob.perform_now(stripe_session_id, customer_email)
+    end
+  end
 end

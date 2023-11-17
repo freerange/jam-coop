@@ -8,5 +8,6 @@ class PurchaseCompleteJob < ApplicationJob
     purchase.update(completed: true, customer_email:)
 
     PurchaseMailer.with(purchase:).completed.deliver_later
+    PurchaseMailer.with(purchase:).notify_artist.deliver_later
   end
 end
