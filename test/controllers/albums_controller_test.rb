@@ -13,14 +13,16 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test '#show shows the published state of the album' do
-    @album.update(published: false)
-    get artist_album_url(@album.artist, @album)
-    assert_select 'p', 'This album is currently unpublished'
-
+  test '#show shows a buy button when album is published' do
     @album.update(published: true)
     get artist_album_url(@album.artist, @album)
-    assert_select 'p', 'This album is currently published'
+    assert_select 'button', text: 'Buy'
+  end
+
+  test '#show disables buy button when album is unpublished' do
+    @album.update(published: false)
+    get artist_album_url(@album.artist, @album)
+    assert_select 'button[disabled=disabled]', text: 'Buy'
   end
 
   test '#show shows the transcode state of each track' do
