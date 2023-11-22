@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_152018) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_22_154027) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_152018) do
     t.bigint "artist_id", default: 1, null: false
     t.text "about"
     t.text "credits"
-    t.boolean "published", default: false, null: false
     t.decimal "price", precision: 8, scale: 2, default: "7.0"
     t.date "released_at"
     t.integer "publication_status", default: 0, null: false
