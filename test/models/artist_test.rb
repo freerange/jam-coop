@@ -10,8 +10,8 @@ class ArtistTest < ActiveSupport::TestCase
   end
 
   test '.listed returns artists that have any published albums' do
-    published_album = create(:album, published: true)
-    unpublished_album = create(:album, published: false)
+    published_album = create(:album, publication_status: :published)
+    unpublished_album = create(:album, publication_status: :unpublished)
     listed_artist = create(:artist, name: 'Listed', albums: [published_album, unpublished_album])
     create(:artist, name: 'Unlisted', albums: [unpublished_album])
 
@@ -19,16 +19,16 @@ class ArtistTest < ActiveSupport::TestCase
   end
 
   test '.listed only returns artist once if they have multiple published albums' do
-    published_album = create(:album, published: true)
-    another_published_album = create(:album, published: true)
+    published_album = create(:album, publication_status: :published)
+    another_published_album = create(:album, publication_status: :published)
     listed_artist = create(:artist, name: 'Listed', albums: [published_album, another_published_album])
 
     assert_equal [listed_artist], Artist.listed
   end
 
   test '#listed?' do
-    published_album = create(:album, published: true)
-    unpublished_album = create(:album, published: false)
+    published_album = create(:album, publication_status: :published)
+    unpublished_album = create(:album, publication_status: :unpublished)
 
     artist = create(:artist)
     assert_not artist.listed?

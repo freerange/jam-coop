@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class PublishingAnAlbumTest < ApplicationSystemTestCase
   setup do
-    @album = create(:album, published: false)
+    @album = create(:album, publication_status: :unpublished)
     sign_in_as(create(:user, admin: true))
   end
 

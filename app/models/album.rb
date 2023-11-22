@@ -4,6 +4,8 @@ class Album < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :scoped, scope: :artist
 
+  enum :publication_status, { unpublished: 0, published: 1 }
+
   validates :title, presence: true
   validates :price, presence: true, numericality: true
 
@@ -14,8 +16,8 @@ class Album < ApplicationRecord
 
   has_one_attached :cover
 
-  scope :published, -> { where(published: true) }
-  scope :unpublished, -> { where(published: false) }
+  scope :published, -> { where(publication_status: :published) }
+  scope :unpublished, -> { where(publication_status: :unpublished) }
   scope :in_release_order, -> { order('released_at DESC NULLS LAST') }
 
   after_update :transcode_tracks, if: :metadata_or_cover_changed?
@@ -30,14 +32,14 @@ class Album < ApplicationRecord
   end
 
   def publish
-    update(published: true)
+    published!
 
     ZipDownloadJob.perform_later(self, format: :mp3v0)
     ZipDownloadJob.perform_later(self, format: :flac)
   end
 
   def unpublish
-    update(published: false)
+    unpublished!
   end
 
   def metadata_or_cover_changed?

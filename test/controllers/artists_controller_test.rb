@@ -17,7 +17,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     get artists_url
     assert_select 'p', "#{@artist.name} (unlisted)"
 
-    @artist.albums << create(:album, published: true)
+    @artist.albums << create(:album, publication_status: :published)
 
     get artists_url
     assert_select 'p', @artist.name
@@ -74,7 +74,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     get artists_url
     assert_select 'p', { count: 0, text: @artist.name }
 
-    @artist.albums << create(:album, published: true)
+    @artist.albums << create(:album, publication_status: :published)
 
     get artists_url
     assert_select 'p', { text: @artist.name }
