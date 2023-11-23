@@ -21,4 +21,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_current_path root_url
     user
   end
+
+  def sign_out
+    click_button 'avatar'
+    click_button 'Log out'
+  end
 end
