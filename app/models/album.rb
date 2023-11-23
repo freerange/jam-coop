@@ -31,6 +31,10 @@ class Album < ApplicationRecord
     tracks.each(&:transcode)
   end
 
+  def pending
+    pending!
+  end
+
   def publish
     published!
 

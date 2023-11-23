@@ -125,7 +125,7 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
   end
 
   test '#show when the album is pending publication has a disabled pending publication button in the navbar' do
-    @album.pending!
+    @album.pending
     get artist_album_url(@album.artist, @album)
 
     assert_select 'nav' do

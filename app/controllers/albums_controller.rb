@@ -55,7 +55,7 @@ class AlbumsController < ApplicationController
   def request_publication
     authorize @album
 
-    @album.pending!
+    @album.pending
     AlbumMailer.with(album: @album).request_publication.deliver_later
     redirect_to artist_album_url(@album.artist, @album),
                 notice: "Thank you! We'll email you when your album is published."
