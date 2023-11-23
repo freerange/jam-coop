@@ -42,6 +42,7 @@ class AlbumsController < ApplicationController
     authorize @album
 
     @album.publish
+    AlbumMailer.with(album: @album).published.deliver_later
     redirect_to artist_album_url(@album.artist, @album)
   end
 

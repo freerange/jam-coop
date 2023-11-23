@@ -99,6 +99,12 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert @album.published?
   end
 
+  test '#publish sends an email to the artist' do
+    assert_enqueued_email_with AlbumMailer, :published, params: { album: @album } do
+      patch publish_artist_album_url(@album.artist, @album)
+    end
+  end
+
   test '#unpublish' do
     patch unpublish_artist_album_url(@album.artist, @album)
     assert_redirected_to artist_album_url(@album.artist, @album)
