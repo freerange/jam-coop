@@ -1,0 +1,5 @@
+<p>Hey there,</p>
+
+<p><%= @album.artist.name %> has requested publication of their album <%= @album.title %></p>
+
+<p><%= link_to "Click here", artist_album_url(@album.artist, @album) %> to check everything looks ok and publish their album.</p>

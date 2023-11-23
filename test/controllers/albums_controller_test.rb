@@ -133,11 +133,17 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
     end
   end
 
-  test '#request_publication' do
+  test '#request_publication sets the pending state of the album' do
     patch request_publication_artist_album_url(@album.artist, @album)
     assert_redirected_to artist_album_url(@album.artist, @album)
     @album.reload
     assert @album.pending?
+  end
+
+  test '#request_publication sends an email to notify admins that artist has requested publication' do
+    assert_enqueued_email_with AlbumMailer, :request_publication, params: { album: @album } do
+      patch request_publication_artist_album_url(@album.artist, @album)
+    end
   end
 end
 
