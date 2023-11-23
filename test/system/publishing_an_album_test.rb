@@ -5,19 +5,16 @@ require 'application_system_test_case'
 class PublishingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @album = create(:album, publication_status: :unpublished)
-    sign_in_as(create(:user, admin: true))
+    user = create(:user)
+    user.artists << @album.artist
+    sign_in_as(user)
   end
 
   test 'publishing an album' do
-    visit artists_url
-    click_link @album.artist.name
+    visit artist_url(@album.artist)
     click_link "#{@album.title} (unpublished)"
 
     click_button 'Publish'
-
-    visit artists_url
-    click_link @album.artist.name
-
-    assert_text @album.title
+    assert_text "Thank you! We'll email you when your album is published."
   end
 end

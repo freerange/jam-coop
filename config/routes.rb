@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       member do
         patch 'publish'
         patch 'unpublish'
+        patch 'request_publication'
       end
 
       resources :purchases, only: %i[new create]

@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
+class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   def setup
     @album = create(:album)
     sign_in_as(create(:user, admin: true))
@@ -32,6 +32,15 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
     get artist_album_url(@album.artist, @album)
 
     assert_select 'li', "#{track.title} mp3v0"
+  end
+
+  test '#show when the album is not published has no publish button in the navbar' do
+    @album.unpublish
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'nav' do
+      assert_select 'button', text: 'Publish', count: 0
+    end
   end
 
   test '#show shows the release date of the album' do
@@ -98,6 +107,40 @@ class AlbumsControllerTestSignedIn < ActionDispatch::IntegrationTest
   end
 end
 
+class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
+  setup do
+    @album = create(:album)
+    user = create(:user)
+    user.artists << @album.artist
+    sign_in_as(user)
+  end
+
+  test '#show when the album is not published has a publish button in the navbar' do
+    @album.unpublish
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'nav' do
+      assert_select 'button', text: 'Publish'
+    end
+  end
+
+  test '#show when the album is pending publication has a disabled pending publication button in the navbar' do
+    @album.pending!
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'nav' do
+      assert_select 'button[disabled=disabled]', text: 'Pending publication'
+    end
+  end
+
+  test '#request_publication' do
+    patch request_publication_artist_album_url(@album.artist, @album)
+    assert_redirected_to artist_album_url(@album.artist, @album)
+    @album.reload
+    assert @album.pending?
+  end
+end
+
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
   def setup
     @album = create(:album)
@@ -140,6 +183,11 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#unpublish' do
     patch unpublish_artist_album_url(@album.artist, @album)
+    assert_redirected_to sign_in_url
+  end
+
+  test '#request_publication' do
+    patch request_publication_artist_album_url(@album.artist, @album)
     assert_redirected_to sign_in_url
   end
 end

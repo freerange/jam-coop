@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AlbumsController < ApplicationController
-  before_action :set_album, only: %i[show edit update publish unpublish]
+  before_action :set_album, only: %i[show edit update publish unpublish request_publication]
   skip_before_action :authenticate, only: %i[show]
 
   def show
@@ -50,6 +50,14 @@ class AlbumsController < ApplicationController
 
     @album.unpublish
     redirect_to artist_album_url(@album.artist, @album)
+  end
+
+  def request_publication
+    authorize @album
+
+    @album.pending!
+    redirect_to artist_album_url(@album.artist, @album),
+                notice: "Thank you! We'll email you when your album is published."
   end
 
   private
