@@ -10,6 +10,13 @@
 
   <section id="tracks">
   <h2 class="text-2xl tracking-tight leading-10 font-extrabold my-3">Tracks</h2>
+  <div class="flex items-center gap-2 mb-4">
+    <span class="text-amber-600">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+      </svg>
+    </span> <p>Files must be in <strong>wav</strong> format.</p></div>
+
   <%= form.fields_for :tracks do |f| %>
     <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
       <%= f.text_field :title, class: 'w-full mb-6', required: true %>
@@ -19,7 +26,7 @@
       <% else %>
         <%= f.label :original, "File", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
       <% end %>
-      <%= f.file_field :original, direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+      <%= f.file_field :original, accept: 'audio/x-wav', direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
       <div class="progressContainer hidden w-full h-4 bg-slate-200">
         <div class="progress w-0 h-4 bg-slate-500"></div>
       </div>
@@ -37,7 +44,7 @@
       <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
         <%= f.text_field :title, class: 'w-full mb-6', required: true %>
         <%= f.label :original, "File", class: 'text-slate-600 mb-1 md:mb-0 pr-4' %>
-        <%= f.file_field :original, direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+        <%= f.file_field :original, accept: 'audio/x-wav', direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
         <div class="progressContainer hidden w-full h-4 bg-slate-200">
           <div class="progress w-0 h-4 bg-slate-500"></div>
         </div>
