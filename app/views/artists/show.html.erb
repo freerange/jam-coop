@@ -7,9 +7,11 @@
 
 <div class="flex flex-row border-b-2 border-b-slate-100 pb-6">
   <div class="basis-1/4 mr-4 m:mr-0">
-    <% if @artist.profile_picture.representable? %>
-    <%= image_tag @artist.profile_picture.representation(resize_to_limit: [150, 150]), class: 'm-auto' %>
-    <% end %>
+    <div class="aspect-w-1 aspect-h-1">
+      <% if @artist.profile_picture.representable? %>
+      <%= image_tag @artist.profile_picture.representation(resize_to_limit: [500, 500]), class: 'object-cover' %>
+      <% end %>
+    </div>
   </div>
   <div class="basis-3/4">
     <h2 class="text-2xl font-semibold"><%= @artist.name %></h2>
@@ -22,9 +24,9 @@
   <% @albums.published.in_release_order.each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
     <div>
-      <div class="border border-slate-200">
+      <div class="border border-slate-200 aspect-w-1 aspect-h-1">
         <% if album.cover.representable? %>
-        <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'w-full' %>
+        <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'object-cover' %>
         <% end %>
       </div>
       <p class='text-sm text-slate-500'><%= album.title %></p>
@@ -36,9 +38,9 @@
     <% @albums.unpublished.in_release_order.each do |album| %>
       <%= link_to(artist_album_path(album.artist, album)) do %>
         <div>
-          <div class="border border-slate-200">
+          <div class="border border-slate-200 aspect-w-1 aspect-h-1">
           <% if album.cover.representable? %>
-          <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'w-full' %>
+          <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'object-cover' %>
           <% end %>
           </div>
           <p class='text-sm text-slate-500'><%= album.title %> (unpublished)</p>

@@ -18,9 +18,9 @@
     <% Album.published.order('RANDOM()').take(8).each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
     <div>
-      <div class="border border-slate-200">
+      <div class="border border-slate-200 aspect-w-1 aspect-h-1">
         <% if album.cover.representable? %>
-        <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'w-full' %>
+        <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'object-cover' %>
         <% end %>
       </div>
       <p class='text-sm text-slate-500'><%= album.title %></p>
