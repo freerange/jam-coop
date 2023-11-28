@@ -29,8 +29,13 @@
       <div class="bg-white p-2 sm:p-6 sm:mt-2 sm:shadow-sm">
         <%= yield %>
       </div>
-      <footer class="flex flex-row justify-end mt-2 text-slate-400 text-sm px-2 sm:px-0">
-        <p>A <a class="underline" href="https://gofreerange.com">Go Free Range</a> project</p>
+      <footer class="flex flex-row justify-between mt-2 mb-4 text-slate-400 text-sm px-2 sm:px-0">
+        <div>
+          <p><%= link_to "About", about_url, class: "underline" %></p>
+        </div>
+        <div>
+          <p>A <a class="underline" href="https://gofreerange.com">Go Free Range</a> project</p>
+        </div>
       </footer>
       <% if Current.user&.admin? && content_for(:admin) %>
       <div class="bg-slate-200 p-2 mb-4 sm:p-6 sm:mt-4 sm:shadow-sm rounded">
