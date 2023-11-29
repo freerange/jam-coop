@@ -31,6 +31,9 @@ jobs:
         ports: ["5432:5432"]
 
     steps:
+      - name: Updates package index files
+        run: sudo apt-get update
+
       - name: Install libvips
         run: sudo apt-get install -y libvips
 
