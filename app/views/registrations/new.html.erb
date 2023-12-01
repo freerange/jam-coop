@@ -1,0 +1,9 @@
+<%= render 'shared/page_header', text: 'Sign up' %>
+
+<%= form_with(url: sign_up_path, builder: TailwindFormBuilder) do |form| %>
+  <%= render('shared/errors', model: @user) %>
+  <%= form.email_field :email, value: @user.email, required: true, autofocus: true, autocomplete: "email", class: 'w-full mb-3' %>
+  <%= form.password_field :password, required: true, autocomplete: "new-password", class: 'w-full mb-3' %>
+  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", class: 'w-full mb-3' %>
+  <%= form.submit "Sign up", class: 'w-full mt-6' %>
+<% end %>

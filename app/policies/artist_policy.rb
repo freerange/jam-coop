@@ -16,7 +16,7 @@ class ArtistPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin?
+    user.admin? || (user.artists.count < 2)
   end
 
   def edit?
@@ -28,7 +28,7 @@ class ArtistPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin?
+    user.admin? || (user.artists.count < 2)
   end
 
   def view_unpublished_albums?

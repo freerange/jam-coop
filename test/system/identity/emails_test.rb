@@ -5,7 +5,7 @@ require 'application_system_test_case'
 module Identity
   class EmailsTest < ApplicationSystemTestCase
     setup do
-      @user = sign_in_as(create(:user))
+      @user = log_in_as(create(:user))
     end
 
     test 'updating the email' do

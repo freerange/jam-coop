@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get  'sign_in', to: 'sessions#new'
-  post 'sign_in', to: 'sessions#create'
+  get  'log_in', to: 'sessions#new'
+  post 'log_in', to: 'sessions#create'
+
+  post 'sign_up', to: 'registrations#create'
+  get  'sign_up', to: 'registrations#new'
 
   get  'about', to: 'pages#about'
 
-  resources :invitations, only: %i[new create]
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
   namespace :identity do

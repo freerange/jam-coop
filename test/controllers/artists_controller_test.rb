@@ -4,7 +4,8 @@ require 'test_helper'
 
 class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as(create(:user, admin: true))
+    @user = create(:user, admin: true)
+    log_in_as(@user)
     @artist = create(:artist)
   end
 
@@ -37,6 +38,14 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_difference('Artist.count') do
       post artists_url, params: { artist: { name: 'Example' } }
     end
+
+    assert_redirected_to artist_url(Artist.last)
+  end
+
+  test '#create associates the new artist with the current user' do
+    post artists_url, params: { artist: { name: 'Example' } }
+
+    assert_equal @user, Artist.last.user
 
     assert_redirected_to artist_url(Artist.last)
   end
@@ -87,27 +96,27 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#new' do
     get new_artist_url
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#create' do
     post artists_url, params: { artist: { name: 'Example' } }
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#edit' do
     get edit_artist_url(@artist)
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#update' do
     patch artist_url(@artist), params: { artist: { name: 'New name' } }
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#destroy' do
     delete artist_url(@artist)
 
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 end

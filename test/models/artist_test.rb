@@ -46,6 +46,13 @@ class ArtistTest < ActiveSupport::TestCase
     assert_equal artist, Artist.friendly.find('rick-astley')
   end
 
+  test 'uses slug candidates in case of clashses' do
+    assert_equal 'rick-astley', create(:artist, name: 'Rick Astley').slug
+    assert_equal 'rick-astley-music', create(:artist, name: 'Rick Astley').slug
+    assert_equal 'rick-astley-sounds', create(:artist, name: 'Rick Astley').slug
+    assert_match(/rick-astley-*/, create(:artist, name: 'Rick Astley').slug)
+  end
+
   test 'transcode_albums' do
     artist = create(:artist)
     create(:album_with_tracks, artist:, number_of_tracks: 2)

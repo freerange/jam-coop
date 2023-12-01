@@ -7,17 +7,17 @@ class SessionsTest < ApplicationSystemTestCase
     @user = create(:user)
   end
 
-  test 'signing in' do
-    visit sign_in_url
+  test 'logging in' do
+    visit log_in_url
     fill_in 'Email', with: @user.email
     fill_in 'Password', with: 'Secret1*3*5*'
-    click_button 'Sign in'
+    click_button 'Log in'
 
-    assert_text 'Signed in successfully'
+    assert_text 'Logged in successfully'
   end
 
-  test 'signing out' do
-    sign_in_as @user
+  test 'logging out' do
+    log_in_as @user
 
     click_button 'avatar'
     click_button 'Log out'

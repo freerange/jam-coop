@@ -7,7 +7,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     @album = create(:album, publication_status: :unpublished)
     user = create(:user)
     user.artists << @album.artist
-    sign_in_as(user)
+    log_in_as(user)
   end
 
   test 'publishing an album' do
@@ -20,7 +20,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
 
     # Admin approves publication
     admin = create(:user, admin: true, email: 'admin@example.com')
-    sign_in_as(admin)
+    log_in_as(admin)
     visit link_in_publish_request_email
     click_button 'Publish'
     sign_out

@@ -5,7 +5,7 @@ require 'test_helper'
 class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   def setup
     @album = create(:album)
-    sign_in_as(create(:user, admin: true))
+    log_in_as(create(:user, admin: true))
   end
 
   test '#show' do
@@ -118,7 +118,7 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
     @album = create(:album)
     user = create(:user)
     user.artists << @album.artist
-    sign_in_as(user)
+    log_in_as(user)
   end
 
   test '#show when the album is not published has a publish button in the navbar' do
@@ -170,36 +170,36 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#new' do
     get new_artist_album_url(@album.artist)
-    assert_redirected_to sign_in_url
+    assert_redirected_to log_in_url
   end
 
   test '#create' do
     post artist_albums_url(@album.artist), params: { album: { title: 'Example' } }
-    assert_redirected_to sign_in_url
+    assert_redirected_to log_in_url
   end
 
   test '#edit' do
     get edit_artist_album_url(@album.artist, @album)
-    assert_redirected_to sign_in_url
+    assert_redirected_to log_in_url
   end
 
   test '#update' do
     patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
-    assert_redirected_to sign_in_url
+    assert_redirected_to log_in_url
   end
 
   test '#publish' do
     patch publish_artist_album_url(@album.artist, @album)
-    assert_redirected_to sign_in_url
+    assert_redirected_to log_in_url
   end
 
   test '#unpublish' do
     patch unpublish_artist_album_url(@album.artist, @album)
-    assert_redirected_to sign_in_url
+    assert_redirected_to log_in_url
   end
 
   test '#request_publication' do
     patch request_publication_artist_album_url(@album.artist, @album)
-    assert_redirected_to sign_in_url
+    assert_redirected_to log_in_url
   end
 end

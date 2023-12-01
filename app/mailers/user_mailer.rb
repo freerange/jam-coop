@@ -18,11 +18,4 @@ class UserMailer < ApplicationMailer
 
     mail to: @user.email, subject: 'Verify your email'
   end
-
-  def invitation_instructions
-    @user = params[:user]
-    @signed_id = @user.password_reset_tokens.create.signed_id(expires_in: 1.day)
-
-    mail to: @user.email, subject: 'You have been invited to jam.coop'
-  end
 end

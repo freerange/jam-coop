@@ -11,6 +11,9 @@
     <% user.artists.each do |artist| %>
     <%= link_to artist.name, artist_path(artist), class: "block px-4 py-2 text-slate-800 text-sm hover:bg-amber-500 hover:text-white" %>
     <% end %>
+    <% if policy(Artist).new? %>
+       <%= link_to "Add artist", new_artist_path, class: "block px-4 py-2 text-slate-800 text-sm hover:bg-amber-500 hover:text-white" %>
+    <% end %>
 
     <hr class="my-2" />
     <%= link_to "Change password", edit_password_path, class: "block px-4 py-2 text-slate-800 text-sm hover:bg-amber-500 hover:text-white" %>

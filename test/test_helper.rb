@@ -11,8 +11,8 @@ module ActiveSupport
     # Run tests in parallel with specified workers
     # parallelize(workers: :number_of_processors)
 
-    def sign_in_as(user)
-      post(sign_in_url, params: { email: user.email, password: 'Secret1*3*5*' })
+    def log_in_as(user)
+      post(log_in_url, params: { email: user.email, password: 'Secret1*3*5*' })
       user
     end
   end
