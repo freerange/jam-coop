@@ -10,8 +10,10 @@ const app = new cdk.App();
 
 new MusicCoopStack(app, 'MusicCoopProductionStack', {
   env: { account: AWS_ACCOUNT_ID, region: AWS_REGION },
+  cdnBucketName: 'music-coop-cdn-prod',
 });
 
 new MusicCoopStack(app, 'MusicCoopDevelopmentStack', {
   env: { account: AWS_ACCOUNT_ID, region: AWS_REGION },
+  cdnBucketName: 'music-coop-cdn-dev',
 });
