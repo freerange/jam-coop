@@ -4,7 +4,8 @@ require 'test_helper'
 
 class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   setup do
-    log_in_as(create(:user, admin: true))
+    @user = create(:user, admin: true)
+    log_in_as(@user)
     @artist = create(:artist)
   end
 
@@ -37,6 +38,14 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_difference('Artist.count') do
       post artists_url, params: { artist: { name: 'Example' } }
     end
+
+    assert_redirected_to artist_url(Artist.last)
+  end
+
+  test '#create associates the new artist with the current user' do
+    post artists_url, params: { artist: { name: 'Example' } }
+
+    assert_equal @user, Artist.last.user
 
     assert_redirected_to artist_url(Artist.last)
   end
