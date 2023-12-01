@@ -4,7 +4,7 @@ require 'test_helper'
 
 class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as(create(:user, admin: true))
+    log_in_as(create(:user, admin: true))
     @artist = create(:artist)
   end
 
@@ -87,27 +87,27 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#new' do
     get new_artist_url
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#create' do
     post artists_url, params: { artist: { name: 'Example' } }
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#edit' do
     get edit_artist_url(@artist)
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#update' do
     patch artist_url(@artist), params: { artist: { name: 'New name' } }
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#destroy' do
     delete artist_url(@artist)
 
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 end

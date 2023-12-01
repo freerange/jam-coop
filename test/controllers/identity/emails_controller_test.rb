@@ -5,7 +5,7 @@ require 'test_helper'
 module Identity
   class EmailsControllerTest < ActionDispatch::IntegrationTest
     setup do
-      @user = sign_in_as(create(:user))
+      @user = log_in_as(create(:user))
     end
 
     test 'should get edit' do

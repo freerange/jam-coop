@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class InvitingUsersTest < ApplicationSystemTestCase
   setup do
-    sign_in_as(create(:user, admin: true))
+    log_in_as(create(:user, admin: true))
     create(:artist, name: 'The Beatles')
   end
 

@@ -10,7 +10,7 @@ module Identity
     end
 
     test 'sending a password reset email' do
-      visit sign_in_url
+      visit log_in_url
       click_link 'Forgot your password?'
 
       fill_in 'Email', with: @user.email

@@ -1,14 +1,14 @@
-<%= render 'shared/page_header', text: 'Sign in' %>
+<%= render 'shared/page_header', text: 'Log in' %>
 
 <p class="text-slate-600 mb-4"><%= text_link_to "jam.coop", root_path %> is currently invite only. If you have a user account, sign in below. If you're an artist and would like to sell your music on jam.coop please <%= text_link_to "read our FAQ page", about_path %> and <%= text_link_to "send us an email", "mailto:contact@jam.coop" %>.</p>
 
-<%= form_with(url: sign_in_path, builder: TailwindFormBuilder) do |form| %>
+<%= form_with(url: log_in_path, builder: TailwindFormBuilder) do |form| %>
   <%= render('shared/alert_box', message: alert) if alert %>
   <%= render('shared/notice_box', message: notice) if notice %>
 
   <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full mb-3" %>
   <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full mb-3" %>
-  <%= form.submit "Sign in", class: "w-full mt-3" %>
+  <%= form.submit "Log in", class: "w-full mt-3" %>
 <% end %>
 
 <div class="mt-6">

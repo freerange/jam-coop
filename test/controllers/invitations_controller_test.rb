@@ -4,7 +4,7 @@ require 'test_helper'
 
 class InvitationsControllerTestSignedIn < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as(create(:user, admin: true))
+    log_in_as(create(:user, admin: true))
   end
 
   test '#new' do
@@ -45,11 +45,11 @@ end
 class InvitationsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#new' do
     get new_invitation_url
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 
   test '#create' do
     post invitations_url, params: { email: 'alice@example.com' }
-    assert_redirected_to sign_in_path
+    assert_redirected_to log_in_path
   end
 end

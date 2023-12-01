@@ -25,7 +25,7 @@ module Identity
         post identity_password_reset_url, params: { email: @user.email }
       end
 
-      assert_redirected_to sign_in_url
+      assert_redirected_to log_in_url
     end
 
     test 'should not send a password reset email to a nonexistent email' do
@@ -53,7 +53,7 @@ module Identity
 
       patch identity_password_reset_url,
             params: { sid:, password: 'Secret6*4*2*', password_confirmation: 'Secret6*4*2*' }
-      assert_redirected_to sign_in_url
+      assert_redirected_to log_in_url
     end
 
     test 'should not update password with expired token' do

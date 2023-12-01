@@ -9,7 +9,7 @@ class ArtistsTest < ApplicationSystemTestCase
 
   test 'adding a new artist' do
     admin = create(:user, admin: true)
-    sign_in_as(admin)
+    log_in_as(admin)
 
     visit artists_url
     click_link 'New artist'
@@ -24,7 +24,7 @@ class ArtistsTest < ApplicationSystemTestCase
   test 'editing a new artist' do
     @artist.save
     artist_user = create(:user, artists: [@artist])
-    sign_in_as(artist_user)
+    log_in_as(artist_user)
 
     visit artist_url(@artist)
     assert_text @artist.name

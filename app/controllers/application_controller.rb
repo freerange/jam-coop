@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to sign_in_path unless Current.user
+    redirect_to log_in_path unless Current.user
   end
 
   def set_current_request_details

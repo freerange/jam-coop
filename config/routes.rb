@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get  'sign_in', to: 'sessions#new'
-  post 'sign_in', to: 'sessions#create'
+  get  'log_in', to: 'sessions#new'
+  post 'log_in', to: 'sessions#create'
 
   get  'about', to: 'pages#about'
 
