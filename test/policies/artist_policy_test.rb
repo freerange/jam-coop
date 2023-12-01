@@ -74,4 +74,13 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert_not policy.create?
     assert_not policy.new?
   end
+
+  test 'unverified users should not be able to create artists' do
+    user = create(:user, verified: false)
+
+    policy = ArtistPolicy.new(user, :_)
+
+    assert_not policy.create?
+    assert_not policy.new?
+  end
 end
