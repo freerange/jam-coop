@@ -8,4 +8,8 @@ class NullUser
   def artists
     []
   end
+
+  def verified?
+    false
+  end
 end
