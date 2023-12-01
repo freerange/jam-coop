@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 
 interface MusicCoopStackProps extends cdk.StackProps {
   readonly cdnBucketName: string;
@@ -10,7 +11,7 @@ export class MusicCoopStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: MusicCoopStackProps) {
     super(scope, id, props);
 
-    new s3.Bucket(this, 'cdnBucket', {
+    const cdnBucket = new s3.Bucket(this, 'cdnBucket', {
       bucketName: props.cdnBucketName,
       publicReadAccess: true,
       blockPublicAccess: {
@@ -19,6 +20,15 @@ export class MusicCoopStack extends cdk.Stack {
         ignorePublicAcls: false,
         restrictPublicBuckets: false,
       }
+    });
+
+    new cloudfront.CloudFrontWebDistribution(this, 'cdnDistribution', {
+      originConfigs: [
+        {
+          s3OriginSource: { s3BucketSource: cdnBucket },
+          behaviors : [{ isDefaultBehavior: true }],
+        },
+      ],
     });
   }
 }
