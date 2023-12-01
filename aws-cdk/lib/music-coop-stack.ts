@@ -22,13 +22,17 @@ export class MusicCoopStack extends cdk.Stack {
       }
     });
 
-    new cloudfront.CloudFrontWebDistribution(this, 'cdnDistribution', {
+    const cdnDistribution = new cloudfront.CloudFrontWebDistribution(this, 'cdnDistribution', {
       originConfigs: [
         {
           s3OriginSource: { s3BucketSource: cdnBucket },
           behaviors : [{ isDefaultBehavior: true }],
         },
       ],
+    });
+
+    new cdk.CfnOutput(this, 'cdnDistributionDomainName', {
+      value: cdnDistribution.distributionDomainName
     });
   }
 }
