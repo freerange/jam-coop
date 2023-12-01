@@ -12,6 +12,13 @@ export class MusicCoopStack extends cdk.Stack {
 
     new s3.Bucket(this, 'cdnBucket', {
       bucketName: props.cdnBucketName,
+      publicReadAccess: true,
+      blockPublicAccess: {
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      }
     });
   }
 }
