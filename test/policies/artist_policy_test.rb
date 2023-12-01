@@ -34,10 +34,10 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     policy = ArtistPolicy.new(user, artist)
 
     assert_not policy.destroy?
-    assert_not policy.create?
+    assert policy.create?
     assert_not policy.update?
     assert_not policy.edit?
-    assert_not policy.new?
+    assert policy.new?
     assert_not policy.view_unpublished_albums?
   end
 
@@ -59,10 +59,19 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     policy = ArtistPolicy.new(user, artist)
 
     assert_not policy.destroy?
-    assert_not policy.create?
+    assert policy.create?
     assert policy.update?
     assert policy.edit?
-    assert_not policy.new?
+    assert policy.new?
     assert policy.view_unpublished_albums?
+  end
+
+  test 'users should not be able to create more than two artists' do
+    user = create(:user, artists: create_list(:artist, 2))
+
+    policy = ArtistPolicy.new(user, :_)
+
+    assert_not policy.create?
+    assert_not policy.new?
   end
 end
