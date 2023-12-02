@@ -19,6 +19,7 @@ const certificateProductionStack = new CertificateStack(app, 'CertificateProduct
 new MusicCoopStack(app, 'MusicCoopProductionStack', {
   env: { account: AWS_ACCOUNT_ID, region: AWS_REGION },
   crossRegionReferences: true,
+  cdnUsername: 'cdnProductionUser',
   cdnBucketName: 'music-coop-cdn-production',
   cdnCertificate: certificateProductionStack.certificate,
 });
@@ -32,6 +33,7 @@ const certificateDevelopmentStack = new CertificateStack(app, 'CertificateDevelo
 new MusicCoopStack(app, 'MusicCoopDevelopmentStack', {
   env: { account: AWS_ACCOUNT_ID, region: AWS_REGION },
   crossRegionReferences: true,
+  cdnUsername: 'cdnDevelopmentUser',
   cdnBucketName: 'music-coop-cdn-development',
   cdnCertificate: certificateDevelopmentStack.certificate,
 });
