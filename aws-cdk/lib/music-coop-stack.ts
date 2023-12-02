@@ -5,6 +5,7 @@ import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 
 interface MusicCoopStackProps extends cdk.StackProps {
   readonly cdnBucketName: string;
+  readonly cdnCertificate: cloudfront.ViewerCertificate;
 }
 
 export class MusicCoopStack extends cdk.Stack {
@@ -29,6 +30,7 @@ export class MusicCoopStack extends cdk.Stack {
           behaviors : [{ isDefaultBehavior: true }],
         },
       ],
+      viewerCertificate: props.cdnCertificate,
     });
 
     new cdk.CfnOutput(this, 'cdnDistributionDomainName', {
