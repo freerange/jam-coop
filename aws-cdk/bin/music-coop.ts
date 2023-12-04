@@ -21,7 +21,9 @@ new MusicCoopStack(app, 'MusicCoopProductionStack', {
   crossRegionReferences: true,
   cdnUsername: 'cdnProductionUser',
   cdnBucketName: 'music-coop-cdn-production',
+  cdnDomainName: 'cdn.jam.coop',
   cdnCertificate: certificateProductionStack.certificate,
+  originDomainName: 'jam.coop'
 });
 
 const certificateDevelopmentStack = new CertificateStack(app, 'CertificateDevelopmentStack', {
@@ -35,5 +37,7 @@ new MusicCoopStack(app, 'MusicCoopDevelopmentStack', {
   crossRegionReferences: true,
   cdnUsername: 'cdnDevelopmentUser',
   cdnBucketName: 'music-coop-cdn-development',
+  cdnDomainName: 'cdn-dev.jam.coop',
   cdnCertificate: certificateDevelopmentStack.certificate,
+  originDomainName: 'dev.jam.coop',
 });

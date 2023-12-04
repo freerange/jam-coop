@@ -2,12 +2,16 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import * as acm from 'aws-cdk-lib/aws-certificatemanager';
 
 interface MusicCoopStackProps extends cdk.StackProps {
   readonly cdnUsername: string;
   readonly cdnBucketName: string;
-  readonly cdnCertificate: cloudfront.ViewerCertificate;
+  readonly cdnDomainName: string;
+  readonly cdnCertificate: acm.Certificate;
+  readonly originDomainName: string;
 }
 
 export class MusicCoopStack extends cdk.Stack {
@@ -37,14 +41,14 @@ export class MusicCoopStack extends cdk.Stack {
     cdnBucket.grantPut(cdnUser);
     cdnBucket.grantDelete(cdnUser);
 
-    const cdnDistribution = new cloudfront.CloudFrontWebDistribution(this, 'cdnDistribution', {
-      originConfigs: [
-        {
-          s3OriginSource: { s3BucketSource: cdnBucket },
-          behaviors : [{ isDefaultBehavior: true }],
-        },
-      ],
-      viewerCertificate: props.cdnCertificate,
+    const cdnDistribution = new cloudfront.Distribution(this, 'cdnDistribution', {
+      defaultBehavior: {
+        origin: new origins.HttpOrigin(props.originDomainName, {
+          protocolPolicy: cloudfront.OriginProtocolPolicy.HTTPS_ONLY
+        })
+      },
+      domainNames: [props.cdnDomainName],
+      certificate: props.cdnCertificate,
     });
 
     new cdk.CfnOutput(this, 'cdnUserAccessKey', {
