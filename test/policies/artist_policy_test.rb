@@ -13,7 +13,6 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert policy.update?
     assert policy.edit?
     assert policy.new?
-    assert policy.view_unpublished_albums?
   end
 
   test 'an admin scope' do
@@ -38,7 +37,6 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert_not policy.update?
     assert_not policy.edit?
     assert policy.new?
-    assert_not policy.view_unpublished_albums?
   end
 
   test 'a user scope' do
@@ -63,7 +61,6 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert policy.update?
     assert policy.edit?
     assert policy.new?
-    assert policy.view_unpublished_albums?
   end
 
   test 'users should not be able to create more than two artists' do

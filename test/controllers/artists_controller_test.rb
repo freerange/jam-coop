@@ -24,9 +24,28 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_select 'p', @artist.name
   end
 
-  test '#show' do
+  test '#show should include published albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
+
     get artist_url(@artist)
-    assert_response :success
+
+    assert_select 'p', 'Album Title'
+  end
+
+  test '#show should include unpublished albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :unpublished)
+
+    get artist_url(@artist)
+
+    assert_select 'p', 'Album Title (unpublished)'
+  end
+
+  test '#show should include pending albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :pending)
+
+    get artist_url(@artist)
+
+    assert_select 'p', 'Album Title (pending)'
   end
 
   test '#new' do
@@ -69,6 +88,40 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   end
 end
 
+class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
+  setup do
+    @user = create(:user)
+    @artist = create(:artist)
+    @user.artists << @artist
+
+    log_in_as(@user)
+  end
+
+  test '#show should include published albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
+
+    get artist_url(@artist)
+
+    assert_select 'p', 'Album Title'
+  end
+
+  test '#show should include unpublished albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :unpublished)
+
+    get artist_url(@artist)
+
+    assert_select 'p', 'Album Title (unpublished)'
+  end
+
+  test '#show should include pending albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :pending)
+
+    get artist_url(@artist)
+
+    assert_select 'p', 'Album Title (pending)'
+  end
+end
+
 class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   setup do
     @artist = create(:artist)
@@ -89,9 +142,28 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_select 'p', { text: @artist.name }
   end
 
-  test '#show' do
+  test '#show should include published albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
+
     get artist_url(@artist)
-    assert_response :success
+
+    assert_select 'p', 'Album Title'
+  end
+
+  test '#show should not include unpublished albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :unpublished)
+
+    get artist_url(@artist)
+
+    assert_select 'p', { text: 'Album Title (unpublished)', count: 0 }
+  end
+
+  test '#show should not include pending albums' do
+    @artist.albums << create(:album, title: 'Album Title', publication_status: :pending)
+
+    get artist_url(@artist)
+
+    assert_select 'p', { text: 'Album Title (pending)', count: 0 }
   end
 
   test '#new' do
