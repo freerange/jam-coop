@@ -8,18 +8,24 @@ const AWS_REGION = 'us-west-2'
 
 const app = new cdk.App();
 
+const CDN_DOMAIN_NAME_PRODUCTION = 'cdn.jam.coop';
+const CDN_ORIGIN_DOMAIN_NAME_PRODUCTION = 'jam.coop';
+
 new MusicCoopStack(app, 'MusicCoopProductionStack', {
   env: { account: AWS_ACCOUNT_ID, region: AWS_REGION },
   s3Username: 'music-coop-s3-user-production',
   s3BucketName: 'music-coop-production',
-  cdnDomainName: 'cdn.jam.coop',
-  cdnOriginDomainName: 'jam.coop'
+  cdnDomainName: CDN_DOMAIN_NAME_PRODUCTION,
+  cdnOriginDomainName: CDN_ORIGIN_DOMAIN_NAME_PRODUCTION,
 });
+
+const CDN_DOMAIN_NAME_DEVELOPMENT = 'cdn-dev.jam.coop';
+const CDN_ORIGIN_DOMAIN_NAME_DEVELOPMENT = 'dev.jam.coop';
 
 new MusicCoopStack(app, 'MusicCoopDevelopmentStack', {
   env: { account: AWS_ACCOUNT_ID, region: AWS_REGION },
   s3Username: 'music-coop-s3-user-development',
   s3BucketName: 'music-coop-development',
-  cdnDomainName: 'cdn-dev.jam.coop',
-  cdnOriginDomainName: 'dev.jam.coop'
+  cdnDomainName: CDN_DOMAIN_NAME_DEVELOPMENT,
+  cdnOriginDomainName: CDN_ORIGIN_DOMAIN_NAME_DEVELOPMENT
 });
