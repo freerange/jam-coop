@@ -54,5 +54,13 @@
   </div>
   </section>
 
+  <h2 class="text-xl tracking-tight leading-10 font-bold my-3">Notice</h2>
+
+  <p class="mb-3">By uploading your music you confirm you have read
+    and agree to our <%= text_link_to "Terms of use", terms_path
+    %>. In particular you must own the rights to, or have permission
+    from the rights-holder for any music or other content you
+    upload.</p>
+
   <%= form.submit "Save", class: 'w-full mt-6', data: { 'multiple-upload-target': "save" } %>
 <% end %>
