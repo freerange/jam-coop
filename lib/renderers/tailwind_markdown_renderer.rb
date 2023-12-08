@@ -28,5 +28,9 @@ module Renderers
     def block_code(code, _)
       "<pre class=\"mb-3\"><code>#{code}</code></pre>"
     end
+
+    def link(link, _, content)
+      "<a href=\"#{link}\" class=\"underline decoration-amber-600 hover:bg-amber-500\">#{content}</a>"
+    end
   end
 end
