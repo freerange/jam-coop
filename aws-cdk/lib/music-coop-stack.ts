@@ -4,10 +4,12 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as acm from 'aws-cdk-lib/aws-certificatemanager';
 
 interface MusicCoopStackProps extends cdk.StackProps {
   readonly s3Username: string;
   readonly s3BucketName: string;
+  readonly cdnCertificate: acm.Certificate;
   readonly cdnDomainName: string;
   readonly cdnOriginDomainName: string;
 }
@@ -48,6 +50,7 @@ export class MusicCoopStack extends cdk.Stack {
         })
       },
       domainNames: [props.cdnDomainName],
+      certificate: props.cdnCertificate
     });
 
     new cdk.CfnOutput(this, 's3UserAccessKey', {
