@@ -5,4 +5,5 @@ class PagesController < ApplicationController
   before_action :skip_authorization
 
   def about; end
+  def terms; end
 end

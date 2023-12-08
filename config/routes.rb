@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get  'sign_up', to: 'registrations#new'
 
   get  'about', to: 'pages#about'
+  get  'terms', to: 'pages#terms'
 
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
