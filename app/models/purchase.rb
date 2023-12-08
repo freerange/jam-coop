@@ -8,8 +8,16 @@ class Purchase < ApplicationRecord
   validates :price, presence: true, numericality: true
   validate :price_is_greater_than_album_price, unless: -> { price.blank? }
 
-  def price_in_pence
-    (price * 100).to_i
+  def price_excluding_gratuity_in_pence
+    (album.price * 100).to_i
+  end
+
+  def gratuity?
+    price > album.price
+  end
+
+  def gratuity_in_pence
+    ((price - album.price) * 100).to_i
   end
 
   private

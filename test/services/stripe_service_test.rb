@@ -29,16 +29,19 @@ class StripeServiceTest < ActiveSupport::TestCase
     StripeService.new(@purchase).create_checkout_session
   end
 
-  test 'creates stripe checkout session with the correct line items' do
+  test 'adds a product line item if the customer pays the suggested price' do
+    album = create(:album, price: 5.00)
+    purchase = create(:purchase, price: 5.00, album:)
+
     expected_line_item = {
       price_data: {
         currency: 'gbp',
-        unit_amount: @purchase.price_in_pence,
+        unit_amount: 500,
         product_data: {
           name: @purchase.album.title,
-          description: "#{@purchase.album.title} by #{@purchase.album.artist.name}",
+          description: "#{purchase.album.title} by #{purchase.album.artist.name}",
           metadata: {
-            productId: @purchase.album.id
+            productId: purchase.album.id
           }
         }
       },
@@ -46,7 +49,44 @@ class StripeServiceTest < ActiveSupport::TestCase
     }
     Stripe::Checkout::Session.expects(:create).with(has_entry(line_items: [expected_line_item]))
 
-    StripeService.new(@purchase).create_checkout_session
+    StripeService.new(purchase).create_checkout_session
+  end
+
+  test 'adds a product line item and a gratuity if the customer pays more than the suggested price' do
+    album = create(:album, price: 5.00)
+    purchase = create(:purchase, price: 8.00, album:)
+
+    expected_purchase_line_item = {
+      price_data: {
+        currency: 'gbp',
+        unit_amount: 500,
+        product_data: {
+          name: purchase.album.title,
+          description: "#{purchase.album.title} by #{purchase.album.artist.name}",
+          metadata: {
+            productId: purchase.album.id
+          }
+        }
+      },
+      quantity: 1
+    }
+
+    expected_gratuity_line_item = {
+      price_data: {
+        currency: 'gbp',
+        unit_amount: 300,
+        product_data: {
+          name: 'Extra contribution',
+          tax_code: 'txcd_90020001'
+        }
+      },
+      quantity: 1
+    }
+    Stripe::Checkout::Session.expects(:create).with(
+      has_entry(line_items: [expected_purchase_line_item, expected_gratuity_line_item])
+    )
+
+    StripeService.new(purchase).create_checkout_session
   end
 
   test 'returns an ok status if session created successfully' do
