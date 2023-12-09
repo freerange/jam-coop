@@ -27,5 +27,10 @@ module MusicCoop
     config.eager_load_paths << Rails.root.join('app/form_builders')
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.middleware.use Rack::Maintenance, {
+      file: Rails.public_path.join('maintenance.html'),
+      env: 'MAINTENANCE'
+    }
   end
 end
