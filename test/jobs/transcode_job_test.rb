@@ -37,4 +37,18 @@ class TranscodeJobTest < ActiveJob::TestCase
     assert_equal 1, track.transcodes.count
     assert_not_equal old_transcode.file, new_transcode.file
   end
+
+  test 'uses /var/data for tmp files when that path exists' do
+    Dir.stubs(:exist?).with('/var/data').returns(true)
+    Tempfile.expects(:create).with('transcode', '/var/data')
+
+    TranscodeJob.perform_now(build(:track))
+  end
+
+  test 'uses default for tmp files when /var/data does not exist' do
+    Dir.stubs(:exist?).with('/var/data').returns(false)
+    Tempfile.expects(:create).with('transcode', nil)
+
+    TranscodeJob.perform_now(build(:track))
+  end
 end
