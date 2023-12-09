@@ -12,7 +12,7 @@
     <%= link_to(artist_path(artist)) do %>
     <div class="border border-slate-200 w-full aspect-w-1 aspect-h-1">
       <% if artist.profile_picture.representable? %>
-      <%= image_tag artist.profile_picture.representation(resize_to_fill: [300, 300]), class: 'w-full' %>
+      <%= image_tag cdn_url(artist.profile_picture.representation(resize_to_fill: [300, 300])), class: 'w-full' %>
       <% end %>
     </div>
     <p class='text-sm text-slate-500'><%= artist.name %><%= artist.listed? ? '' : ' (unlisted)' %></p>

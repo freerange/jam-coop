@@ -54,4 +54,25 @@ Rails.application.routes.draw do
   get 'confirmation', to: 'interests#confirmation'
 
   root 'interests#new'
+
+  direct :cdn do |model, options|
+    expires_in = options.delete(:expires_in) { ActiveStorage.urls_expire_in }
+
+    if model.respond_to?(:signed_id)
+      route_for(
+        :rails_service_blob_proxy,
+        model.signed_id(expires_in:),
+        model.filename,
+        options.merge(host: Rails.configuration.cdn_host, protocol: 'https', port: nil)
+      )
+    else
+      route_for(
+        :rails_blob_representation_proxy,
+        model.blob.signed_id(expires_in:),
+        model.variation.key,
+        model.blob.filename,
+        options.merge(host: Rails.configuration.cdn_host, protocol: 'https', port: nil)
+      )
+    end
+  end
 end

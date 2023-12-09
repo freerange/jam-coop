@@ -20,7 +20,7 @@
     <div>
       <div class="border border-slate-200 aspect-w-1 aspect-h-1">
         <% if album.cover.representable? %>
-        <%= image_tag album.cover.representation(resize_to_limit: [1000, 1000]), class: 'object-cover' %>
+        <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])), class: 'object-cover' %>
         <% end %>
       </div>
       <p class='text-sm text-slate-500'><%= album.title %></p>
