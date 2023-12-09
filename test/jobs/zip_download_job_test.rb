@@ -59,4 +59,18 @@ class ZipDownloadJobTest < ActiveJob::TestCase
 
     assert entries.include? '01 - First Track.mp3'
   end
+
+  test 'uses /var/data for tmp files when that path exists' do
+    Dir.stubs(:exist?).with('/var/data').returns(true)
+    Dir.expects(:mktmpdir).with(nil, '/var/data')
+
+    ZipDownloadJob.perform_now(build(:album))
+  end
+
+  test 'uses default for tmp files when /var/data does not exist' do
+    Dir.stubs(:exist?).with('/var/data').returns(false)
+    Dir.expects(:mktmpdir).with(nil, nil)
+
+    ZipDownloadJob.perform_now(build(:album))
+  end
 end

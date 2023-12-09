@@ -6,7 +6,7 @@ class ZipDownloadJob < ApplicationJob
   queue_as :default
 
   def perform(album, format: :mp3v0)
-    Dir.mktmpdir do |dir|
+    Dir.mktmpdir(nil, tmp_dir_location) do |dir|
       filenames = download_all_tracks(album, format, dir)
 
       zipfile_name = Zaru.sanitize!("#{album.artist.name} - #{album.title}.zip")
@@ -26,6 +26,10 @@ class ZipDownloadJob < ApplicationJob
   end
 
   private
+
+  def tmp_dir_location
+    '/var/data' if Dir.exist?('/var/data')
+  end
 
   def download_all_tracks(album, format, dir)
     filenames = []
