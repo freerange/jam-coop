@@ -67,6 +67,7 @@ export default class extends Controller {
   }
 
   showTrackTitle() {
+    if (this.currentIndex() < 0) return;
     const title = this.trackTargets[this.currentIndex()].querySelector("span").innerText;
     this.trackTitleTarget.classList.remove("invisible");
     this.trackTitleTarget.innerText = title;
