@@ -8,7 +8,7 @@ class TranscodeJob < ApplicationJob
   def perform(track, format: :mp3v0)
     output_fn = "#{track.original.filename.base}.#{file_extension(format)}"
 
-    Tempfile.create('transcode') do |output|
+    Tempfile.create('transcode', tmp_dir_location) do |output|
       track.original.open do |file|
         if track.album.cover.attached?
           track.album.cover.open do |image|
@@ -25,6 +25,10 @@ class TranscodeJob < ApplicationJob
   end
 
   private
+
+  def tmp_dir_location
+    '/var/data' if Dir.exist?('/var/data')
+  end
 
   def transcode(input, output, format, metadata, image = nil)
     TranscodeCommand.new(input, output, format, metadata, image).execute
