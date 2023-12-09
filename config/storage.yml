@@ -13,6 +13,7 @@ amazon:
   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
   region: us-west-2
   bucket: music-coop-<%= Rails.env %>
+  public: true
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
