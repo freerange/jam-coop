@@ -16,4 +16,8 @@ class UserPolicy < ApplicationPolicy
   def new?
     user.admin?
   end
+
+  def show?
+    true
+  end
 end

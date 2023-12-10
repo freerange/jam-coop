@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get  'about', to: 'pages#about'
   get  'terms', to: 'pages#terms'
 
+  get 'account', to: 'users#show'
+
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
   namespace :identity do

@@ -8,6 +8,7 @@ class UserPolicyTest < ActiveSupport::TestCase
     record = build(:user)
     policy = UserPolicy.new(user, record)
 
+    assert policy.show?
     assert policy.edit?
     assert policy.update?
     assert policy.create?
@@ -19,6 +20,7 @@ class UserPolicyTest < ActiveSupport::TestCase
     record = build(:user)
     policy = UserPolicy.new(user, record)
 
+    assert policy.show?
     assert policy.edit?
     assert policy.update?
     assert_not policy.create?
