@@ -10,6 +10,7 @@ module Identity
 
     test 'updating the email' do
       click_button 'avatar'
+      click_link 'My account'
       click_link 'Change email address'
 
       fill_in 'New email', with: 'new_email@hey.com'
@@ -23,6 +24,7 @@ module Identity
       @user.update! verified: false
 
       click_button 'avatar'
+      click_link 'My account'
       click_link 'Change email address'
       click_button 'Re-send verification email'
 
