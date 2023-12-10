@@ -63,7 +63,7 @@ Rails.application.routes.draw do
         :rails_service_blob_proxy,
         model.signed_id(expires_in:),
         model.filename,
-        options.merge(host: Rails.configuration.cdn_host, protocol: 'https', port: nil)
+        options.merge(Rails.application.config.cdn_url_options)
       )
     else
       route_for(
@@ -71,7 +71,7 @@ Rails.application.routes.draw do
         model.blob.signed_id(expires_in:),
         model.variation.key,
         model.blob.filename,
-        options.merge(host: Rails.configuration.cdn_host, protocol: 'https', port: nil)
+        options.merge(Rails.application.config.cdn_url_options)
       )
     end
   end
