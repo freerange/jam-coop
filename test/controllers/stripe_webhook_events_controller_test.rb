@@ -4,7 +4,7 @@ require 'test_helper'
 
 class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
   test 'checkout.session.completed marks associated purchase as complete' do
-    PurchaseCompleteJob.expects(:perform_later).with(stripe_session_id, customer_email)
+    PurchaseCompleteJob.expects(:perform_later).with(stripe_session_id, customer_email, amount_tax)
     Stripe::Webhook.stubs(:construct_event).with(payload, 'signature', nil).returns(stripe_event)
 
     post stripe_webhook_events_path, env: { 'RAW_POST_DATA' => payload, 'HTTP_STRIPE_SIGNATURE' => 'signature' }
@@ -39,6 +39,10 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
 
   def customer_email
     JSON.parse(payload)['data']['object']['customer_details']['email']
+  end
+
+  def amount_tax
+    JSON.parse(payload)['data']['object']['total_details']['amount_tax']
   end
 
   def stripe_event
