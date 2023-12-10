@@ -88,7 +88,7 @@ export default class extends Controller {
   currentTrack() {
     const url = new URL(this.audioTarget.src);
 
-    return url.pathname
+    return url.href
   }
 
   currentIndex() {
