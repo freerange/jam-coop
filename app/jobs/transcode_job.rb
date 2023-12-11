@@ -3,6 +3,8 @@
 class TranscodeJob < ApplicationJob
   queue_as :default
 
+  discard_on ActiveJob::DeserializationError
+
   def perform(track, format: :mp3v0)
     output_fn = "#{track.original.filename.base}.#{file_extension(format)}"
 
