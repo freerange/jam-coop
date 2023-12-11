@@ -35,7 +35,14 @@ export class MusicCoopStack extends cdk.Stack {
         blockPublicPolicy: false,
         ignorePublicAcls: false,
         restrictPublicBuckets: false,
-      }
+      },
+      cors: [{
+        allowedMethods: [s3.HttpMethods.PUT],
+        allowedOrigins: [`https://${props.cdnOriginDomainName}`],
+        allowedHeaders: ['Content-Type', 'Content-MD5', 'Content-Disposition'],
+        exposedHeaders: [],
+        maxAge: 3600,
+      }],
     });
 
     s3Bucket.grantRead(s3User);
