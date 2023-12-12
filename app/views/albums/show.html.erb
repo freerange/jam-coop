@@ -27,7 +27,7 @@
         <h3 data-player-target="trackTitle" class="invisible text-sm italic text-slate-500">one</h3>
       </div>
 
-      <% if @album.preview %>
+      <% if @album.preview && @album.preview.file %>
       <audio controls class='w-full hidden' data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(@album.preview.file) %>">
       </audio>
       <% end %>
@@ -70,7 +70,7 @@
   <section class="my-6">
     <% @album.tracks.each_with_index do |track, index| %>
     <div class="flex flex-row justify-between mb-2">
-      <% if track.preview %>
+      <% if track.preview && track.preview.file %>
       <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= cdn_url(track.preview.file) %>">
         <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span> <span class="text-slate-400"> <%= seconds_to_formated_track_time(track.preview_duration) %></span>
       </div>
