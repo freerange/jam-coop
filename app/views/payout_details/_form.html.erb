@@ -1,0 +1,7 @@
+<%= form_with(model: payout_detail, class: "contents", builder: TailwindFormBuilder) do |form| %>
+  <%= render('shared/errors', model: payout_detail) %>
+  <%= form.text_field :name, placeholder: 'Bartholomew J. Simpson', class: 'w-full' %>
+  <p class="text-slate-600 italic">Your full name as used on your bank account.</p>
+
+  <%= form.submit "Save", class: 'mt-6 w-full'%>
+<% end %>

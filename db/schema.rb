@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_10_211455) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_10_213639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_211455) do
     t.index ["user_id"], name: "index_password_reset_tokens_on_user_id"
   end
 
+  create_table "payout_details", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payout_details_on_user_id"
+  end
+
   create_table "purchases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -156,6 +164,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_211455) do
   add_foreign_key "downloads", "albums"
   add_foreign_key "email_verification_tokens", "users"
   add_foreign_key "password_reset_tokens", "users"
+  add_foreign_key "payout_details", "users"
   add_foreign_key "purchases", "albums"
   add_foreign_key "sessions", "users"
 end
