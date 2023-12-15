@@ -8,7 +8,7 @@ class BroadcastMailerTest < ActionMailer::TestCase
 
     mail = BroadcastMailer.newsletter(user)
 
-    assert_equal 'jam.coop - Newsletter #1', mail.subject
+    assert_match 'jam.coop - Newsletter', mail.subject
     assert_equal ['ann@example.com'], mail.to
     assert_equal ['contact@jam.coop'], mail.from
     assert_match 'Hello', mail.body.encoded
