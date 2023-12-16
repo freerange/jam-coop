@@ -162,4 +162,19 @@ class AlbumTest < ActiveSupport::TestCase
     album = build(:album, price: 'foo')
     assert_not album.valid?
   end
+
+  test 'is not valid if cover is not an image' do
+    album = Album.new
+
+    album.stubs(:transcode_tracks)
+
+    album.cover.attach(
+      io: Rails.root.join('test/fixtures/files/dummy.pdf').open,
+      filename: 'dummy.pdf',
+      content_type: 'application/pdf'
+    )
+
+    assert_not album.valid?
+    assert_includes album.errors[:cover], 'must be an image file (jpeg, png)'
+  end
 end

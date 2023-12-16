@@ -5,7 +5,13 @@
   <%= form.text_area :about, rows: 10, class: 'w-full mb-3' %>
   <%= form.text_area :credits, rows: 10, class: 'w-full mb-3' %>
   <%= form.label :cover %>
-  <%= form.file_field :cover, class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+  <%= form.file_field :cover, accept: 'image/jpeg,image/png', class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+  <div class="flex items-center gap-2 mb-4">
+    <span class="text-amber-600">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+      </svg>
+    </span> <p>File must be in <strong>jpeg</strong> or <strong>png</strong> format.</p></div>
   <%= form.date_field :released_at, class: 'w-full mb-3' %>
 
   <section id="tracks">
