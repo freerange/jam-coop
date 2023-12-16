@@ -68,6 +68,9 @@ Rollbar.configure do |config|
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV['ROLLBAR_ENV'].presence || Rails.env
 
+  # Don't report any of the exceptions which ActionDispatch::ShowExceptions
+  # rescues and converts into suitable HTTP response codes using
+  # ActionDispatch::ExceptionWrapper
   config.before_process << proc do |options|
     rescue_responses = ActionDispatch::ExceptionWrapper.rescue_responses
     exception_class = options[:exception].class.to_s
