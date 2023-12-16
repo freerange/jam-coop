@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   get  'log_in', to: 'sessions#new'
   post 'log_in', to: 'sessions#create'
@@ -75,4 +77,6 @@ Rails.application.routes.draw do
       )
     end
   end
+
+  mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint
 end
