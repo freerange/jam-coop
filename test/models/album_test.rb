@@ -163,6 +163,13 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.valid?
   end
 
+  test 'is not valid if cover is not present' do
+    album = Album.new
+
+    assert_not album.valid?
+    assert_includes album.errors[:cover], 'file cannot be missing'
+  end
+
   test 'is not valid if cover is not an image' do
     album = Album.new
 
