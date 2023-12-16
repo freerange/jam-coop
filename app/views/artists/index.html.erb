@@ -15,7 +15,7 @@
       <%= image_tag cdn_url(artist.profile_picture.representation(resize_to_fill: [300, 300])), class: 'w-full' %>
       <% end %>
     </div>
-    <p class='text-sm text-slate-500'><%= artist.name %><%= artist.listed? ? '' : ' (unlisted)' %></p>
+    <p class='text-sm text-slate-500 break-words'><%= artist.name %><%= artist.listed? ? '' : ' (unlisted)' %></p>
     <% end %>
   </div>
   <% end %>

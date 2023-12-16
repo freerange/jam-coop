@@ -30,9 +30,9 @@
         <% end %>
       </div>
       <% if album.published? %>
-      <p class='text-sm text-slate-500'><%= album.title %></p>
+      <p class='text-sm text-slate-500 break-words'><%= album.title %></p>
       <% else %>
-      <p class='text-sm text-slate-500'><%= album.title %> (<%= album.publication_status %>)</p>
+      <p class='text-sm text-slate-500 break-words'><%= album.title %> (<%= album.publication_status %>)</p>
       <% end %>
     </div>
     <% end %>
