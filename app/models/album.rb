@@ -15,6 +15,10 @@ class Album < ApplicationRecord
   has_many :downloads, dependent: :destroy
 
   has_one_attached :cover
+  validates :cover, content_type: {
+    in: %w[image/jpeg image/png],
+    message: 'must be an image file (jpeg, png)'
+  }
 
   scope :published, -> { where(publication_status: :published) }
   scope :unpublished, -> { where(publication_status: :unpublished) }
