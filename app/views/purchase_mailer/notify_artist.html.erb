@@ -3,10 +3,10 @@
 <p>Good news! You sold a copy of your album <%= @purchase.album.title %>
   for <%= number_to_currency(@purchase.price, unit: "£") %>.</p>
 
-<p>While jam.coop is in its early stages we will make artist payouts
-on the 1st of each month. We'll use this email address to make a
-payment using Wise but <a href="mailto:contact@jam.coop">get in
-touch</a> if you have any questions.</p>
+<% unless @user.payout_detail %>
+<b>Important:</b> we need to know <%= link_to 'some details', new_payout_detail_url %> before we can make a
+payment to you.
+<% end %>
 
 <p>Thank you for selling your music with us,</p>
 
