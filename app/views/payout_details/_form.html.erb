@@ -1,3 +1,5 @@
+<p class="text-slate-500 mb-6">We use <a class="underline" href="https://wise.com">Wise</a> to make payouts once a month. Wise will email you at <span class="font-bold"><%= Current.user.email %></span> to ask for your bank details. To make the payment we need the following:</p>
+
 <%= form_with(model: payout_detail, class: "contents", builder: TailwindFormBuilder) do |form| %>
   <%= render('shared/errors', model: payout_detail) %>
   <%= form.text_field :name, placeholder: 'Bartholomew J. Simpson', class: 'w-full' %>
