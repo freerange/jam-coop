@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
+  resource :payout_detail, only: %i[new create edit update]
+  resolve('PayoutDetail') { [:payout_detail] }
+
   namespace :identity do
     resource :email,              only: %i[edit update]
     resource :email_verification, only: %i[show create]

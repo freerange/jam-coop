@@ -10,8 +10,8 @@ class PurchaseMailer < ApplicationMailer
   def notify_artist
     @purchase = params[:purchase]
 
-    return unless (user = @purchase.album.artist.user)
+    return unless (@user = @purchase.album.artist.user)
 
-    mail to: user.email, subject: "You have sold a copy of #{@purchase.album.title}"
+    mail to: @user.email, subject: "You have sold a copy of #{@purchase.album.title}"
   end
 end

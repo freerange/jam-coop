@@ -49,9 +49,17 @@ Here's a sketch of our roadmap:
 
 ## How much do musicians earn?
 
-To cover the costs of running and building jam.coop a 15% fee is taken from each sale (in addition to processing fees charged by our payment processor Stripe.
+To cover the costs of running and building jam.coop a 15% fee (minimum 20p) is taken from each sale.
 
 We're not sure what the best fee structure will be in the longer term - we need to balance sustainability, speed of development and fairness. We'll be entirely transparent about our finances and involve musicians and workers in the decision of how to set these fees.
+
+## How do I, as a musician, get paid?
+
+Once a month (on or close to the 1st) we make payouts for all of the sales you made that month using [Wise](https://wise.com). We've chosen Wise because it supports a large number of countries/regions and takes a low fee allowing you to keep more of what you sell.
+
+You can provide us with the details we need to make that payout on your [account page](https://jam.coop/account).
+
+We're currently running artist payouts manually but in the future we hope to automate this (so we can provide more frequent payouts) and support other payout options.
 
 ## Where does the profit go?
 
@@ -64,9 +72,7 @@ where we'd like to get to.
 
 ## How do I sell my music on jam.coop?
 
-We'd love to have you!
-
-We want to provide a personal service to our first musicians so that we can work out exactly what you need. If you are an adventurous early-adopter and don't mind some rough edges, please [get in touch](mailto:contact@jam.coop).
+We'd love to have you! [Sign up for an account](https://jam.coop/sign_up). Once you've verified your email address a link to "Add artist" will appear in the avatar menu at the top right of the site.
 
 ## Is jam.coop open-source?
 

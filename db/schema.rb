@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_154027) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_17_164304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,15 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_154027) do
     t.index ["user_id"], name: "index_password_reset_tokens_on_user_id"
   end
 
+  create_table "payout_details", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "country"
+    t.index ["user_id"], name: "index_payout_details_on_user_id"
+  end
+
   create_table "purchases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -106,6 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_154027) do
     t.string "stripe_session_id"
     t.boolean "completed", default: false, null: false
     t.string "customer_email"
+    t.integer "amount_tax"
     t.index ["album_id"], name: "index_purchases_on_album_id"
   end
 
@@ -155,6 +165,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_154027) do
   add_foreign_key "downloads", "albums"
   add_foreign_key "email_verification_tokens", "users"
   add_foreign_key "password_reset_tokens", "users"
+  add_foreign_key "payout_details", "users"
   add_foreign_key "purchases", "albums"
   add_foreign_key "sessions", "users"
 end
