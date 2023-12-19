@@ -72,9 +72,7 @@ where we'd like to get to.
 
 ## How do I sell my music on jam.coop?
 
-We'd love to have you!
-
-We want to provide a personal service to our first musicians so that we can work out exactly what you need. If you are an adventurous early-adopter and don't mind some rough edges, please [get in touch](mailto:contact@jam.coop).
+We'd love to have you! [Sign up for an account](https://jam.coop/sign_up). Once you've verified your email address a link to "Add artist" will appear in the avatar menu at the top right of the site.
 
 ## Is jam.coop open-source?
 
