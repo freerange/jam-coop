@@ -33,7 +33,7 @@ class InterestsControllerTest < ActionDispatch::IntegrationTest
   test '#create should send a confirmation email' do
     @interest.save
 
-    assert_emails 1 do
+    assert_enqueued_emails 1 do
       post interests_url, params: { interest: { email: @interest.email } }
     end
   end

@@ -12,7 +12,7 @@ class InterestsController < ApplicationController
     @interest = Interest.find_or_create_by(interest_params)
 
     if @interest.save
-      InterestsMailer.confirm(@interest).deliver_now
+      InterestsMailer.confirm(@interest).deliver_later
       redirect_to thankyou_url
     else
       render :new, status: :unprocessable_entity

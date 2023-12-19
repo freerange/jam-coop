@@ -34,6 +34,6 @@ class RegistrationsController < ApplicationController
   end
 
   def send_email_verification
-    UserMailer.with(user: @user).email_verification.deliver_now
+    UserMailer.with(user: @user).email_verification.deliver_later
   end
 end

@@ -46,7 +46,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#create sends an email verification email' do
-    assert_emails 1 do
+    assert_enqueued_emails 1 do
       post sign_up_url,
            params: { email: 'user@example.com', password: 'Secret1*3*5*', password_confirmation: 'Secret1*3*5*' }
     end

@@ -9,7 +9,9 @@ class SigningUpTest < ApplicationSystemTestCase
     fill_in 'Email', with: 'user@example.com'
     fill_in 'Password', with: 'Secret1*3*5*'
     fill_in 'Password confirmation', with: 'Secret1*3*5*'
-    click_button 'Sign up'
+    perform_enqueued_jobs do
+      click_button 'Sign up'
+    end
 
     assert_text 'Welcome! You have signed up successfully'
 
