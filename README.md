@@ -33,6 +33,14 @@ Environment specific API keys etc. are stored under `/config/credentials/{develo
 
 If you need to send email via Postmark in development you can set the `USE_POSTMARK_IN_DEVELOPMENT` variable to `true` in `.env`.
 
+## Using Stripe in development
+
+To receive events from Stripe webhooks in your local environment you need to run the Stripe CLI with:
+
+    stripe listen --forward-to localhost:3000/stripe_webhook_events
+
+When you first run this command it will show a value for the "webhook signing secret". Copy this value and set `ENDPOINT_SECRET` to this value in `StripeWebhookEventsController` (either using the development credentials file or by temporarily editing the code).
+
 ## Deployment
 
 All commits to `main` are deployed to [render](https://dashboard.render.com/) (the login credentials for which are available in 1P). They're not currently gated by the CI build that runs in a github action.
