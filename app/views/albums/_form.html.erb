@@ -4,7 +4,11 @@
   <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2' %>
   <%= form.text_area :about, rows: 10, class: 'w-full mb-3' %>
   <%= form.text_area :credits, rows: 10, class: 'w-full mb-3' %>
-  <%= form.labels :cover %>
+  <% if form.object.cover.attached? %>
+    <%= form.labels :cover, text: "Cover (#{form.object.cover.filename})" %>
+  <% else %>
+    <%= form.labels :cover, text: "Cover" %>
+  <% end %>
   <%= form.file_field :cover, accept: 'image/jpeg,image/png', class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
   <div class="flex items-center gap-2 mb-4">
     <span class="text-amber-600">
