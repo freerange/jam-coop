@@ -46,7 +46,7 @@ class ZipDownloadJob < ApplicationJob
   end
 
   def track_filename(track, format)
-    Zaru.sanitize!("#{track.position.to_s.rjust(2, '0')} - #{track.title}.#{extension(format)}")
+    Zaru.sanitize!("#{track.number} - #{track.title}.#{extension(format)}")
   end
 
   def extension(format)
