@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AlbumsController < ApplicationController
-  before_action :set_album, only: %i[show edit update publish unpublish request_publication]
+  before_action :set_album, except: %i[new create]
   skip_before_action :authenticate, only: %i[show]
 
   def show
