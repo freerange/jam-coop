@@ -3,7 +3,11 @@
   <%= form.text_field :name, class: 'w-full mb-3' %>
   <%= form.text_field :location, class: 'w-full mb-3' %>
   <%= form.text_field :description, class: 'w-full mb-3' %>
-  <%= form.label :profile_picture %>
+  <% if form.object.profile_picture.attached? %>
+    <%= form.label :profile_picture, "Profile picture (#{form.object.profile_picture.filename})" %>
+  <% else %>
+    <%= form.label :profile_picture, "Profile picture" %>
+  <% end %>
   <%= form.file_field :profile_picture, class: 'mb-3 block border border-slate-200 mb-6 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
 
   <p class="mb-3">By creating an artist profile on jam.coop and
