@@ -20,4 +20,8 @@ class UserTest < ActiveSupport::TestCase
     @user.sending_suppressed_at = Time.current
     assert @user.suppress_sending?
   end
+
+  test 'is signed in' do
+    assert @user.signed_in?
+  end
 end
