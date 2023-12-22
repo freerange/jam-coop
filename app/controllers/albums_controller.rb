@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AlbumsController < ApplicationController
+  before_action :build_album, only: %i[new create]
   before_action :set_album, except: %i[new create]
   skip_before_action :authenticate, only: %i[show]
 
@@ -9,7 +10,6 @@ class AlbumsController < ApplicationController
   end
 
   def new
-    @album = artist.albums.new
     authorize @album
   end
 
@@ -18,7 +18,6 @@ class AlbumsController < ApplicationController
   end
 
   def create
-    @album = artist.albums.new(album_params)
     authorize @album
 
     if @album.save
@@ -63,6 +62,10 @@ class AlbumsController < ApplicationController
   end
 
   private
+
+  def build_album
+    @album = artist.albums.new(params[:album].present? ? album_params : {})
+  end
 
   def set_album
     @album = artist.albums.friendly.find(params[:id])
