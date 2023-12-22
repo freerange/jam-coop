@@ -4,7 +4,6 @@ FactoryBot.define do
   factory :track do
     album
     sequence(:title) { |n| "Never gonna give you up #{n}" }
-    sequence(:position) { |n| n }
 
     after(:build) do |track|
       track.original.attach(
