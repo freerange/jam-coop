@@ -58,6 +58,13 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     labels + field_wrapper
   end
 
+  def labels(object_method, label_options = {}, field_options = {})
+    label = tailwind_label(object_method, label_options, field_options)
+    error_label = error_label(object_method, field_options)
+
+    @template.content_tag('div', label + error_label, { class: 'flex flex-col items-start' })
+  end
+
   private
 
   def text_like_field(field_method, object_method, options = {})
@@ -73,13 +80,6 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     labels = labels(object_method, custom_opts[:label], options)
 
     labels + field
-  end
-
-  def labels(object_method, label_options, field_options)
-    label = tailwind_label(object_method, label_options, field_options)
-    error_label = error_label(object_method, field_options)
-
-    @template.content_tag('div', label + error_label, { class: 'flex flex-col items-start' })
   end
 
   def tailwind_label(object_method, label_options, field_options)

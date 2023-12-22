@@ -58,7 +58,9 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
   test '#create' do
     assert_difference('Album.count') do
-      post artist_albums_url(@album.artist), params: { album: { title: 'Example' } }
+      post artist_albums_url(@album.artist), params: {
+        album: { title: 'Example', cover: fixture_file_upload('cover.png') }
+      }
     end
 
     assert_redirected_to artist_url(@album.artist)
