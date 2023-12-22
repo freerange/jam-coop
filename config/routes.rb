@@ -58,6 +58,8 @@ Rails.application.routes.draw do
   get 'thankyou', to: 'interests#thankyou'
   get 'confirmation', to: 'interests#confirmation'
 
+  get 'up' => 'healthchecks#show'
+
   root 'interests#new'
 
   direct :cdn do |model, options|
