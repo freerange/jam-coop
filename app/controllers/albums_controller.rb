@@ -9,7 +9,7 @@ class AlbumsController < ApplicationController
   end
 
   def new
-    @album = Album.new(artist:)
+    @album = artist.albums.new
     authorize @album
   end
 
