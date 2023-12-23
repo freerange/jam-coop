@@ -172,9 +172,12 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#show not authorized when album is unpublished' do
     @album = create(:album, publication_status: :unpublished)
-    assert_raises(Pundit::NotAuthorizedError) do
-      get artist_album_url(@album.artist, @album)
-    end
+    previous_url = artist_url(@album.artist)
+
+    get artist_album_url(@album.artist, @album), headers: { 'HTTP_REFERER' => previous_url }
+
+    assert_redirected_to previous_url
+    assert_equal 'You are not authorized to perform this action.', flash[:alert]
   end
 
   test '#new' do
