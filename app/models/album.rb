@@ -28,7 +28,7 @@ class Album < ApplicationRecord
   scope :unpublished, -> { where(publication_status: :unpublished) }
   scope :in_release_order, -> { order('released_at DESC NULLS LAST') }
 
-  after_update :transcode_tracks, if: :metadata_or_cover_changed?
+  after_commit :transcode_tracks, on: :update, if: :metadata_or_cover_changed?
 
   def preview
     first_track_with_preview = tracks.detect(&:preview)

@@ -3,8 +3,6 @@
 class TranscodeJob < ApplicationJob
   queue_as :default
 
-  retry_on ActiveJob::DeserializationError, wait: 10.seconds
-
   def perform(track, format: :mp3v0)
     output_fn = "#{track.original.filename.base}.#{file_extension(format)}"
 
