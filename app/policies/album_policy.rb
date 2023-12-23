@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class AlbumPolicy < ApplicationPolicy
+  def show?
+    return record.published? unless user.signed_in?
+
+    user.admin? || user.artists.include?(record.artist)
+  end
+
   def create?
     user.admin? || user.artists.include?(record.artist)
   end

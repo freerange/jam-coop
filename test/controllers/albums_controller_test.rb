@@ -170,6 +170,13 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_select 'p', text: 'This album is currently unpublished', count: 0
   end
 
+  test '#show not authorized when album is unpublished' do
+    @album = create(:album, publication_status: :unpublished)
+    assert_raises(Pundit::NotAuthorizedError) do
+      get artist_album_url(@album.artist, @album)
+    end
+  end
+
   test '#new' do
     get new_artist_album_url(@album.artist)
     assert_redirected_to log_in_url

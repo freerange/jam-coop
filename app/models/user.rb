@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def suppress_sending?
     sending_suppressed_at.present?
   end
+
+  def signed_in?
+    true
+  end
 end

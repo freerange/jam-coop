@@ -8,6 +8,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     album = build(:album)
     policy = AlbumPolicy.new(user, album)
 
+    assert policy.show?
     assert policy.create?
     assert policy.update?
     assert policy.edit?
@@ -22,6 +23,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     album = build(:album)
     policy = AlbumPolicy.new(user, album)
 
+    assert_not policy.show?
     assert_not policy.create?
     assert_not policy.update?
     assert_not policy.edit?
@@ -36,6 +38,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     user = create(:user, artists: [album.artist])
     policy = AlbumPolicy.new(user, album)
 
+    assert policy.show?
     assert policy.create?
     assert policy.update?
     assert policy.edit?
@@ -43,5 +46,16 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert policy.new?
     assert_not policy.publish?
     assert policy.request_publication?
+  end
+
+  test 'non-signed-in user' do
+    non_signed_in_user = NullUser.new
+    unpublished_album = create(:album, publication_status: :unpublished)
+    pending_album = create(:album, publication_status: :pending)
+    published_album = create(:album, publication_status: :published)
+
+    assert_not AlbumPolicy.new(non_signed_in_user, unpublished_album).show?
+    assert_not AlbumPolicy.new(non_signed_in_user, pending_album).show?
+    assert AlbumPolicy.new(non_signed_in_user, published_album).show?
   end
 end
