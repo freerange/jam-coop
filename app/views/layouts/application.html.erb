@@ -29,6 +29,7 @@
       </nav>
       <div class="bg-white p-2 sm:p-6 sm:mt-2 sm:shadow-sm">
         <%= render('shared/alert_box', message: alert) if alert %>
+        <%= render('shared/notice_box', message: notice) if notice %>
         <%= yield %>
       </div>
       <footer class="flex flex-row justify-between mt-2 mb-4 text-slate-400 text-sm px-2 sm:px-0">
