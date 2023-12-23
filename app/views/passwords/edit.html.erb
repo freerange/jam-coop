@@ -1,5 +1,3 @@
-<%= render('shared/alert_box', message: alert) if alert %>
-
 <%= render 'shared/page_header', text: 'Change your password' %>
 
 <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>

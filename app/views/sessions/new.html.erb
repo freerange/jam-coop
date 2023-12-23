@@ -1,7 +1,6 @@
 <%= render 'shared/page_header', text: 'Log in' %>
 
 <%= form_with(url: log_in_path, builder: TailwindFormBuilder) do |form| %>
-  <%= render('shared/alert_box', message: alert) if alert %>
   <%= render('shared/notice_box', message: notice) if notice %>
 
   <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full mb-3" %>

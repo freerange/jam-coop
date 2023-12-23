@@ -1,5 +1,3 @@
-<%= render('shared/alert_box', message: alert) if alert %>
-
 <%= form_for([@album.artist, @album , @purchase], builder: TailwindFormBuilder) do |form| %>
 <div class="flex justify-center">
   <div class="w-1/2 border">

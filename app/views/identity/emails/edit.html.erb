@@ -1,5 +1,3 @@
-<%= render('shared/alert_box', message: alert) if alert %>
-
 <% if Current.user.verified? %>
   <%= render 'shared/page_header', text: 'Change your email' %>
 <% else %>
