@@ -4,7 +4,7 @@ class AlbumPolicy < ApplicationPolicy
   def show?
     return record.published? unless user.signed_in?
 
-    user.admin? || user.artists.include?(record.artist)
+    record.published? || user.admin? || user.artists.include?(record.artist)
   end
 
   def create?
