@@ -32,5 +32,10 @@ module MusicCoop
       file: Rails.public_path.join('maintenance.html'),
       env: 'MAINTENANCE'
     }
+
+    config.postmark = config_for(:postmark)
+    config.stripe = config_for(:stripe)
+    config.aws = config_for(:aws)
+    config.rollbar = config_for(:rollbar)
   end
 end

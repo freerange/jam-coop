@@ -1,0 +1,9 @@
+default: &default
+  api_key: <%= ENV.fetch('POSTMARK_API_KEY') %>
+  webhooks_token: <%= ENV.fetch('POSTMARK_WEBHOOKS_TOKEN') %>
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  <<: *default

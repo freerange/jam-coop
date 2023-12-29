@@ -4,12 +4,12 @@ Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
 
-  config.access_token = Rails.application.credentials.dig(:rollbar, :access_token)
+  config.access_token = Rails.configuration.rollbar[:access_token]
 
   config.enabled = Rails.env.production?
   config.js_enabled = Rails.env.production?
   config.js_options = {
-    accessToken: Rails.application.credentials.dig(:rollbar, :post_client_item_access_token),
+    accessToken: Rails.configuration.rollbar[:post_client_item_access_token],
     captureUncaught: true,
     payload: {
       environment: Rails.env

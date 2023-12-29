@@ -1,0 +1,9 @@
+default: &default
+  access_token: <%= ENV.fetch('ROLLBAR_ACCESS_TOKEN') %>
+  post_client_item_access_token: <%= ENV.fetch('ROLLBAR_POST_CLIENT_ITEM_ACCESS_TOKEN') %>
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  <<: *default
