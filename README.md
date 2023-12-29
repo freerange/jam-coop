@@ -14,6 +14,10 @@ We're using Rails 7's default image processor library `vips`, which you need to 
 
     brew install libvips
 
+Copy the example `.env` file
+
+    cp `.env.example .env`
+
 From there proceed as usual for local rails app development
 
     rails db:setup
@@ -27,7 +31,7 @@ Linters and test can be run using the default `rake` task.
 
 ## Credentials
 
-Environment specific API keys etc. are stored under `/config/credentials/{development,production}.yml.enc`. You'll need to create `config/credentials/{development,production}.key` to encrypt and decrypt them. The contents of these two key files are in our 1P vault.
+Environment specific API keys etc. are stored in environment variables. The file `.env.example` should be copied to `.env` so that `Dotenv` can find these in development. You may only need to set these to real values if you need a particular third party service for the code you're working on. For example, Rollbar credentials are only needed if for some reason you need to use rollbar in development.
 
 ## Sending email in development
 
