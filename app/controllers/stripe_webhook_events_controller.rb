@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StripeWebhookEventsController < ApplicationController
-  ENDPOINT_SECRET = Rails.application.credentials.dig(:stripe, :endpoint_secret)
+  ENDPOINT_SECRET = Rails.configuration.stripe[:endpoint_secret]
 
   skip_forgery_protection
   skip_before_action :authenticate

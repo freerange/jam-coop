@@ -14,7 +14,12 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Setup dummy application environment using dotenv
+        run: cp .env.example .env.test
+
       - name: Run linters
+        env:
+          RAILS_ENV: test
         run: |
           bin/rails rubocop
 
@@ -47,6 +52,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Setup dummy application environment using dotenv
+        run: cp .env.example .env.test
 
       - name: Setup test database
         env:

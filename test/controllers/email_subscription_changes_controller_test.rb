@@ -3,6 +3,10 @@
 require 'test_helper'
 
 class EmailSubscriptionChangesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    Rails.configuration.stubs(:postmark).returns({ webhooks_token: 'token' })
+  end
+
   test 'suppresses sending for user' do
     user = create_user(email: params['Recipient'])
 

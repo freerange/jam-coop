@@ -52,7 +52,9 @@ Rails.application.configure do
 
   if ENV['USE_POSTMARK_IN_DEVELOPMENT'] == 'true'
     config.action_mailer.delivery_method = :postmark
-    config.action_mailer.postmark_settings = { api_token: Rails.application.credentials.postmark.api_key }
+    config.action_mailer.postmark_settings = {
+      api_token: Rails.configuration.postmark[:api_key]
+    }
   else
     config.action_mailer.delivery_method = :letter_opener
   end

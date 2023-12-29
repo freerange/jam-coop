@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmailSubscriptionChangesController < ApplicationController
-  TOKEN = Rails.application.credentials.postmark.webhooks_token
+  TOKEN = Rails.configuration.postmark[:webhooks_token]
 
   skip_forgery_protection
   before_action :authenticate
