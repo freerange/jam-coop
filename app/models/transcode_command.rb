@@ -3,6 +3,7 @@
 class TranscodeCommand
   METADATA_KEYS_VS_ID3V23_TAGS = {
     track_title: 'TIT2',
+    track_number: 'TRCK',
     album_title: 'TALB',
     artist_name: 'TPE1'
   }.freeze

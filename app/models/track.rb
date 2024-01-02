@@ -6,7 +6,7 @@ class Track < ApplicationRecord
 
   has_many :transcodes, dependent: :destroy
 
-  delegate :artist, to: :album
+  delegate :artist, :unpublished?, to: :album
 
   has_one_attached :original
   validates :original,
@@ -29,6 +29,7 @@ class Track < ApplicationRecord
   def metadata
     {
       track_title: title,
+      track_number: number,
       album_title: album.title,
       artist_name: artist.name
     }
@@ -41,6 +42,10 @@ class Track < ApplicationRecord
   end
 
   def metadata_or_original_changed?
-    title_previously_changed? || attachment_changes['original'].present?
+    title_previously_changed? || position_previously_changed? || attachment_changes['original'].present?
+  end
+
+  def number
+    position.to_s.rjust(2, '0')
   end
 end

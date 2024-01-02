@@ -43,11 +43,17 @@ class TranscodeCommandTest < ActiveSupport::TestCase
   end
 
   test 'adds metadata using ID3v2.3 format' do
-    metadata = { track_title: 'track-title', album_title: 'album-title', artist_name: 'artist-name' }
+    metadata = {
+      track_title: 'track-title',
+      track_number: 'track-number',
+      album_title: 'album-title',
+      artist_name: 'artist-name'
+    }
     command_string = TranscodeCommand.new(@input, @output, :mp3v0, metadata).generate
     assert_contains_pair(command_string, ['-write_id3v2', '1'])
     assert_contains_pair(command_string, ['-id3v2_version', '3'])
     assert_contains_pair(command_string, ['-metadata', 'TIT2="track-title"'])
+    assert_contains_pair(command_string, ['-metadata', 'TRCK="track-number"'])
     assert_contains_pair(command_string, ['-metadata', 'TALB="album-title"'])
     assert_contains_pair(command_string, ['-metadata', 'TPE1="artist-name"'])
   end

@@ -45,6 +45,16 @@ class TrackTest < ActiveSupport::TestCase
     track.update!(title: 'new-title')
   end
 
+  test 'triggers transcoding if position changes' do
+    track1 = build(:track)
+    track2 = build(:track)
+    create(:unpublished_album, tracks: [track1, track2])
+
+    track1.expects(:transcode)
+
+    track1.move_lower
+  end
+
   test 'does not trigger transcoding if nothing significant changes' do
     track = create(:track)
 
@@ -90,7 +100,14 @@ class TrackTest < ActiveSupport::TestCase
     metadata = track.metadata
 
     assert_equal track.title, metadata[:track_title]
+    assert_equal track.number, metadata[:track_number]
     assert_equal track.album.title, metadata[:album_title]
     assert_equal track.album.artist.name, metadata[:artist_name]
+  end
+
+  test '#number' do
+    album = create(:album_with_tracks)
+
+    assert_equal %w[01 02], album.tracks.map(&:number)
   end
 end
