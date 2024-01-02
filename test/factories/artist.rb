@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :artist do
+    user
     name { 'Rick Astley' }
     location { 'Molesey, UK' }
     description do
