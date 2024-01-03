@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get  'terms', to: 'pages#terms'
 
   get 'account', to: 'users#show'
+  get 'collection', to: 'collections#show'
 
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]

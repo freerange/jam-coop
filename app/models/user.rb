@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :email_verification_tokens, dependent: :destroy
   has_many :password_reset_tokens, dependent: :destroy
   has_many :sessions, dependent: :destroy
+  has_many :purchases, dependent: :destroy
   has_one :payout_detail, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -30,5 +31,9 @@ class User < ApplicationRecord
 
   def signed_in?
     true
+  end
+
+  def collection
+    purchases.where(completed: true)
   end
 end

@@ -24,4 +24,11 @@ class UserTest < ActiveSupport::TestCase
   test 'is signed in' do
     assert @user.signed_in?
   end
+
+  test 'collection includes completed purchases' do
+    complete_purchase = create(:purchase, user: @user, completed: true)
+    create(:purchase, user: @user, completed: false)
+
+    assert_equal [complete_purchase], @user.collection
+  end
 end
