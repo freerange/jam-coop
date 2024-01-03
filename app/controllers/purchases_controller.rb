@@ -15,7 +15,8 @@ class PurchasesController < ApplicationController
 
   def create
     @purchase = Purchase.new(album: @album, price: purchase_params[:price],
-                             contact_opt_in: purchase_params[:contact_opt_in])
+                             contact_opt_in: purchase_params[:contact_opt_in],
+                             user: Current.user)
 
     if @purchase.save
       resp = StripeService.new(@purchase).create_checkout_session

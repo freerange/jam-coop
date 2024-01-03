@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_17_164304) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_03_120551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -116,7 +116,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_164304) do
     t.boolean "completed", default: false, null: false
     t.string "customer_email"
     t.integer "amount_tax"
+    t.bigint "user_id"
     t.index ["album_id"], name: "index_purchases_on_album_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -167,5 +169,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_164304) do
   add_foreign_key "password_reset_tokens", "users"
   add_foreign_key "payout_details", "users"
   add_foreign_key "purchases", "albums"
+  add_foreign_key "purchases", "users"
   add_foreign_key "sessions", "users"
 end
