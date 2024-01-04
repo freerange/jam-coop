@@ -39,4 +39,22 @@ class UserTest < ActiveSupport::TestCase
     assert @user.owns?(owned_album)
     assert_not @user.owns?(not_owned_album)
   end
+
+  test 'associates existing purchases with this user when email verified' do
+    user = create(:user, verified: false)
+    purchase = create(:purchase, customer_email: user.email)
+    assert_nil purchase.user
+
+    user.update(verified: true)
+    assert_equal user, purchase.reload.user
+  end
+
+  test 'does not associate existing purchases with this user when email unverified' do
+    user = create(:user, verified: true)
+    purchase = create(:purchase, customer_email: user.email)
+    assert_nil purchase.user
+
+    user.update(verified: false)
+    assert_nil purchase.reload.user
+  end
 end

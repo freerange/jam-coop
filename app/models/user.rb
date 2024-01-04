@@ -25,6 +25,10 @@ class User < ApplicationRecord
     sessions.where.not(id: Current.session).delete_all
   end
 
+  after_update if: :verified_previously_changed? do
+    Purchase.where(customer_email: email).update(user: self) if verified
+  end
+
   def suppress_sending?
     sending_suppressed_at.present?
   end
