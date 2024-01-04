@@ -6,6 +6,7 @@ class PurchaseCompleteJob < ApplicationJob
   def perform(stripe_session_id, customer_email, amount_tax)
     purchase = Purchase.find_by!(stripe_session_id:)
     purchase.update(completed: true, customer_email:, amount_tax:)
+    purchase.update(user: User.find_by(email: customer_email))
 
     PurchaseMailer.with(purchase:).completed.deliver_later
     PurchaseMailer.with(purchase:).notify_artist.deliver_later
