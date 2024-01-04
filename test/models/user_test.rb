@@ -31,4 +31,12 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal [complete_purchase], @user.collection
   end
+
+  test '#owns?' do
+    owned_album = create(:purchase, user: @user).album
+    not_owned_album = create(:album)
+
+    assert @user.owns?(owned_album)
+    assert_not @user.owns?(not_owned_album)
+  end
 end

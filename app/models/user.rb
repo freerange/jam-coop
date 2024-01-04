@@ -36,4 +36,8 @@ class User < ApplicationRecord
   def collection
     purchases.where(completed: true)
   end
+
+  def owns?(album)
+    purchases.exists?(album:)
+  end
 end
