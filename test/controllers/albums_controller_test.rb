@@ -5,7 +5,8 @@ require 'test_helper'
 class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   def setup
     @album = create(:album)
-    log_in_as(create(:user, admin: true))
+    @user = create(:user, admin: true)
+    log_in_as(@user)
   end
 
   test '#show' do
@@ -23,6 +24,16 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     @album.unpublish
     get artist_album_url(@album.artist, @album)
     assert_select 'button[disabled=disabled]', text: 'Buy'
+  end
+
+  test '#show shows download links instead of a buy button when album is purchased' do
+    create(:purchase, album: @album, price: @album.price, user: @user)
+    @album.publish
+
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'button', text: 'Buy', count: 0
+    assert_select 'p', text: 'You own this album:'
   end
 
   test '#show shows the transcode state of each track' do

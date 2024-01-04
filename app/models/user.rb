@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :email_verification_tokens, dependent: :destroy
   has_many :password_reset_tokens, dependent: :destroy
   has_many :sessions, dependent: :destroy
+  has_many :purchases, dependent: :destroy
   has_one :payout_detail, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -24,11 +25,23 @@ class User < ApplicationRecord
     sessions.where.not(id: Current.session).delete_all
   end
 
+  after_update if: :verified_previously_changed? do
+    Purchase.where(customer_email: email).update(user: self) if verified
+  end
+
   def suppress_sending?
     sending_suppressed_at.present?
   end
 
   def signed_in?
     true
+  end
+
+  def collection
+    purchases.where(completed: true)
+  end
+
+  def owns?(album)
+    purchases.exists?(album:)
   end
 end

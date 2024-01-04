@@ -4,6 +4,7 @@ class Purchase < ApplicationRecord
   include ActionView::Helpers::NumberHelper
 
   belongs_to :album
+  belongs_to :user, optional: true
 
   validates :price, presence: true, numericality: true
   validate :price_is_greater_than_album_price, unless: -> { price.blank? }

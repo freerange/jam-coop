@@ -71,4 +71,28 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 'cs_test_foo', Purchase.last.stripe_session_id
   end
+
+  test 'create sets the user on the purchase' do
+    user = create(:user)
+    log_in_as(user)
+    album = create(:album)
+    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    StripeService.expects(:new).returns(service)
+
+    post artist_album_purchases_url(album.artist, album),
+         params: { purchase: { price: album.price, contact_opt_in: true } }
+
+    assert_equal user, Purchase.last.user
+  end
+
+  test 'does not set the user when not logged in' do
+    album = create(:album)
+    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    StripeService.expects(:new).returns(service)
+
+    post artist_album_purchases_url(album.artist, album),
+         params: { purchase: { price: album.price, contact_opt_in: true } }
+
+    assert_nil Purchase.last.user
+  end
 end

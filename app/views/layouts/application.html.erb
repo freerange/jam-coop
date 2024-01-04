@@ -19,12 +19,19 @@
         <div class="flex gap-4 items-center">
           <%= content_for(:navbar) %>
 
-          <% if Current.user %>
+          <div class="flex gap-2 items-center">
+            <% if Current.user %>
+            <div class="w-8 h-8 ">
+              <%= link_to collection_path do %>
+              <svg class="fill-slate-600 hover:fill-amber-600" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m21.75 12a19.6 19.6 0 0 1 -.59 4.634c-.007.033-.006.065-.014.1-.018.072-.043.141-.062.213-.027.108-.062.212-.091.319-.094.343-.183.688-.293 1.02l-.471 1.526a2.758 2.758 0 0 1 -2.63 1.94 2.708 2.708 0 0 1 -.8-.121l-.966-.3a1.748 1.748 0 0 1 -1.161-2.186l1.484-4.854a1.75 1.75 0 0 1 2.187-1.161l.942.289a2.7 2.7 0 0 1 .85.444 17 17 0 0 0 .115-1.863 8.25 8.25 0 0 0 -16.5 0 16.987 16.987 0 0 0 .116 1.865 2.723 2.723 0 0 1 .85-.444l.942-.288a1.75 1.75 0 0 1 2.187 1.16l1.484 4.856a1.747 1.747 0 0 1 -1.162 2.185l-.965.3a2.708 2.708 0 0 1 -.8.121 2.758 2.758 0 0 1 -2.63-1.94l-.472-1.538c-.11-.327-.2-.677-.3-1.024-.028-.1-.062-.2-.089-.309-.018-.072-.043-.139-.061-.212-.008-.033-.007-.065-.014-.1a19.6 19.6 0 0 1 -.586-4.632 9.75 9.75 0 0 1 19.5 0z" /></svg>
+              <% end %>
+            </div>
             <%= render partial: 'avatar_menu', locals: { user: Current.user } %>
-          <% else %>
+            <% else %>
             <%= link_to "sign up", sign_up_path, class: "underline text-slate-500" %>
             <%= link_to "log in", log_in_path, class: "underline text-slate-500" %>
-          <% end %>
+            <% end %>
+          </div>
         </div>
       </nav>
       <div class="bg-white p-2 sm:p-6 sm:mt-2 sm:shadow-sm">
