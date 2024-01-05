@@ -23,7 +23,8 @@ export class MusicCoopStack extends cdk.Stack {
     });
 
     const s3UserAccessKey = new iam.CfnAccessKey(this, 's3UserCfnAccessKey', {
-      userName: s3User.userName
+      userName: s3User.userName,
+      status: iam.AccessKeyStatus.INACTIVE
     });
 
     const s3UserNewAccessKey = new iam.CfnAccessKey(this, 's3UserNewCfnAccessKey', {
