@@ -33,10 +33,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test '#owns?' do
-    owned_album = create(:purchase, user: @user).album
+    owned_album = create(:purchase, completed: true, user: @user).album
+    incomplete_purchase = create(:purchase, completed: false, user: @user).album
     not_owned_album = create(:album)
 
     assert @user.owns?(owned_album)
+    assert_not @user.owns?(incomplete_purchase)
     assert_not @user.owns?(not_owned_album)
   end
 

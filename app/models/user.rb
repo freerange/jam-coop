@@ -42,6 +42,6 @@ class User < ApplicationRecord
   end
 
   def owns?(album)
-    purchases.exists?(album:)
+    collection.exists?(album:)
   end
 end
