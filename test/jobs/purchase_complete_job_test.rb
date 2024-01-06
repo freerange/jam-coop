@@ -30,6 +30,18 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     assert_equal user, purchase.reload.user
   end
 
+  test 'does not overwrite the user if already set' do
+    stripe_session_id = 'session-id'
+    user = create(:user)
+    customer_email = 'non-existant-email'
+    amount_tax = 140
+    purchase = create(:purchase, user:, stripe_session_id:)
+
+    PurchaseCompleteJob.perform_now(stripe_session_id, customer_email, amount_tax)
+
+    assert_equal user, purchase.reload.user
+  end
+
   test 'it emails the customer' do
     stripe_session_id = 'session-id'
     customer_email = 'email@example.com'
