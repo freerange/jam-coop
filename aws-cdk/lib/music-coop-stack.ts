@@ -22,11 +22,6 @@ export class MusicCoopStack extends cdk.Stack {
       userName: props.s3Username
     });
 
-    const s3UserAccessKey = new iam.CfnAccessKey(this, 's3UserCfnAccessKey', {
-      userName: s3User.userName,
-      status: iam.AccessKeyStatus.INACTIVE
-    });
-
     const s3UserNewAccessKey = new iam.CfnAccessKey(this, 's3UserNewCfnAccessKey', {
       userName: s3User.userName,
       serial: 1
@@ -64,14 +59,6 @@ export class MusicCoopStack extends cdk.Stack {
       },
       domainNames: [props.cdnDomainName],
       certificate: props.cdnCertificate
-    });
-
-    new cdk.CfnOutput(this, 's3UserAccessKey', {
-      value: s3UserAccessKey.ref,
-    });
-
-    new cdk.CfnOutput(this, 's3UserSecretAccessKey', {
-      value: s3UserAccessKey.attrSecretAccessKey,
     });
 
     new cdk.CfnOutput(this, 's3UserNewAccessKey', {
