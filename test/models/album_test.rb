@@ -167,23 +167,23 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test '.in_release_order' do
-    create(:album, title: 'Unknown', released_at: nil)
-    create(:album, title: 'Older Published', released_at: nil, first_published_on: Date.parse('2023-01-01'))
-    create(:album, title: 'Older Released', released_at: Date.parse('2023-02-01'))
-    create(:album, title: 'Newer Published', released_at: nil, first_published_on: Date.parse('2023-03-01'))
-    create(:album, title: 'Newer Released', released_at: Date.parse('2023-04-01'))
+    create(:album, title: 'Unknown', released_on: nil)
+    create(:album, title: 'Older Published', released_on: nil, first_published_on: Date.parse('2023-01-01'))
+    create(:album, title: 'Older Released', released_on: Date.parse('2023-02-01'))
+    create(:album, title: 'Newer Published', released_on: nil, first_published_on: Date.parse('2023-03-01'))
+    create(:album, title: 'Newer Released', released_on: Date.parse('2023-04-01'))
 
     expected_titles = ['Newer Released', 'Newer Published', 'Older Released', 'Older Published', 'Unknown']
     assert_equal expected_titles, Album.in_release_order.pluck(:title)
   end
 
-  test 'released_at falls back to first_published_on' do
+  test 'released_on falls back to first_published_on' do
     freeze_time do
-      album_with_released_at = build(:album, released_at: 1.day.ago, first_published_on: 2.days.ago)
-      assert_equal 1.day.ago.to_date, album_with_released_at.released_at
+      album_with_released_on = build(:album, released_on: 1.day.ago, first_published_on: 2.days.ago)
+      assert_equal 1.day.ago.to_date, album_with_released_on.released_on
 
-      album_without_released_at = build(:album, released_at: nil, first_published_on: 2.days.ago)
-      assert_equal 2.days.ago.to_date, album_without_released_at.released_at
+      album_without_released_on = build(:album, released_on: nil, first_published_on: 2.days.ago)
+      assert_equal 2.days.ago.to_date, album_without_released_on.released_on
     end
   end
 

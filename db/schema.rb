@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_07_102846) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_07_113949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,7 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_07_102846) do
     t.text "about"
     t.text "credits"
     t.decimal "price", precision: 8, scale: 2, default: "7.0"
-    t.date "released_at"
+    t.date "released_on"
     t.integer "publication_status", default: 0, null: false
     t.date "first_published_on"
     t.index ["artist_id"], name: "index_albums_on_artist_id"
