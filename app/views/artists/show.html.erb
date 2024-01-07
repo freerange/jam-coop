@@ -5,6 +5,10 @@
   )
 %>
 
+<% content_for(:auto_discovery) do %>
+  <%= auto_discovery_link_tag(:atom, { format: :atom }, { title: "#{@artist.name} albums on jam.coop" }) %>
+<% end %>
+
 <div class="flex flex-row border-b-2 border-b-slate-100 pb-6">
   <div class="basis-1/4 mr-4 m:mr-0">
     <div class="aspect-w-1 aspect-h-1">

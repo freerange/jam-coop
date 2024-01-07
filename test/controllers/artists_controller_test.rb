@@ -142,6 +142,13 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_select 'p', { text: @artist.name }
   end
 
+  test '#index includes auto-discovery link for atom feed' do
+    get artists_url
+
+    url = artists_url(format: :atom)
+    assert_select "head link[rel='alternate'][type='application/atom+xml'][href='#{url}']"
+  end
+
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
     @artist.albums << create(:album, publication_status: :published)
@@ -182,6 +189,13 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     get artist_url(@artist)
 
     assert_select 'p', { text: 'Album Title (pending)', count: 0 }
+  end
+
+  test '#show includes auto-discovery link for atom feed' do
+    get artist_url(@artist)
+
+    url = artist_url(@artist, format: :atom)
+    assert_select "head link[rel='alternate'][type='application/atom+xml'][href='#{url}']"
   end
 
   test '#show with atom format should render atom feed' do

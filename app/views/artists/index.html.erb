@@ -4,6 +4,10 @@
   )
 %>
 
+<% content_for(:auto_discovery) do %>
+  <%= auto_discovery_link_tag(:atom, { format: :atom }, { title: 'Artists on jam.coop' }) %>
+<% end %>
+
 <%= render('shared/page_header', text: 'Artists') %>
 
 <div class="pt-4 grid grid-cols-3 gap-4">
