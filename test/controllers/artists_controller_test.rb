@@ -166,6 +166,22 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_select 'p', { text: 'Album Title (pending)', count: 0 }
   end
 
+  test '#show with atom format should render atom feed' do
+    @artist.albums << create(:album, title: 'Older', publication_status: :published, released_on: 2.days.ago)
+    @artist.albums << create(:album, title: 'Newer', publication_status: :published, released_on: 1.day.ago)
+    @artist.albums << create(:album, title: 'Pending', publication_status: :pending, released_on: 0.days.ago)
+    @artist.albums << create(:album, title: 'Unpublished', publication_status: :unpublished, released_on: 0.days.ago)
+
+    get artist_url(@artist, format: :atom)
+
+    feed = RSS::Parser.parse(response.body)
+    assert_equal "#{@artist.name} albums on jam.coop", feed.title.content
+    assert_equal 'Newer', feed.entries.first.title.content
+    assert_equal 'Older', feed.entries.last.title.content
+    assert_not_includes feed.entries.map(&:title).map(&:content), 'Pending'
+    assert_not_includes feed.entries.map(&:title).map(&:content), 'Unpublished'
+  end
+
   test '#new' do
     get new_artist_url
     assert_redirected_to log_in_path
