@@ -167,9 +167,9 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test '.in_release_order' do
+    create(:album, title: 'Unknown', released_at: nil)
     create(:album, title: 'Older', released_at: Date.parse('2023-01-01'))
     create(:album, title: 'Newer', released_at: Date.parse('2023-02-01'))
-    create(:album, title: 'Unknown', released_at: nil)
 
     assert_equal %w[Newer Older Unknown], Album.in_release_order.pluck(:title)
   end
