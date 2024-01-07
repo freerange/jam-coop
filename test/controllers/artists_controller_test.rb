@@ -142,6 +142,24 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_select 'p', { text: @artist.name }
   end
 
+  test '#index with atom format should render atom feed' do
+    @artist.update!(name: 'Older Artist')
+    @artist.albums << create(:album, publication_status: :published)
+
+    another_artist = create(:artist, name: 'Newer Artist')
+    another_artist.albums << create(:album, publication_status: :published)
+
+    create(:artist, name: 'Unlisted Artist')
+
+    get artists_url(format: :atom)
+
+    feed = RSS::Parser.parse(response.body)
+    assert_equal 'Artists on jam.coop', feed.title.content
+    assert_equal 'Newer Artist', feed.entries.first.title.content
+    assert_equal 'Older Artist', feed.entries.last.title.content
+    assert_not_includes feed.entries.map(&:title).map(&:content), 'Unlisted Artist'
+  end
+
   test '#show should include published albums' do
     @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
 
