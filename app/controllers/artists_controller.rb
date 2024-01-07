@@ -13,11 +13,7 @@ class ArtistsController < ApplicationController
   def show
     skip_authorization
 
-    @albums = if pundit_user.admin? || pundit_user.artists.include?(@artist)
-                Album.where(artist: @artist)
-              else
-                Album.published.where(artist: @artist)
-              end
+    @albums = policy_scope(@artist.albums)
   end
 
   def new
