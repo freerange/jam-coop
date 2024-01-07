@@ -45,6 +45,7 @@ class Album < ApplicationRecord
 
   def publish
     published!
+    update!(first_published_on: Time.current) if first_published_on.blank?
 
     ZipDownloadJob.perform_later(self, format: :mp3v0)
     ZipDownloadJob.perform_later(self, format: :flac)
