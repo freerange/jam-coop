@@ -103,9 +103,9 @@
   </section>
   <% end %>
 
-  <% if @album.released_at %>
+  <% if @album.released_on %>
   <section class="mb-6">
-    <p>released <%= @album.released_at.strftime('%B %-d, %Y') %></p>
+    <p>released <%= @album.released_on.strftime('%B %-d, %Y') %></p>
   </section>
   <% end %>
 

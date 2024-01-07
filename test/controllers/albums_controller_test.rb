@@ -55,7 +55,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   end
 
   test '#show shows the release date of the album' do
-    @album.update(released_at: Date.parse('2023-06-20'))
+    @album.update(released_on: Date.parse('2023-06-20'))
 
     get artist_album_url(@album.artist, @album)
 
