@@ -8,6 +8,7 @@ class Album < ApplicationRecord
 
   validates :title, presence: true
   validates :price, presence: true, numericality: true
+  validates :released_on, comparison: { less_than_or_equal_to: Time.zone.today, allow_blank: true }
 
   belongs_to :artist
   has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
