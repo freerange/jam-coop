@@ -26,6 +26,10 @@ class Artist < ApplicationRecord
     albums.where(publication_status: :published).any?
   end
 
+  def first_listed_on
+    albums.minimum(:first_published_on)
+  end
+
   def transcode_albums
     albums.each(&:transcode_tracks)
   end
