@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-artists = @artists.sort_by(&:first_listed_on).reverse
+artists = @artists.listed.sort_by(&:first_listed_on).reverse
 
 atom_feed(root_url: artists_url, language: 'en-GB', schema_date: 2024) do |f|
   f.title 'Artists on jam.coop'

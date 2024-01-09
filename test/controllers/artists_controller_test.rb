@@ -24,6 +24,26 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_select 'p', @artist.name
   end
 
+  test '#index with atom format should render atom feed' do
+    @artist.update!(name: 'Older Artist')
+    create(:album, artist: @artist, first_published_on: 3.days.ago)
+    create(:album, artist: @artist, publication_status: :unpublished)
+
+    another_artist = create(:artist, name: 'Newer Artist')
+    create(:album, artist: another_artist, first_published_on: 1.day.ago)
+
+    unlisted_artist = create(:artist, name: 'Unlisted Artist')
+    create(:album, artist: unlisted_artist, publication_status: :unpublished)
+
+    get artists_url(format: :atom)
+
+    feed = RSS::Parser.parse(response.body)
+    assert_equal 'Artists on jam.coop', feed.title.content
+    assert_equal 'Newer Artist', feed.entries.first.title.content
+    assert_equal 'Older Artist', feed.entries.last.title.content
+    assert_not_includes feed.entries.map(&:title).map(&:content), 'Unlisted Artist'
+  end
+
   test '#show should include published albums' do
     @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
 
@@ -151,12 +171,14 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
-    @artist.albums << create(:album, publication_status: :published)
+    create(:album, artist: @artist, first_published_on: 3.days.ago)
+    create(:album, artist: @artist, publication_status: :unpublished)
 
     another_artist = create(:artist, name: 'Newer Artist')
-    another_artist.albums << create(:album, publication_status: :published)
+    create(:album, artist: another_artist, first_published_on: 1.day.ago)
 
-    create(:artist, name: 'Unlisted Artist')
+    unlisted_artist = create(:artist, name: 'Unlisted Artist')
+    create(:album, artist: unlisted_artist, publication_status: :unpublished)
 
     get artists_url(format: :atom)
 
