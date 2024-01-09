@@ -99,7 +99,7 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
   def error_label(object_method, options)
     return if errors_for(object_method).blank?
 
-    error_message = @object.errors[object_method].collect(&:titleize).join(', ')
+    error_message = @object.errors.full_messages_for(object_method).to_sentence
     tailwind_label(object_method, { text: error_message, class: ' font-bold text-red-500' }, options)
   end
 
