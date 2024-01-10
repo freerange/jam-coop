@@ -57,11 +57,11 @@ class EmailSubscriptionChangesControllerTest < ActionDispatch::IntegrationTest
   private
 
   def create_user(email:)
-    User.create!(email:, password: SecureRandom.hex)
+    create(:user, email:)
   end
 
   def create_interest(email:)
-    Interest.create!(email:)
+    create(:interest, email:)
   end
 
   def headers(token: EmailSubscriptionChangesController::TOKEN)
