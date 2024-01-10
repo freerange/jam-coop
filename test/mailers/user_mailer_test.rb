@@ -15,7 +15,7 @@ class UserMailerTest < ActionMailer::TestCase
 
   test 'does not send password reset if user has sending suppressed' do
     @user.update!(sending_suppressed_at: Time.current)
-    UserMailer.with(user: @user).password_reset
+    UserMailer.with(user: @user).password_reset.deliver_now!
     assert_emails 0
   end
 
@@ -27,7 +27,7 @@ class UserMailerTest < ActionMailer::TestCase
 
   test 'does not send email verification if user has sending suppressed' do
     @user.update!(sending_suppressed_at: Time.current)
-    UserMailer.with(user: @user).email_verification
+    UserMailer.with(user: @user).email_verification.deliver_now!
     assert_emails 0
   end
 end
