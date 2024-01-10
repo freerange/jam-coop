@@ -35,7 +35,8 @@ class PurchaseMailerTest < ActionMailer::TestCase
   end
 
   test 'notify_artist does not send if the artist has no associated user' do
-    album = build(:album)
+    artist = build(:artist, user: nil)
+    album = build(:album, artist:)
     purchase = build(:purchase, album:, price: 7.00)
 
     PurchaseMailer.with(purchase:).notify_artist
