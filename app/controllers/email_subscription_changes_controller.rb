@@ -20,6 +20,7 @@ class EmailSubscriptionChangesController < ApplicationController
 
     update_sending_suppressed_for(user)
     update_sending_suppressed_for(interest)
+    update_sending_suppressed_for(purchase)
     render json: { user: { id: user&.id }, interest: { id: interest&.id } }, status: :created
   end
 
@@ -43,6 +44,10 @@ class EmailSubscriptionChangesController < ApplicationController
     @interest ||= Interest.find_by(email: params[:Recipient])
   end
 
+  def purchase
+    @purchase ||= Purchase.find_by(customer_email: params[:Recipient])
+  end
+
   def authenticate
     authenticate_or_request_with_http_token do |token|
       ActiveSupport::SecurityUtils.secure_compare(token, TOKEN)
@@ -50,6 +55,6 @@ class EmailSubscriptionChangesController < ApplicationController
   end
 
   def ensure_record_exists
-    raise ActiveRecord::RecordNotFound if user.blank? && interest.blank?
+    raise ActiveRecord::RecordNotFound if user.blank? && interest.blank? && purchase.blank?
   end
 end

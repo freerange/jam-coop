@@ -29,6 +29,17 @@ class EmailSubscriptionChangesControllerTest < ActionDispatch::IntegrationTest
     assert_equal Time.zone.iso8601(params['ChangedAt']), interest.sending_suppressed_at
   end
 
+  test 'suppresses sending for purchase' do
+    purchase = create_purchase(email: params['Recipient'])
+
+    post(email_subscription_changes_path, headers:, params:)
+
+    assert_response :created
+    purchase.reload
+    assert purchase.suppress_sending?
+    assert_equal Time.zone.iso8601(params['ChangedAt']), purchase.sending_suppressed_at
+  end
+
   test 'does not suppress sending for user if bearer token is not valid' do
     post(email_subscription_changes_path, headers: headers(token: 'invalid'), params:)
 
@@ -62,6 +73,10 @@ class EmailSubscriptionChangesControllerTest < ActionDispatch::IntegrationTest
 
   def create_interest(email:)
     create(:interest, email:)
+  end
+
+  def create_purchase(email:)
+    create(:purchase, customer_email: email)
   end
 
   def headers(token: EmailSubscriptionChangesController::TOKEN)
