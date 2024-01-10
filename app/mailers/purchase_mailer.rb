@@ -4,6 +4,8 @@ class PurchaseMailer < ApplicationMailer
   def completed
     @purchase = params[:purchase]
 
+    return if @purchase.suppress_sending?
+
     mail to: @purchase.customer_email, subject: "Thank you for purchasing #{@purchase.album.title}"
   end
 

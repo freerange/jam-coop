@@ -21,6 +21,10 @@ class Purchase < ApplicationRecord
     ((price - album.price) * 100).to_i
   end
 
+  def suppress_sending?
+    sending_suppressed_at.present?
+  end
+
   private
 
   def price_is_greater_than_album_price
