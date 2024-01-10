@@ -23,6 +23,7 @@ class AlbumMailerTest < ActionMailer::TestCase
   end
 
   test '#published does not send email if album has no associated user' do
+    @album.artist.update!(user: nil)
     AlbumMailer.with(album: @album).published
     assert_emails 0
   end
