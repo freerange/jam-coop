@@ -63,4 +63,14 @@ class PurchaseMailerTest < ActionMailer::TestCase
     mail = PurchaseMailer.with(purchase:).notify_artist
     assert_includes mail.body.to_s, edit_payout_detail_url
   end
+
+  test 'do not notify artist of purchase if sending is suppressed' do
+    user = build(:user, sending_suppressed_at: Time.current)
+    album = build(:album)
+    user.artists << album.artist
+    purchase = build(:purchase, album:, price: 7.00)
+
+    PurchaseMailer.with(purchase:).notify_artist.deliver_now!
+    assert_emails 0
+  end
 end

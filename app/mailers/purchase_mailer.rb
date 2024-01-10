@@ -13,6 +13,7 @@ class PurchaseMailer < ApplicationMailer
     @purchase = params[:purchase]
 
     return unless (@user = @purchase.album.artist.user)
+    return if @user.suppress_sending?
 
     mail to: @user.email, subject: "You have sold a copy of #{@purchase.album.title}"
   end
