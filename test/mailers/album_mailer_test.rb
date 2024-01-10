@@ -24,14 +24,14 @@ class AlbumMailerTest < ActionMailer::TestCase
 
   test '#published does not send email if album has no associated user' do
     @album.artist.update!(user: nil)
-    AlbumMailer.with(album: @album).published
+    AlbumMailer.with(album: @album).published.deliver_now!
     assert_emails 0
   end
 
   test '#published does not send email if associated user has sending suppressed' do
     user = create(:user, sending_suppressed_at: Time.current)
     user.artists << @album.artist
-    AlbumMailer.with(album: @album).published
+    AlbumMailer.with(album: @album).published.deliver_now!
     assert_emails 0
   end
 end

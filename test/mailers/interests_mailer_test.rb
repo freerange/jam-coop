@@ -16,7 +16,7 @@ class InterestsMailerTest < ActionMailer::TestCase
 
   test 'do not send interest confirmation email if sending is suppressed' do
     interest = create(:interest, sending_suppressed_at: Time.current)
-    InterestsMailer.confirm(interest)
+    InterestsMailer.confirm(interest).deliver_now!
     assert_emails 0
   end
 end

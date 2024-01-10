@@ -17,7 +17,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
 
   test 'do not send purchase completed email if sending is suppressed' do
     purchase = create(:purchase, customer_email: 'email@example.com', sending_suppressed_at: Time.current)
-    PurchaseMailer.with(purchase:).completed.deliver_now
+    PurchaseMailer.with(purchase:).completed.deliver_now!
     assert_emails 0
   end
 
@@ -39,7 +39,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     album = build(:album, artist:)
     purchase = build(:purchase, album:, price: 7.00)
 
-    PurchaseMailer.with(purchase:).notify_artist
+    PurchaseMailer.with(purchase:).notify_artist.deliver_now!
     assert_emails 0
   end
 
