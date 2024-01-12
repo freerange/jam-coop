@@ -76,7 +76,7 @@ We'd love to have you! [Sign up for an account](https://jam.coop/sign_up). Once 
 
 ## Is jam.coop open-source?
 
-Not yet. Running a successful open source project requires a lot of time and we can't do that and build jam.coop at the same time at the moment. When we "exit to community" we will open-source the code. And if we ever have to shut down jam.coop, we'll open-source it too.
+Yes. You can find the source code [on github](https://github.com/freerange/jam-coop).
 
 ## I have another question!
 
