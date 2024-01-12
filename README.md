@@ -2,7 +2,7 @@
 
 ## Development
 
-This is a Rails app running on the version of ruby specified in `.ruby-version`. There's also a `.tool-versions` file, so if you're using `asdf` you can install the correct version of ruby locally with
+This is a Rails app running on the version of ruby specified in `.ruby-version`. If you're using `asdf` you can install the correct version of ruby locally with
 
     asdf install
 
