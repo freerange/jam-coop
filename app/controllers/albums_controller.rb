@@ -27,8 +27,11 @@ class AlbumsController < ApplicationController
   end
 
   def publish
-    @album.publish
-    AlbumMailer.with(album: @album).published.deliver_later
+    if @album.publish
+      AlbumMailer.with(album: @album).published.deliver_later
+    else
+      flash[:alert] = "Errors prohibited this album from being saved: #{@album.errors.full_messages.to_sentence}"
+    end
     redirect_to artist_album_url(@album.artist, @album)
   end
 
