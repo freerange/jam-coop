@@ -18,7 +18,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     get artists_url
     assert_select 'p', "#{@artist.name} (unlisted)"
 
-    @artist.albums << create(:album, publication_status: :published)
+    @artist.albums << create(:published_album)
 
     get artists_url
     assert_select 'p', @artist.name
@@ -45,7 +45,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   end
 
   test '#show should include published albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
+    @artist.albums << create(:published_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -118,7 +118,7 @@ class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
   end
 
   test '#show should include published albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
+    @artist.albums << create(:published_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -156,7 +156,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     get artists_url
     assert_select 'p', { count: 0, text: @artist.name }
 
-    @artist.albums << create(:album, publication_status: :published)
+    @artist.albums << create(:published_album)
 
     get artists_url
     assert_select 'p', { text: @artist.name }
@@ -190,7 +190,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   end
 
   test '#show should include published albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :published)
+    @artist.albums << create(:published_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -221,8 +221,8 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   end
 
   test '#show with atom format should render atom feed' do
-    @artist.albums << create(:album, title: 'Older', publication_status: :published, released_on: 2.days.ago)
-    @artist.albums << create(:album, title: 'Newer', publication_status: :published, released_on: 1.day.ago)
+    @artist.albums << create(:published_album, title: 'Older', released_on: 2.days.ago)
+    @artist.albums << create(:published_album, title: 'Newer', released_on: 1.day.ago)
     @artist.albums << create(:pending_album, title: 'Pending', released_on: 0.days.ago)
     @artist.albums << create(:unpublished_album, title: 'Unpublished', released_on: 0.days.ago)
 

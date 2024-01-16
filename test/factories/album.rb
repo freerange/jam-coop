@@ -43,5 +43,7 @@ FactoryBot.define do
     publication_status { :pending }
   end
 
-  factory :published_album, parent: :album
+  factory :published_album, parent: :album do
+    publication_status { :published }
+  end
 end

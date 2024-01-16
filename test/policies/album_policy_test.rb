@@ -22,7 +22,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     user = build(:user, admin: true)
     unpublished_album = create(:unpublished_album)
     pending_album = create(:pending_album)
-    published_album = create(:album, publication_status: :published)
+    published_album = create(:published_album)
 
     scope = AlbumPolicy::Scope.new(user, Album.all)
 
@@ -66,7 +66,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     artist = create(:artist, user:)
     unpublished_album = create(:unpublished_album, artist:)
     pending_album = create(:pending_album, artist:)
-    published_album = create(:album, artist:, publication_status: :published)
+    published_album = create(:published_album, artist:)
 
     scope = AlbumPolicy::Scope.new(user, Album.all)
 
@@ -79,7 +79,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     non_signed_in_user = NullUser.new
     unpublished_album = create(:unpublished_album)
     pending_album = create(:pending_album)
-    published_album = create(:album, publication_status: :published)
+    published_album = create(:published_album)
 
     assert_not AlbumPolicy.new(non_signed_in_user, unpublished_album).show?
     assert_not AlbumPolicy.new(non_signed_in_user, pending_album).show?
@@ -90,7 +90,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     user = NullUser.new
     unpublished_album = create(:unpublished_album)
     pending_album = create(:pending_album)
-    published_album = create(:album, publication_status: :published)
+    published_album = create(:published_album)
 
     scope = AlbumPolicy::Scope.new(user, Album.all)
 
@@ -103,7 +103,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     user = build(:user)
     unpublished_album = create(:unpublished_album)
     pending_album = create(:pending_album)
-    published_album = create(:album, publication_status: :published)
+    published_album = create(:published_album)
 
     assert_not AlbumPolicy.new(user, unpublished_album).show?
     assert_not AlbumPolicy.new(user, pending_album).show?
@@ -112,7 +112,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
 
   test 'signed-in user scope' do
     user = build(:user)
-    published_album = create(:album, publication_status: :published)
+    published_album = create(:published_album)
     pending_album = create(:pending_album)
     unpublished_album = create(:unpublished_album)
 

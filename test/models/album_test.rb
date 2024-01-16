@@ -113,7 +113,7 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'unpublish' do
-    album = create(:album, publication_status: :published)
+    album = create(:published_album)
     album.unpublish
     assert_not album.published?
   end
