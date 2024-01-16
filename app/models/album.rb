@@ -9,6 +9,7 @@ class Album < ApplicationRecord
   belongs_to :artist
   has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
   has_many :downloads, dependent: :destroy
+  has_many :purchases, dependent: :destroy
   has_one_attached :cover
 
   accepts_nested_attributes_for :tracks, reject_if: :all_blank, allow_destroy: true
@@ -30,6 +31,7 @@ class Album < ApplicationRecord
   scope :unpublished, -> { where(publication_status: :unpublished) }
   scope :pending, -> { where(publication_status: :pending) }
   scope :in_release_order, -> { order(Arel.sql('COALESCE(released_on, first_published_on) DESC NULLS LAST')) }
+  scope :best_selling, -> { left_joins(:purchases).group(:id).order('COUNT(purchases.id) DESC') }
 
   after_commit :transcode_tracks, on: :update, if: :metadata_or_cover_changed?
 

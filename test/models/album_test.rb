@@ -175,6 +175,17 @@ class AlbumTest < ActiveSupport::TestCase
     assert_equal 1, Album.pending.count
   end
 
+  test '.best_selling' do
+    album_with_no_purchases = create(:album)
+    album_with_one_purchase = create(:album)
+    album_with_two_purchases = create(:album)
+    create(:purchase, album: album_with_one_purchase, price: album_with_one_purchase.price)
+    create(:purchase, album: album_with_two_purchases, price: album_with_two_purchases.price)
+    create(:purchase, album: album_with_two_purchases, price: album_with_two_purchases.price)
+
+    assert_equal [album_with_two_purchases, album_with_one_purchase, album_with_no_purchases], Album.best_selling
+  end
+
   test '.in_release_order' do
     create(:album, title: 'Unknown', released_on: nil)
     create(:album, title: 'Older Published', released_on: nil, first_published_on: Date.parse('2023-01-01'))

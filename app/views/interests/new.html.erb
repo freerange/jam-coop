@@ -11,9 +11,9 @@
 </div>
 
 <section class="mt-6 mb-12">
-  <h2 class="text-slate-400 mb-3 uppercase">Recently added</h2>
+  <h2 class="text-slate-400 mb-3 uppercase">Recently purchased</h2>
   <div class="grid grid-cols-4 gap-4 mb-3">
-    <% Album.published.order('RANDOM()').take(8).each do |album| %>
+    <% Album.best_selling.limit(8).each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
     <div>
       <div class="border border-slate-200 aspect-w-1 aspect-h-1">
