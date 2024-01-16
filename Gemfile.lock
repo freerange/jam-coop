@@ -104,7 +104,7 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.19)
     bigdecimal (3.1.5)
-    bootsnap (1.16.0)
+    bootsnap (1.17.1)
       msgpack (~> 1.2)
     builder (3.2.4)
     capybara (3.39.2)
