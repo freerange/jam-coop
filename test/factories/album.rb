@@ -28,9 +28,8 @@ FactoryBot.define do
         number_of_tracks { 2 }
       end
 
-      after(:create) do |album, evaluator|
-        create_list(:track, evaluator.number_of_tracks, album:)
-        album.reload
+      after(:build) do |album, evaluator|
+        album.tracks = build_list(:track, evaluator.number_of_tracks, album:)
       end
     end
   end
