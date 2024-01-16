@@ -43,7 +43,7 @@ class ArtistTest < ActiveSupport::TestCase
   test '#first_listed_on returns oldest Album#first_published_on' do
     newer_album = build(:album, publication_status: :published, first_published_on: Date.parse('2023-01-02'))
     older_album = build(:unpublished_album, first_published_on: Date.parse('2023-01-01'))
-    album_without_date = build(:album, publication_status: :pending, first_published_on: nil)
+    album_without_date = build(:pending_album, first_published_on: nil)
     artist = create(:artist, albums: [newer_album, older_album, album_without_date])
 
     assert_equal older_album.first_published_on, artist.first_listed_on

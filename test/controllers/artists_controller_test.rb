@@ -61,7 +61,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   end
 
   test '#show should include pending albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :pending)
+    @artist.albums << create(:pending_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -134,7 +134,7 @@ class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
   end
 
   test '#show should include pending albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :pending)
+    @artist.albums << create(:pending_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -206,7 +206,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   end
 
   test '#show should not include pending albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :pending)
+    @artist.albums << create(:pending_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -223,7 +223,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#show with atom format should render atom feed' do
     @artist.albums << create(:album, title: 'Older', publication_status: :published, released_on: 2.days.ago)
     @artist.albums << create(:album, title: 'Newer', publication_status: :published, released_on: 1.day.ago)
-    @artist.albums << create(:album, title: 'Pending', publication_status: :pending, released_on: 0.days.ago)
+    @artist.albums << create(:pending_album, title: 'Pending', released_on: 0.days.ago)
     @artist.albums << create(:unpublished_album, title: 'Unpublished', released_on: 0.days.ago)
 
     get artist_url(@artist, format: :atom)
