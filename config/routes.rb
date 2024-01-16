@@ -32,6 +32,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources 'albums', only: %i[index]
+  end
+
   resources :purchases, only: %i[show]
 
   resources :artists do

@@ -1,0 +1,8 @@
+<%= render('shared/page_header', text: 'Albums') %>
+<%= render('shared/page_sub_header', text: 'Pending') %>
+
+<ul>
+<% Album.pending.each do |album| %>
+<li><%= text_link_to "#{album.title} by #{album.artist.name}", artist_album_path(album.artist, album) %></li>
+<% end %>
+</ul>

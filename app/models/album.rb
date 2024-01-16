@@ -28,6 +28,7 @@ class Album < ApplicationRecord
 
   scope :published, -> { where(publication_status: :published) }
   scope :unpublished, -> { where(publication_status: :unpublished) }
+  scope :pending, -> { where(publication_status: :pending) }
   scope :in_release_order, -> { order(Arel.sql('COALESCE(released_on, first_published_on) DESC NULLS LAST')) }
 
   after_commit :transcode_tracks, on: :update, if: :metadata_or_cover_changed?

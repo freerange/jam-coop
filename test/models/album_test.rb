@@ -168,6 +168,13 @@ class AlbumTest < ActiveSupport::TestCase
     assert_equal [unpublished_album], Album.unpublished
   end
 
+  test '.pending' do
+    create(:album)
+    create(:album, publication_status: :pending)
+
+    assert_equal 1, Album.pending.count
+  end
+
   test '.in_release_order' do
     create(:album, title: 'Unknown', released_on: nil)
     create(:album, title: 'Older Published', released_on: nil, first_published_on: Date.parse('2023-01-01'))
