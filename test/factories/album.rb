@@ -13,7 +13,7 @@ FactoryBot.define do
     credits do
       'Rick Astley - vocals.'
     end
-    publication_status { :published }
+    publication_status { :unpublished }
 
     after(:build) do |album|
       album.cover.attach(
