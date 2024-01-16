@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class BuyingAnAlbumTest < ApplicationSystemTestCase
   setup do
-    @album = create(:album_with_tracks)
+    @album = create(:published_album, :with_tracks)
     create(:transcode, track: @album.tracks.first)
     create(:download, album: @album)
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))

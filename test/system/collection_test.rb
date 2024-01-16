@@ -5,7 +5,7 @@ require 'application_system_test_case'
 class CollectionTest < ApplicationSystemTestCase
   setup do
     @user = create(:user)
-    @album = create(:album)
+    @album = create(:published_album)
     stub_stripe_checkout_session
   end
 

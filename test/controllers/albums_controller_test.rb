@@ -168,7 +168,7 @@ end
 
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
   def setup
-    @album = create(:album)
+    @album = create(:published_album)
   end
 
   test '#show' do

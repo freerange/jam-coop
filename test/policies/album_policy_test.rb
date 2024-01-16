@@ -33,7 +33,7 @@ class AlbumPolicyTest < ActiveSupport::TestCase
 
   test 'a user' do
     user = build(:user)
-    album = build(:album)
+    album = build(:published_album)
     policy = AlbumPolicy.new(user, album)
 
     assert policy.show?

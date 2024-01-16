@@ -26,11 +26,11 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
-    create(:album, artist: @artist, first_published_on: 3.days.ago)
+    create(:published_album, artist: @artist, first_published_on: 3.days.ago)
     create(:unpublished_album, artist: @artist)
 
     another_artist = create(:artist, name: 'Newer Artist')
-    create(:album, artist: another_artist, first_published_on: 1.day.ago)
+    create(:published_album, artist: another_artist, first_published_on: 1.day.ago)
 
     unlisted_artist = create(:artist, name: 'Unlisted Artist')
     create(:unpublished_album, artist: unlisted_artist)
@@ -171,11 +171,11 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
-    create(:album, artist: @artist, first_published_on: 3.days.ago)
+    create(:published_album, artist: @artist, first_published_on: 3.days.ago)
     create(:unpublished_album, artist: @artist)
 
     another_artist = create(:artist, name: 'Newer Artist')
-    create(:album, artist: another_artist, first_published_on: 1.day.ago)
+    create(:published_album, artist: another_artist, first_published_on: 1.day.ago)
 
     unlisted_artist = create(:artist, name: 'Unlisted Artist')
     create(:unpublished_album, artist: unlisted_artist)

@@ -23,7 +23,7 @@ FactoryBot.define do
       )
     end
 
-    factory :album_with_tracks do
+    trait :with_tracks do
       transient do
         number_of_tracks { 2 }
       end
@@ -34,6 +34,8 @@ FactoryBot.define do
       end
     end
   end
+
+  factory :album_with_tracks, parent: :album, traits: %i[with_tracks]
 
   factory :unpublished_album, parent: :album do
     publication_status { :unpublished }
