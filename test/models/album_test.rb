@@ -153,17 +153,19 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test '.published' do
-    create(:album)
+    published_album = create(:published_album)
+    create(:pending_album)
     create(:unpublished_album)
 
-    assert_equal 1, Album.published.count
+    assert_equal [published_album], Album.published
   end
 
   test '.unpublished' do
-    create(:album)
-    create(:unpublished_album)
+    create(:published_album)
+    create(:pending_album)
+    unpublished_album = create(:unpublished_album)
 
-    assert_equal 1, Album.unpublished.count
+    assert_equal [unpublished_album], Album.unpublished
   end
 
   test '.in_release_order' do
