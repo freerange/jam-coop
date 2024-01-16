@@ -182,7 +182,7 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
   end
 
   test '#show not authorized when album is unpublished' do
-    @album = create(:album, publication_status: :unpublished)
+    @album = create(:unpublished_album)
     previous_url = artist_url(@album.artist)
 
     get artist_album_url(@album.artist, @album), headers: { 'HTTP_REFERER' => previous_url }

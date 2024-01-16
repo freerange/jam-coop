@@ -27,13 +27,13 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
     create(:album, artist: @artist, first_published_on: 3.days.ago)
-    create(:album, artist: @artist, publication_status: :unpublished)
+    create(:unpublished_album, artist: @artist)
 
     another_artist = create(:artist, name: 'Newer Artist')
     create(:album, artist: another_artist, first_published_on: 1.day.ago)
 
     unlisted_artist = create(:artist, name: 'Unlisted Artist')
-    create(:album, artist: unlisted_artist, publication_status: :unpublished)
+    create(:unpublished_album, artist: unlisted_artist)
 
     get artists_url(format: :atom)
 
@@ -53,7 +53,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   end
 
   test '#show should include unpublished albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :unpublished)
+    @artist.albums << create(:unpublished_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -126,7 +126,7 @@ class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
   end
 
   test '#show should include unpublished albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :unpublished)
+    @artist.albums << create(:unpublished_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -172,13 +172,13 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
     create(:album, artist: @artist, first_published_on: 3.days.ago)
-    create(:album, artist: @artist, publication_status: :unpublished)
+    create(:unpublished_album, artist: @artist)
 
     another_artist = create(:artist, name: 'Newer Artist')
     create(:album, artist: another_artist, first_published_on: 1.day.ago)
 
     unlisted_artist = create(:artist, name: 'Unlisted Artist')
-    create(:album, artist: unlisted_artist, publication_status: :unpublished)
+    create(:unpublished_album, artist: unlisted_artist)
 
     get artists_url(format: :atom)
 
@@ -198,7 +198,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   end
 
   test '#show should not include unpublished albums' do
-    @artist.albums << create(:album, title: 'Album Title', publication_status: :unpublished)
+    @artist.albums << create(:unpublished_album, title: 'Album Title')
 
     get artist_url(@artist)
 
@@ -224,7 +224,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     @artist.albums << create(:album, title: 'Older', publication_status: :published, released_on: 2.days.ago)
     @artist.albums << create(:album, title: 'Newer', publication_status: :published, released_on: 1.day.ago)
     @artist.albums << create(:album, title: 'Pending', publication_status: :pending, released_on: 0.days.ago)
-    @artist.albums << create(:album, title: 'Unpublished', publication_status: :unpublished, released_on: 0.days.ago)
+    @artist.albums << create(:unpublished_album, title: 'Unpublished', released_on: 0.days.ago)
 
     get artist_url(@artist, format: :atom)
 

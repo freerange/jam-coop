@@ -73,13 +73,13 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'publish sets published state' do
-    album = create(:album, publication_status: :unpublished)
+    album = create(:unpublished_album)
     album.publish
     assert album.published?
   end
 
   test 'publish sets first_published_on if not already set' do
-    album = create(:album, publication_status: :unpublished)
+    album = create(:unpublished_album)
     freeze_time do
       album.publish
       assert_equal Time.zone.today, album.first_published_on
@@ -88,14 +88,14 @@ class AlbumTest < ActiveSupport::TestCase
 
   test 'publish does not set first_published_on if already set' do
     freeze_time do
-      album = create(:album, publication_status: :unpublished, first_published_on: 1.week.ago)
+      album = create(:unpublished_album, first_published_on: 1.week.ago)
       album.publish
       assert_equal 1.week.ago.to_date, album.first_published_on
     end
   end
 
   test 'publish enqueues ZipDownloadJob to prepare mp3v0 download' do
-    album = create(:album, publication_status: :unpublished)
+    album = create(:unpublished_album)
 
     args_matcher = ->(job_args) { job_args[1][:format] == :mp3v0 }
     assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
@@ -104,7 +104,7 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'publish enqueues ZipDownloadJob to prepare flac download' do
-    album = create(:album, publication_status: :unpublished)
+    album = create(:unpublished_album)
 
     args_matcher = ->(job_args) { job_args[1][:format] == :flac }
     assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
@@ -119,7 +119,7 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'pending' do
-    album = create(:album, publication_status: :unpublished)
+    album = create(:unpublished_album)
     album.pending
     assert album.pending?
   end
@@ -154,14 +154,14 @@ class AlbumTest < ActiveSupport::TestCase
 
   test '.published' do
     create(:album)
-    create(:album, publication_status: :unpublished)
+    create(:unpublished_album)
 
     assert_equal 1, Album.published.count
   end
 
   test '.unpublished' do
     create(:album)
-    create(:album, publication_status: :unpublished)
+    create(:unpublished_album)
 
     assert_equal 1, Album.unpublished.count
   end
