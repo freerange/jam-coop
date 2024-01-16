@@ -4,7 +4,7 @@ require 'test_helper'
 
 class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   def setup
-    @album = create(:album)
+    @album = create(:album, :with_tracks)
     @user = create(:user, admin: true)
     log_in_as(@user)
   end
@@ -118,6 +118,26 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     end
   end
 
+  test '#publish does not succeed if album has validation errors' do
+    @album.tracks.destroy_all
+    patch publish_artist_album_url(@album.artist, @album)
+    assert_not @album.reload.published?
+  end
+
+  test '#publish redirects back to album page with error message if album has validation errors' do
+    @album.tracks.destroy_all
+    patch publish_artist_album_url(@album.artist, @album)
+    assert_redirected_to artist_album_url(@album.artist, @album)
+    assert_equal 'Errors prohibited this album from being saved: Number of tracks must be greater than 0', flash[:alert]
+  end
+
+  test '#publish does not send email to artist if album has validation errors' do
+    @album.tracks.destroy_all
+    assert_enqueued_emails 0 do
+      patch publish_artist_album_url(@album.artist, @album)
+    end
+  end
+
   test '#unpublish' do
     patch unpublish_artist_album_url(@album.artist, @album)
     assert_redirected_to artist_album_url(@album.artist, @album)
@@ -128,7 +148,7 @@ end
 
 class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
   setup do
-    @album = create(:album)
+    @album = create(:published_album)
     user = create(:user)
     user.artists << @album.artist
     log_in_as(user)

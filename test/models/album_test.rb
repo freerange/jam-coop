@@ -95,7 +95,7 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'publish enqueues ZipDownloadJob to prepare mp3v0 download' do
-    album = create(:unpublished_album)
+    album = create(:unpublished_album, :with_tracks)
 
     args_matcher = ->(job_args) { job_args[1][:format] == :mp3v0 }
     assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
@@ -104,7 +104,7 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'publish enqueues ZipDownloadJob to prepare flac download' do
-    album = create(:unpublished_album)
+    album = create(:unpublished_album, :with_tracks)
 
     args_matcher = ->(job_args) { job_args[1][:format] == :flac }
     assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
@@ -222,5 +222,16 @@ class AlbumTest < ActiveSupport::TestCase
       assert_not album.valid?
       assert_includes album.errors[:released_on], "must be less than or equal to #{Time.zone.today}"
     end
+  end
+
+  test 'is valid if not published and has no tracks' do
+    album = build(:unpublished_album, tracks: [])
+    assert album.valid?
+  end
+
+  test 'is not valid if published and has no tracks' do
+    album = build(:album, tracks: [], publication_status: :published)
+    assert_not album.valid?
+    assert_includes album.errors[:number_of_tracks], 'must be greater than 0'
   end
 end

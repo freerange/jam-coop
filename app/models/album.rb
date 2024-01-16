@@ -16,6 +16,7 @@ class Album < ApplicationRecord
   validates :title, presence: true
   validates :price, presence: true, numericality: true
   validates :released_on, comparison: { less_than_or_equal_to: Time.zone.today, allow_blank: true }
+  validates :number_of_tracks, comparison: { greater_than: 0 }, if: :published?
   validates(
     :cover,
     attached: { message: 'file cannot be missing' },
@@ -45,11 +46,12 @@ class Album < ApplicationRecord
   end
 
   def publish
-    published!
-    update!(first_published_on: Time.current) if first_published_on.blank?
-
-    ZipDownloadJob.perform_later(self, format: :mp3v0)
-    ZipDownloadJob.perform_later(self, format: :flac)
+    saved = update(publication_status: :published, first_published_on: first_published_on || Time.current)
+    if saved
+      ZipDownloadJob.perform_later(self, format: :mp3v0)
+      ZipDownloadJob.perform_later(self, format: :flac)
+    end
+    saved
   end
 
   def unpublish
@@ -58,6 +60,10 @@ class Album < ApplicationRecord
 
   def released_on
     super || first_published_on
+  end
+
+  def number_of_tracks
+    tracks.length
   end
 
   def metadata_or_cover_changed?
