@@ -6,16 +6,16 @@ class Album < ApplicationRecord
 
   enum :publication_status, { unpublished: 0, published: 1, pending: 2 }
 
+  belongs_to :artist
+  has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
+  has_many :downloads, dependent: :destroy
+  has_one_attached :cover
+
+  accepts_nested_attributes_for :tracks, reject_if: :all_blank, allow_destroy: true
+
   validates :title, presence: true
   validates :price, presence: true, numericality: true
   validates :released_on, comparison: { less_than_or_equal_to: Time.zone.today, allow_blank: true }
-
-  belongs_to :artist
-  has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
-  accepts_nested_attributes_for :tracks, reject_if: :all_blank, allow_destroy: true
-  has_many :downloads, dependent: :destroy
-
-  has_one_attached :cover
   validates(
     :cover,
     attached: { message: 'file cannot be missing' },
