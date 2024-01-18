@@ -16,7 +16,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
       </svg>
     </span> <p>File must be in <strong>jpeg</strong> or <strong>png</strong> format.</p></div>
-  <%= form.date_field :released_on, class: 'w-full mb-3' %>
+  <%= form.date_field :released_on, max: Time.zone.today, class: 'w-full mb-3' %>
 
   <section id="tracks">
   <h2 class="text-2xl tracking-tight leading-10 font-extrabold my-3">Tracks</h2>
