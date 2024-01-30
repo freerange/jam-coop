@@ -32,6 +32,10 @@ FactoryBot.define do
         album.tracks = build_list(:track, evaluator.number_of_tracks, album:)
       end
     end
+
+    trait :with_license do
+      # TODO
+    end
   end
 
   factory :album_with_tracks, parent: :album, traits: %i[with_tracks]
