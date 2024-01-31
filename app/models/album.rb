@@ -11,9 +11,10 @@ class Album < ApplicationRecord
   has_many :downloads, dependent: :destroy
   has_many :purchases, dependent: :destroy
   has_one_attached :cover
-  belongs_to :license
+  belongs_to :license, optional: true
 
   accepts_nested_attributes_for :tracks, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :license
 
   validates :title, presence: true
   validates :price, presence: true, numericality: true

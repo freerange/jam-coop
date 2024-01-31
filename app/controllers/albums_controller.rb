@@ -64,7 +64,8 @@ class AlbumsController < ApplicationController
   def album_params
     params
       .require(:album)
-      .permit(:title, :price, :cover, :about, :credits, :released_on, tracks_attributes: %i[id title original _destroy])
+      .permit(:title, :price, :cover, :about, :credits, :released_on, :license_id, tracks_attributes: %i[id title original
+                                                                                                         _destroy])
   end
 
   def authorize_album

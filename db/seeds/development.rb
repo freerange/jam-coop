@@ -47,4 +47,5 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
   end
 end
 
+# TODO
 License.create!(text: 'Attribution-NonCommercial-NoDerivs 4.0 International', code: 'CC BY-NC-ND 4.0 DEED', url: 'https://creativecommons.org/licenses/by-nc-nd/4.0/')
