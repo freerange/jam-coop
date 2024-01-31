@@ -10,12 +10,11 @@
     }
   )
 %>
-
 <div data-controller="player">
   <div class="flex flex-row gap-4">
     <div class="w-1/2">
       <% if @album.cover.attached? %>
-      <%= image_tag cdn_url(@album.cover.representation(resize_to_limit: [750, 750])), class: 'w-full border border-slate-200' %>
+        <%= image_tag cdn_url(@album.cover.representation(resize_to_limit: [750, 750])), class: 'w-full border border-slate-200' %>
       <% end %>
     </div>
     <div class="w-1/2">
@@ -24,12 +23,10 @@
         <h2 class="text-sm text-slate-600"><%= link_to @album.artist.name, artist_path(@album.artist), class: "hover:underline" %></h2>
         <h3 data-player-target="trackTitle" class="invisible text-sm italic text-slate-500">one</h3>
       </div>
-
       <% if @album.preview && @album.preview.file %>
-      <audio controls class='w-full hidden' data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(@album.preview.file) %>">
-      </audio>
+        <audio controls class='w-full hidden' data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(@album.preview.file) %>">
+        </audio>
       <% end %>
-
       <div class="my-3">
         <div class="flex gap-1 my-1">
           <button data-action="player#playPrev" class="flex justify-center items-center w-1/5 py-3 bg-slate-500 hover:bg-amber-400 text-white font-medium cursor-pointer">
@@ -57,65 +54,63 @@
           <div data-player-target="progress" class="w-0 h-4 bg-slate-500"></div>
         </div>
       </div>
-
       <div>
         <% if Current.user && Current.user.owns?(@album) %>
-        <p class="mb-2">You own this album:</p>
-        <ul class="list-disc list-inside">
-          <% @album.downloads.each do |download| %>
-          <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
-          <% end %>
-        </ul>
+          <p class="mb-2">You own this album:</p>
+          <ul class="list-disc list-inside">
+            <% @album.downloads.each do |download| %>
+              <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
+            <% end %>
+          </ul>
         <% else %>
-        <%= button_to "Buy", new_artist_album_purchase_path(@album.artist, @album), method: :get, disabled: !@album.published?, class: "w-full py-3 bg-amber-500 hover:bg-amber-400 text-white font-medium cursor-pointer disabled:bg-slate-300 disabled:cursor-not-allowed" %>
-        <p class="text-xs text-slate-600"><%= number_to_currency(@album.price, unit: '£') %> or more. Digital download. MP3 and FLAC</p>
+          <%= button_to "Buy", new_artist_album_purchase_path(@album.artist, @album), method: :get, disabled: !@album.published?, class: "w-full py-3 bg-amber-500 hover:bg-amber-400 text-white font-medium cursor-pointer disabled:bg-slate-300 disabled:cursor-not-allowed" %>
+          <p class="text-xs text-slate-600"><%= number_to_currency(@album.price, unit: '£') %> or more. Digital download. MP3 and FLAC</p>
         <% end %>
       </div>
     </div>
   </div>
-
   <section class="my-6">
     <% @album.tracks.each_with_index do |track, index| %>
-    <div class="flex flex-row justify-between mb-2">
-      <% if track.preview && track.preview.file %>
-      <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= cdn_url(track.preview.file) %>">
-        <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span> <span class="text-slate-400"> <%= seconds_to_formated_track_time(track.preview_duration) %></span>
+      <div class="flex flex-row justify-between mb-2">
+        <% if track.preview && track.preview.file %>
+          <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= cdn_url(track.preview.file) %>">
+            <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span> <span class="text-slate-400"> <%= seconds_to_formated_track_time(track.preview_duration) %></span>
+          </div>
+        <% else %>
+          <div>
+            <%= index + 1 %>. <%= track.title %>
+          </div>
+        <% end %>
+        <% if policy(track).reorder? %>
+          <div>
+            <%= text_link_to 'Up', move_higher_track_path(track), data: { turbo_method: :post } %>
+            <%= text_link_to 'Down', move_lower_track_path(track), data: { turbo_method: :post } %>
+          </div>
+        <% end %>
       </div>
-      <% else %>
-      <div>
-        <%= index + 1 %>. <%= track.title %>
-      </div>
-      <% end %>
-
-      <% if policy(track).reorder? %>
-      <div>
-        <%= text_link_to 'Up', move_higher_track_path(track), data: { turbo_method: :post } %>
-        <%= text_link_to 'Down', move_lower_track_path(track), data: { turbo_method: :post } %>
-      </div>
-      <% end %>
-    </div>
     <% end %>
   </section>
-
   <% if @album.about %>
-  <section class="mb-6">
-    <%= format_metadata(@album.about) %>
-  </section>
+    <section class="mb-6">
+      <%= format_metadata(@album.about) %>
+    </section>
   <% end %>
-
   <% if @album.released_on %>
-  <section class="mb-6">
-    <p>released <%= @album.released_on.strftime('%B %-d, %Y') %></p>
-  </section>
+    <section class="mb-6">
+      <p>released <%= @album.released_on.strftime('%B %-d, %Y') %></p>
+    </section>
   <% end %>
-
   <% if @album.credits %>
-  <section>
-    <%= format_metadata(@album.credits) %>
-  </section>
+    <section>
+      <%= format_metadata(@album.credits) %>
+    </section>
+  <% end %>
+  <% if @album.license %>
+    <section>
+      <%= format_metadata(@album.license.text) %>
+    </section>
   <% end %>
 </div>
-
 <% content_for :navbar do %>
   <% if policy(@album).request_publication? && !@album.published? %>
     <%= button_to [:request_publication, @album.artist, @album], disabled: @album.pending?, class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm disabled:cursor-not-allowed disabled:bg-slate-300' do %>
@@ -126,32 +121,28 @@
       <% end %>
     <% end %>
   <% end %>
-
   <% if policy(@album).edit? %>
     <%= link_to "Edit album", edit_artist_album_path(@album.artist, @album), class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm' %>
   <% end %>
 <% end %>
-
 <% content_for :admin do %>
-<div>
-  <h2 class="text-2xl mb-3">Published state</h2>
-  <p>This album is currently <strong><%= @album.published? ? 'published' : 'unpublished' %></strong></p>
-  <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'underline' do %>
-    <%= @album.published? ? 'Unpublish' : 'Publish' %>
-  <% end %>
-
-  <h2 class="text-2xl my-3">Transcodes</h2>
-  <ul>
-    <% @album.tracks.each do |track| %>
-    <li><strong><%= track.title %></strong> <%= track.transcodes.pluck(:format).join(" ") %></li>
+  <div>
+    <h2 class="text-2xl mb-3">Published state</h2>
+    <p>This album is currently <strong><%= @album.published? ? 'published' : 'unpublished' %></strong></p>
+    <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'underline' do %>
+      <%= @album.published? ? 'Unpublish' : 'Publish' %>
     <% end %>
-  </ul>
-
-  <h2 class="text-2xl my-3">Downloads</h2>
-  <ul>
-    <% @album.downloads.each do |download| %>
-    <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
-    <% end %>
-  </ul>
-</div>
+    <h2 class="text-2xl my-3">Transcodes</h2>
+    <ul>
+      <% @album.tracks.each do |track| %>
+        <li><strong><%= track.title %></strong> <%= track.transcodes.pluck(:format).join(" ") %></li>
+      <% end %>
+    </ul>
+    <h2 class="text-2xl my-3">Downloads</h2>
+    <ul>
+      <% @album.downloads.each do |download| %>
+        <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
