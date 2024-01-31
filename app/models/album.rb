@@ -14,7 +14,6 @@ class Album < ApplicationRecord
   belongs_to :license, optional: true
 
   accepts_nested_attributes_for :tracks, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :license
 
   validates :title, presence: true
   validates :price, presence: true, numericality: true

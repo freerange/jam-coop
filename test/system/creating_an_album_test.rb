@@ -6,6 +6,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @artist = create(:artist)
     user = create(:user, artists: [@artist])
+    @license = create(:license)
 
     log_in_as(user)
   end
@@ -15,6 +16,8 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     click_link 'Add album'
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
+    fill_in 'Released on', with: '2024/01/30'
+    select @license.text, from: 'album_license_id'
 
     within('#tracks') do
       click_link 'Add track'

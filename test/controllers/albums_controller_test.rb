@@ -96,6 +96,14 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_equal 'New name', track.reload.title
   end
 
+  test '#update allows adding a license' do
+    # TODO
+  end
+
+  test '#update allows removing a license' do
+    # TODO
+  end
+
   test '#update allows tracks to be destroyed' do
     track = create(:track, album: @album, title: 'Old name')
 
