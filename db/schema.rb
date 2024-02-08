@@ -93,6 +93,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_202726) do
     t.index ["email"], name: "index_interests_on_email", unique: true
   end
 
+  create_table "licenses", force: :cascade do |t|
+    t.string "code", null: false
+    t.text "source"
+    t.text "label", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "password_reset_tokens", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_password_reset_tokens_on_user_id"
