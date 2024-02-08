@@ -17,7 +17,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
     fill_in 'Released on', with: '2024/01/30'
-    select @license.text, from: 'album_license_id'
+    select @license.display_text, from: 'album_license_id'
 
     within('#tracks') do
       click_link 'Add track'
