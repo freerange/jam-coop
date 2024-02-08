@@ -9,10 +9,11 @@ class LicenseTest < ActiveSupport::TestCase
     assert build(:license).valid?
   end
 
-  test 'is not valid if code is not present' do
+  test 'is not valid if requires attribuets are misising' do
     license = License.new
 
     assert_not license.valid?
-    assert_includes license.errors[:code], 'file cannot be missing'
+    assert_includes license.errors[:code], "can't be blank"
+    assert_includes license.errors[:label], "can't be blank"
   end
 end
