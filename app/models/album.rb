@@ -16,7 +16,7 @@ class Album < ApplicationRecord
 
   validates :title, presence: true
   validates :price, presence: true, numericality: true
-  validates :released_on, comparison: { less_than_or_equal_to: Time.zone.today, allow_blank: true }
+  validates :released_on, comparison: { less_than_or_equal_to: -> { Time.zone.today }, allow_blank: true }
   validates :number_of_tracks, comparison: { greater_than: 0 }, if: :published?
   validates(
     :cover,
