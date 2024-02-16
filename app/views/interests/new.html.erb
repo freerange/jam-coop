@@ -31,11 +31,3 @@
     <%= text_link_to "Discover #{Artist.listed.count} more artists", artists_path %>
   </div>
 </section>
-
-<section class="bg-slate-300 p-6">
-<h2 class="text-2xl tracking-tight leading-10 font-bold mb-3">Newsletter</h2>
-  <p class="mb-6 leading-relaxed">For the latest news and
-  developments, fill in your email and we'll be in touch.</p>
-
-  <%= render "form", interest: @interest %>
-</section>
