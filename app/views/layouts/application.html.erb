@@ -11,6 +11,9 @@
     <%= javascript_importmap_tags %>
     <%= hotwire_livereload_tags if Rails.env.development? %>
     <%= content_for(:auto_discovery) %>
+    <% if Rails.env.production? %>
+      <script defer data-domain="jam.coop" src="https://plausible.io/js/script.js"></script>
+    <% end %>
   </head>
 
   <body class="bg-slate-100">
