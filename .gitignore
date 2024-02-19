@@ -36,5 +36,13 @@
 /config/credentials/production.key
 /.env
 
-# Ignore Bust A Gem VSCode extension ctags generation
+# Ignore Bust A Gem VSCode extension ctags generation.
 /TAGS
+
+# Ignore vscode files.
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
