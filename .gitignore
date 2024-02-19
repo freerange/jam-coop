@@ -35,3 +35,6 @@
 
 /config/credentials/production.key
 /.env
+
+# Ignore Bust A Gem ctags generation
+/TAGS
