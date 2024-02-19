@@ -97,11 +97,15 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   end
 
   test '#update allows adding a license' do
-    # TODO
+    patch artist_album_url(@album.artist, @album), params: { license_id: { id: 1 } }
+    assert_response :success
+    assert @album.license = 'foo'
   end
 
-  test '#update allows removing a license' do
-    # TODO
+  test '#update allows changing a license' do
+    patch artist_album_url(@album.artist, @album), params: { license_id: { id: 2 } }
+    assert_response :success
+    assert @album.license = 'bar'
   end
 
   test '#update allows tracks to be destroyed' do

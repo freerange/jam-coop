@@ -54,7 +54,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_220722) do
     t.date "released_on"
     t.integer "publication_status", default: 0, null: false
     t.date "first_published_on"
+    t.bigint "license_id"
     t.index ["artist_id"], name: "index_albums_on_artist_id"
+    t.index ["license_id"], name: "index_albums_on_license_id"
     t.index ["slug", "artist_id"], name: "index_albums_on_slug_and_artist_id", unique: true
   end
 
