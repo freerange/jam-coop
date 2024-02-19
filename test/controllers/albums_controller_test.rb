@@ -96,6 +96,18 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_equal 'New name', track.reload.title
   end
 
+  test '#update allows adding a license' do
+    patch artist_album_url(@album.artist, @album), params: { album: { license_id: { id: 1 } } }
+    assert_redirected_to artist_album_url(@album.artist, @album)
+    assert @album.license_id = 1
+  end
+
+  test '#update allows changing a license' do
+    patch artist_album_url(@album.artist, @album), params: { album: { license_id: { id: 2 } } }
+    assert_redirected_to artist_album_url(@album.artist, @album)
+    assert @album.license_id = 2
+  end
+
   test '#update allows tracks to be destroyed' do
     track = create(:track, album: @album, title: 'Old name')
 

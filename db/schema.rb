@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_10_214125) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_08_220722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_10_214125) do
     t.date "released_on"
     t.integer "publication_status", default: 0, null: false
     t.date "first_published_on"
+    t.bigint "license_id"
     t.index ["artist_id"], name: "index_albums_on_artist_id"
+    t.index ["license_id"], name: "index_albums_on_license_id"
     t.index ["slug", "artist_id"], name: "index_albums_on_slug_and_artist_id", unique: true
   end
 
@@ -91,6 +93,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_10_214125) do
     t.string "confirm_token"
     t.datetime "sending_suppressed_at"
     t.index ["email"], name: "index_interests_on_email", unique: true
+  end
+
+  create_table "licenses", force: :cascade do |t|
+    t.string "code", null: false
+    t.text "source"
+    t.text "label", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "password_reset_tokens", force: :cascade do |t|
