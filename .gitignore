@@ -36,5 +36,5 @@
 /config/credentials/production.key
 /.env
 
-# Ignore Bust A Gem ctags generation
+# Ignore Bust A Gem VSCode extension ctags generation
 /TAGS
