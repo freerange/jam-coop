@@ -43,10 +43,10 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
+  gem 'faker', '~> 3.2'
 end
 
 group :development do
-  gem 'faker', '~> 3.2'
   gem 'hotwire-livereload'
   gem 'letter_opener'
   gem 'rubocop-capybara', require: false

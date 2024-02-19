@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :license do
-    code { 'by' }
-    label { 'Attribution' }
+    code { Faker::Alphanumeric.alpha(number: 10) }
+    label { Faker::Alphanumeric.alpha(number: 15) }
   end
 end
