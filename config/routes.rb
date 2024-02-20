@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get  'about', to: 'pages#about'
   get  'terms', to: 'pages#terms'
+  get  'blog', to: 'pages#blog'
 
   get 'account', to: 'users#show'
   get 'collection', to: 'collections#show'
