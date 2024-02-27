@@ -7,7 +7,7 @@
 <h1>A new music platform. <br /> <span>For us.</span></h1>
 
 <div>
-<p>We're a co-operative music platform, 100% run by and for the benefit of musicians, fans and the people who make it. <%= text_link_to "Find out more", about_path %>.</p>
+<p>We're a co-operative music platform, 100% run by and for the benefit of musicians, fans and the people who make it. <%= link_to "Find out more", about_path %>.</p>
 </div>
 
 <section>
@@ -28,6 +28,6 @@
     <% end %>
   </div>
   <div>
-    <%= text_link_to "Discover #{Artist.listed.count} more artists", artists_path %>
+    <%= link_to "Discover #{Artist.listed.count} more artists", artists_path %>
   </div>
 </section>
