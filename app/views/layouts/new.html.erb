@@ -37,8 +37,14 @@
         </div>
       </nav>
       <div>
-        <%= render('shared/alert_box', message: alert) if alert %>
-        <%= render('shared/notice_box', message: notice) if notice %>
+        <% if alert %>
+        <div><%= alert %></div>
+        <% end %>
+
+        <% if notice %>
+        <div><%= notice %></div>
+        <% end %>
+
         <%= yield %>
       </div>
       <footer>
