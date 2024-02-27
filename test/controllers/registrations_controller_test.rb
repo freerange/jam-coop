@@ -15,7 +15,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[type='email']"
     assert_select "input[type='password']"
     assert_select "input[type='password']", id: 'password-confirmation'
-    assert_select "button[type='submit']"
+    assert_select "input[type='submit']"
   end
 
   test '#create creates a new user' do

@@ -8,4 +8,5 @@
   <% else %>
     <li><%= text_link_to "Add payout details", new_payout_detail_path %></li>
   <% end %>
+  <%= button_to "Log out", Current.session, method: :delete %>
 </ul>
