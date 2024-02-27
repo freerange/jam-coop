@@ -18,9 +18,9 @@ class SessionsTest < ApplicationSystemTestCase
 
   test 'logging out' do
     log_in_as @user
-
-    click_on 'avatar'
+    visit account_path
     click_on 'Log out'
+
     assert_text 'That session has been logged out'
   end
 end

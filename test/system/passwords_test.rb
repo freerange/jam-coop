@@ -8,8 +8,7 @@ class PasswordsTest < ApplicationSystemTestCase
   end
 
   test 'updating the password' do
-    click_on 'avatar'
-    click_on 'My account'
+    visit account_path
     click_on 'Change password'
 
     fill_in 'Current password', with: 'Secret1*3*5*'
