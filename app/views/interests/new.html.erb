@@ -4,30 +4,30 @@
   )
 %>
 
-<h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">A new music platform. <br /> <span class="text-amber-600">For us.</span></h1>
+<h1>A new music platform. <br /> <span>For us.</span></h1>
 
-<div class="max-w-3xl">
-<p class="mb-3 text-slate-600">We're a co-operative music platform, 100% run by and for the benefit of musicians, fans and the people who make it. <%= text_link_to "Find out more", about_path %>.</p>
+<div>
+<p>We're a co-operative music platform, 100% run by and for the benefit of musicians, fans and the people who make it. <%= text_link_to "Find out more", about_path %>.</p>
 </div>
 
-<section class="mt-6 mb-12">
-  <h2 class="text-slate-400 mb-3 uppercase">Recently purchased</h2>
-  <div class="grid grid-cols-4 gap-4 mb-3">
+<section>
+  <h2>Recently purchased</h2>
+  <div>
     <% Album.best_selling.limit(8).each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
     <div>
-      <div class="border border-slate-200 aspect-w-1 aspect-h-1">
+      <div>
         <% if album.cover.representable? %>
-        <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])), class: 'object-cover' %>
+        <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) %>
         <% end %>
       </div>
-      <p class='text-sm text-slate-500 break-words'><%= album.title %></p>
-      <p class='text-sm text-slate-400 break-words'><%= album.artist.name %></p>
+      <p><%= album.title %></p>
+      <p><%= album.artist.name %></p>
     </div>
     <% end %>
     <% end %>
   </div>
-  <div class="flex justify-end">
+  <div>
     <%= text_link_to "Discover #{Artist.listed.count} more artists", artists_path %>
   </div>
 </section>
