@@ -3,6 +3,7 @@
 class InterestsController < ApplicationController
   skip_before_action :authenticate
   before_action :skip_authorization
+  layout 'new', only: :new
 
   def new
     @interest = Interest.new
