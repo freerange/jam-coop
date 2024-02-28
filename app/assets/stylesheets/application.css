@@ -14,5 +14,7 @@
  *= require css/variables
  *= require css/layouts
  *= require css/base
+ *= require css/card
+ *= require css/cardlist
  *= require_self
  */

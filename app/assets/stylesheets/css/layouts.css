@@ -11,3 +11,55 @@
   justify-content: var(--justify, space-between);
   align-items: center;
 }
+
+.box {
+  padding: var(--s1);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
+  background-color: var(--colour-white);
+}
+
+.box * {
+  color: inherit;
+}
+
+.frame {
+  --n: 10;
+  --d: 10;
+  aspect-ratio: var(--n) / var(--d);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frame > img,
+.frame > video {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.stack > * {
+  margin-block: 0;
+}
+
+.stack > * + * {
+  margin-block-start: var(--space, 1.5rem);
+}
+
+.grid {
+  display: grid;
+  grid-gap: 1rem;
+}
+
+@supports (width: min(200px, 100%)) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  }
+}
