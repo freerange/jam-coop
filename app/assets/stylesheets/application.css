@@ -16,5 +16,6 @@
  *= require css/base
  *= require css/card
  *= require css/cardlist
+ *= require css/footer
  *= require_self
  */
