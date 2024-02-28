@@ -3,3 +3,11 @@
   margin-inline: auto;
   max-inline-size: var(--measure);
 }
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space, 1rem);
+  justify-content: var(--justify, space-between);
+  align-items: center;
+}
