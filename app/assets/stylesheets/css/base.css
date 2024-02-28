@@ -48,12 +48,3 @@ a.link {
 .highlight {
   color: var(--colour-red-jam-500);
 }
-
-footer {
-  display: flex;
-  align-items: center;
-  background-color: var(--colour-slate-300);
-  margin-top: var(--s2);
-  min-height: var(--s4);
-  box-shadow: 0 50vh 0 50vh var(--colour-slate-300);
-}
