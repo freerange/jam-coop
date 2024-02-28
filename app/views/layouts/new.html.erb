@@ -58,20 +58,19 @@
 
         <%= yield %>
       </div>
-      <footer>
-        <div>
-          <p><%= link_to "About", about_url %></p>
-          <p><%= link_to "Terms of use", terms_url %></p>
-        </div>
-        <div>
-          <p>A <a href="https://gofreerange.com">Go Free Range</a> project</p>
-        </div>
-      </footer>
+    </div>
+    <footer>
+      <div class="center cluster" style="--measure: 40ch;">
+        <%= link_to "About", about_url, class: 'link' %>
+        <%= link_to "Terms of use", terms_url, class: 'link' %>
+        <span>A <%= link_to "Go Free Range", 'https://gofreerange.com' %> project</span>
+      </div>
+
       <% if Current.user&.admin? && content_for(:admin) %>
       <div>
         <%= content_for :admin %>
       </div>
       <% end %>
-    </div>
+    </footer>
   </body>
 </html>
