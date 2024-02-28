@@ -12,5 +12,7 @@
  *
  *= require css/reset
  *= require css/variables
+ *= require css/layouts
+ *= require css/base
  *= require_self
  */
