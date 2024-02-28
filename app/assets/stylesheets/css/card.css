@@ -1,0 +1,12 @@
+.jam-card {
+  --space: var(--s-2);
+}
+
+.jam-card__title {
+  font-size: var(--font-size-xs);
+}
+
+.jam-card__subtitle {
+  font-size: var(--font-size-xs);
+  font-weight: normal;
+}

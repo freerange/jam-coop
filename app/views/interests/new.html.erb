@@ -4,25 +4,27 @@
   )
 %>
 
-<h1>A new music platform. <span class="highlight">For us.</span></h1>
-
 <div>
-<p>We're a co-operative music platform, 100% run by and for the benefit of musicians, fans and the people who make it. <%= link_to "Find out more", about_path, class: 'link' %>.</p>
+  <h1>A new music platform. <span class="highlight">For us.</span></h1>
+  <p>We're a co-operative music platform, 100% run by and for the benefit of musicians, fans and the people who make it. <%= link_to "Find out more", about_path, class: 'link' %>.</p>
 </div>
 
-<section>
-  <h2>Recently purchased</h2>
-  <div>
-    <% Album.best_selling.limit(8).each do |album| %>
+<section class="jam-cardlist box stack">
+  <div class="jam-cardlist__header cluster">
+    <h2>Best Selling</h2>
+    <%= link_to "View All", artists_path, class: 'link' %>
+  </div>
+  <div class="grid">
+    <% Album.best_selling.limit(5).each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
-    <div>
-      <div>
+    <div class="jam-card stack">
+      <div class="frame">
         <% if album.cover.representable? %>
         <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) %>
         <% end %>
       </div>
-      <h3><%= album.title %></h3>
-      <h4><%= album.artist.name %></h4>
+      <h3 class="jam-card__title"><%= album.title %></h3>
+      <h4 class="jam-card__subtitle"><%= album.artist.name %></h4>
     </div>
     <% end %>
     <% end %>

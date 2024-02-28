@@ -1,0 +1,9 @@
+.jam-cardlist {
+  padding-top: var(--s-2)
+}
+
+.jam-cardlist__header {
+  border-bottom: 1px solid var(--colour-slate-300);
+  padding-bottom: var(--s0);
+  align-items: baseline;
+}
