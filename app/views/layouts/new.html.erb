@@ -32,7 +32,7 @@
         <div>
           <%= content_for(:navbar) %>
 
-          <div>
+          <div class="cluster">
             <% if Current.user %>
             <div>
               <%= link_to collection_path do %>
@@ -41,8 +41,8 @@
               <% end %>
             </div>
             <% else %>
-            <%= link_to "sign up", sign_up_path %>
-            <%= link_to "log in", log_in_path %>
+            <%= link_to "sign up", sign_up_path, class: 'link' %>
+            <%= link_to "log in", log_in_path, class: 'link' %>
             <% end %>
           </div>
         </div>
