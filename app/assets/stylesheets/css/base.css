@@ -1,3 +1,50 @@
 body {
-  background: var(--colour-slate-100);
+  background-color: var(--colour-slate-100);
+  color: var(--colour-slate-800);
+  line-height: var(--line-height-body);
+  font-family: var(--font-family-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: var(--line-height-headers);
+}
+
+h1 {
+  font-size: var(--font-size-xxxl);
+}
+
+h2 {
+  font-size: var(--font-size-xxl);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+h4 {
+  font-size: var(--font-size-l);
+}
+
+a {
+  text-decoration: none;
+}
+
+a.link {
+  color: var(--colour-link);
+  transition: color 200ms;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--colour-link-hover);
+  }
+}
+
+.highlight {
+  color: var(--colour-red-jam-500);
 }
