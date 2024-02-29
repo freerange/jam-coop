@@ -19,11 +19,7 @@ set_meta_tags(
     <% @artists.order(:name).each do |artist| %>
       <%= link_to(artist_path(artist)) do %>
         <div class="jam-card stack">
-          <div class="frame">
-            <% if artist.profile_picture.representable? %>
-              <%= image_tag cdn_url(artist.profile_picture.representation(resize_to_fill: [300, 300])) %>
-            <% end %>
-          </div>
+          <div class="frame"><%= card_image(artist.profile_picture) %></div>
           <h3 class="jam-card__title"><%= artist.name %><%= artist.listed? ? '' : ' (unlisted)' %></h3>
         </div>
       <% end %>
