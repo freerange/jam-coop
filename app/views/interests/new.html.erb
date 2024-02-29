@@ -13,7 +13,7 @@
   <div class="grid">
     <% Album.best_selling.limit(5).each do |album| %>
       <%= link_to(artist_album_path(album.artist, album)) do %>
-        <%= render 'shared/card', album: %>
+        <%= render 'shared/card', image: album.cover, title: album.title, subtitle: album.artist.name %>
       <% end %>
     <% end %>
   </div>
