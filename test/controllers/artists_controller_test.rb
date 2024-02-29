@@ -16,12 +16,12 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
   test '#index should show both listed and unlisted artist' do
     get artists_url
-    assert_select 'p', "#{@artist.name} (unlisted)"
+    assert_select 'h3', "#{@artist.name} (unlisted)"
 
     @artist.albums << create(:published_album)
 
     get artists_url
-    assert_select 'p', @artist.name
+    assert_select 'h3', @artist.name
   end
 
   test '#index with atom format should render atom feed' do
@@ -154,12 +154,12 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#index should only show listed artists' do
     get artists_url
-    assert_select 'p', { count: 0, text: @artist.name }
+    assert_select 'h3', { count: 0, text: @artist.name }
 
     @artist.albums << create(:published_album)
 
     get artists_url
-    assert_select 'p', { text: @artist.name }
+    assert_select 'h3', { text: @artist.name }
   end
 
   test '#index includes auto-discovery link for atom feed' do
