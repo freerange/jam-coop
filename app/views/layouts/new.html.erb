@@ -54,11 +54,15 @@
       </nav>
       <div class="stack">
         <% if alert %>
-        <div><%= alert %></div>
+        <div class="box jam-notice jam-notice--alert">
+          <%= alert %>
+        </div>
         <% end %>
 
         <% if notice %>
-        <div><%= notice %></div>
+        <div class="box jam-notice jam-notice--notice">
+          <%= notice %>
+        </div>
         <% end %>
 
         <%= yield %>

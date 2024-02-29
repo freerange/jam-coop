@@ -1,0 +1,11 @@
+.jam-notice {
+
+}
+
+.jam-notice--alert {
+  border-left: var(--s-1) solid red;
+}
+
+.jam-notice--notice {
+  border-left: var(--s-1) solid var(--colour-slate-300);
+}
