@@ -15,7 +15,7 @@
  *= require css/layouts
  *= require css/base
  *= require css/components/card
- *= require css/components/cardlist
+ *= require css/components/box
  *= require css/components/footer
  *= require css/components/notice
  *= require_self
