@@ -18,10 +18,9 @@ set_meta_tags(
   <div class="grid">
     <% @artists.order(:name).each do |artist| %>
       <%= link_to(artist_path(artist)) do %>
-        <div class="jam-card stack">
-          <div class="frame"><%= card_image(artist.profile_picture) %></div>
-          <h3 class="jam-card__title"><%= artist.name %><%= artist.listed? ? '' : ' (unlisted)' %></h3>
-        </div>
+        <%= render 'shared/card',
+                   image: artist.profile_picture,
+                   title: "#{artist.name}#{artist.listed? ? '' : ' (unlisted)'}" %>
       <% end %>
     <% end %>
   </div>
