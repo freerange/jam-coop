@@ -1,7 +1,9 @@
 <section class="jam-box box stack">
   <div class="jam-box__header cluster">
     <h2><%= title %></h2>
-    <%= action %>
+    <% if local_assigns[:action] %>
+      <%= action %>
+    <% end %>
   </div>
   <%= yield %>
 </section>
