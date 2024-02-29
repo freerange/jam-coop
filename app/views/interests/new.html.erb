@@ -13,15 +13,7 @@
 <div class="grid">
   <% Album.best_selling.limit(5).each do |album| %>
   <%= link_to(artist_album_path(album.artist, album)) do %>
-  <div class="jam-card stack">
-    <div class="frame">
-      <% if album.cover.representable? %>
-      <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) %>
-      <% end %>
-    </div>
-    <h3 class="jam-card__title"><%= album.title %></h3>
-    <h4 class="jam-card__subtitle"><%= album.artist.name %></h4>
-  </div>
+  <%= render 'shared/card', album: %>
   <% end %>
   <% end %>
 </div>
