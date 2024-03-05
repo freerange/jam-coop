@@ -2,6 +2,7 @@
 
 class PasswordsController < ApplicationController
   before_action :set_user
+  layout 'new', only: :edit
 
   def edit
     authorize @user

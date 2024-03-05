@@ -5,6 +5,7 @@ module Identity
     skip_before_action :authenticate
     before_action :skip_authorization
     before_action :set_user, only: %i[edit update]
+    layout 'new'
 
     def new; end
 

@@ -4,6 +4,8 @@ class RegistrationsController < ApplicationController
   skip_before_action :authenticate
   before_action :validate_cloudflare_turnstile, only: :create
 
+  layout 'new'
+
   def new
     skip_authorization
 
