@@ -3,6 +3,7 @@
 module Identity
   class EmailsController < ApplicationController
     before_action :set_user
+    layout 'new'
 
     def edit
       authorize @user

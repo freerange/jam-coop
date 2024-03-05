@@ -2,6 +2,7 @@
 
 class RegistrationsController < ApplicationController
   skip_before_action :authenticate
+  layout 'new'
 
   def new
     skip_authorization
