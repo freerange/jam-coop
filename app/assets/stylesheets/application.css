@@ -14,9 +14,11 @@
  *= require css/variables
  *= require css/layouts
  *= require css/base
+ *= require css/forms
  *= require css/components/card
  *= require css/components/box
  *= require css/components/footer
  *= require css/components/notice
+ *= require css/components/form_group
  *= require_self
  */
