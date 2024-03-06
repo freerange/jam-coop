@@ -1,3 +1,19 @@
+* {
+  max-inline-size: var(--measure);
+}
+
+html,
+body,
+div,
+header,
+nav,
+main,
+section,
+form,
+footer {
+  max-inline-size: none;
+}
+
 body {
   background-color: var(--colour-slate-100);
   color: var(--colour-slate-800);
