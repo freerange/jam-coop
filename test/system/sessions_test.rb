@@ -21,6 +21,6 @@ class SessionsTest < ApplicationSystemTestCase
 
     visit account_path
     click_button 'Log out'
-    assert_text 'That session has been logged out'
+    assert_text 'You have logged out'
   end
 end

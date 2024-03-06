@@ -34,7 +34,7 @@ class SessionsController < ApplicationController
     skip_authorization
 
     @session.destroy
-    redirect_to(sessions_path, notice: 'That session has been logged out')
+    redirect_to(sessions_path, notice: 'You have logged out')
   end
 
   private
