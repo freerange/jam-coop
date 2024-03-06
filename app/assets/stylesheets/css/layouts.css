@@ -1,7 +1,7 @@
 .center {
   box-sizing: content-box;
   margin-inline: auto;
-  max-inline-size: var(--measure);
+  max-inline-size: var(--size, var(--measure));
 }
 
 .cluster {
