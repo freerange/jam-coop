@@ -1,0 +1,13 @@
+<% if model.errors.any? %>
+<div class="box jam-notice jam-notice--alert">
+  <h2>
+    <%= pluralize(model.errors.count, "error") %> prohibited this <%= model.class.name.downcase %> from being saved:
+  </h2>
+
+  <ul>
+    <% model.errors.each do |error| %>
+    <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
