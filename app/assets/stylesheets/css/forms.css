@@ -1,0 +1,14 @@
+input {
+  padding: var(--s-2);
+  border: 1px solid var(--colour-slate-300);
+}
+
+input[type=submit] {
+  border: none;
+  color: var(--colour-white);
+  background-color: var(--colour-red-jam-500);
+}
+
+input[type=submit]:hover {
+  background-color: var(--colour-link-hover);
+}
