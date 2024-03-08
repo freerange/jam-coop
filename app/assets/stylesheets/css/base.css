@@ -61,6 +61,24 @@ a.link {
   }
 }
 
+button.link {
+  color: var(--colour-link);
+  transition: color 200ms;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--colour-link-hover);
+  }
+}
+
 .highlight {
   color: var(--colour-red-jam-500);
 }
