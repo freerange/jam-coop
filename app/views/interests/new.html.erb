@@ -10,8 +10,8 @@
 </div>
 
 <%= render 'shared/box', title: 'Best Selling', action: link_to("View All", artists_path, class: 'link') do %>
-  <div class="grid">
-    <% Album.best_selling.limit(5).each do |album| %>
+  <div class="reel">
+    <% Album.best_selling.limit(8).each do |album| %>
       <%= link_to(artist_album_path(album.artist, album)) do %>
         <%= render 'shared/card', image: album.cover, title: album.title, subtitle: album.artist.name %>
       <% end %>
