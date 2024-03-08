@@ -1,12 +1,12 @@
-<%= render('shared/page_header', text: 'My account') %>
-
-<ul>
-  <li><%= text_link_to "Change password", edit_password_path %></li>
-  <li><%= text_link_to "Change email address", edit_identity_email_path %></li>
-  <% if Current.user.payout_detail %>
-    <li><%= text_link_to "Edit payout details", edit_payout_detail_path %></li>
-  <% else %>
-    <li><%= text_link_to "Add payout details", new_payout_detail_path %></li>
-  <% end %>
-  <%= button_to "Log out", Current.session, method: :delete %>
-</ul>
+<%= render('shared/box', title: 'My account') do %>
+  <ul>
+    <li><%= link_to "Change password", edit_password_path, class: 'link' %></li>
+    <li><%= link_to "Change email address", edit_identity_email_path, class: 'link' %></li>
+    <% if Current.user.payout_detail %>
+      <li><%= link_to "Edit payout details", edit_payout_detail_path, class: 'link' %></li>
+    <% else %>
+      <li><%= link_to "Add payout details", new_payout_detail_path, class: 'link' %></li>
+    <% end %>
+    <li><%= button_to "Log out", Current.session, method: :delete %></li>
+  </ul>
+<% end %>
