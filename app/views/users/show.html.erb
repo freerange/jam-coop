@@ -7,6 +7,6 @@
     <% else %>
       <li><%= link_to "Add payout details", new_payout_detail_path, class: 'link' %></li>
     <% end %>
-    <li><%= button_to "Log out", Current.session, method: :delete %></li>
+    <li><%= button_to "Log out", Current.session, method: :delete, class: 'link' %></li>
   </ul>
 <% end %>
