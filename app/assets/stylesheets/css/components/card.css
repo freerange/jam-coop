@@ -1,14 +1,22 @@
 .jam-card {
   --space: var(--s-2);
+  max-inline-size: 15rem;
+  padding-bottom: var(--s1);
 }
 
 .jam-card__title {
   font-size: var(--font-size-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .jam-card__subtitle {
   font-size: var(--font-size-xs);
   font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .jam-card:hover > .jam-card__title {

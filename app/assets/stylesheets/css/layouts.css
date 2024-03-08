@@ -63,3 +63,41 @@
     grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   }
 }
+
+.reel {
+  display: flex;
+  block-size: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-color: var(--colour-slate-300) var(--colour-white);
+}
+
+.reel::-webkit-scrollbar {
+  block-size: 1rem;
+}
+
+.reel::-webkit-scrollbar-track {
+  background-color: var(--colour-white);
+}
+
+.reel::-webkit-scrollbar-thumb {
+  background-color: var(--colour-slate-300);
+}
+
+.reel > * {
+  flex: 0 0 auto;
+}
+
+.reel > img {
+  block-size: 100%;
+  flex-basis: auto;
+  width: auto;
+}
+
+.reel > * + * {
+  margin-inline-start: 1rem;
+}
+
+.reel.overflowing {
+  padding-block-end: 1rem;
+}
