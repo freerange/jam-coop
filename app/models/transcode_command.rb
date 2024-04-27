@@ -51,7 +51,7 @@ class TranscodeCommand
     supported_keys = @metadata.slice(*tag_keys)
     return if supported_keys.empty?
 
-    entries = supported_keys.map { |k, v| %(-metadata #{id3v23_key_for(k)}="#{v}") }
+    entries = supported_keys.map { |k, v| %(-metadata #{tag_key_for(k)}="#{v}") }
     "-write_id3v2 1 -id3v2_version 3 #{entries.join(' ')}"
   end
 
@@ -72,7 +72,7 @@ class TranscodeCommand
     METADATA_KEYS_VS_ID3V23_TAGS.keys
   end
 
-  def id3v23_key_for(key)
+  def tag_key_for(key)
     METADATA_KEYS_VS_ID3V23_TAGS[key]
   end
 end
