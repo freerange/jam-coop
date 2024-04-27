@@ -12,9 +12,9 @@ class CollectionTest < ApplicationSystemTestCase
   test 'when a logged in user purchases an album it appears in their collection' do
     log_in_as(@user)
     visit artist_album_url(@album.artist, @album)
-    click_button 'Buy'
+    click_on 'Buy'
     fill_in 'Price', with: @album.price
-    click_button 'Checkout'
+    click_on 'Checkout'
     fake_stripe_webhook_event_completed(@user)
     visit collection_url
     assert_text @album.title
@@ -22,9 +22,9 @@ class CollectionTest < ApplicationSystemTestCase
 
   test 'when a logged out user purchases an album it appears in their collection' do
     visit artist_album_url(@album.artist, @album)
-    click_button 'Buy'
+    click_on 'Buy'
     fill_in 'Price', with: @album.price
-    click_button 'Checkout'
+    click_on 'Checkout'
     fake_stripe_webhook_event_completed(@user)
 
     log_in_as(@user)
@@ -36,9 +36,9 @@ class CollectionTest < ApplicationSystemTestCase
     user = build(:user, email: 'someone@example.com')
 
     visit artist_album_url(@album.artist, @album)
-    click_button 'Buy'
+    click_on 'Buy'
     fill_in 'Price', with: @album.price
-    click_button 'Checkout'
+    click_on 'Checkout'
     fake_stripe_webhook_event_completed(user)
 
     visit root_url
@@ -47,7 +47,7 @@ class CollectionTest < ApplicationSystemTestCase
     fill_in 'Password', with: 'Secret1*3*5*'
     fill_in 'Password confirmation', with: 'Secret1*3*5*'
     perform_enqueued_jobs do
-      click_button 'Sign up'
+      click_on 'Sign up'
     end
     visit verify_email_url
     assert_text 'Thank you for verifying your email address'

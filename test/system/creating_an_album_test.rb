@@ -22,7 +22,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
     end
 
-    click_button 'Save'
+    click_on 'Save'
 
     assert_text "A Hard Day's Night (unpublished)"
     click_link "A Hard Day's Night (unpublished)"
@@ -36,7 +36,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     assert_text album.title
     click_link 'Edit album'
     fill_in 'Title', with: 'New Title'
-    click_button 'Save'
+    click_on 'Save'
     assert_text 'New Title'
   end
 end

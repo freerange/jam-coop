@@ -11,7 +11,7 @@ class SessionsTest < ApplicationSystemTestCase
     visit log_in_url
     fill_in 'Email', with: @user.email
     fill_in 'Password', with: 'Secret1*3*5*'
-    click_button 'Log in'
+    click_on 'Log in'
 
     assert_text 'Logged in successfully'
   end
@@ -19,8 +19,8 @@ class SessionsTest < ApplicationSystemTestCase
   test 'logging out' do
     log_in_as @user
 
-    click_button 'avatar'
-    click_button 'Log out'
+    click_on 'avatar'
+    click_on 'Log out'
     assert_text 'That session has been logged out'
   end
 end

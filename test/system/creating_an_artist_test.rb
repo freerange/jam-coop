@@ -11,14 +11,14 @@ class CreatingAnArtistTest < ApplicationSystemTestCase
 
   test 'creating an artist' do
     visit root_url
-    click_button 'avatar'
+    click_on 'avatar'
     click_link 'Add artist'
     fill_in 'Name', with: 'The Beatles'
     fill_in 'Location', with: 'Liverpool'
     fill_in 'Description', with: 'A popular beat combo'
     attach_file 'Profile picture', Rails.root.join('test/fixtures/files/cover.png')
 
-    click_button 'Save'
+    click_on 'Save'
 
     assert_text 'The Beatles'
     assert_text 'Liverpool'

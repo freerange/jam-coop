@@ -14,7 +14,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     # Artist requests publication
     visit artist_url(@album.artist)
     click_link "#{@album.title} (unpublished)"
-    click_button 'Publish'
+    click_on 'Publish'
     assert_text "Thank you! We'll email you when your album is published."
     sign_out
 
@@ -22,7 +22,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     admin = create(:user, admin: true, email: 'admin@example.com')
     log_in_as(admin)
     visit link_in_publish_request_email
-    click_button 'Publish'
+    click_on 'Publish'
     sign_out
 
     # Listener visits published album page
