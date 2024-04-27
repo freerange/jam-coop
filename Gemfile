@@ -44,7 +44,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'faker', '~> 3.2'
+  gem 'faker', '~> 3.3'
   gem 'hotwire-livereload'
   gem 'letter_opener'
   gem 'rubocop-capybara', require: false

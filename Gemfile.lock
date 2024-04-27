@@ -139,7 +139,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    faker (3.2.2)
+    faker (3.3.1)
       i18n (>= 1.8.11, < 2)
     ferrum (0.14)
       addressable (~> 2.5)
@@ -154,7 +154,7 @@ GEM
     hotwire-livereload (1.2.3)
       listen (>= 3.0.0)
       rails (>= 6.0.0)
-    i18n (1.14.1)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -383,7 +383,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   factory_bot_rails
-  faker (~> 3.2)
+  faker (~> 3.3)
   friendly_id (~> 5.5.0)
   hotwire-livereload
   image_processing
