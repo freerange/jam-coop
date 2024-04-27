@@ -8,6 +8,13 @@ class TranscodeCommand
     artist_name: 'TPE1'
   }.freeze
 
+  METADATA_KEYS_VS_FLAC_TAGS = {
+    track_title: 'TITLE',
+    track_number: 'TRACKNUMBER',
+    album_title: 'ALBUM',
+    artist_name: 'ARTIST'
+  }.freeze
+
   def initialize(input, output, format, metadata = {}, image = nil)
     @input = input
     @output = output
@@ -22,8 +29,9 @@ class TranscodeCommand
       global_options,
       input_options,
       image_options,
+      muxer_options,
       metadata_options,
-      transcoding_options(@format),
+      transcoding_options,
       @output.path
     ].compact.join(' ')
   end
@@ -47,16 +55,21 @@ class TranscodeCommand
     "-i #{@image.path} -map 0:0 -map 1:0 -c copy"
   end
 
-  def metadata_options
-    supported_keys = @metadata.slice(*id3v23_keys)
-    return if supported_keys.empty?
+  def muxer_options
+    return unless @format.to_s =~ /^mp3/
 
-    entries = supported_keys.map { |k, v| %(-metadata #{id3v23_key_for(k)}="#{v}") }
-    "-write_id3v2 1 -id3v2_version 3 #{entries.join(' ')}"
+    '-write_id3v2 1 -id3v2_version 3'
   end
 
-  def transcoding_options(format)
-    case format
+  def metadata_options
+    supported_keys = @metadata.slice(*tag_keys)
+    return if supported_keys.empty?
+
+    supported_keys.map { |k, v| %(-metadata #{tag_key_for(k)}="#{v}") }.join(' ')
+  end
+
+  def transcoding_options
+    case @format
     when :mp3v0
       '-codec:a libmp3lame -q:a 0 -f mp3'
     when :mp3128k
@@ -68,11 +81,22 @@ class TranscodeCommand
     end
   end
 
-  def id3v23_keys
-    METADATA_KEYS_VS_ID3V23_TAGS.keys
+  def tag_keys
+    metadata_lookup.keys
   end
 
-  def id3v23_key_for(key)
-    METADATA_KEYS_VS_ID3V23_TAGS[key]
+  def tag_key_for(key)
+    metadata_lookup[key]
+  end
+
+  def metadata_lookup
+    case @format.to_s
+    when /^mp3/
+      METADATA_KEYS_VS_ID3V23_TAGS
+    when /^flac/
+      METADATA_KEYS_VS_FLAC_TAGS
+    else
+      raise ArgumentError, "unsupported format: #{@format}"
+    end
   end
 end
