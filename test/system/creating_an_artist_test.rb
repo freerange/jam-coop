@@ -12,7 +12,7 @@ class CreatingAnArtistTest < ApplicationSystemTestCase
   test 'creating an artist' do
     visit root_url
     click_on 'avatar'
-    click_link 'Add artist'
+    click_on 'Add artist'
     fill_in 'Name', with: 'The Beatles'
     fill_in 'Location', with: 'Liverpool'
     fill_in 'Description', with: 'A popular beat combo'

@@ -12,12 +12,12 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
   test 'creating an album' do
     visit artist_url(@artist)
-    click_link 'Add album'
+    click_on 'Add album'
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
 
     within('#tracks') do
-      click_link 'Add track'
+      click_on 'Add track'
       fill_in 'Title', with: 'And I Love Her'
       attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
     end
@@ -25,7 +25,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     click_on 'Save'
 
     assert_text "A Hard Day's Night (unpublished)"
-    click_link "A Hard Day's Night (unpublished)"
+    click_on "A Hard Day's Night (unpublished)"
     assert_text '1. And I Love Her'
   end
 
@@ -34,7 +34,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
     visit artist_album_url(@artist, album)
     assert_text album.title
-    click_link 'Edit album'
+    click_on 'Edit album'
     fill_in 'Title', with: 'New Title'
     click_on 'Save'
     assert_text 'New Title'

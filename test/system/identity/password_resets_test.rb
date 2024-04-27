@@ -11,7 +11,7 @@ module Identity
 
     test 'sending a password reset email' do
       visit log_in_url
-      click_link 'Forgot your password?'
+      click_on 'Forgot your password?'
 
       fill_in 'Email', with: @user.email
       click_on 'Send password reset email'

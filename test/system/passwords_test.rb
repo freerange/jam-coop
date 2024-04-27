@@ -9,8 +9,8 @@ class PasswordsTest < ApplicationSystemTestCase
 
   test 'updating the password' do
     click_on 'avatar'
-    click_link 'My account'
-    click_link 'Change password'
+    click_on 'My account'
+    click_on 'Change password'
 
     fill_in 'Current password', with: 'Secret1*3*5*'
     fill_in 'New password', with: 'Secret6*4*2*'

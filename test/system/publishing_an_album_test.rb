@@ -13,7 +13,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
   test 'publishing an album' do
     # Artist requests publication
     visit artist_url(@album.artist)
-    click_link "#{@album.title} (unpublished)"
+    click_on "#{@album.title} (unpublished)"
     click_on 'Publish'
     assert_text "Thank you! We'll email you when your album is published."
     sign_out
@@ -27,7 +27,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
 
     # Listener visits published album page
     visit artist_url(@album.artist)
-    click_link @album.title
+    click_on @album.title
   end
 
   private

@@ -10,7 +10,7 @@ class PayoutDetailsTest < ApplicationSystemTestCase
 
   test 'adding payout details' do
     visit account_url
-    click_link 'Add payout details'
+    click_on 'Add payout details'
     fill_in 'Name', with: 'John Lennon'
     select '🇬🇧 United Kingdom (GBP)', from: 'Country / Region'
     click_on 'Save'

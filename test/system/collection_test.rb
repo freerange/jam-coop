@@ -42,7 +42,7 @@ class CollectionTest < ApplicationSystemTestCase
     fake_stripe_webhook_event_completed(user)
 
     visit root_url
-    click_link 'sign up'
+    click_on 'sign up'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'Secret1*3*5*'
     fill_in 'Password confirmation', with: 'Secret1*3*5*'
