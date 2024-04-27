@@ -17,13 +17,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     visit log_in_url
     fill_in :email, with: user.email
     fill_in :password, with: 'Secret1*3*5*'
-    click_button 'Log in'
+    click_on 'Log in'
     assert_current_path root_url
     user
   end
 
   def sign_out
-    click_button 'avatar'
-    click_button 'Log out'
+    click_on 'avatar'
+    click_on 'Log out'
   end
 end

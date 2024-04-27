@@ -10,10 +10,10 @@ class PayoutDetailsTest < ApplicationSystemTestCase
 
   test 'adding payout details' do
     visit account_url
-    click_link 'Add payout details'
+    click_on 'Add payout details'
     fill_in 'Name', with: 'John Lennon'
     select '🇬🇧 United Kingdom (GBP)', from: 'Country / Region'
-    click_button 'Save'
+    click_on 'Save'
 
     assert_equal 'John Lennon', @user.payout_detail.name
     assert_equal 'united_kingdom', @user.payout_detail.country

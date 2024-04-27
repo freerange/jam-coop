@@ -13,9 +13,9 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
 
   test 'purchasing an album' do
     visit artist_album_url(@album.artist, @album)
-    click_button 'Buy'
+    click_on 'Buy'
     fill_in 'Price', with: @album.price
-    click_button 'Checkout'
+    click_on 'Checkout'
 
     # Fake the Stripe checkout redirect to the "success_url"
     visit purchase_url(Purchase.last)
