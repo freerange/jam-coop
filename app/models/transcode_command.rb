@@ -48,7 +48,7 @@ class TranscodeCommand
   end
 
   def metadata_options
-    supported_keys = @metadata.slice(*id3v23_keys)
+    supported_keys = @metadata.slice(*tag_keys)
     return if supported_keys.empty?
 
     entries = supported_keys.map { |k, v| %(-metadata #{id3v23_key_for(k)}="#{v}") }
@@ -68,7 +68,7 @@ class TranscodeCommand
     end
   end
 
-  def id3v23_keys
+  def tag_keys
     METADATA_KEYS_VS_ID3V23_TAGS.keys
   end
 
