@@ -23,7 +23,7 @@ class TranscodeCommand
       input_options,
       image_options,
       metadata_options,
-      transcoding_options(@format),
+      transcoding_options,
       @output.path
     ].compact.join(' ')
   end
@@ -55,8 +55,8 @@ class TranscodeCommand
     "-write_id3v2 1 -id3v2_version 3 #{entries.join(' ')}"
   end
 
-  def transcoding_options(format)
-    case format
+  def transcoding_options
+    case @format
     when :mp3v0
       '-codec:a libmp3lame -q:a 0 -f mp3'
     when :mp3128k
