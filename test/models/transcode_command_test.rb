@@ -42,7 +42,7 @@ class TranscodeCommandTest < ActiveSupport::TestCase
     assert_contains_pair(command_string, ['-c', 'copy'])
   end
 
-  test 'adds metadata using ID3v2.3 format' do
+  test 'adds metadata tags using ID3v2.3 format for MP3 formats' do
     metadata = {
       track_title: 'track-title',
       track_number: 'track-number',
