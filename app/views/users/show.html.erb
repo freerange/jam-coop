@@ -1,4 +1,23 @@
 <%= render('shared/box', title: 'My account') do %>
+  <div class="jam-tab-bar">
+    <ul class="switcher">
+      <li class="jam-tab-bar__selected">Personal</li>
+      <% Current.user.artists.each do |artist| %>
+        <li><%= link_to artist.name, edit_artist_path(artist) %></li>
+      <% end %>
+      <% if policy(Artist).new? %>
+        <li>
+          <span class="icon">
+            <svg width="0.75em" height="0.75em" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" fill="#F16B7C"/>
+            </svg>
+          </span>
+          <%= link_to "Add artist", new_artist_path %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
   <ul>
     <li><%= link_to "Change password", edit_password_path, class: 'link' %></li>
     <li><%= link_to "Change email address", edit_identity_email_path, class: 'link' %></li>

@@ -101,3 +101,15 @@
 .reel.overflowing {
   padding-block-end: 1rem;
 }
+
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  --threshold: 30rem;
+}
+
+.switcher > * {
+  flex-grow: 1;
+  flex-basis: calc((var(--threshold) - 100%) * 999);
+}
