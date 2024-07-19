@@ -13,6 +13,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   driven_by :cuprite
 
+  def setup
+    stub_successful_cloudflare_turnstile_request
+  end
+
   def log_in_as(user)
     visit log_in_url
     fill_in :email, with: user.email
@@ -25,5 +29,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def sign_out
     click_on 'avatar'
     click_on 'Log out'
+  end
+
+  private
+
+  def stub_successful_cloudflare_turnstile_request
+    stub_request(:post, 'https://challenges.cloudflare.com/turnstile/v0/siteverify')
+      .to_return(status: 200, body: { success: true }.to_json)
   end
 end
