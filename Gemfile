@@ -57,4 +57,5 @@ group :test do
   gem 'mocha', '~> 2.1'
   gem 'rubocop-factory_bot'
   gem 'selenium-webdriver'
+  gem 'webmock'
 end
