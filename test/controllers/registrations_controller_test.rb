@@ -4,6 +4,9 @@ require 'test_helper'
 
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   def setup
+    stub_request(:post, 'https://challenges.cloudflare.com/turnstile/v0/siteverify')
+      .to_return(status: 200, body: { success: true }.to_json)
+
     @album = create(:album)
     log_in_as(create(:user, admin: true))
   end
@@ -57,5 +60,15 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
     assert_select 'h2', text: /errors prohibited this user from being saved/
+  end
+
+  test '#create makes a call to the cloudflare turnstile API to validate the request' do
+    post sign_up_url, params: {
+      email: 'user@example.com',
+      password: 'Secret1*3*5*',
+      password_confirmation: 'Secret1*3*5*'
+    }
+
+    assert_requested :post, 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
   end
 end

@@ -1,9 +1,14 @@
+<% content_for :head do %>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer data-turbo-track="reload" data-turbo-temporary="true"></script>
+<% end %>
+
 <%= render 'shared/page_header', text: 'Sign up' %>
 
-<%= form_with(url: sign_up_path, builder: TailwindFormBuilder) do |form| %>
+<%= form_with(url: sign_up_path, builder: TailwindFormBuilder, data: { turbo: false }) do |form| %>
   <%= render('shared/errors', model: @user) %>
   <%= form.email_field :email, value: @user.email, required: true, autofocus: true, autocomplete: "email", class: 'w-full mb-3' %>
   <%= form.password_field :password, required: true, autocomplete: "new-password", class: 'w-full mb-3' %>
-  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", class: 'w-full mb-3' %>
+  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", class: 'w-full mb-6' %>
+  <%= cloudflare_turnstile %>
   <%= form.submit "Sign up", class: 'w-full mt-6' %>
 <% end %>
