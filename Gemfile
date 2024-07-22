@@ -32,7 +32,7 @@ gem 'rubyzip', '~> 2.3'
 gem 'sidekiq'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
-gem 'stripe', '~> 10.5'
+gem 'stripe', '~> 12.3'
 gem 'tailwindcss-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
