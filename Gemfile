@@ -45,9 +45,12 @@ group :development, :test do
 end
 
 group :development do
+  gem 'actioncable'
   gem 'faker', '~> 3.3'
   gem 'hotwire-livereload'
   gem 'letter_opener'
+  gem 'listen'
+  gem 'lookbook', '>= 2.3.2'
   gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
 end

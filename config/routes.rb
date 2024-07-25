@@ -90,4 +90,5 @@ Rails.application.routes.draw do
   end
 
   mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint
+  mount Lookbook::Engine, at: '/lookbook' if Rails.env.development?
 end
