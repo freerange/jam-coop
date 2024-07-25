@@ -12,9 +12,9 @@ module ApplicationHelper
     "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}?d=mp"
   end
 
-  def card_image(attachment)
+  def card_image_url(attachment)
     return unless attachment.representable?
 
-    image_tag cdn_url(attachment.representation(resize_to_fill: [300, 300]))
+    cdn_url(attachment.representation(resize_to_fill: [300, 300]))
   end
 end

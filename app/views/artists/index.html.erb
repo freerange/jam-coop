@@ -19,7 +19,7 @@ set_meta_tags(
     <% @artists.order(:name).each do |artist| %>
       <%= link_to(artist_path(artist)) do %>
         <%= render 'shared/card',
-                   image: artist.profile_picture,
+                   image_url: card_image_url(artist.profile_picture),
                    title: "#{artist.name}#{artist.listed? ? '' : ' (unlisted)'}" %>
       <% end %>
     <% end %>
