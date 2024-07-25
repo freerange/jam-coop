@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+  <title>Component Preview</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body style="padding: 20px; background-color: #fff">
+  <div style="
+              margin-left: auto;
+              margin-right: auto;
+              max-width: <%= params.dig(:lookbook, :display, :max_width) || "100%" %>
+    ">
+    <%= yield %>
+  </div>
+</body>
+</html>
