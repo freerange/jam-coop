@@ -30,28 +30,20 @@ class ArtistsController < ApplicationController
     @artist = Artist.new(artist_params.merge(user: Current.user))
     authorize @artist
 
-    respond_to do |format|
-      if @artist.save
-        format.html { redirect_to artist_url(@artist), notice: 'Artist was successfully created.' }
-        format.json { render :show, status: :created, location: @artist }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @artist.errors, status: :unprocessable_entity }
-      end
+    if @artist.save
+      redirect_to artist_url(@artist), notice: 'Artist was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
     authorize @artist
 
-    respond_to do |format|
-      if @artist.update(artist_params)
-        format.html { redirect_to artist_url(@artist), notice: 'Artist was successfully updated.' }
-        format.json { render :show, status: :ok, location: @artist }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @artist.errors, status: :unprocessable_entity }
-      end
+    if @artist.update(artist_params)
+      redirect_to artist_url(@artist), notice: 'Artist was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
