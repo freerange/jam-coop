@@ -1,0 +1,9 @@
+<div class="jam-tab-bar">
+  <ul class="switcher">
+    <% if local_assigns[:items] %>
+      <% items.each do |item| %>
+        <%= tab_bar_item(item) %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
