@@ -3,7 +3,7 @@
 class ArtistsController < ApplicationController
   before_action :set_artist, only: %i[show edit update destroy]
   skip_before_action :authenticate, only: %i[index show]
-  layout 'new', only: %i[index edit update]
+  layout 'new', only: %i[index edit update new create]
 
   def index
     skip_authorization

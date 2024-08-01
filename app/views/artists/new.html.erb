@@ -1,2 +1,9 @@
-<%= render('shared/page_header', text: 'New artist') %>
-<%= render "form", artist: @artist %>
+<%= render('shared/box', title: 'My account') do %>
+  <%= render('shared/tab_bar', items: [
+    { title: 'Personal', link: account_path },
+    Current.user.artists.map { |artist| { title: artist.name, link: edit_artist_path(artist) } },
+    ( { title: 'Add artist', link: new_artist_path, icon: true, selected: true } if policy(Artist).new? )
+  ].flatten.compact) %>
+
+  <%= render "form", artist: @artist %>
+<% end %>
