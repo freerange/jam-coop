@@ -1,0 +1,42 @@
+.jam-form-group {
+  --space: var(--s-1);
+}
+
+.simple_form .input {
+  --space: var(--s-2);
+  margin-block-end: var(--s1);
+}
+
+.simple_form .field_with_errors input {
+  outline: 0;
+  border: 1px solid var(--colour-red-jam-500);
+}
+
+.simple_form .error {
+  color: var(--colour-red-jam-500);
+}
+
+.simple_form label {
+  font-size: var(--font-size-m);
+  font-weight: 600;
+}
+
+input {
+  padding: var(--s-2);
+  border: 1px solid var(--colour-slate-300);
+}
+
+input:focus {
+  outline: 0;
+  border: 1px solid var(--colour-slate-600);
+}
+
+input[type=submit] {
+  border: none;
+  color: var(--colour-white);
+  background-color: var(--colour-red-jam-500);
+}
+
+input[type=submit]:hover {
+  background-color: var(--colour-link-hover);
+}

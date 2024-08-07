@@ -363,6 +363,9 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.19.0)
+    simple_form (5.3.1)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -456,6 +459,7 @@ DEPENDENCIES
   rubyzip (~> 2.3)
   selenium-webdriver
   sidekiq
+  simple_form
   sprockets-rails
   stimulus-rails
   stripe (~> 10.5)
