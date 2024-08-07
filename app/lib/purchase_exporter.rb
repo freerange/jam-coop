@@ -30,8 +30,6 @@ class PurchaseExporter
   private
 
   def purchases
-    Purchase.where(
-      'created_at >= ? AND created_at < ?', @date.last_month.beginning_of_month, @date.beginning_of_month
-    ).where(completed: true)
+    Purchase.where(created_at: @date.last_month.beginning_of_month...@date.beginning_of_month).where(completed: true)
   end
 end
