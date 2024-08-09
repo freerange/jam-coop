@@ -1,0 +1,9 @@
+<section class="divide-y divide-slate-300">
+  <div class="flex justify-between content-baseline">
+    <h2 class="text-slate-800 font-semibold text-lg"><%= @title %></h2>
+    <%= link_to @link_text, @link_path, class: 'text-red-400 hover:underline' %>
+  </div>
+  <div class="pt-3">
+    <%= content %>
+  </div>
+</section>
