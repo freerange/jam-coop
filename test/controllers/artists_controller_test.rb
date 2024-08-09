@@ -57,7 +57,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
     get artist_url(@artist)
 
-    assert_select 'p', 'Album Title (unpublished)'
+    assert_select 'p', 'unpublished'
   end
 
   test '#show should include pending albums' do
@@ -65,7 +65,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
     get artist_url(@artist)
 
-    assert_select 'p', 'Album Title (pending)'
+    assert_select 'p', 'pending'
   end
 
   test '#new' do
@@ -130,7 +130,7 @@ class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
 
     get artist_url(@artist)
 
-    assert_select 'p', 'Album Title (unpublished)'
+    assert_select 'p', 'unpublished'
   end
 
   test '#show should include pending albums' do
@@ -138,7 +138,7 @@ class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
 
     get artist_url(@artist)
 
-    assert_select 'p', 'Album Title (pending)'
+    assert_select 'p', 'pending'
   end
 end
 
@@ -202,7 +202,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
     get artist_url(@artist)
 
-    assert_select 'p', { text: 'Album Title (unpublished)', count: 0 }
+    assert_select 'p', { text: 'unpublished', count: 0 }
   end
 
   test '#show should not include pending albums' do
@@ -210,7 +210,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
     get artist_url(@artist)
 
-    assert_select 'p', { text: 'Album Title (pending)', count: 0 }
+    assert_select 'p', { text: 'pending', count: 0 }
   end
 
   test '#show includes auto-discovery link for atom feed' do

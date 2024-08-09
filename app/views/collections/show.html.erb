@@ -7,15 +7,11 @@
 <div class="pt-4 grid grid-cols-3 gap-4">
   <% Current.user.collection.each do |purchase| %>
     <%= link_to(artist_album_path(purchase.album.artist, purchase.album)) do %>
-    <div>
-      <div class="border border-slate-200 aspect-w-1 aspect-h-1">
-        <% if purchase.album.cover.representable? %>
-        <%= image_tag cdn_url(purchase.album.cover.representation(resize_to_limit: [1000, 1000])), class: 'object-cover' %>
-        <% end %>
-      </div>
-      <p class='text-sm text-slate-500 break-words'><%= purchase.album.title %></p>
-      <p class='text-sm text-slate-400 break-words'><%= purchase.album.artist.name %></p>
-    </div>
+      <%= render(CardComponent.new(
+        title: purchase.album.title,
+        subtitle: purchase.album.artist.name,
+        image: ( cdn_url(purchase.album.cover.representation(resize_to_limit: [1000, 1000])) if purchase.album.cover.representable? )
+      )) %>
     <% end %>
   <% end %>
 </div>
