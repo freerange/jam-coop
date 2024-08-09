@@ -7,6 +7,7 @@ module.exports = {
     './app/javascript/**/*.js',
     './app/views/**/*.{erb,haml,html,slim}',
     './app/components/**/*.{erb,haml,html,slim}',
+    './test/components/previews/**/*.{erb,haml,html,slim}',
     './app/form_builders/*.rb',
     './lib/renderers/*.rb'
   ],
