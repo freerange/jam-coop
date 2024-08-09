@@ -13,7 +13,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
   test 'publishing an album' do
     # Artist requests publication
     visit artist_url(@album.artist)
-    click_on "#{@album.title} (unpublished)"
+    click_on @album.title.to_s
     click_on 'Publish'
     assert_text "Thank you! We'll email you when your album is published."
     sign_out

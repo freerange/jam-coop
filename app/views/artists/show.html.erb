@@ -27,18 +27,11 @@
 <div class="pt-4 grid grid-cols-3 gap-4">
   <% @albums.in_release_order.each do |album| %>
     <%= link_to(artist_album_path(album.artist, album)) do %>
-    <div>
-      <div class="border border-slate-200 aspect-w-1 aspect-h-1">
-        <% if album.cover.representable? %>
-        <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])), class: 'object-cover' %>
-        <% end %>
-      </div>
-      <% if album.published? %>
-      <p class='text-sm text-slate-500 break-words'><%= album.title %></p>
-      <% else %>
-      <p class='text-sm text-slate-500 break-words'><%= album.title %> (<%= album.publication_status %>)</p>
-      <% end %>
-    </div>
+      <%= render(CardComponent.new(
+        title: album.title,
+        subtitle: ( album.publication_status if !album.published? ),
+        image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
+      )) %>
     <% end %>
   <% end %>
 

@@ -24,8 +24,9 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
     click_on 'Save'
 
-    assert_text "A Hard Day's Night (unpublished)"
-    click_on "A Hard Day's Night (unpublished)"
+    assert_text "A Hard Day's Night"
+    assert_text 'unpublished'
+    click_on "A Hard Day's Night"
     assert_text '1. And I Love Her'
   end
 
