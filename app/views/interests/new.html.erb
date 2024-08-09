@@ -6,12 +6,16 @@
 
 <h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">An online music store. <br /> <span class="text-amber-600">Owned by us.</span></h1>
 
-<div class="max-w-3xl">
-<p class="mb-3 text-slate-600">We're a co-operatively owned music store, 100% run by and for the benefit of musicians, fans and the people who work here. <%= text_link_to "Find out more", about_path %>.</p>
+<div class="max-w-3xl mb-6">
+  <p class="mb-3 text-slate-600">We're a co-operatively owned music store, 100% run by and for the benefit of musicians, fans and the people who work here. <%= text_link_to "Find out more", about_path %>.</p>
 </div>
 
-<section class="mt-6 mb-12">
-  <h2 class="text-slate-400 mb-3 uppercase">Recently purchased</h2>
+<%= render(
+  SectionComponent.new(
+    title: 'Recently purchased',
+    link_text: "Discover #{Artist.listed.count} more artists",
+    link_path: artists_path)
+) do %>
   <div class="grid grid-cols-4 gap-4 mb-3">
     <% Album.best_selling.limit(8).each do |album| %>
       <%= link_to(artist_album_path(album.artist, album)) do %>
@@ -23,7 +27,4 @@
       <% end %>
     <% end %>
   </div>
-  <div class="flex justify-end">
-    <%= text_link_to "Discover #{Artist.listed.count} more artists", artists_path %>
-  </div>
-</section>
+<% end %>
