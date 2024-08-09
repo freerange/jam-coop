@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     member do
       post 'move_higher'
       post 'move_lower'
+      get 'player'
     end
   end
 

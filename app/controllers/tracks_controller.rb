@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TracksController < ApplicationController
-  before_action :set_track, only: %i[move_higher move_lower]
+  before_action :set_track, only: %i[move_higher move_lower player]
 
   def move_higher
     authorize @track
@@ -17,6 +17,12 @@ class TracksController < ApplicationController
     @track.move_lower
 
     redirect_to artist_album_path(@track.artist, @track.album)
+  end
+
+  def player
+    authorize @track
+    @album = @track.album
+    render layout: false
   end
 
   private

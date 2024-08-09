@@ -12,4 +12,8 @@ class TrackPolicy < ApplicationPolicy
   def reorder?
     record.unpublished? && move_lower? && move_higher?
   end
+
+  def player?
+    true
+  end
 end
