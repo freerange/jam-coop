@@ -27,12 +27,15 @@ class Track < ApplicationRecord
   end
 
   def metadata
-    {
+    data = {
       track_title: title,
       track_number: number,
       album_title: album.title,
       artist_name: artist.name
     }
+
+    data[:release_date] = album.released_on if album.released_on
+    data
   end
 
   def transcode
