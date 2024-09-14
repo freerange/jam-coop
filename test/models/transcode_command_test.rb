@@ -63,13 +63,15 @@ class TranscodeCommandTest < ActiveSupport::TestCase
       track_title: 'track-title',
       track_number: 'track-number',
       album_title: 'album-title',
-      artist_name: 'artist-name'
+      artist_name: 'artist-name',
+      release_date: 'release-date'
     }
     command_string = TranscodeCommand.new(@input, @output, :flac, metadata).generate
     assert_contains_pair(command_string, ['-metadata', 'TITLE="track-title"'])
     assert_contains_pair(command_string, ['-metadata', 'TRACKNUMBER="track-number"'])
     assert_contains_pair(command_string, ['-metadata', 'ALBUM="album-title"'])
     assert_contains_pair(command_string, ['-metadata', 'ARTIST="artist-name"'])
+    assert_contains_pair(command_string, ['-metadata', 'RELEASEDATE="release-date"'])
   end
 
   test 'transcodes audio to mp3 using libmp3lame codec highest audio quality' do

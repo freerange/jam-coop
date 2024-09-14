@@ -12,7 +12,8 @@ class TranscodeCommand
     track_title: 'TITLE',
     track_number: 'TRACKNUMBER',
     album_title: 'ALBUM',
-    artist_name: 'ARTIST'
+    artist_name: 'ARTIST',
+    release_date: 'RELEASEDATE'
   }.freeze
 
   def initialize(input, output, format, metadata = {}, image = nil)
