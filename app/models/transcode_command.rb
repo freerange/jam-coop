@@ -5,7 +5,8 @@ class TranscodeCommand
     track_title: 'TIT2',
     track_number: 'TRCK',
     album_title: 'TALB',
-    artist_name: 'TPE1'
+    artist_name: 'TPE1',
+    release_date: 'RELEASEDATE'
   }.freeze
 
   METADATA_KEYS_VS_FLAC_TAGS = {
