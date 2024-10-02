@@ -51,4 +51,40 @@ class TranscodeJobTest < ActiveJob::TestCase
 
     TranscodeJob.perform_now(build(:track))
   end
+
+  test 'it adds metadata to the generated MP3 file' do
+    album = create(:album, released_on: Time.zone.today)
+    track = create(:track, album:)
+    TranscodeJob.perform_now(track)
+
+    track.transcodes.mp3v0.first.file.open do |file|
+      cmd = "ffprobe -i #{file.path} -v quiet -print_format json -show_format"
+      std_out, _status = Open3.capture2(cmd)
+      metadata = JSON.parse(std_out)
+
+      assert_equal track.title, metadata['format']['tags']['title']
+      assert_equal '01', metadata['format']['tags']['track']
+      assert_equal album.title, metadata['format']['tags']['album']
+      assert_equal album.artist.name, metadata['format']['tags']['artist']
+      assert_equal album.released_on.to_s, metadata['format']['tags']['date']
+    end
+  end
+
+  test 'it adds metadata to the generated flac file' do
+    album = create(:album, released_on: Time.zone.today)
+    track = create(:track, album:)
+    TranscodeJob.perform_now(track, format: :flac)
+
+    track.transcodes.flac.first.file.open do |file|
+      cmd = "ffprobe -i #{file.path} -v quiet -print_format json -show_format"
+      std_out, _status = Open3.capture2(cmd)
+      metadata = JSON.parse(std_out)
+
+      assert_equal track.title, metadata['format']['tags']['TITLE']
+      assert_equal '01', metadata['format']['tags']['track']
+      assert_equal album.title, metadata['format']['tags']['ALBUM']
+      assert_equal album.artist.name, metadata['format']['tags']['ARTIST']
+      assert_equal album.released_on.to_s, metadata['format']['tags']['DATE']
+    end
+  end
 end
