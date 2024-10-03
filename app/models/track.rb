@@ -34,7 +34,7 @@ class Track < ApplicationRecord
       artist_name: artist.name
     }
 
-    data[:release_date] = album.released_on if album.released_on
+    data[:release_year] = album.released_on.year if album.released_on
     data
   end
 

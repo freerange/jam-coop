@@ -48,7 +48,7 @@ class TranscodeCommandTest < ActiveSupport::TestCase
       track_number: 'track-number',
       album_title: 'album-title',
       artist_name: 'artist-name',
-      release_date: 'release-date'
+      release_year: 'release-year'
     }
     command_string = TranscodeCommand.new(@input, @output, :mp3v0, metadata).generate
     assert_contains_pair(command_string, ['-write_id3v2', '1'])
@@ -57,7 +57,7 @@ class TranscodeCommandTest < ActiveSupport::TestCase
     assert_contains_pair(command_string, ['-metadata', 'TRCK="track-number"'])
     assert_contains_pair(command_string, ['-metadata', 'TALB="album-title"'])
     assert_contains_pair(command_string, ['-metadata', 'TPE1="artist-name"'])
-    assert_contains_pair(command_string, ['-metadata', 'DATE="release-date"'])
+    assert_contains_pair(command_string, ['-metadata', 'TORY="release-year"'])
   end
 
   test 'adds metadata tags for FLAC format' do
@@ -66,14 +66,14 @@ class TranscodeCommandTest < ActiveSupport::TestCase
       track_number: 'track-number',
       album_title: 'album-title',
       artist_name: 'artist-name',
-      release_date: 'release-date'
+      release_year: 'release-year'
     }
     command_string = TranscodeCommand.new(@input, @output, :flac, metadata).generate
     assert_contains_pair(command_string, ['-metadata', 'TITLE="track-title"'])
     assert_contains_pair(command_string, ['-metadata', 'TRACKNUMBER="track-number"'])
     assert_contains_pair(command_string, ['-metadata', 'ALBUM="album-title"'])
     assert_contains_pair(command_string, ['-metadata', 'ARTIST="artist-name"'])
-    assert_contains_pair(command_string, ['-metadata', 'DATE="release-date"'])
+    assert_contains_pair(command_string, ['-metadata', 'DATE="release-year"'])
   end
 
   test 'transcodes audio to mp3 using libmp3lame codec highest audio quality' do

@@ -53,7 +53,7 @@ class TranscodeJobTest < ActiveJob::TestCase
   end
 
   test 'it adds metadata to the generated MP3 file' do
-    album = create(:album, released_on: Time.zone.today)
+    album = create(:album, released_on: Date.parse('2024-10-03'))
     track = create(:track, album:)
     TranscodeJob.perform_now(track)
 
@@ -66,12 +66,12 @@ class TranscodeJobTest < ActiveJob::TestCase
       assert_equal '01', metadata['format']['tags']['track']
       assert_equal album.title, metadata['format']['tags']['album']
       assert_equal album.artist.name, metadata['format']['tags']['artist']
-      assert_equal album.released_on.to_s, metadata['format']['tags']['date']
+      assert_equal '2024', metadata['format']['tags']['TORY']
     end
   end
 
   test 'it adds metadata to the generated flac file' do
-    album = create(:album, released_on: Time.zone.today)
+    album = create(:album, released_on: Date.parse('2024-10-03'))
     track = create(:track, album:)
     TranscodeJob.perform_now(track, format: :flac)
 
@@ -84,7 +84,7 @@ class TranscodeJobTest < ActiveJob::TestCase
       assert_equal '01', metadata['format']['tags']['track']
       assert_equal album.title, metadata['format']['tags']['ALBUM']
       assert_equal album.artist.name, metadata['format']['tags']['ARTIST']
-      assert_equal album.released_on.to_s, metadata['format']['tags']['DATE']
+      assert_equal '2024', metadata['format']['tags']['DATE']
     end
   end
 end

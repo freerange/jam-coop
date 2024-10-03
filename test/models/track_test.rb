@@ -112,7 +112,7 @@ class TrackTest < ActiveSupport::TestCase
 
     metadata = track.metadata
 
-    assert_equal track.album.released_on, metadata[:release_date]
+    assert_equal track.album.released_on.year, metadata[:release_year]
   end
 
   test '#number' do
