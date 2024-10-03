@@ -103,6 +103,16 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal track.number, metadata[:track_number]
     assert_equal track.album.title, metadata[:album_title]
     assert_equal track.album.artist.name, metadata[:artist_name]
+    assert_not metadata.key?(:release_date)
+  end
+
+  test '#metadata when album has released_on' do
+    album = create(:album, released_on: Time.zone.today)
+    track = create(:track, album:)
+
+    metadata = track.metadata
+
+    assert_equal track.album.released_on.year, metadata[:release_year]
   end
 
   test '#number' do

@@ -5,14 +5,16 @@ class TranscodeCommand
     track_title: 'TIT2',
     track_number: 'TRCK',
     album_title: 'TALB',
-    artist_name: 'TPE1'
+    artist_name: 'TPE1',
+    release_year: 'TORY'
   }.freeze
 
   METADATA_KEYS_VS_FLAC_TAGS = {
     track_title: 'TITLE',
     track_number: 'TRACKNUMBER',
     album_title: 'ALBUM',
-    artist_name: 'ARTIST'
+    artist_name: 'ARTIST',
+    release_year: 'DATE'
   }.freeze
 
   def initialize(input, output, format, metadata = {}, image = nil)
