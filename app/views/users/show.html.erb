@@ -36,7 +36,6 @@
 </div>
 
 <ul>
-  <li><%= text_link_to "Change password", edit_password_path %></li>
   <li><%= text_link_to "Change email address", edit_identity_email_path %></li>
   <% if Current.user.payout_detail %>
     <li><%= text_link_to "Edit payout details", edit_payout_detail_path %></li>

@@ -13,11 +13,6 @@ class UsersControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test '#show has a link to change password' do
-    get account_url
-    assert_select 'a', href: edit_password_path
-  end
-
   test '#show has a link to change email address' do
     get account_url
     assert_select 'a', href: edit_identity_email_path

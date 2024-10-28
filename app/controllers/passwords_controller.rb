@@ -3,10 +3,6 @@
 class PasswordsController < ApplicationController
   before_action :set_user
 
-  def edit
-    authorize @user
-  end
-
   def update
     authorize @user
 
