@@ -7,7 +7,8 @@ class PasswordsController < ApplicationController
     authorize @user
 
     if !@user.authenticate(params[:current_password])
-      redirect_to account_path, alert: 'The current password you entered is incorrect'
+      flash[:incorrect_password] = 'The current password you entered is incorrect'
+      redirect_to account_path
     elsif @user.update(user_params)
       redirect_to account_path, notice: 'Your password has been changed'
     else

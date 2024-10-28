@@ -19,6 +19,6 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
                     password_confirmation: 'Secret6*4*2*' }
 
     assert_redirected_to account_path
-    assert_equal 'The current password you entered is incorrect', flash[:alert]
+    assert_equal 'The current password you entered is incorrect', flash[:incorrect_password]
   end
 end

@@ -7,6 +7,9 @@
     </div>
     <div class="basis-3/4">
       <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
+        <% if flash[:incorrect_password] %>
+          <%= render ErrorBoxComponent.new(title: 'Incorrect password').with_content(flash[:incorrect_password]) %>
+        <% end %>
         <%= render ModelErrorComponent.new(model: @user) %>
         <%= form.password_field :current_password, required: true, autofocus: true, autocomplete: "current-password", class: "w-full mb-3" %>
         <%= form.password_field :password, label: { text: "New password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
