@@ -10,7 +10,7 @@
 <% end %>
 
 <%= form_with(url: identity_email_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
-  <%= render 'shared/errors', model: @user %>
+  <%= render ModelErrorComponent.new(model: @user) %>
   <%= form.email_field :email, label: { text: "New email" }, required: true, autofocus: true, class: 'w-full mb-3' %>
   <%= form.password_field :current_password, required: true, autocomplete: "current-password", class: 'w-full mb-3' %>
   <%= form.submit "Save changes", class: 'w-full mt-3' %>
