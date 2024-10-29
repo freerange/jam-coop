@@ -1,5 +1,5 @@
 <%= form_for([album.artist, album], builder: TailwindFormBuilder, data: { controller: 'multiple-upload', action: 'direct-upload:initialize->multiple-upload#init direct-upload:progress->multiple-upload#progress' }) do |form| %>
-  <%= render('shared/errors', model: album) %>
+  <%= render ModelErrorComponent.new(model: album) %>
   <%= form.text_field :title, class: 'w-full mb-3' %>
   <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2' %>
   <%= form.text_area :about, rows: 10, class: 'w-full mb-3' %>

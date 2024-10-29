@@ -29,7 +29,7 @@ module Identity
 
       get identity_email_verification_url(sid: sid_exp, email: @user.email)
 
-      assert_redirected_to edit_identity_email_url
+      assert_redirected_to root_url
       assert_equal 'That email verification link is invalid', flash[:alert]
     end
   end

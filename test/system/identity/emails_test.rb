@@ -8,27 +8,56 @@ module Identity
       @user = log_in_as(create(:user))
     end
 
-    test 'updating the email' do
-      click_on 'avatar'
-      click_on 'My account'
-      click_on 'Change email address'
+    test 'when I update my email address I should be prompted to verify it' do
+      visit account_path
 
-      fill_in 'New email', with: 'new_email@hey.com'
-      fill_in 'Current password', with: 'Secret1*3*5*'
-      click_on 'Save changes'
+      within(email_address_section) do
+        fill_in 'New email', with: 'new_email@example.com'
+        fill_in 'Current password', with: 'Secret1*3*5*'
+        click_on 'Save changes'
+      end
 
       assert_text 'Your email has been changed'
+
+      visit account_path
+      assert_text 'We sent a verification email to the address below'
+
+      click_on 'Re-send verification email'
+      assert_text 'We sent a verification email to your email address'
     end
 
-    test 'sending a verification email' do
-      @user.update! verified: false
+    test 'updating my email address fails if my current password is wrong' do
+      visit account_path
 
-      click_on 'avatar'
-      click_on 'My account'
-      click_on 'Change email address'
-      click_on 'Re-send verification email'
+      within(email_address_section) do
+        fill_in 'New email', with: 'new_email@example.com'
+        fill_in 'Current password', with: 'wrongpassword'
+        click_on 'Save changes'
+      end
 
-      assert_text 'We sent a verification email to your email address'
+      assert_text 'The password you entered is incorrect'
+      refute_text 'We sent a verification email to the address below'
+    end
+
+    test 'updating my email address fails if I use an existing email' do
+      existing_user = create(:user)
+
+      visit account_path
+
+      within(email_address_section) do
+        fill_in 'New email', with: existing_user.email
+        fill_in 'Current password', with: 'Secret1*3*5*'
+        click_on 'Save changes'
+      end
+
+      assert_text 'Email has already been taken'
+      refute_text 'We sent a verification email to the address below'
+    end
+
+    private
+
+    def email_address_section
+      find('h2', text: 'Email address').ancestor('section')
     end
   end
 end
