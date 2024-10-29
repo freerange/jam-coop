@@ -8,27 +8,42 @@ module Identity
       @user = log_in_as(create(:user))
     end
 
-    test 'updating the email' do
-      click_on 'avatar'
-      click_on 'My account'
-      click_on 'Change email address'
+    test 'when I update my email address I should be prompted to verify it' do
+      visit edit_identity_email_path
 
-      fill_in 'New email', with: 'new_email@hey.com'
+      fill_in 'New email', with: 'new_email@example.com'
       fill_in 'Current password', with: 'Secret1*3*5*'
       click_on 'Save changes'
 
       assert_text 'Your email has been changed'
+
+      visit edit_identity_email_path
+      assert_text 'We sent a verification email to the address below'
+
+      click_on 'Re-send verification email'
+      assert_text 'We sent a verification email to your email address'
     end
 
-    test 'sending a verification email' do
-      @user.update! verified: false
+    test 'updating my email address fails if my current password is wrong' do
+      visit edit_identity_email_path
 
-      click_on 'avatar'
-      click_on 'My account'
-      click_on 'Change email address'
-      click_on 'Re-send verification email'
+      fill_in 'New email', with: 'new_email@example.com'
+      fill_in 'Current password', with: 'wrongpassword'
+      click_on 'Save changes'
 
-      assert_text 'We sent a verification email to your email address'
+      assert_text 'The password you entered is incorrect'
+    end
+
+    test 'updating my email address fails if I use an existing email' do
+      existing_user = create(:user)
+
+      visit edit_identity_email_path
+
+      fill_in 'New email', with: existing_user.email
+      fill_in 'Current password', with: 'Secret1*3*5*'
+      click_on 'Save changes'
+
+      assert_text 'Email has already been taken'
     end
   end
 end
