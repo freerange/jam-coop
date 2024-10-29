@@ -32,6 +32,7 @@ module Identity
       click_on 'Save changes'
 
       assert_text 'The password you entered is incorrect'
+      refute_text 'We sent a verification email to the address below'
     end
 
     test 'updating my email address fails if I use an existing email' do
@@ -44,6 +45,7 @@ module Identity
       click_on 'Save changes'
 
       assert_text 'Email has already been taken'
+      refute_text 'We sent a verification email to the address below'
     end
   end
 end

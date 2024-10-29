@@ -17,7 +17,7 @@ class User < ApplicationRecord
     self.email = email.downcase.strip
   end
 
-  before_validation if: :email_changed?, on: :update do
+  before_update if: :email_changed? do
     self.verified = false
   end
 
