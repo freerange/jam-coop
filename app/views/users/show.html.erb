@@ -10,7 +10,9 @@
         <% if flash[:incorrect_password] %>
           <%= render ErrorBoxComponent.new(title: 'Incorrect password').with_content(flash[:incorrect_password]) %>
         <% end %>
-        <%= render ModelErrorComponent.new(model: @user) %>
+        <% if @user.errors.include?(:password) %>
+          <%= render ModelErrorComponent.new(model: @user) %>
+        <% end %>
         <%= form.password_field :current_password, required: true, autofocus: true, autocomplete: "current-password", class: "w-full mb-3" %>
         <%= form.password_field :password, label: { text: "New password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
         <%= form.password_field :password_confirmation, label: { text: "Confirm new password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
