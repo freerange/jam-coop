@@ -50,7 +50,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     purchase = build(:purchase, album:, price: 7.00)
 
     mail = PurchaseMailer.with(purchase:).notify_artist
-    assert_includes mail.body.to_s, new_payout_detail_url
+    assert_includes mail.body.to_s, account_url
   end
 
   test 'notify_artist allows user to change/verify payout details' do
@@ -61,7 +61,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     purchase = build(:purchase, album:, price: 7.00)
 
     mail = PurchaseMailer.with(purchase:).notify_artist
-    assert_includes mail.body.to_s, edit_payout_detail_url
+    assert_includes mail.body.to_s, account_url
   end
 
   test 'do not notify artist of purchase if sending is suppressed' do

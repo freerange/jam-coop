@@ -10,12 +10,35 @@ class PayoutDetailsTest < ApplicationSystemTestCase
 
   test 'adding payout details' do
     visit account_url
-    click_on 'Add payout details'
-    fill_in 'Name', with: 'John Lennon'
-    select '🇬🇧 United Kingdom (GBP)', from: 'Country / Region'
-    click_on 'Save'
 
+    within(payout_details_section) do
+      fill_in 'Name', with: 'John Lennon'
+      select '🇬🇧 United Kingdom (GBP)', from: 'Country / Region'
+      click_on 'Add payout details'
+    end
+
+    assert_text 'Payout details added'
     assert_equal 'John Lennon', @user.payout_detail.name
     assert_equal 'united_kingdom', @user.payout_detail.country
+  end
+
+  test 'updating payout details' do
+    create(:payout_detail, user: @user)
+
+    visit account_url
+
+    within(payout_details_section) do
+      fill_in 'Name', with: 'John Smith'
+      select '🇬🇧 United Kingdom (GBP)', from: 'Country / Region'
+      click_on 'Save changes'
+    end
+
+    assert_text 'Payout details updated'
+  end
+
+  private
+
+  def payout_details_section
+    find('h2', text: 'Payout details').ancestor('section')
   end
 end

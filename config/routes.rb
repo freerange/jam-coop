@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[update]
-  resource :payout_detail, only: %i[new create edit update]
+  resource :payout_detail, only: %i[create update]
   resolve('PayoutDetail') { [:payout_detail] }
 
   namespace :identity do

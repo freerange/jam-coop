@@ -54,15 +54,25 @@
       <h2 class="text-lg font-bold">Payout details</h2>
     </div>
     <div class="basis-3/4">
-      <p>form goes here</p>
+      <p class="text-slate-500 mb-6">We use <a class="underline" href="https://wise.com">Wise</a> to make payouts once a month. Wise will email you at <span class="font-bold"><%= Current.user.email %></span> to ask for your bank details. To make the payment we need the following:</p>
+
+      <% payout_detail = @user.payout_detail || PayoutDetail.new(user: @user) %>
+      <%= form_with(model: payout_detail, class: "contents", builder: TailwindFormBuilder) do |form| %>
+        <%= render ModelErrorComponent.new(model: payout_detail) %>
+        <%= form.text_field :name, placeholder: 'Bartholomew J. Simpson', class: 'w-full' %>
+        <p class="text-slate-500 italic text-sm mb-3">Your full name as used on your bank account.</p>
+
+        <%= form.select :country, options_for_payout_details_country_select, include_blank: true, label: { text: 'Country / Region' }, class: 'w-full' %>
+        <p class="text-slate-500 italic text-sm mb-3">We support payouts to the regions/countries <a href="https://wise.com/help/articles/2571942/what-countriesregions-can-i-send-to" class="underline">that Wise supports</a>.</p>
+
+        <div class="flex flex-row justify-end">
+          <% if payout_detail.persisted? %>
+            <%= form.submit "Save changes", class: 'mt-3'%>
+          <% else %>
+            <%= form.submit "Add payout details", class: 'mt-3'%>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </section>
 </div>
-
-<ul>
-  <% if Current.user.payout_detail %>
-    <li><%= text_link_to "Edit payout details", edit_payout_detail_path %></li>
-  <% else %>
-    <li><%= text_link_to "Add payout details", new_payout_detail_path %></li>
-  <% end %>
-</ul>
