@@ -26,7 +26,7 @@ module Identity
       token = EmailVerificationToken.find_signed!(params[:sid])
       @user = token.user
     rescue StandardError
-      redirect_to edit_identity_email_path, alert: 'That email verification link is invalid'
+      redirect_to root_path, alert: 'That email verification link is invalid'
     end
 
     def send_email_verification

@@ -27,7 +27,26 @@
       <h2 class="text-lg font-bold">Email address</h2>
     </div>
     <div class="basis-3/4">
-      <p>form goes here</p>
+      <% unless Current.user.verified? %>
+        <div class="mb-3 border border-slate-300 p-4">
+          <p>We sent a verification email to the address below. Check that email and follow those instructions to confirm it's your email address.</p>
+          <p><%= button_to "Re-send verification email", identity_email_verification_path, class: 'py-3 px-5 bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer my-3' %></p>
+        </div>
+      <% end %>
+
+      <%= form_with(url: identity_email_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
+        <% if flash[:emails_update_password_incorrect] %>
+          <%= render ErrorBoxComponent.new(title: 'Incorrect password').with_content(flash[:emails_update_password_incorrect]) %>
+        <% end %>
+        <% if @user.errors.include?(:email) %>
+          <%= render ModelErrorComponent.new(model: @user) %>
+        <% end %>
+        <%= form.email_field :email, label: { text: "New email" }, required: true, autofocus: true, class: 'w-full mb-3' %>
+        <%= form.password_field :current_password, required: true, autocomplete: "current-password", class: 'w-full mb-3' %>
+        <div class="flex flex-row justify-end">
+          <%= form.submit "Save changes", class: 'mt-3' %>
+        </div>
+      <% end %>
     </div>
   </section>
   <section class="flex flex-row py-6">
@@ -41,7 +60,6 @@
 </div>
 
 <ul>
-  <li><%= text_link_to "Change email address", edit_identity_email_path %></li>
   <% if Current.user.payout_detail %>
     <li><%= text_link_to "Edit payout details", edit_payout_detail_path %></li>
   <% else %>

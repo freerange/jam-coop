@@ -9,15 +9,17 @@ module Identity
     end
 
     test 'when I update my email address I should be prompted to verify it' do
-      visit edit_identity_email_path
+      visit account_path
 
-      fill_in 'New email', with: 'new_email@example.com'
-      fill_in 'Current password', with: 'Secret1*3*5*'
-      click_on 'Save changes'
+      within(email_address_section) do
+        fill_in 'New email', with: 'new_email@example.com'
+        fill_in 'Current password', with: 'Secret1*3*5*'
+        click_on 'Save changes'
+      end
 
       assert_text 'Your email has been changed'
 
-      visit edit_identity_email_path
+      visit account_path
       assert_text 'We sent a verification email to the address below'
 
       click_on 'Re-send verification email'
@@ -25,11 +27,13 @@ module Identity
     end
 
     test 'updating my email address fails if my current password is wrong' do
-      visit edit_identity_email_path
+      visit account_path
 
-      fill_in 'New email', with: 'new_email@example.com'
-      fill_in 'Current password', with: 'wrongpassword'
-      click_on 'Save changes'
+      within(email_address_section) do
+        fill_in 'New email', with: 'new_email@example.com'
+        fill_in 'Current password', with: 'wrongpassword'
+        click_on 'Save changes'
+      end
 
       assert_text 'The password you entered is incorrect'
       refute_text 'We sent a verification email to the address below'
@@ -38,14 +42,22 @@ module Identity
     test 'updating my email address fails if I use an existing email' do
       existing_user = create(:user)
 
-      visit edit_identity_email_path
+      visit account_path
 
-      fill_in 'New email', with: existing_user.email
-      fill_in 'Current password', with: 'Secret1*3*5*'
-      click_on 'Save changes'
+      within(email_address_section) do
+        fill_in 'New email', with: existing_user.email
+        fill_in 'Current password', with: 'Secret1*3*5*'
+        click_on 'Save changes'
+      end
 
       assert_text 'Email has already been taken'
       refute_text 'We sent a verification email to the address below'
+    end
+
+    private
+
+    def email_address_section
+      find('h2', text: 'Email address').ancestor('section')
     end
   end
 end

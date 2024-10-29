@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resolve('PayoutDetail') { [:payout_detail] }
 
   namespace :identity do
-    resource :email,              only: %i[edit update]
+    resource :email,              only: %i[update]
     resource :email_verification, only: %i[show create]
     resource :password_reset,     only: %i[new edit create update]
   end
