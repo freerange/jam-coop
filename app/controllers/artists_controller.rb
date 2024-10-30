@@ -18,6 +18,8 @@ class ArtistsController < ApplicationController
 
   def new
     @artist = Artist.new
+    @user = Current.user
+
     authorize @artist
   end
 
