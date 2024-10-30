@@ -4,6 +4,6 @@
 
 <%= render(AccountNavComponent.new(user: @artist.user)) %>
 
-<%= render(SidebarSectionComponent.new(title: 'Details')) do %>
+<%= render(SidebarSectionComponent.new(title: 'Artist details')) do %>
   <%= render "form", artist: @artist %>
 <% end %>
