@@ -1,13 +1,15 @@
 <nav class="mb-3">
   <ul class="flex flex-row gap-6 border-b-2 border-slate-300 text-sm">
-    <li class="border-b-4 border-amber-600 -mb-[3px] px-3 py-2 uppercase font-semibold"><%= link_to 'Personal', account_path %></li>
+    <li class="px-3 py-2 uppercase <%= current_page?(account_path) ? active_classes : inactive_classes %>">
+      <%= link_to 'Personal', account_path %>
+    </li>
     <% @user.artists.each do |artist| %>
-      <li class="uppercase px-3 py-2 hover:border-b-4 hover:border-slate-500 hover:-mb-[3px] hover:transition-all">
+      <li class="px-3 py-2 uppercase <%= current_page?(edit_artist_path(artist)) ? active_classes : inactive_classes %>">
         <%= link_to artist.name, edit_artist_path(artist) %>
       </li>
     <% end %>
 
-    <li class="flex gap-2 text-amber-600 px-3 py-2 uppercase hover:border-b-4 hover:border-slate-500 hover:-mb-[3px] hover:transition-all">
+    <li class="flex gap-2 text-amber-600 px-3 py-2 uppercase <%= current_page?(new_artist_path) ? active_classes : inactive_classes %>">
       <svg class="fill-amber-600 mt-[3px]" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
       </svg>
