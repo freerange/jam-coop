@@ -2,6 +2,8 @@
   <h1 class="text-2xl font-bold mb-1"><%= @artist.name %></h1>
 </div>
 
+<%= render 'shared/account_nav', user: @artist.user %>
+
 <%= render(SidebarSectionComponent.new(title: 'Details')) do %>
   <%= render "form", artist: @artist %>
 <% end %>

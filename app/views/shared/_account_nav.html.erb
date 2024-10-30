@@ -1,7 +1,7 @@
 <nav class="mb-3">
   <ul class="flex flex-row gap-6 border-b-2 border-slate-300 text-sm">
     <li class="border-b-4 border-amber-600 -mb-[3px] px-3 py-2 uppercase font-semibold"><%= link_to 'Personal', account_path %></li>
-    <% @user.artists.each do |artist| %>
+    <% user.artists.each do |artist| %>
       <li class="uppercase px-3 py-2 hover:border-b-4 hover:border-slate-500 hover:-mb-[3px] hover:transition-all">
         <%= link_to artist.name, edit_artist_path(artist) %>
       </li>
