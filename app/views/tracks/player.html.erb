@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= display_meta_tags site: "jam.coop" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= hotwire_livereload_tags if Rails.env.development? %>
+  </head>
+
+  <style>
+    .player {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('<%= cdn_url(@album.cover.representation(resize_to_limit: [750, 750])) %>');
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .footer {
+      position: absolute;
+      right: 0;
+      bottom: 3%;
+      left: 3%;
+     }
+  </style>
+
+  <body>
+    <div class="player">
+      <div class="footer">
+        <span class="text-white bg-slate-600 px-2 py-1">
+          <%= text_link_to @album.title, artist_album_url(@album.artist, @album) %> by <%= @album.artist.name %>
+        </span>
+        <span></span>
+      </div>
+    </div>
+  </body>
+</html>
