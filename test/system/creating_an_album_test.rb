@@ -33,11 +33,11 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   test 'editing an album' do
     album = create(:album, artist: @artist)
 
-    visit artist_album_url(@artist, album)
+    visit edit_artist_url(@artist, album)
     assert_text album.title
-    click_on 'Edit album'
+    click_on album.title
     fill_in 'Title', with: 'New Title'
-    click_on 'Save'
+    click_on 'Save & preview'
     assert_text 'New Title'
   end
 

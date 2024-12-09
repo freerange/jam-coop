@@ -126,10 +126,6 @@
       <% end %>
     <% end %>
   <% end %>
-
-  <% if policy(@album).edit? %>
-    <%= link_to "Edit album", edit_artist_album_path(@album.artist, @album), class: 'px-2 py-1 bg-amber-600 hover:bg-amber-500 text-white cursor-pointer text-sm' %>
-  <% end %>
 <% end %>
 
 <% content_for :admin do %>
