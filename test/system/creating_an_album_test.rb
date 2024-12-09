@@ -11,7 +11,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   end
 
   test 'creating an album' do
-    visit artist_url(@artist)
+    visit edit_artist_url(@artist)
     click_on 'Add album'
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
@@ -22,7 +22,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
     end
 
-    click_on 'Save'
+    click_on 'Save & preview'
 
     assert_text "A Hard Day's Night"
     assert_text 'unpublished'
