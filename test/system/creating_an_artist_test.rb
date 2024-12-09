@@ -10,9 +10,8 @@ class CreatingAnArtistTest < ApplicationSystemTestCase
   end
 
   test 'creating an artist' do
-    visit root_url
-    click_on 'avatar'
-    click_on 'Add artist'
+    visit account_path
+    click_on 'Add artist profile'
     fill_in 'Name', with: 'The Beatles'
     fill_in 'Location', with: 'Liverpool'
     fill_in 'Description', with: 'A popular beat combo'
