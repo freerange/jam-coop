@@ -78,7 +78,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
       post artists_url, params: { artist: { name: 'Example' } }
     end
 
-    assert_redirected_to artist_url(Artist.last)
+    assert_redirected_to edit_artist_url(Artist.last)
   end
 
   test '#create associates the new artist with the current user' do
@@ -86,7 +86,7 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
 
     assert_equal @user, Artist.last.user
 
-    assert_redirected_to artist_url(Artist.last)
+    assert_redirected_to edit_artist_url(Artist.last)
   end
 
   test '#edit' do

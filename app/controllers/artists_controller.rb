@@ -33,7 +33,9 @@ class ArtistsController < ApplicationController
 
     respond_to do |format|
       if @artist.save
-        format.html { redirect_to artist_url(@artist), notice: 'Artist was successfully created.' }
+        format.html do
+          redirect_to edit_artist_url(@artist), notice: 'Artist was successfully created. You can now add albums below.'
+        end
         format.json { render :show, status: :created, location: @artist }
       else
         format.html { render :new, status: :unprocessable_entity }

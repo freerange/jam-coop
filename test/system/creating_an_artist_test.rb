@@ -19,6 +19,8 @@ class CreatingAnArtistTest < ApplicationSystemTestCase
 
     click_on 'Save'
 
+    visit artist_path(Artist.last)
+
     assert_text 'The Beatles'
     assert_text 'Liverpool'
     assert_text 'A popular beat combo'
