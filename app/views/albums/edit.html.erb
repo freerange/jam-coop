@@ -1,2 +1,5 @@
-<%= render('shared/page_header', text: 'Editing album') %>
+<div class="border-b border-slate-300 mb-6">
+  <h1 class="text-2xl font-bold mb-1">Editing <%= @album.title %></h1>
+</div>
+
 <%= render "form", album: @album %>

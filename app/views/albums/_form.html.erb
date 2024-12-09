@@ -1,76 +1,82 @@
 <%= form_for([album.artist, album], builder: TailwindFormBuilder, data: { controller: 'multiple-upload', action: 'direct-upload:initialize->multiple-upload#init direct-upload:progress->multiple-upload#progress' }) do |form| %>
   <%= render ModelErrorComponent.new(model: album) %>
-  <%= form.text_field :title, class: 'w-full mb-3' %>
-  <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2' %>
-  <%= form.text_area :about, rows: 10, class: 'w-full mb-3' %>
-  <%= form.text_area :credits, rows: 10, class: 'w-full mb-3' %>
-  <% if form.object.cover.attached? %>
-    <%= form.labels :cover, text: "Cover (#{form.object.cover.filename})" %>
-  <% else %>
-    <%= form.labels :cover, text: "Cover" %>
-  <% end %>
-  <%= form.file_field :cover, accept: 'image/jpeg,image/png', class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
-  <div class="flex items-center gap-2 mb-4">
-    <span class="text-amber-600">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-      </svg>
-    </span> <p>File must be in <strong>jpeg</strong> or <strong>png</strong> format.</p></div>
-  <%= form.date_field :released_on, max: Time.zone.today, class: 'w-full mb-3' %>
 
-  <section id="tracks">
-  <h2 class="text-2xl tracking-tight leading-10 font-extrabold my-3">Tracks</h2>
-  <div class="flex items-center gap-2 mb-4">
-    <span class="text-amber-600">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-      </svg>
-    </span> <p>Files must be in <strong>wav</strong> format.</p></div>
-
-  <%= form.fields_for :tracks do |f| %>
-    <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
-      <%= f.text_field :title, class: 'w-full mb-6', required: true %>
-
-      <% if f.object.original.attached? %>
-        <%= f.labels :original, text: "File (#{f.object.original.filename})" %>
-      <% else %>
-        <%= f.labels :original, text: "File" %>
-      <% end %>
-      <%= f.file_field :original, accept: 'audio/x-wav', direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
-      <div class="progressContainer hidden w-full h-4 bg-slate-200">
-        <div class="progress w-0 h-4 bg-slate-500"></div>
-      </div>
-      <% if f.object.persisted? %>
-        <%= f.label :delete %>
-        <%= f.check_box :_destroy %>
-      <% end %>
-    </div>
+  <%= render(SidebarSectionComponent.new(title: 'Details')) do %>
+    <%= form.text_field :title, class: 'w-full mb-3' %>
+    <%= form.text_area :about, rows: 10, class: 'w-full mb-3' %>
+    <%= form.text_area :credits, rows: 10, class: 'w-full mb-3' %>
+    <% if form.object.cover.attached? %>
+      <%= form.labels :cover, text: "Cover (#{form.object.cover.filename})" %>
+    <% else %>
+      <%= form.labels :cover, text: "Cover" %>
+    <% end %>
+    <%= form.file_field :cover, accept: 'image/jpeg,image/png', class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+    <div class="flex items-center gap-2 mb-4">
+      <span class="text-amber-600">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        </svg>
+      </span> <p>File must be in <strong>jpeg</strong> or <strong>png</strong> format.</p></div>
+    <%= form.date_field :released_on, max: Time.zone.today, class: 'w-full mb-3' %>
   <% end %>
 
-  <div data-controller="dynamic-fields">
-    <%= text_link_to "Add track", "#", data: { action: 'dynamic-fields#add' } %>
-    <template data-dynamic-fields-target="template">
-      <%= form.fields_for :tracks, Track.new, child_index: "__CHILD_INDEX__" do |f| %>
+  <%= render(SidebarSectionComponent.new(title: 'Tracks')) do %>
+    <div class="flex items-center gap-2 mb-4">
+      <span class="text-amber-600">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        </svg>
+      </span> <p>Files must be in <strong>wav</strong> format.</p></div>
+
+    <%= form.fields_for :tracks do |f| %>
       <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
         <%= f.text_field :title, class: 'w-full mb-6', required: true %>
-        <%= f.labels :original, text: "File" %>
+
+        <% if f.object.original.attached? %>
+          <%= f.labels :original, text: "File (#{f.object.original.filename})" %>
+        <% else %>
+          <%= f.labels :original, text: "File" %>
+        <% end %>
         <%= f.file_field :original, accept: 'audio/x-wav', direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
         <div class="progressContainer hidden w-full h-4 bg-slate-200">
           <div class="progress w-0 h-4 bg-slate-500"></div>
         </div>
+        <% if f.object.persisted? %>
+          <%= f.label :delete %>
+          <%= f.check_box :_destroy %>
+        <% end %>
       </div>
-      <% end %>
-    </template>
+    <% end %>
+
+    <div data-controller="dynamic-fields">
+      <%= text_link_to "Add track", "#", data: { action: 'dynamic-fields#add' } %>
+      <template data-dynamic-fields-target="template">
+        <%= form.fields_for :tracks, Track.new, child_index: "__CHILD_INDEX__" do |f| %>
+          <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
+            <%= f.text_field :title, class: 'w-full mb-6', required: true %>
+            <%= f.labels :original, text: "File" %>
+            <%= f.file_field :original, accept: 'audio/x-wav', direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
+            <div class="progressContainer hidden w-full h-4 bg-slate-200">
+              <div class="progress w-0 h-4 bg-slate-500"></div>
+            </div>
+          </div>
+        <% end %>
+      </template>
+    </div>
+  <% end %>
+
+  <%= render(SidebarSectionComponent.new(title: 'Purchase options')) do %>
+    <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2' %>
+  <% end %>
+
+  <div class="flex sm:flex-row flex-col items-start justify-between gap-6">
+    <p class="text-sm italic">By uploading your music you confirm you have read
+      and agree to our <%= text_link_to "Terms of use", terms_path %>.
+      In particular you must own the rights to, or have permission
+      from the rights-holder for any music or other content you
+      upload.
+    </p>
+
+    <%= form.submit "Save & preview", class: 'w-full sm:w-fit', data: { 'multiple-upload-target': "save" } %>
   </div>
-  </section>
-
-  <h2 class="text-xl tracking-tight leading-10 font-bold my-3">Notice</h2>
-
-  <p class="mb-3">By uploading your music you confirm you have read
-    and agree to our <%= text_link_to "Terms of use", terms_path
-    %>. In particular you must own the rights to, or have permission
-    from the rights-holder for any music or other content you
-    upload.</p>
-
-  <%= form.submit "Save", class: 'w-full mt-6', data: { 'multiple-upload-target': "save" } %>
 <% end %>

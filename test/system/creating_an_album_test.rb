@@ -16,7 +16,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
 
-    within('#tracks') do
+    within(tracks_section) do
       click_on 'Add track'
       fill_in 'Title', with: 'And I Love Her'
       attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
@@ -39,5 +39,11 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     fill_in 'Title', with: 'New Title'
     click_on 'Save'
     assert_text 'New Title'
+  end
+
+  private
+
+  def tracks_section
+    find('h2', text: 'Tracks').ancestor('section')
   end
 end
