@@ -18,6 +18,9 @@
   </head>
 
   <body class="bg-slate-100">
+    <%= render(ToastComponent.new(message: alert, type: :alert)) %>
+    <%= render(ToastComponent.new(message: notice, type: :notice)) %>
+
     <div class="mx-auto sm:w-2/3 w-full text-slate-800">
       <nav class="w-full flex justify-between items-center px-1 sm:mt-2">
         <div>
@@ -47,8 +50,6 @@
         </div>
       </nav>
       <div class="bg-white p-2 sm:p-6 sm:mt-2 sm:shadow-sm">
-        <%= render('shared/alert_box', message: alert) if alert %>
-        <%= render('shared/notice_box', message: notice) if notice %>
         <%= yield %>
       </div>
       <footer class="flex flex-row justify-between mt-2 mb-4 text-slate-400 text-sm px-2 sm:px-0">
