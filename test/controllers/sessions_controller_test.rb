@@ -7,13 +7,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     @user = create(:user, admin: true)
   end
 
-  test 'should get index' do
-    log_in_as @user
-
-    get sessions_url
-    assert_response :success
-  end
-
   test 'should get new' do
     get log_in_url
     assert_response :success
@@ -49,6 +42,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   private
 
   def a_url_that_requires_authentication
-    sessions_url
+    account_url
   end
 end
