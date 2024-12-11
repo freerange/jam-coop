@@ -42,6 +42,6 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   private
 
   def tracks_section
-    find('h2', text: 'Tracks').ancestor('section')
+    find('h2', text: 'Tracks').ancestor('.sidebar-section')
   end
 end

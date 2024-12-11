@@ -1,9 +1,7 @@
-<div class="border-b border-slate-300 mb-6">
-  <h1 class="text-2xl font-bold mb-1">My account</h1>
-</div>
+<%= render(SectionComponent.new(title: 'My account')) do %>
+  <%= render(AccountNavComponent.new(user: @user)) %>
 
-<%= render(AccountNavComponent.new(user: @user)) %>
-
-<%= render(SidebarSectionComponent.new(title: 'Artist details')) do %>
-  <%= render "form", artist: @artist %>
+  <%= render(SidebarSectionComponent.new(title: 'Artist details')) do %>
+    <%= render "form", artist: @artist %>
+  <% end %>
 <% end %>

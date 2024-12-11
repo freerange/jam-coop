@@ -57,7 +57,7 @@ module Identity
     private
 
     def email_address_section
-      find('h2', text: 'Email address').ancestor('section')
+      find('h2', text: 'Email address').ancestor('.sidebar-section')
     end
   end
 end

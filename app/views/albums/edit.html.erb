@@ -1,15 +1,13 @@
-<div class="flex flex-col gap-6">
-  <ol class="flex gap-2 text-sm">
-    <li><%= link_to 'Account', account_path, class: 'hover:underline' %></li>
-    <li class='text-slate-400'>/</li>
-    <li><%= link_to @album.artist.name, edit_artist_path(@album.artist), class: 'hover:underline' %></li>
-    <li class='text-slate-400'>/</li>
-    <li class='text-rose-400'><%= @album.title %></li>
-  </ol>
+<%= render(SectionComponent.new(title: "Editing #{@album.title}")) do %>
+  <div class="flex flex-col gap-6">
+    <ol class="flex gap-2 text-sm">
+      <li><%= link_to 'Account', account_path, class: 'hover:underline' %></li>
+      <li class='text-slate-400'>/</li>
+      <li><%= link_to @album.artist.name, edit_artist_path(@album.artist), class: 'hover:underline' %></li>
+      <li class='text-slate-400'>/</li>
+      <li class='text-rose-400'><%= @album.title %></li>
+    </ol>
 
-  <div class="border-b border-slate-300">
-    <h1 class="text-2xl font-bold mb-1">Editing <%= @album.title %></h1>
+    <%= render "form", album: @album %>
   </div>
-
-  <%= render "form", album: @album %>
-</div>
+<% end %>

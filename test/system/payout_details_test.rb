@@ -39,6 +39,6 @@ class PayoutDetailsTest < ApplicationSystemTestCase
   private
 
   def payout_details_section
-    find('h2', text: 'Payout details').ancestor('section')
+    find('h2', text: 'Payout details').ancestor('.sidebar-section')
   end
 end

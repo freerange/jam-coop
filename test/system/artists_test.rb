@@ -44,6 +44,6 @@ class ArtistsTest < ApplicationSystemTestCase
   private
 
   def details_section
-    find('h2', text: 'Artist details').ancestor('section')
+    find('h2', text: 'Artist details').ancestor('.sidebar-section')
   end
 end

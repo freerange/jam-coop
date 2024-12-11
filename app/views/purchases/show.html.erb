@@ -1,9 +1,10 @@
-<%= render('shared/page_header', text: 'Thank you!') %>
+<%= render(SectionComponent.new(title: 'Thank you!')) do %>
 
-<p>Thank you for purchasing <%= @purchase.album.title %> by <%= @purchase.album.artist.name %>. Here are your downloads:</p>
+  <p>Thank you for purchasing <%= @purchase.album.title %> by <%= @purchase.album.artist.name %>. Here are your downloads:</p>
 
-<ul>
-  <% @purchase.album.downloads.each do |download| %>
-    <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% @purchase.album.downloads.each do |download| %>
+      <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
+    <% end %>
+  </ul>
+<% end %>

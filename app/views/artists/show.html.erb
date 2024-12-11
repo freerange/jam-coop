@@ -9,29 +9,31 @@
   <%= auto_discovery_link_tag(:atom, { format: :atom }, { title: "#{@artist.name} albums on jam.coop" }) %>
 <% end %>
 
-<div class="flex flex-row border-b-2 border-b-slate-100 pb-6">
-  <div class="basis-1/4 mr-4 m:mr-0">
-    <div class="aspect-w-1 aspect-h-1">
-      <% if @artist.profile_picture.representable? %>
-        <%= image_tag cdn_url(@artist.profile_picture.representation(resize_to_limit: [500, 500])), class: 'object-cover' %>
-      <% end %>
+<%= render(SectionComponent.new) do %>
+  <div class="flex flex-row border-b-2 border-b-slate-100 pb-6">
+    <div class="basis-1/4 mr-4 m:mr-0">
+      <div class="aspect-w-1 aspect-h-1">
+        <% if @artist.profile_picture.representable? %>
+          <%= image_tag cdn_url(@artist.profile_picture.representation(resize_to_limit: [500, 500])), class: 'object-cover' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="basis-3/4">
+      <h2 class="text-2xl font-semibold"><%= @artist.name %></h2>
+      <p class="text-slate-400 mb-4"><%= @artist.location %></p>
+      <p><%= @artist.description %></p>
     </div>
   </div>
-  <div class="basis-3/4">
-    <h2 class="text-2xl font-semibold"><%= @artist.name %></h2>
-    <p class="text-slate-400 mb-4"><%= @artist.location %></p>
-    <p><%= @artist.description %></p>
-  </div>
-</div>
 
-<div class="pt-4 grid grid-cols-3 gap-4">
-  <% @albums.in_release_order.each do |album| %>
-    <%= link_to(artist_album_path(album.artist, album)) do %>
-      <%= render(CardComponent.new(
+  <div class="pt-4 grid grid-cols-3 gap-4">
+    <% @albums.in_release_order.each do |album| %>
+      <%= link_to(artist_album_path(album.artist, album)) do %>
+        <%= render(CardComponent.new(
         title: album.title,
         subtitle: ( album.publication_status if !album.published? ),
         image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
       )) %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

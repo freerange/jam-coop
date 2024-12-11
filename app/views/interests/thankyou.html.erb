@@ -1,5 +1,5 @@
-<%= render 'shared/page_header', text: 'Thank you' %>
-
-<p class="mb-3 leading-relaxed">We've sent you an email. Please
-  check your inbox and click the link to confirm your email
-  address.</p>
+<%= render(SectionComponent.new(title: 'Thank you!')) do %>
+  <p class="mb-3 leading-relaxed">We've sent you an email. Please
+    check your inbox and click the link to confirm your email
+    address.</p>
+<% end %>

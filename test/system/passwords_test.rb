@@ -38,6 +38,6 @@ class PasswordsTest < ApplicationSystemTestCase
   private
 
   def password_section
-    find('h2', text: 'Password').ancestor('section')
+    find('h2', text: 'Password').ancestor('.sidebar-section')
   end
 end

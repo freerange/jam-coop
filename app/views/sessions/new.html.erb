@@ -1,12 +1,12 @@
-<%= render 'shared/page_header', text: 'Log in' %>
+<%= render(SectionComponent.new(title: 'Log in')) do %>
+  <%= form_with(url: log_in_path, builder: TailwindFormBuilder) do |form| %>
+    <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full mb-3" %>
+    <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full mb-3" %>
+    <%= form.submit "Log in", class: "w-full mt-3" %>
+  <% end %>
 
-<%= form_with(url: log_in_path, builder: TailwindFormBuilder) do |form| %>
-  <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "w-full mb-3" %>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", class: "w-full mb-3" %>
-  <%= form.submit "Log in", class: "w-full mt-3" %>
+  <div class="mt-6">
+    <%= text_link_to "Sign up", sign_up_path, class: "mr-3" %>
+    <%= text_link_to "Forgot your password?", new_identity_password_reset_path %>
+  </div>
 <% end %>
-
-<div class="mt-6">
-  <%= text_link_to "Sign up", sign_up_path, class: "mr-3" %>
-  <%= text_link_to "Forgot your password?", new_identity_password_reset_path %>
-</div>

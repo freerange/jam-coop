@@ -1,69 +1,68 @@
-<div class="border-b border-slate-300 mb-6">
-  <h1 class="text-2xl font-bold mb-1">My account</h1>
-</div>
+<%= render(SectionComponent.new(title: 'My account')) do %>
 
-<%= render(AccountNavComponent.new(user: @user)) %>
+  <%= render(AccountNavComponent.new(user: @user)) %>
 
-<div class="flex flex-col divide-y divide-slate-300">
-  <%= render(SidebarSectionComponent.new(title: 'Password')) do %>
-    <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
-      <% if flash[:incorrect_password] %>
-        <%= render ErrorBoxComponent.new(title: 'Incorrect password').with_content(flash[:incorrect_password]) %>
-      <% end %>
-      <% if @user.errors.include?(:password) %>
-        <%= render ModelErrorComponent.new(model: @user) %>
-      <% end %>
-      <%= form.password_field :current_password, required: true, autofocus: true, autocomplete: "current-password", class: "w-full mb-3" %>
-      <%= form.password_field :password, label: { text: "New password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
-      <%= form.password_field :password_confirmation, label: { text: "Confirm new password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
-      <div class="flex flex-row justify-end">
-        <%= form.submit "Save changes", class: "mt-3" %>
-      </div>
-    <% end %>
-  <% end %>
-
-  <%= render(SidebarSectionComponent.new(title: 'Email address')) do %>
-    <% unless Current.user.verified? %>
-      <div class="mb-3 border border-slate-300 p-4">
-        <p>We sent a verification email to the address below. Check that email and follow those instructions to confirm it's your email address.</p>
-        <p><%= button_to "Re-send verification email", identity_email_verification_path, class: 'py-3 px-5 bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer my-3' %></p>
-      </div>
-    <% end %>
-
-    <%= form_with(url: identity_email_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
-      <% if flash[:emails_update_password_incorrect] %>
-        <%= render ErrorBoxComponent.new(title: 'Incorrect password').with_content(flash[:emails_update_password_incorrect]) %>
-      <% end %>
-      <% if @user.errors.include?(:email) %>
-        <%= render ModelErrorComponent.new(model: @user) %>
-      <% end %>
-      <%= form.email_field :email, label: { text: "New email" }, required: true, autofocus: true, class: 'w-full mb-3' %>
-      <%= form.password_field :current_password, required: true, autocomplete: "current-password", class: 'w-full mb-3' %>
-      <div class="flex flex-row justify-end">
-        <%= form.submit "Save changes", class: 'mt-3' %>
-      </div>
-    <% end %>
-  <% end %>
-
-  <%= render(SidebarSectionComponent.new(title: 'Payout details')) do %>
-    <p class="text-slate-500 mb-6">We use <a class="underline" href="https://wise.com">Wise</a> to make payouts once a month. Wise will email you at <span class="font-bold"><%= Current.user.email %></span> to ask for your bank details. To make the payment we need the following:</p>
-
-    <% payout_detail = @user.payout_detail || PayoutDetail.new(user: @user) %>
-    <%= form_with(model: payout_detail, class: "contents", builder: TailwindFormBuilder) do |form| %>
-      <%= render ModelErrorComponent.new(model: payout_detail) %>
-      <%= form.text_field :name, placeholder: 'Bartholomew J. Simpson', class: 'w-full' %>
-      <p class="text-slate-500 italic text-sm mb-3">Your full name as used on your bank account.</p>
-
-      <%= form.select :country, options_for_payout_details_country_select, include_blank: true, label: { text: 'Country / Region' }, class: 'w-full' %>
-      <p class="text-slate-500 italic text-sm mb-3">We support payouts to the regions/countries <a href="https://wise.com/help/articles/2571942/what-countriesregions-can-i-send-to" class="underline">that Wise supports</a>.</p>
-
-      <div class="flex flex-row justify-end">
-        <% if payout_detail.persisted? %>
-          <%= form.submit "Save changes", class: 'mt-3'%>
-        <% else %>
-          <%= form.submit "Add payout details", class: 'mt-3'%>
+  <div class="flex flex-col divide-y divide-slate-300">
+    <%= render(SidebarSectionComponent.new(title: 'Password')) do %>
+      <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
+        <% if flash[:incorrect_password] %>
+          <%= render ErrorBoxComponent.new(title: 'Incorrect password').with_content(flash[:incorrect_password]) %>
         <% end %>
-      </div>
+        <% if @user.errors.include?(:password) %>
+          <%= render ModelErrorComponent.new(model: @user) %>
+        <% end %>
+        <%= form.password_field :current_password, required: true, autofocus: true, autocomplete: "current-password", class: "w-full mb-3" %>
+        <%= form.password_field :password, label: { text: "New password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
+        <%= form.password_field :password_confirmation, label: { text: "Confirm new password"}, required: true, autocomplete: "new-password", class: "w-full mb-3" %>
+        <div class="flex flex-row justify-end">
+          <%= form.submit "Save changes", class: "mt-3" %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+
+    <%= render(SidebarSectionComponent.new(title: 'Email address')) do %>
+      <% unless Current.user.verified? %>
+        <div class="mb-3 border border-slate-300 p-4">
+          <p>We sent a verification email to the address below. Check that email and follow those instructions to confirm it's your email address.</p>
+          <p><%= button_to "Re-send verification email", identity_email_verification_path, class: 'py-3 px-5 bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer my-3' %></p>
+        </div>
+      <% end %>
+
+      <%= form_with(url: identity_email_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
+        <% if flash[:emails_update_password_incorrect] %>
+          <%= render ErrorBoxComponent.new(title: 'Incorrect password').with_content(flash[:emails_update_password_incorrect]) %>
+        <% end %>
+        <% if @user.errors.include?(:email) %>
+          <%= render ModelErrorComponent.new(model: @user) %>
+        <% end %>
+        <%= form.email_field :email, label: { text: "New email" }, required: true, autofocus: true, class: 'w-full mb-3' %>
+        <%= form.password_field :current_password, required: true, autocomplete: "current-password", class: 'w-full mb-3' %>
+        <div class="flex flex-row justify-end">
+          <%= form.submit "Save changes", class: 'mt-3' %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= render(SidebarSectionComponent.new(title: 'Payout details')) do %>
+      <p class="text-slate-500 mb-6">We use <a class="underline" href="https://wise.com">Wise</a> to make payouts once a month. Wise will email you at <span class="font-bold"><%= Current.user.email %></span> to ask for your bank details. To make the payment we need the following:</p>
+
+      <% payout_detail = @user.payout_detail || PayoutDetail.new(user: @user) %>
+      <%= form_with(model: payout_detail, class: "contents", builder: TailwindFormBuilder) do |form| %>
+        <%= render ModelErrorComponent.new(model: payout_detail) %>
+        <%= form.text_field :name, placeholder: 'Bartholomew J. Simpson', class: 'w-full' %>
+        <p class="text-slate-500 italic text-sm mb-3">Your full name as used on your bank account.</p>
+
+        <%= form.select :country, options_for_payout_details_country_select, include_blank: true, label: { text: 'Country / Region' }, class: 'w-full' %>
+        <p class="text-slate-500 italic text-sm mb-3">We support payouts to the regions/countries <a href="https://wise.com/help/articles/2571942/what-countriesregions-can-i-send-to" class="underline">that Wise supports</a>.</p>
+
+        <div class="flex flex-row justify-end">
+          <% if payout_detail.persisted? %>
+            <%= form.submit "Save changes", class: 'mt-3'%>
+          <% else %>
+            <%= form.submit "Add payout details", class: 'mt-3'%>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

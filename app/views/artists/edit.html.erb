@@ -1,38 +1,36 @@
-<div class="border-b border-slate-300 mb-6">
-  <h1 class="text-2xl font-bold mb-1">My account</h1>
-</div>
+<%= render(SectionComponent.new(title: 'My account')) do %>
+  <%= render(AccountNavComponent.new(user: @artist.user)) %>
 
-<%= render(AccountNavComponent.new(user: @artist.user)) %>
+  <%= render(SidebarSectionComponent.new(title: 'Artist details')) do %>
+    <%= render "form", artist: @artist %>
+  <% end %>
 
-<%= render(SidebarSectionComponent.new(title: 'Artist details')) do %>
-  <%= render "form", artist: @artist %>
-<% end %>
-
-<%= render(SidebarSectionComponent.new(title: 'Albums')) do %>
-  <div class="grid grid-cols-3 gap-4">
-    <% @artist.albums.in_release_order.each do |album| %>
-      <%= link_to(edit_artist_album_path(album.artist, album)) do %>
-        <%= render(CardComponent.new(
-          title: album.title,
-          subtitle: ( album.publication_status if !album.published? ),
-          image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
-        )) %>
+  <%= render(SidebarSectionComponent.new(title: 'Albums')) do %>
+    <div class="grid grid-cols-3 gap-4">
+      <% @artist.albums.in_release_order.each do |album| %>
+        <%= link_to(edit_artist_album_path(album.artist, album)) do %>
+          <%= render(CardComponent.new(
+      title: album.title,
+      subtitle: ( album.publication_status if !album.published? ),
+      image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
+      )) %>
+        <% end %>
       <% end %>
-    <% end %>
 
-    <%= link_to(new_artist_album_path(@artist)) do %>
-      <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
-        <div class="grid place-items-center">
-          <div class="flex gap-2 items-center text-amber-600">
-            <span>
-              <svg class="fill-amber-600" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
-              </svg>
-            </span>
-            Add album
+      <%= link_to(new_artist_album_path(@artist)) do %>
+        <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
+          <div class="grid place-items-center">
+            <div class="flex gap-2 items-center text-amber-600">
+              <span>
+                <svg class="fill-amber-600" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
+                </svg>
+              </span>
+              Add album
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

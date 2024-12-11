@@ -1,17 +1,18 @@
-<%= render('shared/page_header', text: 'My collection') %>
+<%= render(SectionComponent.new(title: 'My collection')) do %>
 
-<% if Current.user.collection.empty? %>
-  <p class="class='text-sm text-slate-600">There's nothing in your collection at the moment.</p>
-<% end %>
+  <% if Current.user.collection.empty? %>
+    <p class="class='text-sm text-slate-600">There's nothing in your collection at the moment.</p>
+  <% end %>
 
-<div class="pt-4 grid grid-cols-3 gap-4">
-  <% Current.user.collection.each do |purchase| %>
-    <%= link_to(artist_album_path(purchase.album.artist, purchase.album)) do %>
-      <%= render(CardComponent.new(
+  <div class="pt-4 grid grid-cols-3 gap-4">
+    <% Current.user.collection.each do |purchase| %>
+      <%= link_to(artist_album_path(purchase.album.artist, purchase.album)) do %>
+        <%= render(CardComponent.new(
         title: purchase.album.title,
         subtitle: purchase.album.artist.name,
         image: ( cdn_url(purchase.album.cover.representation(resize_to_limit: [1000, 1000])) if purchase.album.cover.representable? )
       )) %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

@@ -1,10 +1,14 @@
 <section class="divide-y divide-slate-300 bg-white p-3 sm:p-6 shadow">
-  <div class="flex justify-between content-baseline">
-    <h2 class="text-slate-800 font-semibold text-lg"><%= @title %></h2>
-    <% if @link_text && @link_path %>
-      <%= link_to @link_text, @link_path, class: 'text-red-400 hover:underline' %>
-    <% end %>
-  </div>
+  <% if show_header? %>
+    <div class="flex justify-between content-baseline">
+      <% if @title %>
+        <h2 class="text-slate-800 font-semibold text-lg"><%= @title %></h2>
+      <% end %>
+      <% if @link_text && @link_path %>
+        <%= link_to @link_text, @link_path, class: 'text-red-400 hover:underline' %>
+      <% end %>
+    </div>
+  <% end %>
   <div class="pt-3">
     <%= content %>
   </div>
