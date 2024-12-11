@@ -4,7 +4,7 @@ class SidebarSectionComponentPreview < ViewComponent::Preview
   def default
     render(
       SidebarSectionComponent.new(
-        title: 'Title',
+        title: 'Title'
       )
     ) do
       content_tag(:span, 'Content')
