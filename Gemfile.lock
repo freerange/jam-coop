@@ -163,6 +163,7 @@ GEM
     hotwire-livereload (1.2.3)
       listen (>= 3.0.0)
       rails (>= 6.0.0)
+    htmlbeautifier (1.4.3)
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -412,6 +413,7 @@ DEPENDENCIES
   faker (~> 3.3)
   friendly_id (~> 5.5.0)
   hotwire-livereload
+  htmlbeautifier
   image_processing
   importmap-rails
   jbuilder
