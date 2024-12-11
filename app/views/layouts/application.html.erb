@@ -43,8 +43,10 @@
               </div>
               <%= render partial: 'avatar_menu', locals: { user: Current.user } %>
             <% else %>
-            <%= link_to "sign up", sign_up_path, class: "underline text-slate-500" %>
-            <%= link_to "log in", log_in_path, class: "underline text-slate-500" %>
+            <div class="flex flex-row z-10 gap-3">
+              <%= link_to "sign up", sign_up_path, class: "underline text-slate-500" %>
+              <%= link_to "log in", log_in_path, class: "underline text-slate-500" %>
+            </div>
             <% end %>
           </div>
         </div>
