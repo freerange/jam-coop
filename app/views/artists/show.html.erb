@@ -13,7 +13,7 @@
   <div class="basis-1/4 mr-4 m:mr-0">
     <div class="aspect-w-1 aspect-h-1">
       <% if @artist.profile_picture.representable? %>
-      <%= image_tag cdn_url(@artist.profile_picture.representation(resize_to_limit: [500, 500])), class: 'object-cover' %>
+        <%= image_tag cdn_url(@artist.profile_picture.representation(resize_to_limit: [500, 500])), class: 'object-cover' %>
       <% end %>
     </div>
   </div>

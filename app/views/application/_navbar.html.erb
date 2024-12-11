@@ -11,18 +11,18 @@
   <div class="flex gap-4 items-center">
     <div class="flex gap-2 items-center">
       <% if Current.user %>
-      <div class="w-8 h-8 z-10">
-        <%= link_to collection_path do %>
-        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 5C11.7167 5 5 11.7167 5 20V31.6667C5 33.5 6.5 35 8.33333 35H15V21.6667H8.33333V20C8.33333 13.55 13.55 8.33333 20 8.33333C26.45 8.33333 31.6667 13.55 31.6667 20V21.6667H25V35H31.6667C33.5 35 35 33.5 35 31.6667V20C35 11.7167 28.2833 5 20 5ZM11.6667 25V31.6667H8.33333V25H11.6667ZM31.6667 31.6667H28.3333V25H31.6667V31.6667Z" fill="#1E293B"/>
-        </svg>
-        <% end %>
-      </div>
-      <%= render partial: 'avatar_menu', locals: { user: Current.user } %>
+        <div class="w-8 h-8 z-10">
+          <%= link_to collection_path do %>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 5C11.7167 5 5 11.7167 5 20V31.6667C5 33.5 6.5 35 8.33333 35H15V21.6667H8.33333V20C8.33333 13.55 13.55 8.33333 20 8.33333C26.45 8.33333 31.6667 13.55 31.6667 20V21.6667H25V35H31.6667C33.5 35 35 33.5 35 31.6667V20C35 11.7167 28.2833 5 20 5ZM11.6667 25V31.6667H8.33333V25H11.6667ZM31.6667 31.6667H28.3333V25H31.6667V31.6667Z" fill="#1E293B"/>
+            </svg>
+          <% end %>
+        </div>
+        <%= render partial: 'avatar_menu', locals: { user: Current.user } %>
       <% else %>
-      <div class="flex flex-row z-10 gap-3">
-        <%= link_to "sign up", sign_up_path, class: "underline text-slate-500" %>
-        <%= link_to "log in", log_in_path, class: "underline text-slate-500" %>
-      </div>
+        <div class="flex flex-row z-10 gap-3">
+          <%= link_to "sign up", sign_up_path, class: "underline text-slate-500" %>
+          <%= link_to "log in", log_in_path, class: "underline text-slate-500" %>
+        </div>
       <% end %>
     </div>
   </div>

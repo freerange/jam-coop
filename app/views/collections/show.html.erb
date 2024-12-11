@@ -1,7 +1,7 @@
 <%= render('shared/page_header', text: 'My collection') %>
 
 <% if Current.user.collection.empty? %>
-<p class="class='text-sm text-slate-600">There's nothing in your collection at the moment.</p>
+  <p class="class='text-sm text-slate-600">There's nothing in your collection at the moment.</p>
 <% end %>
 
 <div class="pt-4 grid grid-cols-3 gap-4">

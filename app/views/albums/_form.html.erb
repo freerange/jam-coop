@@ -16,7 +16,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
         </svg>
-      </span> <p>File must be in <strong>jpeg</strong> or <strong>png</strong> format.</p></div>
+      </span>
+      <p>File must be in <strong>jpeg</strong> or <strong>png</strong> format.</p>
+    </div>
     <%= form.date_field :released_on, max: Time.zone.today, class: 'w-full mb-3' %>
   <% end %>
 
@@ -26,7 +28,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
         </svg>
-      </span> <p>Files must be in <strong>wav</strong> format.</p></div>
+      </span>
+      <p>Files must be in <strong>wav</strong> format.</p>
+    </div>
 
     <%= form.fields_for :tracks do |f| %>
       <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
