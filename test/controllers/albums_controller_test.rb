@@ -74,7 +74,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to artist_url(@album.artist)
+    assert_redirected_to artist_album_url(@album.artist, Album.last)
   end
 
   test '#edit' do
