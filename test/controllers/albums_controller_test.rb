@@ -45,13 +45,11 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_select 'li', "#{track.title} mp3v0"
   end
 
-  test '#show when the album is not published has no publish button in the navbar' do
+  test '#show when the album is not published has no publish button' do
     @album.unpublish
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'nav' do
-      assert_select 'button', text: 'Publish', count: 0
-    end
+    assert_select 'button', text: 'Publish', count: 0
   end
 
   test '#show shows the release date of the album' do
@@ -160,22 +158,18 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
     assert_select 'a', text: 'Edit'
   end
 
-  test '#show when the album is not published has a publish button in the navbar' do
+  test '#show when the album is not published has a publish button' do
     @album.unpublish
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'nav' do
-      assert_select 'button', text: 'Publish'
-    end
+    assert_select 'button', text: 'Publish'
   end
 
-  test '#show when the album is pending publication has a disabled pending publication button in the navbar' do
+  test '#show when the album is pending publication has a disabled pending publication button' do
     @album.pending
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'nav' do
-      assert_select 'button[disabled=disabled]', text: 'Pending publication'
-    end
+    assert_select 'button[disabled=disabled]', text: 'Pending publication'
   end
 
   test '#request_publication sets the pending state of the album' do
