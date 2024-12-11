@@ -18,8 +18,9 @@ class CreatingAnArtistTest < ApplicationSystemTestCase
     attach_file 'Profile picture', Rails.root.join('test/fixtures/files/cover.png')
 
     click_on 'Save'
+    assert_text 'Artist was successfully created'
 
-    visit artist_path(Artist.last)
+    visit artist_path(Artist.find_by(name: 'The Beatles'))
 
     assert_text 'The Beatles'
     assert_text 'Liverpool'

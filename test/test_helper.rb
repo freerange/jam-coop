@@ -7,6 +7,8 @@ require 'webmock/minitest'
 
 module ActiveSupport
   class TestCase
+    parallelize(workers: 1)
+
     include FactoryBot::Syntax::Methods
 
     WebMock.disable_net_connect!(allow_localhost: true)
