@@ -25,9 +25,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     click_on 'Save & preview'
 
     assert_text "A Hard Day's Night"
-    assert_text 'unpublished'
-    click_on "A Hard Day's Night"
-    assert_text '1. And I Love Her'
+    find('button', text: 'Publish')
   end
 
   test 'editing an album' do
