@@ -154,6 +154,12 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
     log_in_as(user)
   end
 
+  test '#show has an edit button' do
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'a', text: 'Edit'
+  end
+
   test '#show when the album is not published has a publish button in the navbar' do
     @album.unpublish
     get artist_album_url(@album.artist, @album)
