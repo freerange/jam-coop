@@ -30,6 +30,11 @@
       <% end %>
     <% end %>
   <% end %>
+  <% if policy(@album).publish? %>
+  <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'flex gap-2 px-3 py-3 bg-rose-400 hover:bg-rose-500 text-white cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-300' do %>
+    <%= @album.published? ? 'Unpublish' : 'Publish' %>
+  <% end %>
+  <% end %>
 </div>
 
 <div data-controller="player">
@@ -139,12 +144,6 @@
 
 <% content_for :admin do %>
 <div>
-  <h2 class="text-2xl mb-3">Published state</h2>
-  <p>This album is currently <strong><%= @album.published? ? 'published' : 'unpublished' %></strong></p>
-  <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'underline' do %>
-    <%= @album.published? ? 'Unpublish' : 'Publish' %>
-  <% end %>
-
   <h2 class="text-2xl my-3">Transcodes</h2>
   <ul>
     <% @album.tracks.each do |track| %>

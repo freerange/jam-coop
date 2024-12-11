@@ -45,11 +45,18 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_select 'li', "#{track.title} mp3v0"
   end
 
-  test '#show when the album is not published has no publish button' do
+  test '#show when the album is not published has publish button' do
     @album.unpublish
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'button', text: 'Publish', count: 0
+    assert_select 'button', text: 'Publish', count: 1
+  end
+
+  test '#show when the album is published has unpublish button' do
+    @album.publish
+    get artist_album_url(@album.artist, @album)
+
+    assert_select 'button', text: 'Unpublish', count: 1
   end
 
   test '#show shows the release date of the album' do
