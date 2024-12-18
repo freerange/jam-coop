@@ -43,7 +43,7 @@ To receive events from Stripe webhooks in your local environment you need to run
 
     stripe listen --forward-to localhost:3000/stripe_webhook_events
 
-When you first run this command it will show a value for the "webhook signing secret". Copy this value and set `ENDPOINT_SECRET` to this value in `StripeWebhookEventsController` (either using the development credentials file or by temporarily editing the code).
+When you first run this command it will show a value for the "webhook signing secret". Copy this value and set `STRIPE_ENDPOINT_SECRET` to this value in your local `.env` file.
 
 ## Deployment
 
