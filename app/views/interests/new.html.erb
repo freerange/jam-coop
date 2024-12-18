@@ -10,21 +10,36 @@
   <p class="mb-3 text-slate-600">We're a co-operatively owned music store, 100% run by and for the benefit of musicians, fans and the people who work here. <%= text_link_to "Find out more", about_path %>.</p>
 </div>
 
-<%= render(
-  SectionComponent.new(
-    title: 'Recently purchased',
-    link_text: "View All",
-    link_path: artists_path)
+<div class="grid grid-col gap-6">
+  <%= render(
+  SectionComponent.new(title: 'Recently released')
 ) do %>
-  <%= render(CardGridComponent.new) do %>
-    <% Album.best_selling.limit(8).each do |album| %>
-      <%= link_to(artist_album_path(album.artist, album)) do %>
-        <%= render(CardComponent.new(
+    <%= render(CardGridComponent.new) do %>
+      <% Album.recently_released.limit(4).each do |album| %>
+        <%= link_to(artist_album_path(album.artist, album)) do %>
+          <%= render(CardComponent.new(
           title: album.title,
           subtitle: album.artist.name,
           image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
         )) %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
-<% end %>
+
+  <%= render(
+  SectionComponent.new(title: 'Best selling')
+) do %>
+    <%= render(CardGridComponent.new) do %>
+      <% Album.best_selling.limit(4).each do |album| %>
+        <%= link_to(artist_album_path(album.artist, album)) do %>
+          <%= render(CardComponent.new(
+          title: album.title,
+          subtitle: album.artist.name,
+          image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
+        )) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

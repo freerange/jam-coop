@@ -207,6 +207,29 @@ class AlbumTest < ActiveSupport::TestCase
     end
   end
 
+  test '.recently_released returns most recent released album per artist' do
+    artist1 = create(:artist)
+    artist2 = create(:artist)
+
+    older_album_artist1 = create(:album, artist: artist1, released_on: 2.months.ago)
+    newer_album_artist1 = create(:album, artist: artist1, released_on: 1.month.ago)
+    unreleased_album_artist1 = create(:album, artist: artist1, released_on: nil)
+
+    older_album_artist2 = create(:album, artist: artist2, released_on: 2.months.ago)
+    newer_album_artist2 = create(:album, artist: artist2, released_on: 1.month.ago)
+    unreleased_album_artist2 = create(:album, artist: artist2, released_on: nil)
+
+    recently_released = Album.recently_released.map(&:id)
+
+    assert_equal 2, recently_released.size
+    assert_includes recently_released, newer_album_artist1.id
+    assert_includes recently_released, newer_album_artist2.id
+    assert_not_includes recently_released, older_album_artist1.id
+    assert_not_includes recently_released, older_album_artist2.id
+    assert_not_includes recently_released, unreleased_album_artist1.id
+    assert_not_includes recently_released, unreleased_album_artist2.id
+  end
+
   test 'is invalid with a non-numeric price' do
     album = build(:album, price: 'foo')
     assert_not album.valid?
