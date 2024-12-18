@@ -11,3 +11,5 @@ Rake::Task['test'].enhance(%i[rubocop htmlbeautifier])
 Rake::Task['test'].enhance do
   Rake::Task['test:system'].invoke
 end
+
+task lint: %i[rubocop htmlbeautifier]
