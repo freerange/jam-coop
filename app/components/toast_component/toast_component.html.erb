@@ -1,4 +1,4 @@
-<div data-controller="toasts" class="flex flex-col items-center fixed sm:absolute bottom-3 sm:top-3 w-full" role="alert">
+<div data-controller="toasts" class="flex flex-col items-center fixed z-10 sm:z-0 sm:absolute bottom-3 sm:top-3 w-full" role="alert">
   <div class="transition-opacity duration-200 flex flex-row items-center bg-slate-50 gap-3 max-w-xs p-4 bg-white sm:shadow shadow-lg border-l-4 <%= type_class %>" data-toasts-target="toast">
     <%= @message %>
 
