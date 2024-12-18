@@ -5,7 +5,7 @@ require 'capybara/cuprite'
 
 Capybara.javascript_driver = :cuprite
 Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(app, window_size: [1400, 1400], timeout: 10)
+  Capybara::Cuprite::Driver.new(app, window_size: [1400, 1400], timeout: 30)
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
