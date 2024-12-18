@@ -211,12 +211,13 @@ class AlbumTest < ActiveSupport::TestCase
     artist1 = create(:artist)
     artist2 = create(:artist)
 
-    older_album_artist1 = create(:album, artist: artist1, first_published_on: 4.months.ago)
-    newer_album_artist1 = create(:album, artist: artist1, first_published_on: 3.months.ago)
-    older_album_artist2 = create(:album, artist: artist2, first_published_on: 2.months.ago)
-    newer_album_artist2 = create(:album, artist: artist2, first_published_on: 1.month.ago)
+    older_album_artist1 = create(:album, artist: artist1, released_on: 4.months.ago)
+    newer_album_artist1 = create(:album, artist: artist1, released_on: 3.months.ago)
+    older_album_artist2 = create(:album, artist: artist2, released_on: 2.months.ago)
+    newer_album_artist2 = create(:album, artist: artist2, released_on: 1.month.ago)
+    create(:album, artist: artist1, released_on: nil)
 
-    recently_released = Album.recently_published.map(&:id)
+    recently_released = Album.recently_released.map(&:id)
 
     assert_equal [newer_album_artist2.id,
                   older_album_artist2.id,

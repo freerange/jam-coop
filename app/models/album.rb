@@ -32,7 +32,7 @@ class Album < ApplicationRecord
   scope :pending, -> { where(publication_status: :pending) }
   scope :in_release_order, -> { order(Arel.sql('COALESCE(released_on, first_published_on) DESC NULLS LAST')) }
   scope :best_selling, -> { left_joins(:purchases).group(:id).order('COUNT(purchases.id) DESC') }
-  scope :recently_published, -> { order(first_published_on: :desc) }
+  scope :recently_released, -> { where.not(released_on: nil).order(released_on: :desc) }
 
   after_commit :transcode_tracks, on: :update, if: :metadata_or_cover_changed?
 
