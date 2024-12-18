@@ -1,8 +1,11 @@
 <nav class="w-full flex justify-between items-center sm:mt-2 mb-6">
   <div>
-    <a href="/">
-      <%= render 'jam_logo' %>
-    </a>
+    <div class="flex items-center gap-8">
+      <a href="/">
+        <%= render 'jam_logo' %>
+      </a>
+      <%= link_to 'artists', artists_path, class: 'uppercase text-slate-600 hover:text-slate-800 font-normal text-sm' %>
+    </div>
   </div>
   <div class="flex gap-4 items-center">
     <div class="flex gap-2 items-center">
