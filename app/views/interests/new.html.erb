@@ -16,7 +16,7 @@
     link_text: "View All",
     link_path: artists_path)
 ) do %>
-  <div class="grid grid-cols-4 gap-4 mb-3">
+  <%= render(CardGridComponent.new) do %>
     <% Album.best_selling.limit(8).each do |album| %>
       <%= link_to(artist_album_path(album.artist, album)) do %>
         <%= render(CardComponent.new(
@@ -26,5 +26,5 @@
         )) %>
       <% end %>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

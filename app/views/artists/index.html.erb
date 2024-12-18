@@ -9,8 +9,7 @@
 <% end %>
 
 <%= render(SectionComponent.new(title: 'Artists')) do %>
-
-  <div class="pt-4 grid grid-cols-3 gap-4">
+  <%= render(CardGridComponent.new) do %>
     <% @artists.order(:name).each do |artist| %>
       <div>
         <%= link_to(artist_path(artist)) do %>
@@ -23,5 +22,5 @@
         <% end %>
       </div>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

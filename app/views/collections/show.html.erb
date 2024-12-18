@@ -4,7 +4,7 @@
     <p class="class='text-sm text-slate-600">There's nothing in your collection at the moment.</p>
   <% end %>
 
-  <div class="pt-4 grid grid-cols-3 gap-4">
+  <%= render(CardGridComponent.new) do %>
     <% Current.user.collection.each do |purchase| %>
       <%= link_to(artist_album_path(purchase.album.artist, purchase.album)) do %>
         <%= render(CardComponent.new(
@@ -14,5 +14,5 @@
       )) %>
       <% end %>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

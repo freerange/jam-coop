@@ -10,7 +10,7 @@
 <% end %>
 
 <%= render(SectionComponent.new) do %>
-  <div class="flex flex-row border-b-2 border-b-slate-100 pb-6">
+  <div class="flex flex-row border-b-2 border-b-slate-100 pb-6 mb-3">
     <div class="basis-1/4 mr-4 m:mr-0">
       <div class="aspect-w-1 aspect-h-1">
         <% if @artist.profile_picture.representable? %>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="pt-4 grid grid-cols-3 gap-4">
+  <%= render(CardGridComponent.new) do %>
     <% @albums.in_release_order.each do |album| %>
       <%= link_to(artist_album_path(album.artist, album)) do %>
         <%= render(CardComponent.new(
@@ -35,5 +35,5 @@
       )) %>
       <% end %>
     <% end %>
-  </div>
+  <% end %>
 <% end %>
