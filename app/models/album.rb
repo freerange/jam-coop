@@ -33,7 +33,7 @@ class Album < ApplicationRecord
   scope :in_release_order, -> { order(Arel.sql('COALESCE(released_on, first_published_on) DESC NULLS LAST')) }
   scope :best_selling, -> { left_joins(:purchases).group(:id).order('COUNT(purchases.id) DESC') }
 
-  scope :recently_released, -> {
+  scope :recently_released, lambda {
     joins(:artist)
       .where.not(released_on: nil)
       .select('DISTINCT ON (artists.id) albums.*')
