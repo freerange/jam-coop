@@ -37,5 +37,6 @@ module MusicCoop
     config.stripe = config_for(:stripe)
     config.aws = config_for(:aws)
     config.rollbar = config_for(:rollbar)
+    # config.eager_load_paths << Rails.root.join("extras")
   end
 end
