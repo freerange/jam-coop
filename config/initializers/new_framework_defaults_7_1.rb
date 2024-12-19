@@ -154,7 +154,7 @@ Rails.application.config.active_record.before_committed_on_all_records = true
 # To keep the historic behavior, you can set it to `YAML`, however it is
 # recommended to explicitly define the serialization method for each column
 # rather than to rely on a global default.
-# Rails.application.config.active_record.default_column_serializer = nil
+Rails.application.config.active_record.default_column_serializer = nil
 
 # Enable a performance optimization that serializes Active Record models
 # in a faster and more compact way.
