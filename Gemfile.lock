@@ -305,7 +305,7 @@ GEM
     regexp_parser (2.9.3)
     reline (0.4.3)
       io-console (~> 0.5)
-    rexml (3.2.6)
+    rexml (3.3.9)
     rollbar (3.5.1)
     rss (0.3.0)
       rexml
