@@ -111,7 +111,7 @@ Rails.application.config.active_record.query_log_tags_format = :sqlcommenter
 # that have not yet been upgraded must be able to read messages from upgraded
 # servers, first deploy without changing the serializer, then set the serializer
 # in a subsequent deploy.
-# Rails.application.config.active_support.message_serializer = :json_allow_marshal
+Rails.application.config.active_support.message_serializer = :json_allow_marshal
 
 # Enable a performance optimization that serializes message data and metadata
 # together. This changes the message format, so messages serialized this way
