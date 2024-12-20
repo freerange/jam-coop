@@ -1,5 +1,5 @@
-<div data-controller="toasts" class="flex flex-col items-center fixed z-10 sm:z-0 sm:absolute bottom-3 sm:top-3 w-full" role="alert">
-  <div class="transition-opacity duration-200 flex flex-row items-center bg-slate-50 gap-3 max-w-xs p-4 bg-white sm:shadow shadow-lg border-l-4 <%= type_class %>" data-toasts-target="toast">
+<div data-controller="toasts" class="flex flex-col items-center fixed z-10 sm:z-0 sm:absolute bottom-3 sm:top-3 w-full" role="alert" data-toasts-target="toast">
+  <div class="flex flex-row items-center bg-slate-50 gap-3 max-w-xs p-4 bg-white sm:shadow shadow-lg border-l-4 <%= type_class %>">
     <%= @message %>
 
     <button type="button" data-action="toasts#close" class="-mx-1.5 -my-1.5 bg-slate-50 text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" aria-label="Close">
