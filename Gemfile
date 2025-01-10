@@ -9,7 +9,7 @@ gem 'active_storage_validations', '~> 1.1'
 gem 'acts_as_list'
 gem 'authentication-zero', '~> 3.0'
 gem 'aws-sdk-s3'
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.20'
 gem 'bootsnap', require: false
 gem 'friendly_id', '~> 5.5.0'
 gem 'image_processing'
