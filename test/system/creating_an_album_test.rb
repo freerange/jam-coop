@@ -26,6 +26,21 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
     assert_text "A Hard Day's Night"
     find('button', text: 'Publish')
+    sign_out
+
+    perform_enqueued_jobs
+
+    # Admin checks transcodes
+    admin = create(:user, admin: true, email: 'admin@example.com')
+    log_in_as(admin)
+    album = Album.find_by(title: "A Hard Day's Night")
+    visit artist_album_url(album.artist, album)
+    within(admin_section) do
+      assert_text 'And I Love Her'
+      assert_text 'mp3v0'
+      assert_text 'mp3128k'
+      assert_text 'flac'
+    end
   end
 
   test 'editing an album' do
@@ -43,5 +58,9 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
   def tracks_section
     find('h2', text: 'Tracks').ancestor('.sidebar-section')
+  end
+
+  def admin_section
+    find('section', id: 'admin')
   end
 end

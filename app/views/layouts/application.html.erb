@@ -44,9 +44,9 @@
         </div>
       </footer>
       <% if Current.user&.admin? && content_for(:admin) %>
-        <div class="bg-slate-200 p-2 mb-4 sm:p-6 sm:mt-4 sm:shadow-sm rounded">
+        <section id="admin" class="bg-slate-200 p-2 mb-4 sm:p-6 sm:mt-4 sm:shadow-sm rounded">
           <%= content_for :admin %>
-        </div>
+        </section>
       <% end %>
     </div>
   </body>

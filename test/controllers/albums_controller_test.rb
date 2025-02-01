@@ -82,6 +82,16 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_redirected_to artist_album_url(@album.artist, Album.last)
   end
 
+  test '#create enqueues transcoding' do
+    assert_enqueued_with(job: TranscodeJob) do
+      post artist_albums_url(@album.artist), params: {
+        album: { title: 'Example',
+                 cover: fixture_file_upload('cover.png'),
+                 tracks_attributes: { '0': { title: 'Test', original: fixture_file_upload('one.wav') } } }
+      }
+    end
+  end
+
   test '#edit' do
     get edit_artist_album_url(@album.artist, @album)
     assert_response :success

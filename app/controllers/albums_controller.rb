@@ -12,6 +12,7 @@ class AlbumsController < ApplicationController
 
   def create
     if @album.save
+      @album.transcode_tracks
       redirect_to artist_album_url(@album.artist, @album), notice: 'Album was successfully created.'
     else
       render :new, status: :unprocessable_entity
