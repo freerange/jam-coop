@@ -14,6 +14,7 @@ FactoryBot.define do
       'Rick Astley - vocals.'
     end
     publication_status { :unpublished }
+    released_on { Time.zone.today }
 
     after(:build) do |album|
       album.cover.attach(

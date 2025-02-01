@@ -15,7 +15,7 @@
   SectionComponent.new(title: 'Recently released')
 ) do %>
     <%= render(CardGridComponent.new) do %>
-      <% Album.recently_released.limit(4).each do |album| %>
+      <% Album.published.recently_released.limit(4).each do |album| %>
         <%= link_to(artist_album_path(album.artist, album)) do %>
           <%= render(CardComponent.new(
           title: album.title,

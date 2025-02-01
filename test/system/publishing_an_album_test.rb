@@ -11,6 +11,12 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
   end
 
   test 'publishing an album' do
+    # Album does not appear in "recently released" section
+    visit root_url
+    within(recently_released) do
+      refute_text @album.title
+    end
+
     # Artist requests publication
     visit artist_url(@album.artist)
     click_on @album.title.to_s
@@ -28,6 +34,12 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     # Listener visits published album page
     visit artist_url(@album.artist)
     click_on @album.title
+
+    # Album appears in "recently released" section
+    visit root_url
+    within(recently_released) do
+      assert_text @album.title
+    end
   end
 
   private
@@ -39,5 +51,9 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
 
     url = /"(?<url>http.*artists.*albums.*)"/.match(mail.to_s).named_captures['url']
     url.gsub('http://example.com/', root_url)
+  end
+
+  def recently_released
+    find('h2', text: 'Recently released').ancestor('section')
   end
 end
