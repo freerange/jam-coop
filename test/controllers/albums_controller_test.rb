@@ -65,7 +65,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'p', 'released June 20, 2023'
+    assert_select 'p', 'Released: June 20, 2023'
   end
 
   test '#new' do
