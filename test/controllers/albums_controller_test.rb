@@ -6,6 +6,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   def setup
     @album = create(:album, :with_tracks)
     @user = create(:user, admin: true)
+    License.find_or_create_by(id: 1, code: 'code', label: 'label')
     log_in_as(@user)
   end
 
@@ -64,7 +65,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'p', 'released June 20, 2023'
+    assert_select 'p', 'Released: June 20, 2023'
   end
 
   test '#new' do

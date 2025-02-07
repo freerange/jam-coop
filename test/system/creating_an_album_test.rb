@@ -6,6 +6,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @artist = create(:artist)
     user = create(:user, artists: [@artist])
+    License.find_or_create_by(id: 1, code: 'code', label: 'label')
 
     log_in_as(user)
   end
