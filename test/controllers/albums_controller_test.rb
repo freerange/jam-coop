@@ -6,6 +6,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   def setup
     @album = create(:album, :with_tracks)
     @user = create(:user, admin: true)
+    License.find_or_create_by(id: 1, code: 'code', label: 'label')
     log_in_as(@user)
   end
 
