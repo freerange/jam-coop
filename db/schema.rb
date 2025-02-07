@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_18_202726) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_07_140601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_202726) do
     t.date "released_on"
     t.integer "publication_status", default: 0, null: false
     t.date "first_published_on"
+    t.bigint "license_id"
     t.index ["artist_id"], name: "index_albums_on_artist_id"
+    t.index ["license_id"], name: "index_albums_on_license_id"
     t.index ["slug", "artist_id"], name: "index_albums_on_slug_and_artist_id", unique: true
   end
 
@@ -173,6 +175,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_202726) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "albums", "artists"
+  add_foreign_key "albums", "licenses"
   add_foreign_key "artists", "users"
   add_foreign_key "downloads", "albums"
   add_foreign_key "email_verification_tokens", "users"

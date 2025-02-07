@@ -75,7 +75,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   test '#create' do
     assert_difference('Album.count') do
       post artist_albums_url(@album.artist), params: {
-        album: { title: 'Example', cover: fixture_file_upload('cover.png') }
+        album: { title: 'Example', cover: fixture_file_upload('cover.png'), license_id: License.first.id }
       }
     end
 
@@ -87,6 +87,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
       post artist_albums_url(@album.artist), params: {
         album: { title: 'Example',
                  cover: fixture_file_upload('cover.png'),
+                 license_id: License.first.id,
                  tracks_attributes: { '0': { title: 'Test', original: fixture_file_upload('one.wav') } } }
       }
     end
