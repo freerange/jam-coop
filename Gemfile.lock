@@ -247,7 +247,7 @@ GEM
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.8.1)
-    rack (3.1.8)
+    rack (3.1.10)
     rack-maintenance (3.0.0)
       rack (>= 2.1.4)
       rake (>= 12.3.3)
