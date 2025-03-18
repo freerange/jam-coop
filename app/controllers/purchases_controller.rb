@@ -21,7 +21,7 @@ class PurchasesController < ApplicationController
     )
 
     if @purchase.save
-      resp = StripeService.new(@purchase).create_checkout_session
+      resp = StripeService.new(@purchase, stripe_connect_account).create_checkout_session
 
       if resp.success?
         @purchase.update!(stripe_session_id: resp.id)
@@ -42,10 +42,14 @@ class PurchasesController < ApplicationController
   end
 
   def artist
-    Artist.friendly.find(params[:artist_id])
+    Artist.includes(:user).friendly.find(params[:artist_id])
   end
 
   def purchase_params
     params.require(:purchase).permit(:price, :contact_opt_in)
+  end
+
+  def stripe_connect_account
+    StripeConnectAccount.find_or_initialize_by(user: artist.user)
   end
 end
