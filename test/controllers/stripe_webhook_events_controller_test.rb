@@ -18,6 +18,32 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'account.updated updates Stripe Connect account status when details submitted' do
+    stripe_identifier = 'acct_test_12345'
+    stripe_connect_account = create(:stripe_connect_account, stripe_identifier:)
+
+    params = account_updated_params(stripe_identifier, details_submitted: true)
+    headers = headers_for_event(params)
+
+    post stripe_webhook_events_path, params:, headers:, as: :json
+
+    assert stripe_connect_account.reload.details_submitted?
+    assert_response :success
+  end
+
+  test 'account.updated updates Stripe Connect account status when charges enabled' do
+    stripe_identifier = 'acct_test_12345'
+    stripe_connect_account = create(:stripe_connect_account, stripe_identifier:)
+
+    params = account_updated_params(stripe_identifier, charges_enabled: true)
+    headers = headers_for_event(params)
+
+    post stripe_webhook_events_path, params:, headers:, as: :json
+
+    assert stripe_connect_account.reload.charges_enabled?
+    assert_response :success
+  end
+
   test 'invalid signature in payload' do
     post stripe_webhook_events_path, params: {}, headers: {}, as: :json
 
@@ -55,6 +81,22 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
           total_details: {
             amount_tax:
           }
+        }
+      }
+    }
+  end
+
+  def account_updated_params(stripe_account_id, **statuses)
+    statuses.with_defaults!(
+      details_submitted: false,
+      charges_enabled: false
+    )
+    {
+      type: 'account.updated',
+      data: {
+        object: {
+          id: stripe_account_id,
+          **statuses
         }
       }
     }

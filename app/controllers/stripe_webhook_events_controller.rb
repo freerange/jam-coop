@@ -30,6 +30,13 @@ class StripeWebhookEventsController < ApplicationController
       customer_email = event.data.object.customer_details.email
       amount_tax = event.data.object.total_details.amount_tax
       PurchaseCompleteJob.perform_later(stripe_session_id, customer_email, amount_tax)
+    when 'account.updated'
+      account_in_stripe = event.data.object
+      account_in_jam = StripeConnectAccount.find_by!(stripe_identifier: account_in_stripe.id)
+      account_in_jam.update!(
+        details_submitted: account_in_stripe.details_submitted?,
+        charges_enabled: account_in_stripe.charges_enabled?
+      )
     else
       Rails.logger.debug { "Unhandled event type: #{event.type}" }
     end
