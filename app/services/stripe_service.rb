@@ -3,8 +3,9 @@
 class StripeService
   include Rails.application.routes.url_helpers
 
-  def initialize(purchase)
+  def initialize(purchase, stripe_connect_account)
     @purchase = purchase
+    @stripe_connect_account = stripe_connect_account
   end
 
   def line_items
@@ -41,7 +42,7 @@ class StripeService
   end
 
   def create_checkout_session
-    session = Stripe::Checkout::Session.create(checkout_params)
+    session = Stripe::Checkout::Session.create(checkout_params, checkout_options)
 
     StripeServiceResponse.new(
       status: 'ok',
@@ -74,6 +75,18 @@ class StripeService
       mode: 'payment',
       automatic_tax: { enabled: true },
       line_items:
-    }
+    }.merge(payment_intent_data:)
+  end
+
+  def payment_intent_data
+    return {} unless @stripe_connect_account.accepts_payments?
+
+    { application_fee_amount: @purchase.platform_fee_in_pence }
+  end
+
+  def checkout_options
+    return {} unless @stripe_connect_account.accepts_payments?
+
+    { stripe_account: @stripe_connect_account.stripe_identifier }
   end
 end
