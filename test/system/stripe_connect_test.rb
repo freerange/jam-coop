@@ -3,7 +3,7 @@
 require 'application_system_test_case'
 
 class StripeConnectTest < ApplicationSystemTestCase
-  test 'enabling Stripe Connect on my account' do
+  test 'after enabling Stripe Connect on my account, a customer purchases one of my albums' do
     stub_stripe_connect_user_flow
 
     using_session('artist') do
@@ -16,6 +16,25 @@ class StripeConnectTest < ApplicationSystemTestCase
       assert_text "Account ID: #{stripe_account_id}"
       assert_text 'Status: Charges enabled'
     end
+
+    create_published_album
+    stub_stripe_checkout_flow
+
+    using_session('fan') do
+      visit artist_album_path(album.artist, album)
+      click_on 'Buy'
+      fill_in 'Price', with: album.price
+      click_on 'Checkout'
+
+      perform_enqueued_jobs
+
+      visit purchase_path(purchase)
+      assert_text 'Thank you!'
+      assert_text 'Download (mp3v0)'
+    end
+
+    assert_equal album.price, purchase.price
+    assert_equal amount_tax, purchase.amount_tax
   end
 
   private
@@ -38,7 +57,54 @@ class StripeConnectTest < ApplicationSystemTestCase
     )
   end
 
+  def stub_stripe_checkout_flow
+    Stripe::Checkout::Session.stubs(:create).returns(stripe_checkout_session)
+    Stripe::Checkout::Session.stubs(:retrieve).with(stripe_session_id).returns(stripe_checkout_session)
+    PurchaseCompleteJob.perform_later(stripe_session_id)
+  end
+
+  def stripe_checkout_session
+    Stripe::Checkout::Session.construct_from(
+      id: stripe_session_id,
+      url: 'https://stripe.example.com',
+      customer_details: {
+        email: 'fan@example.com'
+      },
+      total_details: {
+        amount_tax:
+      }
+    )
+  end
+
+  def stripe_session_id
+    'cs_test_foo'
+  end
+
+  def tax_percent
+    20
+  end
+
+  def amount_tax
+    album.price * 100 * tax_percent / 100.0
+  end
+
   def artist_user
     @artist_user ||= create(:user)
+  end
+
+  def artist
+    @artist ||= create(:artist, user: artist_user)
+  end
+
+  def album
+    @album ||= create(:published_album, :with_tracks, artist:, price: 7.00)
+  end
+
+  def create_published_album
+    create(:transcode, track: album.tracks.first)
+  end
+
+  def purchase
+    Purchase.last
   end
 end
