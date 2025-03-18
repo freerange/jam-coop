@@ -38,4 +38,22 @@ class StripeConnectAccountTest < ActiveSupport::TestCase
     @account.charges_enabled = true
     assert @account.charges_enabled?
   end
+
+  test "#status returns 'not_started' if #details_submitted? or #charges_enabled? are both false" do
+    @account.assign_attributes(details_submitted: false, charges_enabled: false)
+    assert_equal 'not_started', @account.status
+  end
+
+  test "#status returns 'details_submitted' if #details_submitted? is true & #charges_enabled? is false" do
+    @account.assign_attributes(details_submitted: true, charges_enabled: false)
+    assert_equal 'details_submitted', @account.status
+  end
+
+  test "#status returns 'charges_enabled' if #charges_enabled? is true" do
+    @account.assign_attributes(details_submitted: false, charges_enabled: true)
+    assert_equal 'charges_enabled', @account.status
+
+    @account.assign_attributes(details_submitted: true, charges_enabled: true)
+    assert_equal 'charges_enabled', @account.status
+  end
 end
