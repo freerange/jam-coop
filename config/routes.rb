@@ -20,6 +20,13 @@ Rails.application.routes.draw do
   get 'account', to: 'users#show'
   get 'collection', to: 'collections#show'
 
+  resources :stripe_connect_accounts, path: 'connect', only: %i[new create] do
+    member do
+      get :link
+      get :success
+    end
+  end
+
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[update]
   resource :payout_detail, only: %i[create update]
