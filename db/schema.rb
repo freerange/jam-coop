@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_19_135825) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_19_162945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -278,6 +278,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_19_135825) do
     t.index ["expires_at"], name: "index_solid_queue_semaphores_on_expires_at"
     t.index ["key", "value"], name: "index_solid_queue_semaphores_on_key_and_value"
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
+  end
+
+  create_table "stripe_connect_accounts", force: :cascade do |t|
+    t.boolean "charges_enabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.boolean "details_submitted", default: false, null: false
+    t.string "stripe_identifier", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["stripe_identifier"], name: "index_stripe_connect_accounts_on_stripe_identifier"
+    t.index ["user_id"], name: "index_stripe_connect_accounts_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
