@@ -23,6 +23,7 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
       title: Faker::Music.album,
       about: Faker::Lorem.paragraph,
       credits: Faker::Lorem.paragraph,
+      license: License.find_by(code: 'all_rights_reserved'),
       artist:
     )
     album.cover.attach(

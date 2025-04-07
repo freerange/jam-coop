@@ -64,7 +64,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'p', 'released June 20, 2023'
+    assert_select 'p', 'Released: June 20, 2023'
   end
 
   test '#new' do
@@ -75,7 +75,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   test '#create' do
     assert_difference('Album.count') do
       post artist_albums_url(@album.artist), params: {
-        album: { title: 'Example', cover: fixture_file_upload('cover.png') }
+        album: { title: 'Example', cover: fixture_file_upload('cover.png'), license_id: License.first.id }
       }
     end
 
@@ -87,6 +87,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
       post artist_albums_url(@album.artist), params: {
         album: { title: 'Example',
                  cover: fixture_file_upload('cover.png'),
+                 license_id: License.first.id,
                  tracks_attributes: { '0': { title: 'Test', original: fixture_file_upload('one.wav') } } }
       }
     end

@@ -5,6 +5,7 @@ require 'application_system_test_case'
 class CreatingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @artist = create(:artist)
+    create(:license)
     user = create(:user, artists: [@artist])
 
     log_in_as(user)

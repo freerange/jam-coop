@@ -15,6 +15,7 @@ FactoryBot.define do
     end
     publication_status { :unpublished }
     released_on { Time.zone.today }
+    license
 
     after(:build) do |album|
       album.cover.attach(
