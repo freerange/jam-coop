@@ -230,10 +230,22 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
     feed = RSS::Parser.parse(response.body)
     assert_equal "#{@artist.name} albums on jam.coop", feed.title.content
+    assert_equal @artist.name, feed.author.name.content
     assert_equal 'Newer', feed.entries.first.title.content
     assert_equal 'Older', feed.entries.last.title.content
     assert_not_includes feed.entries.map(&:title).map(&:content), 'Pending'
     assert_not_includes feed.entries.map(&:title).map(&:content), 'Unpublished'
+  end
+
+  test '#show with atom format for artist with no published albums should render atom feed' do
+    @artist.albums << create(:unpublished_album)
+
+    get artist_url(@artist, format: :atom)
+
+    feed = RSS::Parser.parse(response.body)
+    assert_equal "#{@artist.name} albums on jam.coop", feed.title.content
+    assert_equal @artist.name, feed.author.name.content
+    assert_equal 0, feed.entries.length
   end
 
   test '#new' do
