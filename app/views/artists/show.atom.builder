@@ -4,7 +4,8 @@ albums = @albums.in_release_order
 
 atom_feed(language: 'en-GB', schema_date: 2024) do |f|
   f.title "#{@artist.name} albums on jam.coop"
-  f.updated albums.first.released_on
+  f.updated albums.first&.released_on || @artist.updated_at
+  f.author { |a| a.name @artist.name }
   albums.each do |album|
     id = "tag:#{request.host},2024:#{artist_album_path(@artist, album)}"
     url = artist_album_url(@artist, album)
