@@ -350,11 +350,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sidekiq (7.3.7)
-      connection_pool (>= 2.3.0)
-      logger
-      rack (>= 2.2.4)
-      redis-client (>= 0.22.2)
     solid_queue (1.1.5)
       activejob (>= 7.1)
       activerecord (>= 7.1)
@@ -455,7 +450,6 @@ DEPENDENCIES
   rubocop-rails
   rubyzip (~> 2.3)
   selenium-webdriver
-  sidekiq
   solid_queue (~> 1.1)
   sprockets-rails
   stimulus-rails
