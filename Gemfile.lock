@@ -308,8 +308,8 @@ GEM
     rdoc (6.10.0)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
-    redis (5.0.8)
-      redis-client (>= 0.17.0)
+    redis (5.4.0)
+      redis-client (>= 0.22.0)
     redis-client (0.23.0)
       connection_pool
     regexp_parser (2.10.0)
@@ -447,7 +447,7 @@ DEPENDENCIES
   rails_autolink (~> 1.1)
   rails_cloudflare_turnstile
   redcarpet (~> 3.6)
-  redis (~> 5.0)
+  redis
   rollbar
   rss
   rubocop-capybara

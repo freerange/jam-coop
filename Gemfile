@@ -25,11 +25,9 @@ gem 'rails', '~> 7.2'
 gem 'rails_autolink', '~> 1.1'
 gem 'rails_cloudflare_turnstile'
 gem 'redcarpet', '~> 3.6'
-gem 'redis', '~> 5.0'
 gem 'rollbar'
 gem 'rss'
 gem 'rubyzip', '~> 2.3'
-gem 'sidekiq'
 gem 'solid_queue', '~> 1.1'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
@@ -51,6 +49,7 @@ group :development do
   gem 'faker', '~> 3.3'
   gem 'hotwire-livereload'
   gem 'letter_opener'
+  gem 'redis'
   gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
 end
