@@ -5,8 +5,8 @@ FactoryBot.define do
     format { :mp3v0 }
     album { nil }
 
-    after(:build) do |transcode|
-      transcode.file.attach(
+    after(:build) do |download|
+      download.file.attach(
         io: Rails.root.join('test/fixtures/files/album.zip').open,
         filename: 'album.zip',
         content_type: 'application/zip'
