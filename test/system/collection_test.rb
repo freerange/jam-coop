@@ -63,11 +63,6 @@ class CollectionTest < ApplicationSystemTestCase
     PurchaseCompleteJob.perform_now('cs_test_foo', user.email, amount_tax)
   end
 
-  def stub_stripe_checkout_session
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
-    StripeService.expects(:new).returns(service)
-  end
-
   def verify_email_url
     mail = ActionMailer::Base.deliveries.last
     verify_email_url = /"(?<url>http.*email_verification.*)"/.match(mail.to_s).named_captures['url']

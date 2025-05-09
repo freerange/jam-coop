@@ -37,4 +37,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     stub_request(:post, 'https://challenges.cloudflare.com/turnstile/v0/siteverify')
       .to_return(status: 200, body: { success: true }.to_json)
   end
+
+  def stub_stripe_checkout_session
+    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    StripeService.expects(:new).returns(service)
+  end
 end
