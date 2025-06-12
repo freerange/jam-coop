@@ -14,7 +14,8 @@ class Track < ApplicationRecord
             content_type: { in: 'audio/x-wav', message: 'must be a WAV file' }
   validates :title, presence: true
 
-  after_commit :transcode, on: %i[create update], if: :metadata_or_original_changed?
+  after_create :transcode
+  after_commit :transcode, on: %i[update], if: :metadata_or_original_changed?
 
   def preview
     transcodes.mp3128k.first

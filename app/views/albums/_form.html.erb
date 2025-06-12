@@ -28,7 +28,7 @@
     <% end %>
 
     <%= form.fields_for :tracks do |f| %>
-      <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
+      <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" data-testid="track-data">
         <%= f.text_field :title, class: 'w-full mb-6', required: true %>
 
         <% if f.object.original.attached? %>
@@ -51,7 +51,7 @@
       <%= text_link_to "Add track", "#", data: { action: 'dynamic-fields#add' } %>
       <template data-dynamic-fields-target="template">
         <%= form.fields_for :tracks, Track.new, child_index: "__CHILD_INDEX__" do |f| %>
-          <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" >
+          <div class="border-0 border-l-4 border pl-4 mb-6 border-slate-200" data-testid="track-data" >
             <%= f.text_field :title, class: 'w-full mb-6', required: true %>
             <%= f.labels :original, text: "File" %>
             <%= f.file_field :original, accept: 'audio/x-wav', direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-600 hover:file:bg-amber-500 file:text-white' %>
