@@ -5,7 +5,9 @@ require 'zip'
 class ZipDownloadJob < ApplicationJob
   queue_as :default
 
-  def perform(album, format: :mp3v0)
+  def perform(purchase, format: :mp3v0)
+    album = purchase.album
+
     Dir.mktmpdir(nil, tmp_dir_location) do |dir|
       filenames = download_all_tracks(album, format, dir)
 
@@ -17,8 +19,8 @@ class ZipDownloadJob < ApplicationJob
         end
       end
 
-      album.downloads.where(format:).destroy_all
-      download = album.downloads.create(format:)
+      purchase.purchase_downloads.where(format:).destroy_all
+      download = purchase.purchase_downloads.create(format:)
       download.file.attach(io: File.open(File.join(dir, zipfile_name)),
                            filename: zipfile_name,
                            content_type: 'application/zip')

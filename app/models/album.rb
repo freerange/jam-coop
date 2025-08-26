@@ -51,12 +51,7 @@ class Album < ApplicationRecord
   end
 
   def publish
-    saved = update(publication_status: :published, first_published_on: first_published_on || Time.current)
-    if saved
-      ZipDownloadJob.perform_later(self, format: :mp3v0)
-      ZipDownloadJob.perform_later(self, format: :flac)
-    end
-    saved
+    update(publication_status: :published, first_published_on: first_published_on || Time.current)
   end
 
   def unpublish

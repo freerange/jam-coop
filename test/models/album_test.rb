@@ -94,24 +94,6 @@ class AlbumTest < ActiveSupport::TestCase
     end
   end
 
-  test 'publish enqueues ZipDownloadJob to prepare mp3v0 download' do
-    album = create(:unpublished_album, :with_tracks)
-
-    args_matcher = ->(job_args) { job_args[1][:format] == :mp3v0 }
-    assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
-      album.publish
-    end
-  end
-
-  test 'publish enqueues ZipDownloadJob to prepare flac download' do
-    album = create(:unpublished_album, :with_tracks)
-
-    args_matcher = ->(job_args) { job_args[1][:format] == :flac }
-    assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
-      album.publish
-    end
-  end
-
   test 'unpublish' do
     album = create(:published_album)
     album.unpublish

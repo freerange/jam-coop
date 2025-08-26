@@ -10,13 +10,14 @@ class ZipDownloadJobTest < ActiveJob::TestCase
     track2 = create(:track, album:, title: 'Second Track', position: 2)
     create(:transcode, track: track1, format: :mp3v0)
     create(:transcode, track: track2, format: :mp3v0)
+    purchase = create(:purchase, price: album.price, album:)
 
-    ZipDownloadJob.perform_now(album)
+    ZipDownloadJob.perform_now(purchase)
 
-    assert_equal 1, album.downloads.count
+    assert_equal 1, purchase.purchase_downloads.count
 
     entries = []
-    album.downloads.last.file.open do |zip_file|
+    purchase.purchase_downloads.last.file.open do |zip_file|
       Zip::File.open(zip_file) do |zip|
         zip.each do |entry|
           entries << entry.name
@@ -32,24 +33,26 @@ class ZipDownloadJobTest < ActiveJob::TestCase
     album = create(:album)
     track = create(:track, album:)
     create(:transcode, track:, format: :mp3v0)
-    create(:download, album:, format: :mp3v0)
+    purchase = create(:purchase, price: album.price, album:)
+    create(:purchase_download, purchase:, format: :mp3v0)
 
-    assert_equal 1, album.downloads.count
-    ZipDownloadJob.perform_now(album)
-    assert_equal 1, album.reload.downloads.count
+    assert_equal 1, purchase.purchase_downloads.count
+    ZipDownloadJob.perform_now(purchase)
+    assert_equal 1, purchase.reload.purchase_downloads.count
   end
 
   test 'creates a zip file when the album title contains a /' do
     album = create(:album, title: 'Slash / Slash')
     track = create(:track, album:, title: 'First / Track', position: 1)
     create(:transcode, track:, format: :mp3v0)
+    purchase = create(:purchase, price: album.price, album:)
 
-    ZipDownloadJob.perform_now(album)
+    ZipDownloadJob.perform_now(purchase)
 
-    assert_equal 1, album.downloads.count
+    assert_equal 1, purchase.purchase_downloads.count
 
     entries = []
-    album.downloads.last.file.open do |zip_file|
+    purchase.purchase_downloads.last.file.open do |zip_file|
       Zip::File.open(zip_file) do |zip|
         zip.each do |entry|
           entries << entry.name
@@ -64,13 +67,13 @@ class ZipDownloadJobTest < ActiveJob::TestCase
     Dir.stubs(:exist?).with('/var/data').returns(true)
     Dir.expects(:mktmpdir).with(nil, '/var/data')
 
-    ZipDownloadJob.perform_now(build(:album))
+    ZipDownloadJob.perform_now(build(:purchase))
   end
 
   test 'uses default for tmp files when /var/data does not exist' do
     Dir.stubs(:exist?).with('/var/data').returns(false)
     Dir.expects(:mktmpdir).with(nil, nil)
 
-    ZipDownloadJob.perform_now(build(:album))
+    ZipDownloadJob.perform_now(build(:purchase))
   end
 end
