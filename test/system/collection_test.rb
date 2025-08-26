@@ -18,6 +18,8 @@ class CollectionTest < ApplicationSystemTestCase
     fake_stripe_webhook_event_completed(@user)
     visit collection_url
     assert_text @album.title
+    click_on @album.title
+    assert_text 'You own this album'
   end
 
   test 'when a logged out user purchases an album it appears in their collection' do
