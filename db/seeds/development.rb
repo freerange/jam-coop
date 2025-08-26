@@ -24,6 +24,7 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
       about: Faker::Lorem.paragraph,
       credits: Faker::Lorem.paragraph,
       license: License.find_by(code: 'all_rights_reserved'),
+      released_on: Time.zone.today,
       artist:
     )
     album.cover.attach(
