@@ -6,7 +6,6 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
   setup do
     @album = create(:published_album, :with_tracks)
     create(:transcode, track: @album.tracks.first)
-    create(:download, album: @album)
     stub_stripe_checkout_session
   end
 
@@ -15,6 +14,8 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'
+
+    perform_enqueued_jobs
 
     # Fake the Stripe checkout redirect to the "success_url"
     visit purchase_url(Purchase.last)
