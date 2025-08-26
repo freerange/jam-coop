@@ -14,11 +14,11 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
     user:
   )
   artist.profile_picture.attach(
-    io: URI.open("https://picsum.photos/500/500.jpg?blur=3?random=#{i}"),
+    io: Rails.root.join('test/fixtures/files/cover.png').open,
     filename: 'profile.jpg'
   )
 
-  3.times do |j|
+  3.times do
     album = Album.build(
       title: Faker::Music.album,
       about: Faker::Lorem.paragraph,
@@ -27,7 +27,7 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
       artist:
     )
     album.cover.attach(
-      io: URI.open("https://picsum.photos/500/500.jpg?blur=3?random=#{i}#{j}"),
+      io: Rails.root.join('test/fixtures/files/cover.png').open,
       filename: 'cover.jpg'
     )
     album.save!
