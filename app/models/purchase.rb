@@ -5,6 +5,7 @@ class Purchase < ApplicationRecord
 
   belongs_to :album
   belongs_to :user, optional: true
+  has_many :purchase_downloads, dependent: :destroy
 
   validates :price, presence: true, numericality: true
   validate :price_is_greater_than_album_price, unless: -> { price.blank? }
