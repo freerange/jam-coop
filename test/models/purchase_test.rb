@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class PurchaseTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   test 'fixture is valid' do
     assert build(:purchase).valid?
   end
@@ -38,5 +40,19 @@ class PurchaseTest < ActiveSupport::TestCase
     purchase = build(:purchase, album:, price: '7.00')
 
     assert_equal 200, purchase.gratuity_in_pence
+  end
+
+  test 'create enqueues ZipDownloadJob to prepare mp3v0 download' do
+    args_matcher = ->(job_args) { job_args[1][:format] == :mp3v0 }
+    assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
+      create(:purchase)
+    end
+  end
+
+  test 'create enqueues ZipDownloadJob to prepare flac download' do
+    args_matcher = ->(job_args) { job_args[1][:format] == :flac }
+    assert_enqueued_with(job: ZipDownloadJob, args: args_matcher) do
+      create(:purchase)
+    end
   end
 end

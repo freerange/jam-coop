@@ -3,7 +3,7 @@
   <p>Thank you for purchasing <%= @purchase.album.title %> by <%= @purchase.album.artist.name %>. Here are your downloads:</p>
 
   <ul>
-    <% @purchase.album.downloads.each do |download| %>
+    <% @purchase.purchase_downloads.each do |download| %>
       <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
     <% end %>
   </ul>

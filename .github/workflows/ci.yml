@@ -71,4 +71,6 @@ jobs:
           PGHOST: localhost
           PGUSER: myapp
           PGPASSWORD: password
+          FERRUM_PROCESS_TIMEOUT: 30
+          FERRUM_DEFAULT_TIMEOUT: 30
         run: bin/rails test:all

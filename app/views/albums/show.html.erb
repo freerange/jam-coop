@@ -89,7 +89,7 @@
           <% if Current.user && Current.user.owns?(@album) %>
             <p class="mb-2">You own this album:</p>
             <ul class="list-disc list-inside">
-              <% @album.downloads.each do |download| %>
+              <% Purchase.find_by(album: @album, user: Current.user).purchase_downloads.each do |download| %>
                 <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
               <% end %>
             </ul>
@@ -155,13 +155,6 @@
       <ul>
         <% @album.tracks.each do |track| %>
           <li><strong><%= track.title %></strong> <%= track.transcodes.pluck(:format).join(" ") %></li>
-        <% end %>
-      </ul>
-
-      <h2 class="text-2xl my-3">Downloads</h2>
-      <ul>
-        <% @album.downloads.each do |download| %>
-          <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
         <% end %>
       </ul>
     </div>
