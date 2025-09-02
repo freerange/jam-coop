@@ -11,7 +11,7 @@ class CreatingAnArtistTest < ApplicationSystemTestCase
 
   test 'creating an artist' do
     visit account_path
-    click_on 'Add artist profile'
+    click_on 'Add artist'
     fill_in 'Name', with: 'The Beatles'
     fill_in 'Location', with: 'Liverpool'
     fill_in 'Description', with: 'A popular beat combo'

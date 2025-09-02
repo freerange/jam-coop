@@ -1,8 +1,39 @@
 <%= render(SectionComponent.new(title: 'My account')) do %>
-
-  <%= render(AccountNavComponent.new(user: @user)) %>
-
   <div class="flex flex-col divide-y divide-slate-300">
+    <%= render(SidebarSectionComponent.new(title: 'Artists')) do |component| %>
+      <% component.with_subtitle do %>
+        <p>Artists associated with your account</p>
+      <% end %>
+
+      <div class="grid grid-cols-3 gap-4">
+        <% @user.artists.each do |artist| %>
+          <%= link_to(edit_artist_path(artist)) do %>
+            <%= render(CardComponent.new(
+                title: artist.name,
+                subtitle: '',
+              image: ( cdn_url(artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if artist.profile_picture.representable? )
+              )) %>
+          <% end %>
+        <% end %>
+
+        <%= link_to(new_artist_path) do %>
+          <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
+            <div class="grid place-items-center">
+              <div class="flex gap-2 items-center text-amber-600">
+                <span>
+                  <svg class="fill-amber-600" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
+                  </svg>
+                </span>
+                Add artist
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    <% end %>
+
     <%= render(SidebarSectionComponent.new(title: 'Password')) do %>
       <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
         <% if flash[:incorrect_password] %>

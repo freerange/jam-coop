@@ -1,5 +1,8 @@
-<%= render(SectionComponent.new(title: 'My account')) do %>
-  <%= render(AccountNavComponent.new(user: @user)) %>
+<%= render(SectionComponent.new(title: 'New artist')) do %>
+  <%= render BreadcrumbComponent.new(items: [
+      { text: 'My account', link: account_path },
+      { text: 'New artist' }
+    ]) %>
 
   <%= render(SidebarSectionComponent.new(title: 'Artist details')) do %>
     <%= render "form", artist: @artist %>

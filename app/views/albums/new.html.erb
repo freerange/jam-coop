@@ -1,12 +1,10 @@
 <%= render(SectionComponent.new(title: 'New album')) do %>
   <div class="flex flex-col gap-3">
-    <ol class="flex gap-2 mt-3 text-sm uppercase">
-      <li><%= link_to 'Account', account_path, class: 'hover:underline' %></li>
-      <li class='text-slate-400'>/</li>
-      <li><%= link_to @album.artist.name, edit_artist_path(@album.artist), class: 'hover:underline' %></li>
-      <li class='text-slate-400'>/</li>
-      <li class='font-semibold'>New album</li>
-    </ol>
+    <%= render BreadcrumbComponent.new(items: [
+        { text: 'My account', link: account_path },
+        { text: @album.artist.name, link: edit_artist_path(@album.artist) },
+        { text: 'New album' }
+      ]) %>
 
     <%= render "form", album: @album %>
   </div>
