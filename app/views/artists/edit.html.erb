@@ -1,6 +1,6 @@
 <%= render(SectionComponent.new(title: "Editing #{@artist.name}")) do %>
   <%= render BreadcrumbComponent.new(items: [
-      { text: 'Account', link: account_path },
+      { text: 'My account', link: account_path },
       { text: @artist.name },
     ]) %>
 

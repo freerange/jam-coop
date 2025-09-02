@@ -1,7 +1,7 @@
 <%= render(SectionComponent.new(title: 'New album')) do %>
   <div class="flex flex-col gap-3">
     <%= render BreadcrumbComponent.new(items: [
-        { text: 'Account', link: account_path },
+        { text: 'My account', link: account_path },
         { text: @album.artist.name, link: edit_artist_path(@album.artist) },
         { text: 'New album' }
       ]) %>
