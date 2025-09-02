@@ -39,13 +39,13 @@
   </div>
 
   <div data-controller="player">
-    <div class="flex flex-row gap-4">
-      <div class="w-1/2">
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="w-full md:w-1/2">
         <% if @album.cover.attached? %>
           <%= image_tag cdn_url(@album.cover.representation(resize_to_limit: [750, 750])), class: 'w-full border border-slate-200' %>
         <% end %>
       </div>
-      <div class="w-1/2">
+      <div class="w-full md:w-1/2">
         <div class="mb-3">
           <h1 class="text-lg font-medium leading-tight"><%= @album.title %></h1>
           <h2 class="text-sm text-slate-600"><%= link_to @album.artist.name, artist_path(@album.artist), class: "hover:underline" %></h2>
