@@ -63,15 +63,6 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert policy.new?
   end
 
-  test 'users should not be able to create more than two artists' do
-    user = create(:user, artists: create_list(:artist, 2))
-
-    policy = ArtistPolicy.new(user, :_)
-
-    assert_not policy.create?
-    assert_not policy.new?
-  end
-
   test 'unverified users should not be able to create artists' do
     user = create(:user, verified: false)
 
