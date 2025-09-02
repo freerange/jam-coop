@@ -1,0 +1,8 @@
+<ol class="flex gap-2 mt-3 text-sm uppercase">
+  <% items.each_with_index do |item, index| %>
+    <li><%= breadcrumb_item(item) %></li>
+    <% unless index == items.length - 1 %>
+      <li class='text-slate-400'>/</li>
+    <% end %>
+  <% end %>
+</ol>

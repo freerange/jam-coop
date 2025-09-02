@@ -1,9 +1,8 @@
 <%= render(SectionComponent.new(title: 'New artist')) do %>
-  <ol class="flex gap-2 mt-3 text-sm uppercase">
-    <li><%= link_to 'Account', account_path, class: 'hover:underline' %></li>
-    <li class='text-slate-400'>/</li>
-    <li class='font-semibold'>New artist</li>
-  </ol>
+  <%= render BreadcrumbComponent.new(items: [
+      { text: 'Account', link: account_path },
+      { text: 'New artist' }
+    ]) %>
 
   <%= render(SidebarSectionComponent.new(title: 'Artist details')) do %>
     <%= render "form", artist: @artist %>
