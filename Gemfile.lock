@@ -102,7 +102,7 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.4.1)
-    bigdecimal (3.2.2)
+    bigdecimal (3.2.3)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     builder (3.3.0)
@@ -139,7 +139,7 @@ GEM
       tzinfo
     factory_bot (6.5.5)
       activesupport (>= 6.1.0)
-    factory_bot_rails (6.5.0)
+    factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
     faker (3.3.1)
