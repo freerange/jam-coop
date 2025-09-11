@@ -21,21 +21,6 @@
         Edit
       <% end %>
     <% end %>
-
-    <% if policy(@album).request_publication? && !@album.published? %>
-      <%= button_to [:request_publication, @album.artist, @album], disabled: @album.pending?, class: 'flex gap-2 px-3 py-3 bg-rose-400 hover:bg-rose-500 text-white cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-300' do %>
-        <% if @album.pending? %>
-          Pending publication
-        <% else %>
-          Publish
-        <% end %>
-      <% end %>
-    <% end %>
-    <% if policy(@album).publish? %>
-      <%= button_to [@album.published? ? :unpublish : :publish, @album.artist, @album], class: 'flex gap-2 px-3 py-3 bg-rose-400 hover:bg-rose-500 text-white cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-300' do %>
-        <%= @album.published? ? 'Unpublish' : 'Publish' %>
-      <% end %>
-    <% end %>
   </div>
 
   <div data-controller="player">

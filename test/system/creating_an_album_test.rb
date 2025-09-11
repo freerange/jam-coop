@@ -25,7 +25,6 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     click_on 'Save & preview'
 
     assert_text "A Hard Day's Night"
-    find('button', text: 'Publish')
     sign_out
 
     perform_enqueued_jobs
