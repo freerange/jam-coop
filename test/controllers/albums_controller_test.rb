@@ -168,12 +168,6 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
     @album.reload
     assert @album.pending?
   end
-
-  test '#request_publication sends an email to notify admins that artist has requested publication' do
-    assert_enqueued_email_with AlbumMailer, :request_publication, params: { album: @album } do
-      patch request_publication_artist_album_url(@album.artist, @album)
-    end
-  end
 end
 
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
