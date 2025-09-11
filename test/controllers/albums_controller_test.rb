@@ -20,8 +20,8 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_select 'button', text: 'Buy'
   end
 
-  test '#show disables buy button when album is unpublished' do
-    @album.unpublished!
+  test '#show disables buy button when album is draft' do
+    @album.draft!
     get artist_album_url(@album.artist, @album)
     assert_select 'button[disabled=disabled]', text: 'Buy'
   end
@@ -135,11 +135,11 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#show does not indicate published state' do
     get artist_album_url(@album.artist, @album)
-    assert_select 'p', text: 'This album is currently unpublished', count: 0
+    assert_select 'p', text: 'This album is currently draft', count: 0
   end
 
-  test '#show not authorized when album is unpublished' do
-    @album = create(:unpublished_album)
+  test '#show not authorized when album is draft' do
+    @album = create(:draft_album)
     previous_url = artist_url(@album.artist)
 
     get artist_album_url(@album.artist, @album), headers: { 'HTTP_REFERER' => previous_url }

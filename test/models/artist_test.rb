@@ -11,9 +11,9 @@ class ArtistTest < ActiveSupport::TestCase
 
   test '.listed returns artists that have any published albums' do
     published_album = create(:published_album)
-    unpublished_album = create(:unpublished_album)
-    listed_artist = create(:artist, name: 'Listed', albums: [published_album, unpublished_album])
-    create(:artist, name: 'Unlisted', albums: [unpublished_album])
+    draft_album = create(:draft_album)
+    listed_artist = create(:artist, name: 'Listed', albums: [published_album, draft_album])
+    create(:artist, name: 'Unlisted', albums: [draft_album])
 
     assert_equal [listed_artist], Artist.listed
   end
@@ -28,12 +28,12 @@ class ArtistTest < ActiveSupport::TestCase
 
   test '#listed?' do
     published_album = create(:published_album)
-    unpublished_album = create(:unpublished_album)
+    draft_album = create(:draft_album)
 
     artist = create(:artist)
     assert_not artist.listed?
 
-    artist.albums << unpublished_album
+    artist.albums << draft_album
     assert_not artist.listed?
 
     artist.albums << published_album
@@ -42,7 +42,7 @@ class ArtistTest < ActiveSupport::TestCase
 
   test '#first_listed_on returns oldest Album#first_published_on' do
     newer_album = build(:published_album, first_published_on: Date.parse('2023-01-02'))
-    older_album = build(:unpublished_album, first_published_on: Date.parse('2023-01-01'))
+    older_album = build(:draft_album, first_published_on: Date.parse('2023-01-01'))
     artist = create(:artist, albums: [newer_album, older_album])
 
     assert_equal older_album.first_published_on, artist.first_listed_on

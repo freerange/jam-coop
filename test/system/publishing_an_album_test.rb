@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class PublishingAnAlbumTest < ApplicationSystemTestCase
   setup do
-    @album = create(:unpublished_album, :with_tracks)
+    @album = create(:draft_album, :with_tracks)
     user = create(:user)
     user.artists << @album.artist
     log_in_as(user)
@@ -21,7 +21,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     visit artist_url(@album.artist)
     click_on @album.title.to_s
     click_on 'Edit'
-    assert_checked_field 'Unpublished'
+    assert_checked_field 'Draft'
     choose 'Published'
     click_on 'Save & preview'
     sign_out

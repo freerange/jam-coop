@@ -3,9 +3,9 @@
 require 'test_helper'
 
 class TrackPolicyTest < ActiveSupport::TestCase
-  test 'an admin acting on a track from an unpublished album' do
+  test 'an admin acting on a track from an draft album' do
     user = build(:user, admin: true)
-    track = build(:track, album: build(:unpublished_album))
+    track = build(:track, album: build(:draft_album))
     policy = TrackPolicy.new(user, track)
 
     assert policy.move_higher?

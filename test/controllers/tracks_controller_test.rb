@@ -5,7 +5,7 @@ require 'test_helper'
 class TracksControllerTest < ActionDispatch::IntegrationTest
   setup do
     log_in_as(create(:user, admin: true))
-    @track = create(:track, album: build(:unpublished_album))
+    @track = create(:track, album: build(:draft_album))
   end
 
   test 'should move track higher' do

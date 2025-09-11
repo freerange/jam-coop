@@ -48,7 +48,7 @@ class TrackTest < ActiveSupport::TestCase
   test 'triggers transcoding if position changes' do
     track1 = build(:track)
     track2 = build(:track)
-    create(:unpublished_album, tracks: [track1, track2])
+    create(:draft_album, tracks: [track1, track2])
 
     track1.expects(:transcode)
 

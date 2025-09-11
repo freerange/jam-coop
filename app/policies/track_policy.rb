@@ -2,14 +2,14 @@
 
 class TrackPolicy < ApplicationPolicy
   def move_higher?
-    record.unpublished? && user.admin?
+    record.draft? && user.admin?
   end
 
   def move_lower?
-    record.unpublished? && user.admin?
+    record.draft? && user.admin?
   end
 
   def reorder?
-    record.unpublished? && move_lower? && move_higher?
+    record.draft? && move_lower? && move_higher?
   end
 end

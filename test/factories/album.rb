@@ -13,7 +13,7 @@ FactoryBot.define do
     credits do
       'Rick Astley - vocals.'
     end
-    publication_status { :unpublished }
+    publication_status { :draft }
     released_on { Time.zone.today }
     license
 
@@ -38,8 +38,8 @@ FactoryBot.define do
 
   factory :album_with_tracks, parent: :album, traits: %i[with_tracks]
 
-  factory :unpublished_album, parent: :album do
-    publication_status { :unpublished }
+  factory :draft_album, parent: :album do
+    publication_status { :draft }
   end
 
   factory :published_album, parent: :album, traits: %i[with_tracks] do

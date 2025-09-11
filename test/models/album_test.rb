@@ -73,13 +73,13 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'published! sets published state' do
-    album = create(:unpublished_album, :with_tracks)
+    album = create(:draft_album, :with_tracks)
     album.published!
     assert album.published?
   end
 
   test 'published! sets first_published_on if not already set' do
-    album = create(:unpublished_album, :with_tracks)
+    album = create(:draft_album, :with_tracks)
     freeze_time do
       album.published!
       assert_equal Time.current.to_date, album.reload.first_published_on
@@ -88,14 +88,14 @@ class AlbumTest < ActiveSupport::TestCase
 
   test 'published! does not set first_published_on if already set' do
     freeze_time do
-      album = create(:unpublished_album, :with_tracks, first_published_on: 1.week.ago)
+      album = create(:draft_album, :with_tracks, first_published_on: 1.week.ago)
       album.published!
       assert_equal 1.week.ago.to_date, album.reload.first_published_on
     end
   end
 
   test 'updating publication_status to published sets first_published_on if not already set' do
-    album = create(:unpublished_album, :with_tracks)
+    album = create(:draft_album, :with_tracks)
     freeze_time do
       album.update!(publication_status: :published)
       assert_equal Time.current.to_date, album.reload.first_published_on
@@ -104,14 +104,14 @@ class AlbumTest < ActiveSupport::TestCase
 
   test 'updating publication_status to published does not set first_published_on if already set' do
     freeze_time do
-      album = create(:unpublished_album, :with_tracks, first_published_on: 1.week.ago)
+      album = create(:draft_album, :with_tracks, first_published_on: 1.week.ago)
       album.update!(publication_status: :published)
       assert_equal 1.week.ago.to_date, album.reload.first_published_on
     end
   end
 
   test 'changing other attributes does not affect first_published_on' do
-    album = create(:unpublished_album)
+    album = create(:draft_album)
     album.update!(title: 'New Title')
     assert_nil album.reload.first_published_on
   end
@@ -146,16 +146,16 @@ class AlbumTest < ActiveSupport::TestCase
 
   test '.published' do
     published_album = create(:published_album)
-    create(:unpublished_album)
+    create(:draft_album)
 
     assert_equal [published_album], Album.published
   end
 
-  test '.unpublished' do
+  test '.draft' do
     create(:published_album)
-    unpublished_album = create(:unpublished_album)
+    draft_album = create(:draft_album)
 
-    assert_equal [unpublished_album], Album.unpublished
+    assert_equal [draft_album], Album.draft
   end
 
   test '.best_selling' do
@@ -245,7 +245,7 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'is valid if not published and has no tracks' do
-    album = build(:unpublished_album, tracks: [])
+    album = build(:draft_album, tracks: [])
     assert album.valid?
   end
 
