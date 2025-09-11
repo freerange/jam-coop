@@ -1,7 +1,0 @@
-<%= render(SectionComponent.new(title: 'Pending albums')) do %>
-  <ul>
-    <% Album.pending.each do |album| %>
-      <li><%= text_link_to "#{album.title} by #{album.artist.name}", artist_album_path(album.artist, album) %></li>
-    <% end %>
-  </ul>
-<% end %>
