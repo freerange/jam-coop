@@ -100,12 +100,6 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.published?
   end
 
-  test 'pending' do
-    album = create(:unpublished_album)
-    album.pending
-    assert album.pending?
-  end
-
   test 'triggers transcoding of tracks if cover changes' do
     album = create(:album)
 
