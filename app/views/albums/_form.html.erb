@@ -68,6 +68,10 @@
     <%= form.currency_field :price, symbol: '£', class: 'w-full mb-2' %>
   <% end %>
 
+  <%= render(SidebarSectionComponent.new(title: 'Visibility')) do %>
+    <%= form.collection_radio_buttons :publication_status, options_for_album_visibility, :value, :text %>
+  <% end %>
+
   <div class="flex sm:flex-row flex-col items-start justify-between gap-6">
     <p class="text-sm italic">By uploading your music you confirm you have read
       and agree to our <%= text_link_to "Terms of use", terms_path %>.

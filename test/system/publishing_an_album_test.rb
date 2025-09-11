@@ -17,18 +17,13 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
       refute_text @album.title
     end
 
-    # Artist requests publication
+    # Artist sets visibility of album to published
     visit artist_url(@album.artist)
     click_on @album.title.to_s
-    click_on 'Publish'
-    assert_text "Thank you! We'll email you when your album is published."
-    sign_out
-
-    # Admin approves publication
-    admin = create(:user, admin: true, email: 'admin@example.com')
-    log_in_as(admin)
-    visit link_in_publish_request_email
-    click_on 'Publish'
+    click_on 'Edit'
+    assert_checked_field 'Unpublished'
+    choose 'Published'
+    click_on 'Save & preview'
     sign_out
 
     # Listener visits published album page
@@ -43,15 +38,6 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
   end
 
   private
-
-  def link_in_publish_request_email
-    perform_enqueued_jobs
-
-    mail = ActionMailer::Base.deliveries.last
-
-    url = /"(?<url>http.*artists.*albums.*)"/.match(mail.to_s).named_captures['url']
-    url.gsub('http://example.com/', root_url)
-  end
 
   def recently_released
     find('h2', text: 'Recently released').ancestor('section')

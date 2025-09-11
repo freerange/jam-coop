@@ -15,4 +15,12 @@ module AlbumHelper
 
     Time.at(seconds).utc.strftime('%M:%S')
   end
+
+  def options_for_album_visibility
+    option = Struct.new(:value, :text)
+
+    Album.publication_statuses.map do |k, _|
+      option.new(k, k.humanize)
+    end
+  end
 end
