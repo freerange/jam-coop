@@ -39,10 +39,6 @@ Rails.application.routes.draw do
 
   resources :artists do
     resources :albums, only: %i[show new edit create update] do
-      member do
-        patch 'publish'
-      end
-
       resources :purchases, only: %i[new create]
     end
   end

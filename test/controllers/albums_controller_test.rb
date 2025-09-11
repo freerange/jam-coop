@@ -106,39 +106,6 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
             params: { album: { title: 'Example', tracks_attributes: { id: track.id, _destroy: true } } }
     end
   end
-
-  test '#publish' do
-    patch publish_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    @album.reload
-    assert @album.published?
-  end
-
-  test '#publish sends an email to the artist' do
-    assert_enqueued_email_with AlbumMailer, :published, params: { album: @album } do
-      patch publish_artist_album_url(@album.artist, @album)
-    end
-  end
-
-  test '#publish does not succeed if album has validation errors' do
-    @album.tracks.destroy_all
-    patch publish_artist_album_url(@album.artist, @album)
-    assert_not @album.reload.published?
-  end
-
-  test '#publish redirects back to album page with error message if album has validation errors' do
-    @album.tracks.destroy_all
-    patch publish_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    assert_equal 'Errors prohibited this album from being saved: Number of tracks must be greater than 0', flash[:alert]
-  end
-
-  test '#publish does not send email to artist if album has validation errors' do
-    @album.tracks.destroy_all
-    assert_enqueued_emails 0 do
-      patch publish_artist_album_url(@album.artist, @album)
-    end
-  end
 end
 
 class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
@@ -198,11 +165,6 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#update' do
     patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
-    assert_redirected_to log_in_url
-  end
-
-  test '#publish' do
-    patch publish_artist_album_url(@album.artist, @album)
     assert_redirected_to log_in_url
   end
 end
