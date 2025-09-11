@@ -29,10 +29,6 @@ class AlbumPolicy < ApplicationPolicy
     user.admin? || user.artists.include?(record.artist)
   end
 
-  def unpublish?
-    user.admin?
-  end
-
   def new?
     user.admin? || user.artists.include?(record.artist)
   end

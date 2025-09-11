@@ -12,7 +12,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert policy.create?
     assert policy.update?
     assert policy.edit?
-    assert policy.unpublish?
     assert policy.new?
     assert policy.publish?
   end
@@ -37,7 +36,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert_not policy.create?
     assert_not policy.update?
     assert_not policy.edit?
-    assert_not policy.unpublish?
     assert_not policy.new?
     assert_not policy.publish?
   end
@@ -51,7 +49,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert policy.create?
     assert policy.update?
     assert policy.edit?
-    assert_not policy.unpublish?
     assert policy.new?
     assert_not policy.publish?
   end
