@@ -21,7 +21,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   end
 
   test '#show disables buy button when album is unpublished' do
-    @album.unpublish
+    @album.unpublished!
     get artist_album_url(@album.artist, @album)
     assert_select 'button[disabled=disabled]', text: 'Buy'
   end

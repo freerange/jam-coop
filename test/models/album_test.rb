@@ -94,12 +94,6 @@ class AlbumTest < ActiveSupport::TestCase
     end
   end
 
-  test 'unpublish' do
-    album = create(:published_album)
-    album.unpublish
-    assert_not album.published?
-  end
-
   test 'triggers transcoding of tracks if cover changes' do
     album = create(:album)
 
