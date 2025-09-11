@@ -36,11 +36,6 @@ class AlbumsController < ApplicationController
     redirect_to artist_album_url(@album.artist, @album)
   end
 
-  def unpublish
-    @album.unpublish
-    redirect_to artist_album_url(@album.artist, @album)
-  end
-
   private
 
   def build_album

@@ -139,13 +139,6 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
       patch publish_artist_album_url(@album.artist, @album)
     end
   end
-
-  test '#unpublish' do
-    patch unpublish_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    @album.reload
-    assert_not @album.published?
-  end
 end
 
 class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
@@ -210,11 +203,6 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#publish' do
     patch publish_artist_album_url(@album.artist, @album)
-    assert_redirected_to log_in_url
-  end
-
-  test '#unpublish' do
-    patch unpublish_artist_album_url(@album.artist, @album)
     assert_redirected_to log_in_url
   end
 end
