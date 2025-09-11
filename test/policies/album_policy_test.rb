@@ -15,7 +15,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert policy.unpublish?
     assert policy.new?
     assert policy.publish?
-    assert_not policy.request_publication?
   end
 
   test 'an admin scope' do
@@ -43,7 +42,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert_not policy.unpublish?
     assert_not policy.new?
     assert_not policy.publish?
-    assert_not policy.request_publication?
   end
 
   test 'a user with an album belonging to their artist' do
@@ -58,7 +56,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert_not policy.unpublish?
     assert policy.new?
     assert_not policy.publish?
-    assert policy.request_publication?
   end
 
   test 'scope for a user with albums belonging to their artist' do
