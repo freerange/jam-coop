@@ -161,13 +161,6 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
 
     assert_select 'a', text: 'Edit'
   end
-
-  test '#request_publication sets the pending state of the album' do
-    patch request_publication_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    @album.reload
-    assert @album.pending?
-  end
 end
 
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
@@ -222,11 +215,6 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#unpublish' do
     patch unpublish_artist_album_url(@album.artist, @album)
-    assert_redirected_to log_in_url
-  end
-
-  test '#request_publication' do
-    patch request_publication_artist_album_url(@album.artist, @album)
     assert_redirected_to log_in_url
   end
 end

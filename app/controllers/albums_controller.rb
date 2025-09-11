@@ -41,12 +41,6 @@ class AlbumsController < ApplicationController
     redirect_to artist_album_url(@album.artist, @album)
   end
 
-  def request_publication
-    @album.pending
-    redirect_to artist_album_url(@album.artist, @album),
-                notice: "Thank you! We'll email you when your album is published."
-  end
-
   private
 
   def build_album
