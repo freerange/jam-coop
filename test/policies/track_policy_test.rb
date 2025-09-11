@@ -13,16 +13,6 @@ class TrackPolicyTest < ActiveSupport::TestCase
     assert policy.reorder?
   end
 
-  test 'an admin acting on a track from an pending album' do
-    user = build(:user, admin: true)
-    track = build(:track, album: build(:pending_album))
-    policy = TrackPolicy.new(user, track)
-
-    assert_not policy.move_higher?
-    assert_not policy.move_lower?
-    assert_not policy.reorder?
-  end
-
   test 'an admin acting on a track from an published album' do
     user = build(:user, admin: true)
     track = build(:track, album: build(:published_album))

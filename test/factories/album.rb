@@ -42,10 +42,6 @@ FactoryBot.define do
     publication_status { :unpublished }
   end
 
-  factory :pending_album, parent: :album do
-    publication_status { :pending }
-  end
-
   factory :published_album, parent: :album, traits: %i[with_tracks] do
     publication_status { :published }
   end

@@ -4,7 +4,7 @@ class Album < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :scoped, scope: :artist
 
-  enum :publication_status, { unpublished: 0, published: 1, pending: 2 }
+  enum :publication_status, { unpublished: 0, published: 1 }
 
   belongs_to :artist
   has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
@@ -29,7 +29,6 @@ class Album < ApplicationRecord
 
   scope :published, -> { where(publication_status: :published) }
   scope :unpublished, -> { where(publication_status: :unpublished) }
-  scope :pending, -> { where(publication_status: :pending) }
   scope :in_release_order, -> { order(Arel.sql('COALESCE(released_on, first_published_on) DESC NULLS LAST')) }
   scope :best_selling, -> { left_joins(:purchases).group(:id).order('COUNT(purchases.id) DESC') }
   scope :recently_released, -> { where.not(released_on: nil).order(released_on: :desc) }

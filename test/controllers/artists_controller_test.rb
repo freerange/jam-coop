@@ -60,14 +60,6 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_select 'p', 'unpublished'
   end
 
-  test '#show should include pending albums' do
-    @artist.albums << create(:pending_album, title: 'Album Title')
-
-    get artist_url(@artist)
-
-    assert_select 'p', 'pending'
-  end
-
   test '#new' do
     get new_artist_url
     assert_response :success
@@ -131,14 +123,6 @@ class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
     get artist_url(@artist)
 
     assert_select 'p', 'unpublished'
-  end
-
-  test '#show should include pending albums' do
-    @artist.albums << create(:pending_album, title: 'Album Title')
-
-    get artist_url(@artist)
-
-    assert_select 'p', 'pending'
   end
 end
 
@@ -205,14 +189,6 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_select 'p', { text: 'unpublished', count: 0 }
   end
 
-  test '#show should not include pending albums' do
-    @artist.albums << create(:pending_album, title: 'Album Title')
-
-    get artist_url(@artist)
-
-    assert_select 'p', { text: 'pending', count: 0 }
-  end
-
   test '#show includes auto-discovery link for atom feed' do
     get artist_url(@artist)
 
@@ -223,7 +199,6 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#show with atom format should render atom feed' do
     @artist.albums << create(:published_album, title: 'Older', released_on: 2.days.ago)
     @artist.albums << create(:published_album, title: 'Newer', released_on: 1.day.ago)
-    @artist.albums << create(:pending_album, title: 'Pending', released_on: 0.days.ago)
     @artist.albums << create(:unpublished_album, title: 'Unpublished', released_on: 0.days.ago)
 
     get artist_url(@artist, format: :atom)
@@ -233,7 +208,6 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_equal @artist.name, feed.author.name.content
     assert_equal 'Newer', feed.entries.first.title.content
     assert_equal 'Older', feed.entries.last.title.content
-    assert_not_includes feed.entries.map(&:title).map(&:content), 'Pending'
     assert_not_includes feed.entries.map(&:title).map(&:content), 'Unpublished'
   end
 
