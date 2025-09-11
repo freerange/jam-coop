@@ -13,7 +13,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert policy.update?
     assert policy.edit?
     assert policy.new?
-    assert policy.publish?
   end
 
   test 'an admin scope' do
@@ -37,7 +36,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert_not policy.update?
     assert_not policy.edit?
     assert_not policy.new?
-    assert_not policy.publish?
   end
 
   test 'a user with an album belonging to their artist' do
@@ -50,7 +48,6 @@ class AlbumPolicyTest < ActiveSupport::TestCase
     assert policy.update?
     assert policy.edit?
     assert policy.new?
-    assert_not policy.publish?
   end
 
   test 'scope for a user with albums belonging to their artist' do
