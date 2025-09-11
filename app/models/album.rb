@@ -45,10 +45,6 @@ class Album < ApplicationRecord
     tracks.each(&:transcode)
   end
 
-  def publish
-    update(publication_status: :published, first_published_on: first_published_on || Time.current)
-  end
-
   def released_on
     super || first_published_on
   end

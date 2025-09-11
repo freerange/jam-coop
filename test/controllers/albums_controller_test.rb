@@ -15,7 +15,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   end
 
   test '#show shows a buy button when album is published' do
-    @album.publish
+    @album.published!
     get artist_album_url(@album.artist, @album)
     assert_select 'button', text: 'Buy'
   end
@@ -28,7 +28,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
   test '#show shows download links instead of a buy button when album is purchased' do
     create(:purchase, album: @album, price: @album.price, user: @user)
-    @album.publish
+    @album.published!
 
     get artist_album_url(@album.artist, @album)
 

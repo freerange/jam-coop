@@ -72,28 +72,6 @@ class AlbumTest < ActiveSupport::TestCase
     end
   end
 
-  test 'publish sets published state' do
-    album = create(:unpublished_album)
-    album.publish
-    assert album.published?
-  end
-
-  test 'publish sets first_published_on if not already set' do
-    album = create(:unpublished_album)
-    freeze_time do
-      album.publish
-      assert_equal Time.zone.today, album.first_published_on
-    end
-  end
-
-  test 'publish does not set first_published_on if already set' do
-    freeze_time do
-      album = create(:unpublished_album, first_published_on: 1.week.ago)
-      album.publish
-      assert_equal 1.week.ago.to_date, album.first_published_on
-    end
-  end
-
   test 'published! sets published state' do
     album = create(:unpublished_album, :with_tracks)
     album.published!
