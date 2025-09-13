@@ -45,6 +45,6 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
     track3.original.attach(io: Rails.root.join('test/fixtures/files/three.wav').open, filename: 'three.wav')
     track3.save!
 
-    album.publish
+    album.published!
   end
 end

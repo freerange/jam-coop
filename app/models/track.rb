@@ -6,7 +6,7 @@ class Track < ApplicationRecord
 
   has_many :transcodes, dependent: :destroy
 
-  delegate :artist, :unpublished?, to: :album
+  delegate :artist, :draft?, to: :album
 
   has_one_attached :original
   validates :original,

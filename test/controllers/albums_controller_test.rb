@@ -15,20 +15,20 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   end
 
   test '#show shows a buy button when album is published' do
-    @album.publish
+    @album.published!
     get artist_album_url(@album.artist, @album)
     assert_select 'button', text: 'Buy'
   end
 
-  test '#show disables buy button when album is unpublished' do
-    @album.unpublish
+  test '#show disables buy button when album is draft' do
+    @album.draft!
     get artist_album_url(@album.artist, @album)
     assert_select 'button[disabled=disabled]', text: 'Buy'
   end
 
   test '#show shows download links instead of a buy button when album is purchased' do
     create(:purchase, album: @album, price: @album.price, user: @user)
-    @album.publish
+    @album.published!
 
     get artist_album_url(@album.artist, @album)
 
@@ -43,20 +43,6 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     get artist_album_url(@album.artist, @album)
 
     assert_select 'li', "#{track.title} mp3v0"
-  end
-
-  test '#show when the album is not published has publish button' do
-    @album.unpublish
-    get artist_album_url(@album.artist, @album)
-
-    assert_select 'button', text: 'Publish', count: 1
-  end
-
-  test '#show when the album is published has unpublish button' do
-    @album.publish
-    get artist_album_url(@album.artist, @album)
-
-    assert_select 'button', text: 'Unpublish', count: 1
   end
 
   test '#show shows the release date of the album' do
@@ -120,46 +106,6 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
             params: { album: { title: 'Example', tracks_attributes: { id: track.id, _destroy: true } } }
     end
   end
-
-  test '#publish' do
-    patch publish_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    @album.reload
-    assert @album.published?
-  end
-
-  test '#publish sends an email to the artist' do
-    assert_enqueued_email_with AlbumMailer, :published, params: { album: @album } do
-      patch publish_artist_album_url(@album.artist, @album)
-    end
-  end
-
-  test '#publish does not succeed if album has validation errors' do
-    @album.tracks.destroy_all
-    patch publish_artist_album_url(@album.artist, @album)
-    assert_not @album.reload.published?
-  end
-
-  test '#publish redirects back to album page with error message if album has validation errors' do
-    @album.tracks.destroy_all
-    patch publish_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    assert_equal 'Errors prohibited this album from being saved: Number of tracks must be greater than 0', flash[:alert]
-  end
-
-  test '#publish does not send email to artist if album has validation errors' do
-    @album.tracks.destroy_all
-    assert_enqueued_emails 0 do
-      patch publish_artist_album_url(@album.artist, @album)
-    end
-  end
-
-  test '#unpublish' do
-    patch unpublish_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    @album.reload
-    assert_not @album.published?
-  end
 end
 
 class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
@@ -176,31 +122,16 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
     assert_select 'a', text: 'Edit'
   end
 
-  test '#show when the album is not published has a publish button' do
-    @album.unpublish
+  test '#show indicates draft visibility of album' do
+    @album.draft!
     get artist_album_url(@album.artist, @album)
-
-    assert_select 'button', text: 'Publish'
+    assert_match 'Only you can see it', response.body
   end
 
-  test '#show when the album is pending publication has a disabled pending publication button' do
-    @album.pending
+  test '#show indicates published visibility of album' do
+    @album.published!
     get artist_album_url(@album.artist, @album)
-
-    assert_select 'button[disabled=disabled]', text: 'Pending publication'
-  end
-
-  test '#request_publication sets the pending state of the album' do
-    patch request_publication_artist_album_url(@album.artist, @album)
-    assert_redirected_to artist_album_url(@album.artist, @album)
-    @album.reload
-    assert @album.pending?
-  end
-
-  test '#request_publication sends an email to notify admins that artist has requested publication' do
-    assert_enqueued_email_with AlbumMailer, :request_publication, params: { album: @album } do
-      patch request_publication_artist_album_url(@album.artist, @album)
-    end
+    assert_match 'Everyone can see it', response.body
   end
 end
 
@@ -214,13 +145,8 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test '#show does not indicate published state' do
-    get artist_album_url(@album.artist, @album)
-    assert_select 'p', text: 'This album is currently unpublished', count: 0
-  end
-
-  test '#show not authorized when album is unpublished' do
-    @album = create(:unpublished_album)
+  test '#show not authorized when album is draft' do
+    @album = create(:draft_album)
     previous_url = artist_url(@album.artist)
 
     get artist_album_url(@album.artist, @album), headers: { 'HTTP_REFERER' => previous_url }
@@ -246,21 +172,6 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
   test '#update' do
     patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
-    assert_redirected_to log_in_url
-  end
-
-  test '#publish' do
-    patch publish_artist_album_url(@album.artist, @album)
-    assert_redirected_to log_in_url
-  end
-
-  test '#unpublish' do
-    patch unpublish_artist_album_url(@album.artist, @album)
-    assert_redirected_to log_in_url
-  end
-
-  test '#request_publication' do
-    patch request_publication_artist_album_url(@album.artist, @album)
     assert_redirected_to log_in_url
   end
 end

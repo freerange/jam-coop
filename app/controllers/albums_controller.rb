@@ -27,27 +27,6 @@ class AlbumsController < ApplicationController
     end
   end
 
-  def publish
-    if @album.publish
-      AlbumMailer.with(album: @album).published.deliver_later
-    else
-      flash[:alert] = "Errors prohibited this album from being saved: #{@album.errors.full_messages.to_sentence}"
-    end
-    redirect_to artist_album_url(@album.artist, @album)
-  end
-
-  def unpublish
-    @album.unpublish
-    redirect_to artist_album_url(@album.artist, @album)
-  end
-
-  def request_publication
-    @album.pending
-    AlbumMailer.with(album: @album).request_publication.deliver_later
-    redirect_to artist_album_url(@album.artist, @album),
-                notice: "Thank you! We'll email you when your album is published."
-  end
-
   private
 
   def build_album
@@ -65,7 +44,7 @@ class AlbumsController < ApplicationController
   def album_params
     params
       .require(:album)
-      .permit(:title, :price, :cover, :about, :credits, :released_on, :license_id,
+      .permit(:title, :price, :cover, :about, :credits, :released_on, :license_id, :publication_status,
               tracks_attributes: %i[id title original _destroy])
   end
 

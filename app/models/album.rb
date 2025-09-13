@@ -4,7 +4,7 @@ class Album < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :scoped, scope: :artist
 
-  enum :publication_status, { unpublished: 0, published: 1, pending: 2 }
+  enum :publication_status, { draft: 0, published: 1 }
 
   belongs_to :artist
   has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
@@ -28,12 +28,12 @@ class Album < ApplicationRecord
   )
 
   scope :published, -> { where(publication_status: :published) }
-  scope :unpublished, -> { where(publication_status: :unpublished) }
-  scope :pending, -> { where(publication_status: :pending) }
+  scope :draft, -> { where(publication_status: :draft) }
   scope :in_release_order, -> { order(Arel.sql('COALESCE(released_on, first_published_on) DESC NULLS LAST')) }
   scope :best_selling, -> { left_joins(:purchases).group(:id).order('COUNT(purchases.id) DESC') }
   scope :recently_released, -> { where.not(released_on: nil).order(released_on: :desc) }
 
+  after_update :set_first_published_on, if: :saved_change_to_publication_status_to_published?
   after_commit :transcode_tracks, on: :update, if: :metadata_or_cover_changed?
 
   def preview
@@ -43,18 +43,6 @@ class Album < ApplicationRecord
 
   def transcode_tracks
     tracks.each(&:transcode)
-  end
-
-  def pending
-    pending!
-  end
-
-  def publish
-    update(publication_status: :published, first_published_on: first_published_on || Time.current)
-  end
-
-  def unpublish
-    unpublished!
   end
 
   def released_on
@@ -67,5 +55,18 @@ class Album < ApplicationRecord
 
   def metadata_or_cover_changed?
     title_previously_changed? || attachment_changes['cover'].present?
+  end
+
+  private
+
+  def saved_change_to_publication_status_to_published?
+    saved_change_to_publication_status? && published?
+  end
+
+  def set_first_published_on
+    return unless first_published_on.nil?
+
+    self.first_published_on = Time.current
+    save!
   end
 end

@@ -5,7 +5,7 @@ require 'application_system_test_case'
 class ReorderingTracklistTest < ApplicationSystemTestCase
   setup do
     log_in_as(create(:user, admin: true))
-    @track = create(:track, album: build(:unpublished_album))
+    @track = create(:track, album: build(:draft_album))
   end
 
   test 're-ordering a tracklist' do

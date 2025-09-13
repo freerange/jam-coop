@@ -27,13 +27,13 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
     create(:published_album, artist: @artist, first_published_on: 3.days.ago)
-    create(:unpublished_album, artist: @artist)
+    create(:draft_album, artist: @artist)
 
     another_artist = create(:artist, name: 'Newer Artist')
     create(:published_album, artist: another_artist, first_published_on: 1.day.ago)
 
     unlisted_artist = create(:artist, name: 'Unlisted Artist')
-    create(:unpublished_album, artist: unlisted_artist)
+    create(:draft_album, artist: unlisted_artist)
 
     get artists_url(format: :atom)
 
@@ -52,20 +52,12 @@ class ArtistsControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_select 'p', 'Album Title'
   end
 
-  test '#show should include unpublished albums' do
-    @artist.albums << create(:unpublished_album, title: 'Album Title')
+  test '#show should include draft albums' do
+    @artist.albums << create(:draft_album, title: 'Album Title')
 
     get artist_url(@artist)
 
-    assert_select 'p', 'unpublished'
-  end
-
-  test '#show should include pending albums' do
-    @artist.albums << create(:pending_album, title: 'Album Title')
-
-    get artist_url(@artist)
-
-    assert_select 'p', 'pending'
+    assert_select 'p', 'draft'
   end
 
   test '#new' do
@@ -125,20 +117,12 @@ class ArtistsControllerTestSignedInArtist < ActionDispatch::IntegrationTest
     assert_select 'p', 'Album Title'
   end
 
-  test '#show should include unpublished albums' do
-    @artist.albums << create(:unpublished_album, title: 'Album Title')
+  test '#show should include draft albums' do
+    @artist.albums << create(:draft_album, title: 'Album Title')
 
     get artist_url(@artist)
 
-    assert_select 'p', 'unpublished'
-  end
-
-  test '#show should include pending albums' do
-    @artist.albums << create(:pending_album, title: 'Album Title')
-
-    get artist_url(@artist)
-
-    assert_select 'p', 'pending'
+    assert_select 'p', 'draft'
   end
 end
 
@@ -172,13 +156,13 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#index with atom format should render atom feed' do
     @artist.update!(name: 'Older Artist')
     create(:published_album, artist: @artist, first_published_on: 3.days.ago)
-    create(:unpublished_album, artist: @artist)
+    create(:draft_album, artist: @artist)
 
     another_artist = create(:artist, name: 'Newer Artist')
     create(:published_album, artist: another_artist, first_published_on: 1.day.ago)
 
     unlisted_artist = create(:artist, name: 'Unlisted Artist')
-    create(:unpublished_album, artist: unlisted_artist)
+    create(:draft_album, artist: unlisted_artist)
 
     get artists_url(format: :atom)
 
@@ -197,20 +181,12 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_select 'p', 'Album Title'
   end
 
-  test '#show should not include unpublished albums' do
-    @artist.albums << create(:unpublished_album, title: 'Album Title')
+  test '#show should not include draft albums' do
+    @artist.albums << create(:draft_album, title: 'Album Title')
 
     get artist_url(@artist)
 
-    assert_select 'p', { text: 'unpublished', count: 0 }
-  end
-
-  test '#show should not include pending albums' do
-    @artist.albums << create(:pending_album, title: 'Album Title')
-
-    get artist_url(@artist)
-
-    assert_select 'p', { text: 'pending', count: 0 }
+    assert_select 'p', { text: 'draft', count: 0 }
   end
 
   test '#show includes auto-discovery link for atom feed' do
@@ -223,8 +199,7 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#show with atom format should render atom feed' do
     @artist.albums << create(:published_album, title: 'Older', released_on: 2.days.ago)
     @artist.albums << create(:published_album, title: 'Newer', released_on: 1.day.ago)
-    @artist.albums << create(:pending_album, title: 'Pending', released_on: 0.days.ago)
-    @artist.albums << create(:unpublished_album, title: 'Unpublished', released_on: 0.days.ago)
+    @artist.albums << create(:draft_album, title: 'Draft', released_on: 0.days.ago)
 
     get artist_url(@artist, format: :atom)
 
@@ -233,12 +208,11 @@ class ArtistsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_equal @artist.name, feed.author.name.content
     assert_equal 'Newer', feed.entries.first.title.content
     assert_equal 'Older', feed.entries.last.title.content
-    assert_not_includes feed.entries.map(&:title).map(&:content), 'Pending'
-    assert_not_includes feed.entries.map(&:title).map(&:content), 'Unpublished'
+    assert_not_includes feed.entries.map(&:title).map(&:content), 'Draft'
   end
 
   test '#show with atom format for artist with no published albums should render atom feed' do
-    @artist.albums << create(:unpublished_album)
+    @artist.albums << create(:draft_album)
 
     get artist_url(@artist, format: :atom)
 
