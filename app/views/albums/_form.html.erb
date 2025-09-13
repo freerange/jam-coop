@@ -69,7 +69,12 @@
   <% end %>
 
   <%= render(SidebarSectionComponent.new(title: 'Visibility')) do %>
-    <%= form.collection_radio_buttons :publication_status, options_for_album_visibility, :value, :text %>
+    <%= form.collection_radio_buttons :publication_status, options_for_album_visibility, :value, :text do |b| %>
+      <div class="flex items-center space-x-2">
+        <%= b.radio_button %>
+        <%= b.label %>
+      </div>
+    <% end %>
   <% end %>
 
   <div class="flex sm:flex-row flex-col items-start justify-between gap-6">
