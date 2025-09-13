@@ -121,6 +121,18 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
 
     assert_select 'a', text: 'Edit'
   end
+
+  test '#show indicates draft visibility of album' do
+    @album.draft!
+    get artist_album_url(@album.artist, @album)
+    assert_match 'Only you can see it', response.body
+  end
+
+  test '#show indicates published visibility of album' do
+    @album.published!
+    get artist_album_url(@album.artist, @album)
+    assert_match 'Everyone can see it', response.body
+  end
 end
 
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
@@ -131,11 +143,6 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#show' do
     get artist_album_url(@album.artist, @album)
     assert_response :success
-  end
-
-  test '#show does not indicate published state' do
-    get artist_album_url(@album.artist, @album)
-    assert_select 'p', text: 'This album is currently draft', count: 0
   end
 
   test '#show not authorized when album is draft' do
