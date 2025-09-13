@@ -23,7 +23,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     click_on 'Edit'
     assert_checked_field 'Draft'
     choose 'Published'
-    click_on 'Save & preview'
+    click_on 'Save'
     sign_out
 
     # Listener visits published album page
