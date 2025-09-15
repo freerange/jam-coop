@@ -33,6 +33,7 @@ class Album < ApplicationRecord
   scope :best_selling, -> { left_joins(:purchases).group(:id).order('COUNT(purchases.id) DESC') }
   scope :recently_released, -> { where.not(released_on: nil).order(released_on: :desc) }
 
+  after_create :set_first_published_on, if: :published?
   after_update :set_first_published_on, if: :saved_change_to_publication_status_to_published?
   after_commit :transcode_tracks, on: :update, if: :metadata_or_cover_changed?
 

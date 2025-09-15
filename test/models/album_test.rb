@@ -116,6 +116,12 @@ class AlbumTest < ActiveSupport::TestCase
     assert_nil album.reload.first_published_on
   end
 
+  test 'newly created published albums have a first_published_on' do
+    album = create(:published_album)
+
+    assert_not_nil album.reload.first_published_on
+  end
+
   test 'triggers transcoding of tracks if cover changes' do
     album = create(:album)
 
