@@ -239,7 +239,9 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.4)
+    pg (1.6.2-arm64-darwin)
+    pg (1.6.2-x86_64-darwin)
+    pg (1.6.2-x86_64-linux)
     postmark (1.24.0)
       json
     postmark-rails (0.22.1)
@@ -413,6 +415,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  arm64-darwin-23
   arm64-darwin-24
   x86_64-darwin-22
   x86_64-linux
