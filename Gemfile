@@ -11,6 +11,7 @@ gem 'authentication-zero', '~> 3.0'
 gem 'aws-sdk-s3'
 gem 'bcrypt', '~> 3.1.20'
 gem 'bootsnap', require: false
+gem 'csv'
 gem 'friendly_id', '~> 5.5.0'
 gem 'image_processing'
 gem 'importmap-rails'

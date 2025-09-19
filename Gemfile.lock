@@ -122,6 +122,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    csv (3.3.5)
     cuprite (0.15.1)
       capybara (~> 3.0)
       ferrum (~> 0.15.0)
@@ -431,6 +432,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.20)
   bootsnap
   capybara
+  csv
   cuprite
   debug
   dotenv-rails
