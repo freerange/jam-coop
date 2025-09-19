@@ -6,6 +6,9 @@ require:
 AllCops:
   NewCops: enable
 
+Lint/MissingSuper:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

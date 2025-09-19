@@ -4,8 +4,6 @@ class ToastComponent < ViewComponent::Base
   def initialize(message:, type:)
     @message = message
     @type = type
-
-    super
   end
 
   def type_class

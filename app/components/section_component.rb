@@ -7,8 +7,6 @@ class SectionComponent < ViewComponent::Base
     @title = title
     @link_text = link_text
     @link_path = link_path
-
-    super
   end
 
   def show_header?
