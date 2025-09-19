@@ -3,8 +3,8 @@
 
   <%= render(SidebarSectionComponent.new(title: 'Details')) do %>
     <%= form.text_field :title, class: 'w-full mb-3' %>
-    <%= form.text_area :about, rows: 10, class: 'w-full mb-3' %>
-    <%= form.text_area :credits, rows: 10, class: 'w-full mb-3' %>
+    <%= form.textarea :about, rows: 10, class: 'w-full mb-3' %>
+    <%= form.textarea :credits, rows: 10, class: 'w-full mb-3' %>
     <%= form.date_field :released_on, max: Time.zone.today, class: 'w-full mb-3' %>
     <%= form.select :license_id, License.all.pluck(:label, :id), selected: album.license_id, class: 'w-full mb-3' %>
   <% end %>

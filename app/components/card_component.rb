@@ -5,7 +5,5 @@ class CardComponent < ViewComponent::Base
     @title = title
     @subtitle = subtitle
     @image = image
-
-    super
   end
 end

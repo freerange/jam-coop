@@ -13,7 +13,7 @@ module Identity
       elsif @user.update(email: params[:email])
         resend_verification_email_and_redirect
       else
-        render 'users/show', status: :unprocessable_entity
+        render 'users/show', status: :unprocessable_content
       end
     end
 

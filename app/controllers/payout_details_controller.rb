@@ -10,7 +10,7 @@ class PayoutDetailsController < ApplicationController
     if @payout_detail.save
       redirect_to account_url, notice: 'Payout details added'
     else
-      render 'users/show', status: :unprocessable_entity
+      render 'users/show', status: :unprocessable_content
     end
   end
 
@@ -23,7 +23,7 @@ class PayoutDetailsController < ApplicationController
     if @payout_detail.update(payout_detail_params)
       redirect_to account_url, notice: 'Payout details updated'
     else
-      render 'users/show', status: :unprocessable_entity
+      render 'users/show', status: :unprocessable_content
     end
   end
 

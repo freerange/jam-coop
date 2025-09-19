@@ -3,8 +3,6 @@
 class ModelErrorComponent < ViewComponent::Base
   def initialize(model:)
     @model = model
-
-    super
   end
 
   def render?

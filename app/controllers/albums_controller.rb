@@ -15,7 +15,7 @@ class AlbumsController < ApplicationController
       @album.transcode_tracks
       redirect_to artist_album_url(@album.artist, @album), notice: 'Album was successfully created.'
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -23,7 +23,7 @@ class AlbumsController < ApplicationController
     if @album.update(album_params)
       redirect_to artist_album_url(@album.artist, @album), notice: 'Artist was successfully updated.'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

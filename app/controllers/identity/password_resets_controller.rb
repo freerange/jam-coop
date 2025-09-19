@@ -24,7 +24,7 @@ module Identity
         revoke_tokens
         redirect_to(log_in_path, notice: 'Your password was reset successfully. Please sign in')
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 
