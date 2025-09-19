@@ -326,7 +326,7 @@ GEM
     reline (0.6.2)
       io-console (~> 0.5)
     rexml (3.4.4)
-    rollbar (3.5.1)
+    rollbar (3.6.2)
     rss (0.3.0)
       rexml
     rubocop (1.69.2)
