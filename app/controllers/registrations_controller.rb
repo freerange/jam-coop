@@ -24,7 +24,7 @@ class RegistrationsController < ApplicationController
                   notice: "Welcome! You have signed up successfully. We have sent an email to #{@user.email}.
                            Please check your inbox to finish creating your account."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

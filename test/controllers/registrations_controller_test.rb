@@ -58,7 +58,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test '#create shows an error if data is unprocessable' do
     post sign_up_url, params: { email: '', password: '', password_confirmation: '' }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     assert_select 'h2', text: /errors prohibited this user from being saved/
   end
 

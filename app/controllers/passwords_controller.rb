@@ -12,7 +12,7 @@ class PasswordsController < ApplicationController
     elsif @user.update(user_params)
       redirect_to account_path, notice: 'Your password has been changed'
     else
-      render 'users/show', status: :unprocessable_entity
+      render 'users/show', status: :unprocessable_content
     end
   end
 

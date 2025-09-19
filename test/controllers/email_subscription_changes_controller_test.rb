@@ -60,7 +60,7 @@ class EmailSubscriptionChangesControllerTest < ActionDispatch::IntegrationTest
 
     post(email_subscription_changes_path, headers:, params:)
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     assert_equal({ 'error' => 'invalid', 'messages' => ['Email has an error'] }, response.parsed_body)
     assert_not user.reload.suppress_sending?
   end

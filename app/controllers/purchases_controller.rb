@@ -29,7 +29,7 @@ class PurchasesController < ApplicationController
         redirect_to new_artist_album_purchase_path(artist, @album)
       end
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
