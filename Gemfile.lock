@@ -379,12 +379,12 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.7)
     stripe (13.2.0)
-    tailwindcss-rails (2.7.9-arm64-darwin)
+    tailwindcss-rails (3.3.2)
       railties (>= 7.0.0)
-    tailwindcss-rails (2.7.9-x86_64-darwin)
-      railties (>= 7.0.0)
-    tailwindcss-rails (2.7.9-x86_64-linux)
-      railties (>= 7.0.0)
+      tailwindcss-ruby (~> 3.0)
+    tailwindcss-ruby (3.4.17-arm64-darwin)
+    tailwindcss-ruby (3.4.17-x86_64-darwin)
+    tailwindcss-ruby (3.4.17-x86_64-linux)
     thor (1.3.2)
     timeout (0.4.3)
     turbo-rails (2.0.11)
@@ -466,7 +466,7 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   stripe (~> 13.2)
-  tailwindcss-rails (~> 2.0)
+  tailwindcss-rails (~> 3.0)
   turbo-rails
   tzinfo-data
   view_component
