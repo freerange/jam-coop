@@ -44,6 +44,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'htmlbeautifier'
+  gem 'lookbook', '>= 2.3.13'
 end
 
 group :development do
