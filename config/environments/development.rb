@@ -95,4 +95,6 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.active_job.queue_adapter = :solid_queue
+
+  config.view_component.previews.default_layout = 'component_preview'
 end
