@@ -87,7 +87,12 @@
               <% end %>
             </ul>
           <% else %>
-            <%= button_to "Buy", new_artist_album_purchase_path(@album.artist, @album), method: :get, disabled: !@album.published?, class: "w-full py-3 bg-amber-500 hover:bg-amber-400 text-white font-medium cursor-pointer disabled:bg-slate-300 disabled:cursor-not-allowed" %>
+          <%= render(ButtonComponent.new(
+                text: 'Buy',
+                path: new_artist_album_purchase_path(@album.artist, @album),
+                method: :get,
+                disabled: !@album.published?
+              )) %>
             <p class="text-xs text-slate-600"><%= number_to_currency(@album.price, unit: '£') %> or more. Digital download. MP3 and FLAC</p>
           <% end %>
         </div>
