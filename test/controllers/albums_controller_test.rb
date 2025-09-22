@@ -119,7 +119,7 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
   test '#show has an edit button' do
     get artist_album_url(@album.artist, @album)
 
-    assert_select 'a', text: 'Edit'
+    assert_select 'a', text: 'Edit album'
   end
 
   test '#show indicates draft visibility of album' do
