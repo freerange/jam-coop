@@ -53,9 +53,12 @@
 
     <%= render(SidebarSectionComponent.new(title: 'Email address')) do %>
       <% unless Current.user.verified? %>
-        <div class="mb-3 border border-slate-300 p-4">
+        <div class="mb-3 border border-slate-300 p-3 flex flex-col gap-2">
           <p>We sent a verification email to the address below. Check that email and follow those instructions to confirm it's your email address.</p>
-          <p><%= button_to "Re-send verification email", identity_email_verification_path, class: 'py-3 px-5 bg-amber-600 hover:bg-amber-500 text-white font-medium cursor-pointer my-3' %></p>
+          <%= render(ButtonComponent.new(
+                text: 'Re-send verification email',
+                path: identity_email_verification_path))
+              %>
         </div>
       <% end %>
 
