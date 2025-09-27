@@ -7,9 +7,10 @@ class ButtonComponentTest < ViewComponent::TestCase
     render_inline(
       ButtonComponent.new(
         text: 'Button',
-        path: 'https://example.com'
+        path: 'https://example.com',
+        class: ['additional-css-class']
       )
-    ).to_html
+    )
   end
 
   def test_component_renders_title
@@ -22,5 +23,9 @@ class ButtonComponentTest < ViewComponent::TestCase
 
   def test_component_renders_a_form_with_path_as_action
     assert_selector('form[action="https://example.com"]')
+  end
+
+  def test_component_adds_classes_to_default
+    assert_selector('button.additional-css-class')
   end
 end
