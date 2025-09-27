@@ -21,6 +21,18 @@ class ButtonComponentTest < ViewComponent::TestCase
     assert_selector('form[method="post"]')
   end
 
+  def test_component_passes_additional_options_to_button
+    render_inline(
+      ButtonComponent.new(
+        text: 'Button',
+        path: 'https://example.com',
+        method: :get
+      )
+    )
+
+    assert_selector('form[method="get"]')
+  end
+
   def test_component_renders_a_form_with_path_as_action
     assert_selector('form[action="https://example.com"]')
   end
