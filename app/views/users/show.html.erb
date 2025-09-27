@@ -57,7 +57,8 @@
           <p>We sent a verification email to the address below. Check that email and follow those instructions to confirm it's your email address.</p>
           <%= render(ButtonComponent.new(
                 text: 'Re-send verification email',
-                path: identity_email_verification_path))
+                path: identity_email_verification_path,
+                class: ['w-full']))
               %>
         </div>
       <% end %>

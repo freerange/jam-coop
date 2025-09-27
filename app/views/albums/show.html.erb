@@ -91,6 +91,7 @@
             <%= render(ButtonComponent.new(
                 text: 'Buy',
                 path: new_artist_album_purchase_path(@album.artist, @album),
+                class: ['w-full'],
                 method: :get,
                 disabled: !@album.published?
               )) %>
