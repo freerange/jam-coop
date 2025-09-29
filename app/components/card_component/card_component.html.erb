@@ -1,6 +1,10 @@
 <div class="group">
   <div class="border border-slate-200 aspect-w-1 aspect-h-1 group-hover:border-slate-500">
-    <%= image_tag @image, class: 'object-cover' %>
+    <% if @image %>
+      <%= image_tag @image, class: 'object-cover' %>
+    <% else %>
+      <%= image_tag "https://picsum.photos/50?blur=10", class: 'object-cover' %>
+    <% end %>
   </div>
   <p class='font-medium text-slate-600 break-words'><%= @title %></p>
   <p class='text-slate-600 break-words'><%= @subtitle %></p>
