@@ -136,6 +136,11 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
 end
 
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
+  test '#index' do
+    get albums_url
+    assert_response :success
+  end
+
   test '#index with atom format should render atom feed' do
     artist = create(:artist, name: 'Artist Name')
     create(:published_album, title: 'Older Album', first_published_on: 3.days.ago, artist:)

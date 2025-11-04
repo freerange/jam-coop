@@ -1,0 +1,23 @@
+<%
+  set_meta_tags(
+    title: "Albums",
+  )
+%>
+
+<% content_for(:auto_discovery) do %>
+  <%= auto_discovery_link_tag(:atom, { format: :atom }, { title: 'Albums on jam.coop' }) %>
+<% end %>
+
+<%= render(SectionComponent.new(title: 'Albums')) do %>
+  <%= render(CardGridComponent.new) do %>
+    <% @albums.each do |album| %>
+      <%= link_to(artist_album_path(album.artist, album)) do %>
+        <%= render(CardComponent.new(
+        title: album.title,
+        subtitle: album.artist.name,
+        image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
+        )) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
