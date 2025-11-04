@@ -45,7 +45,7 @@ When you first run this command it will show a value for the "webhook signing se
 
 ## Deployment
 
-All commits to `main` are deployed to [render](https://dashboard.render.com/) (the login credentials for which are available in 1P). They're not currently gated by the CI build that runs in a github action.
+When a CI build on the `main` branch succeeds the commits are promoted to the `production` branch. [Render](https://dashboard.render.com/) is configured to automatically deploy the latest changes from the `production` branch. The login credentials for Render are available in the shared 1Password vault.
 
 ## Troubleshooting
 
