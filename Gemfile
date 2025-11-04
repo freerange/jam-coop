@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.6'
+ruby file: '.ruby-version'
 
 gem 'active_storage_validations', '~> 1.1'
 gem 'acts_as_list'

@@ -2,9 +2,7 @@
 
 ## Development
 
-This is a Rails app running on the version of ruby specified in `.ruby-version`. If you're using `asdf` you can install the correct version of ruby locally with
-
-    asdf install
+This is a Rails app running on the version of Ruby specified in `.ruby-version` and the version of Node specified in `.node-version`. If you're using `asdf` you can install the correct versions of Ruby and Node locally with `asdf install`. If you're using `mise` you can install the correct versions of Ruby and Node locally with `mise install`.
 
 We're using PostgreSQL 15 in production, so it's recommended you run that in development too. On OS X you can use homebrew
 
