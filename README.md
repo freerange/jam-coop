@@ -1,4 +1,4 @@
-# README
+# README [![CI](https://github.com/freerange/jam-coop/actions/workflows/ci.yml/badge.svg)](https://github.com/freerange/jam-coop/actions/workflows/ci.yml)
 
 ## Development
 
