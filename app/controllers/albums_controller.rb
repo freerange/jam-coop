@@ -2,9 +2,15 @@
 
 class AlbumsController < ApplicationController
   before_action :build_album, only: %i[new create]
-  before_action :set_album, except: %i[new create]
-  skip_before_action :authenticate, only: %i[show]
-  before_action :authorize_album
+  before_action :set_album, except: %i[index new create]
+  skip_before_action :authenticate, only: %i[index show]
+  before_action :authorize_album, except: %i[index]
+
+  def index
+    authorize Album
+
+    @albums = Album.published.order(first_published_on: :desc)
+  end
 
   def show; end
   def new; end

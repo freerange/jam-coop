@@ -136,42 +136,64 @@ class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
 end
 
 class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
-  def setup
-    @album = create(:published_album)
+  test '#index' do
+    get albums_url
+    assert_response :success
+  end
+
+  test '#index with atom format should render atom feed' do
+    artist = create(:artist, name: 'Artist Name')
+    create(:published_album, title: 'Older Album', first_published_on: 3.days.ago, artist:)
+    create(:published_album, title: 'Newer Album', first_published_on: 1.day.ago, artist:)
+    create(:draft_album, title: 'Draft Album', artist:)
+
+    get albums_url(format: :atom)
+
+    feed = RSS::Parser.parse(response.body)
+    assert_equal 'Albums on jam.coop', feed.title.content
+    assert_equal 'Newer Album by Artist Name', feed.entries.first.title.content
+    assert_equal 'Older Album by Artist Name', feed.entries.last.title.content
+    assert_not_includes feed.entries.map(&:title).map(&:content), 'Draft Album by Artist Name'
   end
 
   test '#show' do
-    get artist_album_url(@album.artist, @album)
+    get artist_album_url(album.artist, album)
     assert_response :success
   end
 
   test '#show not authorized when album is draft' do
-    @album = create(:draft_album)
-    previous_url = artist_url(@album.artist)
+    draft_album = create(:draft_album)
+    previous_url = artist_url(draft_album.artist)
 
-    get artist_album_url(@album.artist, @album), headers: { 'HTTP_REFERER' => previous_url }
+    get artist_album_url(draft_album.artist, draft_album), headers: { 'HTTP_REFERER' => previous_url }
 
     assert_redirected_to previous_url
     assert_equal 'You are not authorized to perform this action.', flash[:alert]
   end
 
   test '#new' do
-    get new_artist_album_url(@album.artist)
+    get new_artist_album_url(album.artist)
     assert_redirected_to log_in_url
   end
 
   test '#create' do
-    post artist_albums_url(@album.artist), params: { album: { title: 'Example' } }
+    post artist_albums_url(album.artist), params: { album: { title: 'Example' } }
     assert_redirected_to log_in_url
   end
 
   test '#edit' do
-    get edit_artist_album_url(@album.artist, @album)
+    get edit_artist_album_url(album.artist, album)
     assert_redirected_to log_in_url
   end
 
   test '#update' do
-    patch artist_album_url(@album.artist, @album), params: { album: { title: 'Example' } }
+    patch artist_album_url(album.artist, album), params: { album: { title: 'Example' } }
     assert_redirected_to log_in_url
+  end
+
+  private
+
+  def album
+    @album ||= create(:published_album)
   end
 end

@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :albums, only: %i[index]
+
   resources :tracks, only: %i[] do
     member do
       post 'move_higher'

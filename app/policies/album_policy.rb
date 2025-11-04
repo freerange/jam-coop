@@ -11,6 +11,10 @@ class AlbumPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    true
+  end
+
   def show?
     return record.published? unless user.signed_in?
 
