@@ -147,6 +147,10 @@
     <% else %>
       <p><strong>License:</strong> <%= @album.license.label %></p>
     <% end %>
+
+    <% if @album.tags.any? %>
+      <p><strong>Tags:</strong> <%= @album.tags.join(', ') %></p>
+    <% end %>
   </section>
 
   <% content_for :admin do %>
