@@ -13,7 +13,7 @@
       <p>Help listeners find your music by tagging it. Our genre tags come from <%= link_to 'Musicbrainz', 'https://musicbrainz.org/genres', class: 'underline' %>.</p>
     <% end %>
 
-    <%= form.select :tag_ids, Tag.all.pluck(:name, :id), label: { text: 'Tags' }, multiple: true, class: 'w-full mb-3' %>
+    <%= form.select :tag_ids, Tag.all.pluck(:name, :id), { label: { text: 'Tags' }, multiple: true }, { data: { controller: 'select', 'select-target': 'select' }, class: 'w-full mb-3' } %>
   <% end %>
 
   <%= render(SidebarSectionComponent.new(title: 'Cover')) do |component| %>
