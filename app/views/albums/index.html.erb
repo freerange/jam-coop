@@ -15,7 +15,7 @@
         <%= render(CardComponent.new(
         title: album.title,
         subtitle: album.artist.name,
-        image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
+        image: ( cdn_url(album.cover.representation(resize_to_limit: [500, 500])) if album.cover.representable? )
         )) %>
       <% end %>
     <% end %>
