@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_11_151444) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_05_141311) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -261,6 +261,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_11_151444) do
     t.index ["expires_at"], name: "index_solid_queue_semaphores_on_expires_at"
     t.index ["key", "value"], name: "index_solid_queue_semaphores_on_key_and_value"
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "musicbrainz_id"
+    t.string "disambiguation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["musicbrainz_id"], name: "index_tags_on_musicbrainz_id", unique: true
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "tracks", force: :cascade do |t|
