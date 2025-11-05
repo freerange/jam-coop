@@ -90,6 +90,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       end
 
       click_on 'Save'
+      assert_text 'This album is published'
     end
 
     perform_enqueued_jobs
