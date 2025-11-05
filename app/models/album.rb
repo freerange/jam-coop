@@ -9,6 +9,8 @@ class Album < ApplicationRecord
   belongs_to :artist
   has_many :tracks, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :album
   has_many :purchases, dependent: :destroy
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
   has_one_attached :cover
   belongs_to :license
 
