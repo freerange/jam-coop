@@ -2,6 +2,7 @@
 
 require 'test_helper'
 require 'capybara/cuprite'
+require 'support/screenshot_helper_with_multiple_sessions'
 
 Capybara.javascript_driver = :cuprite
 Capybara.register_driver(:cuprite) do |app|
