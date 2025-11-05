@@ -107,6 +107,9 @@ GEM
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     builder (3.3.0)
+    bullet (8.1.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     capybara (3.40.0)
       addressable
       matrix
@@ -413,6 +416,7 @@ GEM
     unicode-display_width (3.1.2)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
+    uniform_notifier (1.18.0)
     uri (0.13.2)
     useragent (0.16.11)
     view_component (4.0.2)
@@ -448,6 +452,7 @@ DEPENDENCIES
   aws-sdk-s3
   bcrypt (~> 3.1.20)
   bootsnap
+  bullet
   capybara
   csv
   cuprite

@@ -40,6 +40,7 @@ gem 'view_component'
 gem 'zaru', '~> 1.0'
 
 group :development, :test do
+  gem 'bullet'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
