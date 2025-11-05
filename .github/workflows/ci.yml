@@ -75,6 +75,13 @@ jobs:
           FERRUM_DEFAULT_TIMEOUT: 30
         run: bin/rails test:all
 
+      - name: Upload system test screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: System test screenshots
+          path: tmp/screenshots
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
