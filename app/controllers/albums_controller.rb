@@ -14,7 +14,10 @@ class AlbumsController < ApplicationController
 
   def show; end
   def new; end
-  def edit; end
+
+  def edit
+    @album = artist.albums.includes(tracks: :original_attachment).friendly.find(params[:id])
+  end
 
   def create
     if @album.save
