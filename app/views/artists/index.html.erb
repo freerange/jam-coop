@@ -1,3 +1,5 @@
+<% @artists = @artists.includes(:profile_picture_attachment) %>
+
 <%
   set_meta_tags(
     title: "Artists",
