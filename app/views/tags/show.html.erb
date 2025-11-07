@@ -1,0 +1,19 @@
+<%
+  set_meta_tags(
+    title: @tag.name,
+  )
+%>
+
+<%= render(SectionComponent.new(title: "Albums tagged with #{@tag.name}")) do %>
+  <%= render(CardGridComponent.new) do %>
+    <% @albums.each do |album| %>
+      <%= link_to(artist_album_path(album.artist, album)) do %>
+        <%= render(CardComponent.new(
+        title: album.title,
+        subtitle: album.artist.name,
+        image: ( cdn_url(album.cover.representation(resize_to_limit: [500, 500])) if album.cover.representable? )
+        )) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

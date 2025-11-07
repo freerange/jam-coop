@@ -149,7 +149,7 @@
     <% end %>
 
     <% if @album.tags.any? %>
-      <p><strong>Tags:</strong> <%= @album.tags.join(', ') %></p>
+      <p><strong>Tags:</strong> <%= safe_join(@album.tags.map { |t| link_to(t.name, tag_path(t), class: 'underline') }, ', ') %></p>
     <% end %>
   </section>
 
