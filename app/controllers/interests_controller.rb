@@ -6,8 +6,8 @@ class InterestsController < ApplicationController
 
   def new
     @interest = Interest.new
-    @recently_released_albums = Album.published.recently_released.limit(4)
-    @best_selling_albums = Album.best_selling.limit(4)
+    @recently_released_albums = Album.published.recently_released.limit(4).includes(:artist, :cover_attachment)
+    @best_selling_albums = Album.best_selling.limit(4).includes(:artist, :cover_attachment)
   end
 
   def create
