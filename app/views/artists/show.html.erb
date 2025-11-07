@@ -1,3 +1,5 @@
+<% @albums = @albums.includes(:cover_attachment) %>
+
 <%
   set_meta_tags(
     title: @artist.name,
