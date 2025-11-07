@@ -9,7 +9,7 @@ class AlbumsController < ApplicationController
   def index
     authorize Album
 
-    @albums = Album.published.order(first_published_on: :desc).limit(20)
+    @albums = Album.published.order(first_published_on: :desc).limit(20).includes(:artist, :cover_attachment)
   end
 
   def show; end
