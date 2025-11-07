@@ -147,6 +147,10 @@
     <% else %>
       <p><strong>License:</strong> <%= @album.license.label %></p>
     <% end %>
+
+    <% if @album.tags.any? %>
+      <p><strong>Tags:</strong> <%= safe_join(@album.tags.map { |t| link_to(t.name, tag_path(t), class: 'underline') }, ', ') %></p>
+    <% end %>
   </section>
 
   <% content_for :admin do %>

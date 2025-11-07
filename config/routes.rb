@@ -54,6 +54,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tags, only: %i[show]
+
   resources :email_subscription_changes, only: %i[create]
   resources :stripe_webhook_events, only: %i[create]
 

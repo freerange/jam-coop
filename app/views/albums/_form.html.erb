@@ -8,6 +8,14 @@
     <%= form.date_field :released_on, max: Time.zone.today, class: 'w-full mb-3' %>
     <%= form.select :license_id, License.all.pluck(:label, :id), selected: album.license_id, class: 'w-full mb-3' %>
   <% end %>
+  <%= render(SidebarSectionComponent.new(title: 'Tags')) do |component| %>
+    <% component.with_subtitle do %>
+      <p>Help listeners find your music by tagging it. Our genre tags come from <%= link_to 'Musicbrainz', 'https://musicbrainz.org/genres', class: 'underline' %>.</p>
+    <% end %>
+
+    <%= form.select :tag_ids, Tag.all.pluck(:name, :id), { label: { text: 'Tags' }, multiple: true }, { data: { controller: 'select', 'select-target': 'select' }, class: 'w-full mb-3' } %>
+  <% end %>
+
   <%= render(SidebarSectionComponent.new(title: 'Cover')) do |component| %>
     <% component.with_subtitle do %>
       <p>File must be in <strong>jpeg</strong> or <strong>png</strong> format.</p>

@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_11_151444) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_07_131611) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -263,6 +263,28 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_11_151444) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "album_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id", "tag_id"], name: "index_taggings_on_album_id_and_tag_id", unique: true
+    t.index ["album_id"], name: "index_taggings_on_album_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "musicbrainz_id"
+    t.string "disambiguation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["musicbrainz_id"], name: "index_tags_on_musicbrainz_id", unique: true
+    t.index ["name"], name: "index_tags_on_name", unique: true
+    t.index ["slug"], name: "index_tags_on_slug", unique: true
+  end
+
   create_table "tracks", force: :cascade do |t|
     t.string "title"
     t.integer "position"
@@ -311,4 +333,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_11_151444) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "taggings", "albums"
+  add_foreign_key "taggings", "tags"
 end
