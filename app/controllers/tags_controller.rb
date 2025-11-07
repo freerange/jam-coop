@@ -6,7 +6,7 @@ class TagsController < ApplicationController
   def show
     skip_authorization
 
-    @tag = Tag.find(params[:id])
+    @tag = Tag.friendly.find(params[:id])
     @albums = @tag.albums
   end
 end
