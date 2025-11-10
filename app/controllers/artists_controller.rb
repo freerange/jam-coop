@@ -24,6 +24,7 @@ class ArtistsController < ApplicationController
   end
 
   def edit
+    @artist = Artist.includes(albums: :cover_attachment).friendly.find(params[:id])
     authorize @artist
   end
 
