@@ -27,7 +27,7 @@ class Artist < ApplicationRecord
   end
 
   def first_listed_on
-    albums.minimum(:first_published_on)
+    albums.min_by(&:first_published_on).first_published_on
   end
 
   def transcode_albums
