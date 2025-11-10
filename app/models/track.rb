@@ -18,7 +18,7 @@ class Track < ApplicationRecord
   after_commit :transcode, on: %i[update], if: :metadata_or_original_changed?
 
   def preview
-    transcodes.mp3128k.first
+    transcodes.select { it.mp3128k? }.first
   end
 
   def preview_duration
