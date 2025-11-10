@@ -168,6 +168,15 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.33.0-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.33.0-x86_64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.33.0-x86_64-linux-gnu)
+      bigdecimal
+      rake (>= 13)
     hashdiff (1.1.2)
     hotwire-livereload (1.4.1)
       actioncable (>= 6.0.0)
@@ -259,6 +268,8 @@ GEM
     pg (1.6.2-arm64-darwin)
     pg (1.6.2-x86_64-darwin)
     pg (1.6.2-x86_64-linux)
+    pg_query (6.1.0)
+      google-protobuf (>= 3.25.3)
     postmark (1.24.0)
       json
     postmark-rails (0.22.1)
@@ -267,6 +278,7 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
+    prosopite (2.1.2)
     psych (5.2.6)
       date
       stringio
@@ -466,7 +478,9 @@ DEPENDENCIES
   meta-tags (~> 2.19)
   mocha (~> 2.1)
   pg (~> 1.5)
+  pg_query
   postmark-rails
+  prosopite
   puma (~> 6.4)
   pundit (~> 2.3)
   rack-maintenance
