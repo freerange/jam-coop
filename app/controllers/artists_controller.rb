@@ -7,7 +7,7 @@ class ArtistsController < ApplicationController
   def index
     skip_authorization
 
-    @artists = policy_scope(Artist)
+    @artists = policy_scope(Artist).includes(:albums, profile_picture_attachment: :blob)
   end
 
   def show
