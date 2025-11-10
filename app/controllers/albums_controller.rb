@@ -29,6 +29,7 @@ class AlbumsController < ApplicationController
   end
 
   def update
+    @album = artist.albums.includes(tracks: :original_attachment).friendly.find(params[:id])
     if @album.update(album_params)
       redirect_to artist_album_url(@album.artist, @album), notice: 'Artist was successfully updated.'
     else
