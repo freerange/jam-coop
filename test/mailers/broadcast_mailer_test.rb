@@ -11,7 +11,7 @@ class BroadcastMailerTest < ActionMailer::TestCase
     assert_match 'jam.coop - Newsletter', mail.subject
     assert_equal ['ann@example.com'], mail.to
     assert_equal ['contact@jam.coop'], mail.from
-    assert_match 'Hello', mail.body.encoded
+    assert_match 'Hey folks', mail.body.encoded
     assert_equal 'true', mail.message.track_opens
     assert_equal 'broadcast', mail.message.message_stream
   end

@@ -6,7 +6,7 @@ class BroadcastMailer < ApplicationMailer
 
     mail(
       to: user.email,
-      subject: 'jam.coop - Newsletter #2',
+      subject: 'jam.coop - Newsletter #3',
       track_opens: 'true',
       message_stream: 'broadcast'
     )
