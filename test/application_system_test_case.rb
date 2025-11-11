@@ -7,7 +7,8 @@ require 'support/screenshot_helper_with_multiple_sessions'
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include ActionMailer::TestHelper
 
-  driven_by :cuprite
+  headless = ActiveRecord::Type::Boolean.new.cast(ENV.fetch('HEADLESS', true))
+  driven_by :cuprite, options: { headless: }
 
   def setup
     stub_successful_cloudflare_turnstile_request

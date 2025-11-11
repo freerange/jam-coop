@@ -27,6 +27,8 @@ The app should be running on [http://localhost:3000/](http://localhost:3000/)
 
 Linters and test can be run using the default `rake` task.
 
+To run the system tests in a visible/headed browser set the `HEADLESS` environment variable to false. For example: to run all system tests in a visible browser, execute `HEADLESS=false rails test test/system`.
+
 ## Credentials
 
 Environment specific API keys etc. are stored in environment variables. The file `.env.example` should be copied to `.env` so that `Dotenv` can find these in development. You may only need to set these to real values if you need a particular third party service for the code you're working on. For example, Rollbar credentials are only needed if for some reason you need to use rollbar in development.
