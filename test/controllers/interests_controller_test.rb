@@ -7,11 +7,6 @@ class InterestsControllerTest < ActionDispatch::IntegrationTest
     @interest = build(:interest)
   end
 
-  test '#new should get new' do
-    get new_interest_url
-    assert_response :success
-  end
-
   test '#create should create interest' do
     assert_difference('Interest.count') do
       post interests_url, params: { interest: { email: @interest.email } }

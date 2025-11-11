@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   mount Lookbook::Engine, at: '/lookbook' if Rails.env.development?
 
+  root 'pages#home'
+
   get  'log_in', to: 'sessions#new'
   post 'log_in', to: 'sessions#create'
 
@@ -63,8 +65,6 @@ Rails.application.routes.draw do
   get 'confirmation', to: 'interests#confirmation'
 
   get 'up' => 'healthchecks#show'
-
-  root 'interests#new'
 
   direct :cdn do |model, options|
     expires_in = options.delete(:expires_in) { ActiveStorage.urls_expire_in }
