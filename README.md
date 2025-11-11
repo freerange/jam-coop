@@ -47,6 +47,25 @@ When you first run this command it will show a value for the "webhook signing se
 
 When a CI build on the `main` branch succeeds the commits are promoted to the `production` branch. [Render](https://dashboard.render.com/) is configured to automatically deploy the latest changes from the `production` branch. The login credentials for Render are available in the shared 1Password vault.
 
+## Downloading production data
+
+This requires you to store the Render database credentials (host, username and password) in environment variables (e.g. in .envrc if using direnv). Get the values from render.com.
+
+```
+# Create a backup of the production database
+PGPASSWORD=${RENDER_DB_PASSWORD} pg_dump -h ${RENDER_DB_HOST} -U ${RENDER_DB_USER} musiccoop > tmp/jam-production-db.sql
+
+# Drop and create the local database
+rails db:drop
+rails db:create
+
+# Restore the production database locally
+rails db -p < tmp/jam-production-db.sql
+
+# Set the environment to development so that we don't see scary warnings about modifying the production database when we attempt to drop it
+echo "update ar_internal_metadata set value = 'development' where key = 'environment' and value = 'production'" | rails db -p
+```
+
 ## Troubleshooting
 
 ### Generating image varients fails locally
