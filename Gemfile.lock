@@ -125,9 +125,9 @@ GEM
     css_parser (1.21.1)
       addressable
     csv (3.3.5)
-    cuprite (0.15.1)
+    cuprite (0.17)
       capybara (~> 3.0)
-      ferrum (~> 0.15.0)
+      ferrum (~> 0.17.0)
     date (3.5.0)
     debug (1.11.0)
       irb (~> 1.10)
@@ -153,8 +153,9 @@ GEM
       logger
     faraday-net_http (3.1.0)
       net-http
-    ferrum (0.15)
+    ferrum (0.17.1)
       addressable (~> 2.5)
+      base64 (~> 0.2)
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
@@ -234,7 +235,7 @@ GEM
       net-pop
       net-smtp
     marcel (1.1.0)
-    matrix (0.4.2)
+    matrix (0.4.3)
     meta-tags (2.22.1)
       actionpack (>= 6.0.0, < 8.1)
     mini_magick (5.3.1)
@@ -284,14 +285,14 @@ GEM
     psych (5.2.6)
       date
       stringio
-    public_suffix (6.0.1)
+    public_suffix (6.0.2)
     puma (6.4.3)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.2.3)
+    rack (3.2.4)
     rack-maintenance (3.0.0)
       rack (>= 2.1.4)
       rake (>= 12.3.3)
