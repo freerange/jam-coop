@@ -390,12 +390,6 @@ GEM
     ruby2_keywords (0.0.5)
     rubyzip (3.1.0)
     securerandom (0.4.1)
-    selenium-webdriver (4.35.0)
-      base64 (~> 0.2)
-      logger (~> 1.4)
-      rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 4.0)
-      websocket (~> 1.0)
     solid_queue (1.1.5)
       activejob (>= 7.1)
       activerecord (>= 7.1)
@@ -441,7 +435,6 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.9.1)
-    websocket (1.2.11)
     websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
@@ -501,7 +494,6 @@ DEPENDENCIES
   rubocop-factory_bot
   rubocop-rails
   rubyzip (~> 3.0)
-  selenium-webdriver
   solid_queue (~> 1.1)
   sprockets-rails
   stimulus-rails
