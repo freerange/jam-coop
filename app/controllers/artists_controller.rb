@@ -13,7 +13,7 @@ class ArtistsController < ApplicationController
   def show
     skip_authorization
 
-    @albums = policy_scope(@artist.albums)
+    @albums = policy_scope(@artist.albums).includes(cover_attachment: :blob)
   end
 
   def new
