@@ -4,11 +4,6 @@ require 'test_helper'
 require 'capybara/cuprite'
 require 'support/screenshot_helper_with_multiple_sessions'
 
-Capybara.javascript_driver = :cuprite
-Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(app, window_size: [1400, 1400], timeout: 30, process_timeout: 15)
-end
-
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include ActionMailer::TestHelper
 
