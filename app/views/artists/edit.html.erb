@@ -10,7 +10,7 @@
 
   <%= render(SidebarSectionComponent.new(title: 'Albums')) do %>
     <div class="grid grid-cols-3 gap-4">
-      <% @artist.albums.in_release_order.each do |album| %>
+      <% @artist.albums.includes(cover_attachment: :blob).in_release_order.each do |album| %>
         <%= link_to(edit_artist_album_path(album.artist, album)) do %>
           <%= render(CardComponent.new(
       title: album.title,
