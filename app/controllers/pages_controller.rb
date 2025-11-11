@@ -6,6 +6,7 @@ class PagesController < ApplicationController
 
   def home
     @recently_released_albums = Album.published.recently_released.limit(4)
+    @best_selling_albums = Album.best_selling.limit(4)
   end
 
   def about; end
