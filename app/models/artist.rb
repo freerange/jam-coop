@@ -23,11 +23,11 @@ class Artist < ApplicationRecord
   after_commit :transcode_albums, on: :update, if: :metadata_changed?
 
   def listed?
-    albums.where(publication_status: :published).any?
+    albums.any? { it.published? }
   end
 
   def first_listed_on
-    albums.minimum(:first_published_on)
+    albums.min_by(&:first_published_on).first_published_on
   end
 
   def transcode_albums

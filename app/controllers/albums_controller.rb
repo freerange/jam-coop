@@ -9,7 +9,7 @@ class AlbumsController < ApplicationController
   def index
     authorize Album
 
-    @albums = Album.published.order(first_published_on: :desc).limit(20)
+    @albums = Album.includes(:artist, { cover_attachment: :blob }).published.order(first_published_on: :desc).limit(20)
   end
 
   def show; end
@@ -40,7 +40,8 @@ class AlbumsController < ApplicationController
   end
 
   def set_album
-    @album = artist.albums.friendly.find(params[:id])
+    @album = artist.albums.includes(tracks: [{ transcodes: { file_attachment: :blob } },
+                                             { original_attachment: :blob }]).friendly.find(params[:id])
   end
 
   def artist

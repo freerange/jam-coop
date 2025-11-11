@@ -97,4 +97,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
 
   config.view_component.previews.default_layout = 'component_preview'
+
+  config.after_initialize do
+    Prosopite.raise = true
+  end
 end
