@@ -17,7 +17,7 @@ class ReorderingTracklistTest < ApplicationSystemTestCase
     assert_text "1. #{first_track.title}"
     assert_text "2. #{second_track.title}"
 
-    first_down_link = all('a', text: 'Down').first
+    first_down_link = first('a', text: 'Down')
     first_down_link.click
 
     assert_text "1. #{second_track.title}"

@@ -75,7 +75,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       click_on album.title
 
       within(tracks_section) do
-        first_track = all('div[data-testid="track-data"]', minimum: 0).first
+        first_track = first('div[data-testid="track-data"]', minimum: 0)
         within(first_track) do
           fill_in 'Title', with: 'Rename the first track'
         end
