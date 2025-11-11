@@ -2,6 +2,7 @@
 
 class Artist < ApplicationRecord
   extend FriendlyId
+
   friendly_id :slug_candidates, use: :slugged
 
   def slug_candidates
@@ -23,7 +24,7 @@ class Artist < ApplicationRecord
   after_commit :transcode_albums, on: :update, if: :metadata_changed?
 
   def listed?
-    albums.any? { it.published? }
+    albums.any?(&:published?)
   end
 
   def first_listed_on

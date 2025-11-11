@@ -115,7 +115,7 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     classes + border_color_classes(object_method) + " #{custom_opts[:class]}"
   end
 
-  CUSTOM_OPTS = %i[label class].freeze
+  CUSTOM_OPTS = %i[label class].freeze # rubocop:disable Lint/UselessConstantScoping
   def partition_custom_opts(opts)
     opts.partition { |k, _v| CUSTOM_OPTS.include?(k) }.map(&:to_h)
   end

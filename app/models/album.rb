@@ -2,6 +2,7 @@
 
 class Album < ApplicationRecord
   extend FriendlyId
+
   friendly_id :title, use: :scoped, scope: :artist
 
   enum :publication_status, { draft: 0, published: 1 }
