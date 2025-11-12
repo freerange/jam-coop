@@ -7,3 +7,8 @@
 <h3>
   <%= album.tracks.first.title %>
 </h3>
+
+<% if album.preview && album.preview.file %>
+  <audio controls src="<%= cdn_url(album.preview.file) %>">
+  </audio>
+<% end %>
