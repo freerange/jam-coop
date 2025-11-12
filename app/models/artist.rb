@@ -32,7 +32,7 @@ class Artist < ApplicationRecord
   end
 
   def transcode_albums
-    albums.each(&:transcode_tracks)
+    albums.includes(:tracks).find_each(&:transcode_tracks)
   end
 
   def metadata_changed?
