@@ -33,6 +33,17 @@ class PlayersControllerTest < ActionDispatch::IntegrationTest
     assert_select 'h3', text: @album.tracks.first.title
   end
 
+  test '#show does not display audio element when tracks have not been transcoded' do
+    get artist_album_player_path(@artist, @album)
+    refute_select 'audio'
+  end
+
+  test '#show displays audio element when tracks have been transcoded' do
+    perform_enqueued_jobs
+    get artist_album_player_path(@artist, @album)
+    assert_select 'audio'
+  end
+
   test '#show allows page to be used in iframe on own site in newer browsers' do
     get artist_album_player_path(@artist, @album)
     assert_includes response.headers['Content-Security-Policy'], "'self'"
