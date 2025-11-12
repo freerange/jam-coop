@@ -7,6 +7,13 @@
       url: artist_album_url(@album.artist, @album),
       type: "music.album",
       description: "An album by #{@album.artist.name} released on jam.coop - a music platform run by and for artists",
+    },
+    twitter: {
+      player: {
+        _: artist_album_player_url(@album.artist, @album),
+        height: Rails.configuration.x.player.height,
+        width: Rails.configuration.x.player.width
+      }
     }
   )
 %>

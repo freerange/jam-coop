@@ -14,6 +14,21 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test '#show renders twitter:player meta tag' do
+    get artist_album_url(@album.artist, @album)
+    assert_select %(meta[name="twitter:player"][content="#{artist_album_player_url(@album.artist, @album)}"])
+  end
+
+  test '#show renders twitter:player:height meta tag' do
+    get artist_album_url(@album.artist, @album)
+    assert_select %(meta[name="twitter:player:height"][content="#{Rails.configuration.x.player.height}"])
+  end
+
+  test '#show renders twitter:player:width meta tag' do
+    get artist_album_url(@album.artist, @album)
+    assert_select %(meta[name="twitter:player:width"][content="#{Rails.configuration.x.player.width}"])
+  end
+
   test '#show shows a buy button when album is published' do
     @album.published!
     get artist_album_path(@album.artist, @album)
