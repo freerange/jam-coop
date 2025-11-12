@@ -43,6 +43,7 @@ Rails.application.routes.draw do
 
   resources :artists do
     resources :albums, only: %i[show new edit create update] do
+      resource :player, only: %i[show]
       resources :purchases, only: %i[new create]
     end
   end
