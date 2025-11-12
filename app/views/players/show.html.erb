@@ -1,16 +1,32 @@
-<div>
+<div data-controller="player">
   <% if album.cover.attached? %>
     <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [750, 750])), alt: 'Album Cover' %>
   <% end %>
 
   <h1><%= album.title %></h1>
   <h2><%= artist.name %></h2>
-  <h3>
+  <h3 data-player-target="trackTitle">
     <%= album.tracks.first.title %>
   </h3>
 
   <% if album.preview && album.preview.file %>
-    <audio controls src="<%= cdn_url(album.preview.file) %>">
+    <audio controls class="hidden" data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(album.preview.file) %>">
     </audio>
+  <% end %>
+
+  <div class="bg-slate-200 cursor-pointer" data-action="click->player#setProgress" data-player-target="progressContainer">
+    <div class="w-0 h-4 bg-slate-500" data-player-target="progress"></div>
+  </div>
+  <button data-action="player#playPrev">&laquo;</button>
+  <button data-action="player#play" data-player-target="playButton">Play</button>
+  <button class="hidden" data-action="player#pause" data-player-target="pauseButton">Pause</button>
+  <button data-action="player#playNext">&raquo;</button>
+
+  <% album.tracks.each_with_index do |track, index| %>
+    <% if track.preview && track.preview.file %>
+      <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= cdn_url(track.preview.file) %>">
+        <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span>
+      </div>
+    <% end %>
   <% end %>
 </div>
