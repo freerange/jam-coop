@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
     policy.frame_ancestors :self, 'https:'
   end
 
-  helper_method :album, :artist
+  helper_method :album, :artist, :player_dimensions
 
   def show
     skip_authorization
@@ -24,6 +24,10 @@ class PlayersController < ApplicationController
 
   def artist
     @artist ||= Artist.friendly.find(params[:artist_id])
+  end
+
+  def player_dimensions
+    [435, 450].freeze
   end
 
   def allow_iframe

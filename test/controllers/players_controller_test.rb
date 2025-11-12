@@ -13,6 +13,11 @@ class PlayersControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test '#show displays album artwork image' do
+    get artist_album_player_path(@artist, @album)
+    assert_select "img[alt='Album Cover']"
+  end
+
   test '#show displays album title' do
     get artist_album_player_path(@artist, @album)
     assert_select 'h1', text: @album.title
