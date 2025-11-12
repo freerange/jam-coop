@@ -99,5 +99,6 @@ Rails.application.configure do
 
   config.after_initialize do
     Prosopite.raise = true
+    Prosopite.allow_stack_paths = ['Track#transcode']
   end
 end
