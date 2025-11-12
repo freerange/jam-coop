@@ -28,6 +28,11 @@ class PlayersControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     assert_select 'h2', text: @artist.name
   end
 
+  test '#show displays title of first track' do
+    get artist_album_player_path(@artist, @album)
+    assert_select 'h3', text: @album.tracks.first.title
+  end
+
   test '#show allows page to be used in iframe on own site in newer browsers' do
     get artist_album_player_path(@artist, @album)
     assert_includes response.headers['Content-Security-Policy'], "'self'"
