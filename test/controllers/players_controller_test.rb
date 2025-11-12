@@ -22,4 +22,19 @@ class PlayersControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     get artist_album_player_path(@artist, @album)
     assert_select 'h2', text: @artist.name
   end
+
+  test '#show allows page to be used in iframe on own site in newer browsers' do
+    get artist_album_player_path(@artist, @album)
+    assert_includes response.headers['Content-Security-Policy'], "'self'"
+  end
+
+  test '#show allows page to be used in iframe on https sites in newer browsers' do
+    get artist_album_player_path(@artist, @album)
+    assert_includes response.headers['Content-Security-Policy'], 'https:'
+  end
+
+  test '#show allows page to be used in iframe on any site in older browsers' do
+    get artist_album_player_path(@artist, @album)
+    assert_nil response.headers['X-Frame-Options']
+  end
 end
