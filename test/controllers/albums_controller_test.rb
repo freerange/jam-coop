@@ -171,6 +171,21 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_equal 'You are not authorized to perform this action.', flash[:alert]
   end
 
+  test '#show renders twitter:player meta tag' do
+    get artist_album_path(album.artist, album)
+    assert_select %(meta[name="twitter:player"][content="#{artist_album_player_url(album.artist, album)}"])
+  end
+
+  test '#show renders twitter:player:height meta tag' do
+    get artist_album_path(album.artist, album)
+    assert_select %(meta[name="twitter:player:height"][content="#{Rails.configuration.x.player.height}"])
+  end
+
+  test '#show renders twitter:player:width meta tag' do
+    get artist_album_path(album.artist, album)
+    assert_select %(meta[name="twitter:player:width"][content="#{Rails.configuration.x.player.width}"])
+  end
+
   test '#new' do
     get new_artist_album_path(album.artist)
     assert_redirected_to log_in_path
