@@ -1,14 +1,16 @@
-<% if album.cover.attached? %>
-  <%= image_tag cdn_url(album.cover.representation(resize_to_limit: player_dimensions)), alt: 'Album Cover' %>
-<% end %>
+<div>
+  <% if album.cover.attached? %>
+    <%= image_tag cdn_url(album.cover.representation(resize_to_limit: player_dimensions)), alt: 'Album Cover' %>
+  <% end %>
 
-<h1><%= album.title %></h1>
-<h2><%= artist.name %></h2>
-<h3>
-  <%= album.tracks.first.title %>
-</h3>
+  <h1><%= album.title %></h1>
+  <h2><%= artist.name %></h2>
+  <h3>
+    <%= album.tracks.first.title %>
+  </h3>
 
-<% if album.preview && album.preview.file %>
-  <audio controls src="<%= cdn_url(album.preview.file) %>">
-  </audio>
-<% end %>
+  <% if album.preview && album.preview.file %>
+    <audio controls src="<%= cdn_url(album.preview.file) %>">
+    </audio>
+  <% end %>
+</div>
