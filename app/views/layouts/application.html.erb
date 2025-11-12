@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= display_meta_tags site: "jam.coop" %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <%= hotwire_livereload_tags if Rails.env.development? %>
-    <%= content_for(:auto_discovery) %>
-    <% if Rails.env.production? %>
-      <script defer data-domain="jam.coop" src="https://plausible.io/js/script.js"></script>
-    <% end %>
-    <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+    <%= render partial: 'layouts/head' %>
     <%= yield :head %>
   </head>
 
