@@ -31,7 +31,7 @@ class PlayersController < ApplicationController
   end
 
   def player_dimensions
-    [435, 450].freeze
+    [Rails.configuration.x.player.width, Rails.configuration.x.player.height].freeze
   end
 
   def allow_iframe
