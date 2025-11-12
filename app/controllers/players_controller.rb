@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PlayersController < ApplicationController
+  layout 'player'
+
   skip_before_action :authenticate
 
   helper_method :album, :artist
