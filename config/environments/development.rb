@@ -2,8 +2,6 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.routes.default_url_options = { host: 'localhost', port: 3000 }
-
 Rails.application.configure do
   config.enable_reloading = true
   config.eager_load = false
@@ -35,7 +33,6 @@ Rails.application.configure do
   else
     config.action_mailer.delivery_method = :letter_opener
   end
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.active_support.deprecation = :log
   config.active_support.disallowed_deprecation = :raise
@@ -61,4 +58,9 @@ Rails.application.configure do
     Prosopite.raise = true
     Prosopite.allow_stack_paths = ['Track#transcode']
   end
+
+  config.base_url = ENV.fetch('BASE_URL', 'http://localhost:3000')
+  config.cdn_base_url = ENV.fetch('CDN_BASE_URL', config.base_url)
+
+  config.hosts << URI.parse(Rails.configuration.base_url).host
 end

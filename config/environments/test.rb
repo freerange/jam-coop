@@ -2,8 +2,6 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.routes.default_url_options[:host] = 'example.com'
-
 Rails.application.configure do
   config.enable_reloading = false
   config.eager_load = ENV['CI'].present?
@@ -21,7 +19,6 @@ Rails.application.configure do
   config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'example.com' }
   config.action_mailer.delivery_method = :test
 
   config.active_support.deprecation = :stderr
@@ -35,4 +32,7 @@ Rails.application.configure do
   config.after_initialize do
     Prosopite.raise = true
   end
+
+  config.base_url = 'http://example.com'
+  config.cdn_base_url = config.base_url
 end
