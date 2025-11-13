@@ -5,4 +5,4 @@ default_options = { host: 'localhost', port: 3000 }
 
 options = Rails.env.production? ? production_options : default_options
 
-Rails.application.config.cdn_url_options = options
+Rails.configuration.cdn_url_options = options
