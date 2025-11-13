@@ -59,5 +59,7 @@ Rails.application.configure do
     Prosopite.allow_stack_paths = ['Track#transcode']
   end
 
-  config.base_url = 'http://localhost:3000'
+  config.base_url = ENV.fetch('BASE_URL', 'http://localhost:3000')
+
+  config.hosts << URI.parse(Rails.configuration.base_url).host
 end

@@ -36,5 +36,5 @@ Rails.application.configure do
 
   config.active_record.dump_schema_after_migration = false
 
-  config.base_url = 'https://jam.coop'
+  config.base_url = ENV.fetch('BASE_URL', 'https://jam.coop')
 end
