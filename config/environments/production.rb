@@ -2,7 +2,7 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.routes.default_url_options = { host: 'jam.coop', protocol: 'https:' }
+Rails.application.default_url_options = { host: 'jam.coop', protocol: 'https:' }
 
 Rails.application.configure do
   config.enable_reloading = false

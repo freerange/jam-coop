@@ -2,7 +2,7 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.routes.default_url_options = { host: 'localhost', port: 3000 }
+Rails.application.default_url_options = { host: 'localhost', port: 3000 }
 
 Rails.application.configure do
   config.enable_reloading = true
