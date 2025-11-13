@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 production_options = { host: 'cdn.jam.coop', protocol: 'https' }
-default_options = { host: 'localhost', port: 3000 }
 
-options = Rails.env.production? ? production_options : default_options
+options = Rails.env.production? ? production_options : Rails.application.default_url_options
 
 Rails.configuration.cdn_url_options = options
