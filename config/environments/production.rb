@@ -23,6 +23,13 @@ Rails.application.configure do
                                        .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
   config.log_tags = [:request_id]
   config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
+  config.log_formatter = Logger::Formatter.new
+
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new($stdout)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
 
   config.active_job.queue_adapter = :solid_queue
 
@@ -35,14 +42,6 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   config.active_support.report_deprecations = false
-
-  config.log_formatter = Logger::Formatter.new
-
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new($stdout)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
 
   config.active_record.dump_schema_after_migration = false
 end
