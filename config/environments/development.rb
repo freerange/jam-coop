@@ -35,7 +35,6 @@ Rails.application.configure do
   else
     config.action_mailer.delivery_method = :letter_opener
   end
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.active_support.deprecation = :log
   config.active_support.disallowed_deprecation = :raise
