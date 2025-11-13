@@ -10,7 +10,7 @@ module Identity
     end
 
     test 'sending a password reset email' do
-      visit log_in_url
+      visit log_in_path
       click_on 'Forgot your password?'
 
       fill_in 'Email', with: @user.email
@@ -20,7 +20,7 @@ module Identity
     end
 
     test 'updating password' do
-      visit edit_identity_password_reset_url(sid: @sid)
+      visit edit_identity_password_reset_path(sid: @sid)
 
       fill_in 'New password', with: 'Secret6*4*2*'
       fill_in 'Confirm new password', with: 'Secret6*4*2*'

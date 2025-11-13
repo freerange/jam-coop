@@ -17,7 +17,7 @@ module ActiveSupport
     # parallelize(workers: :number_of_processors)
 
     def log_in_as(user)
-      post(log_in_url, params: { email: user.email, password: 'Secret1*3*5*' })
+      post(log_in_path, params: { email: user.email, password: 'Secret1*3*5*' })
       user
     end
   end

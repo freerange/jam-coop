@@ -8,7 +8,7 @@ class SessionsTest < ApplicationSystemTestCase
   end
 
   test 'logging in' do
-    visit log_in_url
+    visit log_in_path
     fill_in 'Email', with: @user.email
     fill_in 'Password', with: 'Secret1*3*5*'
     click_on 'Log in'

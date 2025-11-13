@@ -13,7 +13,7 @@ class InterestsController < ApplicationController
 
     if @interest.save
       InterestsMailer.confirm(@interest).deliver_later
-      redirect_to thankyou_url
+      redirect_to thankyou_path
     else
       render :new, status: :unprocessable_content
     end
@@ -24,9 +24,9 @@ class InterestsController < ApplicationController
 
     if interest
       interest.email_activate
-      redirect_to confirmation_url
+      redirect_to confirmation_path
     else
-      redirect_to root_url
+      redirect_to root_path
     end
   end
 
