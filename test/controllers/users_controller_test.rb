@@ -9,14 +9,14 @@ class UsersControllerTestSignedIn < ActionDispatch::IntegrationTest
   end
 
   test '#show' do
-    get account_url
+    get account_path
     assert_response :success
   end
 end
 
 class UserControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#show' do
-    get account_url
+    get account_path
     assert_redirected_to log_in_path
   end
 end

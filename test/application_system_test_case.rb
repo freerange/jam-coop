@@ -15,11 +15,11 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def log_in_as(user)
-    visit log_in_url
+    visit log_in_path
     fill_in :email, with: user.email
     fill_in :password, with: 'Secret1*3*5*'
     click_on 'Log in'
-    assert_current_path root_url
+    assert_current_path root_path
     user
   end
 

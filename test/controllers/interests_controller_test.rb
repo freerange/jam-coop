@@ -9,27 +9,27 @@ class InterestsControllerTest < ActionDispatch::IntegrationTest
 
   test '#create should create interest' do
     assert_difference('Interest.count') do
-      post interests_url, params: { interest: { email: @interest.email } }
+      post interests_path, params: { interest: { email: @interest.email } }
     end
 
-    assert_redirected_to thankyou_url
+    assert_redirected_to thankyou_path
   end
 
   test '#create should find an existing record if one exists' do
     @interest.save
 
     assert_no_difference('Interest.count') do
-      post interests_url, params: { interest: { email: @interest.email } }
+      post interests_path, params: { interest: { email: @interest.email } }
     end
 
-    assert_redirected_to thankyou_url
+    assert_redirected_to thankyou_path
   end
 
   test '#create should send a confirmation email' do
     @interest.save
 
     assert_enqueued_emails 1 do
-      post interests_url, params: { interest: { email: @interest.email } }
+      post interests_path, params: { interest: { email: @interest.email } }
     end
   end
 
@@ -37,15 +37,15 @@ class InterestsControllerTest < ActionDispatch::IntegrationTest
     @interest.save
 
     assert_changes -> { @interest.reload.email_confirmed } do
-      get confirm_email_interest_url(@interest.confirm_token)
+      get confirm_email_interest_path(@interest.confirm_token)
     end
 
-    assert_redirected_to confirmation_url
+    assert_redirected_to confirmation_path
   end
 
   test '#confirm_email should handle unknown confirmation tokens' do
-    get confirm_email_interest_url('invalid-token')
+    get confirm_email_interest_path('invalid-token')
 
-    assert_redirected_to root_url
+    assert_redirected_to root_path
   end
 end

@@ -12,7 +12,7 @@ class ReorderingTracklistTest < ApplicationSystemTestCase
     first_track = @track
     second_track = create(:track, album: first_track.album, title: 'Second Track')
 
-    visit artist_album_url(first_track.artist, first_track.album)
+    visit artist_album_path(first_track.artist, first_track.album)
 
     assert_text "1. #{first_track.title}"
     assert_text "2. #{second_track.title}"

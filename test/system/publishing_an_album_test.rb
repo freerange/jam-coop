@@ -12,13 +12,13 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
 
   test 'publishing an album' do
     # Album does not appear in "recently released" section
-    visit root_url
+    visit root_path
     within(recently_released) do
       refute_text @album.title
     end
 
     # Artist sets visibility of album to published
-    visit artist_url(@album.artist)
+    visit artist_path(@album.artist)
     click_on @album.title.to_s
     click_on 'Edit'
     assert_checked_field 'Draft'
@@ -28,11 +28,11 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     sign_out
 
     # Listener visits published album page
-    visit artist_url(@album.artist)
+    visit artist_path(@album.artist)
     click_on @album.title
 
     # Album appears in "recently released" section
-    visit root_url
+    visit root_path
     within(recently_released) do
       assert_text @album.title
     end

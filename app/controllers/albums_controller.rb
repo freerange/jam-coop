@@ -19,7 +19,7 @@ class AlbumsController < ApplicationController
   def create
     if @album.save
       @album.transcode_tracks
-      redirect_to artist_album_url(@album.artist, @album), notice: 'Album was successfully created.'
+      redirect_to artist_album_path(@album.artist, @album), notice: 'Album was successfully created.'
     else
       render :new, status: :unprocessable_content
     end
@@ -27,7 +27,7 @@ class AlbumsController < ApplicationController
 
   def update
     if @album.update(album_params)
-      redirect_to artist_album_url(@album.artist, @album), notice: 'Artist was successfully updated.'
+      redirect_to artist_album_path(@album.artist, @album), notice: 'Artist was successfully updated.'
     else
       render :edit, status: :unprocessable_content
     end

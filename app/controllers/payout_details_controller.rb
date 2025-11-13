@@ -8,7 +8,7 @@ class PayoutDetailsController < ApplicationController
     authorize @payout_detail
 
     if @payout_detail.save
-      redirect_to account_url, notice: 'Payout details added'
+      redirect_to account_path, notice: 'Payout details added'
     else
       render 'users/show', status: :unprocessable_content
     end
@@ -21,7 +21,7 @@ class PayoutDetailsController < ApplicationController
     authorize @payout_detail
 
     if @payout_detail.update(payout_detail_params)
-      redirect_to account_url, notice: 'Payout details updated'
+      redirect_to account_path, notice: 'Payout details updated'
     else
       render 'users/show', status: :unprocessable_content
     end

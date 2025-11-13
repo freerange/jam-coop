@@ -9,7 +9,7 @@ class PayoutDetailsTest < ApplicationSystemTestCase
   end
 
   test 'adding payout details' do
-    visit account_url
+    visit account_path
 
     within(payout_details_section) do
       fill_in 'Name', with: 'John Lennon'
@@ -25,7 +25,7 @@ class PayoutDetailsTest < ApplicationSystemTestCase
   test 'updating payout details' do
     create(:payout_detail, user: @user)
 
-    visit account_url
+    visit account_path
 
     within(payout_details_section) do
       fill_in 'Name', with: 'John Smith'

@@ -34,7 +34,10 @@ class ArtistsController < ApplicationController
     respond_to do |format|
       if @artist.save
         format.html do
-          redirect_to edit_artist_url(@artist), notice: 'Artist was successfully created. You can now add albums below.'
+          redirect_to(
+            edit_artist_path(@artist),
+            notice: 'Artist was successfully created. You can now add albums below.'
+          )
         end
         format.json { render :show, status: :created, location: @artist }
       else
@@ -49,7 +52,7 @@ class ArtistsController < ApplicationController
 
     respond_to do |format|
       if @artist.update(artist_params)
-        format.html { redirect_to artist_url(@artist), notice: 'Artist was successfully updated.' }
+        format.html { redirect_to artist_path(@artist), notice: 'Artist was successfully updated.' }
         format.json { render :show, status: :ok, location: @artist }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -63,7 +66,7 @@ class ArtistsController < ApplicationController
     @artist.destroy
 
     respond_to do |format|
-      format.html { redirect_to artists_url, notice: 'Artist was successfully destroyed.' }
+      format.html { redirect_to artists_path, notice: 'Artist was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

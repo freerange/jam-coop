@@ -12,7 +12,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#new should render a registration form' do
-    get sign_up_url
+    get sign_up_path
 
     assert_response :success
     assert_select "input[type='email']"
@@ -23,7 +23,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test '#create creates a new user' do
     assert_difference('User.count') do
-      post sign_up_url, params: {
+      post sign_up_path, params: {
         email: 'user@example.com',
         password: 'Secret1*3*5*',
         password_confirmation: 'Secret1*3*5*'
@@ -32,7 +32,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#create sets a session token cookie' do
-    post sign_up_url, params: {
+    post sign_up_path, params: {
       email: 'user@example.com',
       password: 'Secret1*3*5*',
       password_confirmation: 'Secret1*3*5*'
@@ -42,7 +42,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#create redirects to the home page' do
-    post sign_up_url,
+    post sign_up_path,
          params: { email: 'user@example.com', password: 'Secret1*3*5*', password_confirmation: 'Secret1*3*5*' }
 
     assert_redirected_to root_path
@@ -50,20 +50,20 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test '#create sends an email verification email' do
     assert_enqueued_emails 1 do
-      post sign_up_url,
+      post sign_up_path,
            params: { email: 'user@example.com', password: 'Secret1*3*5*', password_confirmation: 'Secret1*3*5*' }
     end
   end
 
   test '#create shows an error if data is unprocessable' do
-    post sign_up_url, params: { email: '', password: '', password_confirmation: '' }
+    post sign_up_path, params: { email: '', password: '', password_confirmation: '' }
 
     assert_response :unprocessable_content
     assert_select 'h2', text: /errors prohibited this user from being saved/
   end
 
   test '#create makes a call to the cloudflare turnstile API to validate the request' do
-    post sign_up_url, params: {
+    post sign_up_path, params: {
       email: 'user@example.com',
       password: 'Secret1*3*5*',
       password_confirmation: 'Secret1*3*5*'

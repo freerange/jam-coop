@@ -11,39 +11,39 @@ class CollectionTest < ApplicationSystemTestCase
 
   test 'when a logged in user purchases an album it appears in their collection' do
     log_in_as(@user)
-    visit artist_album_url(@album.artist, @album)
+    visit artist_album_path(@album.artist, @album)
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'
     fake_stripe_webhook_event_completed(@user)
-    visit collection_url
+    visit collection_path
     assert_text @album.title
     click_on @album.title
     assert_text 'You own this album'
   end
 
   test 'when a logged out user purchases an album it appears in their collection' do
-    visit artist_album_url(@album.artist, @album)
+    visit artist_album_path(@album.artist, @album)
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'
     fake_stripe_webhook_event_completed(@user)
 
     log_in_as(@user)
-    visit collection_url
+    visit collection_path
     assert_text @album.title
   end
 
   test 'when someone purchases an album and then creates an account, the album appears in their collection' do
     user = build(:user, email: 'someone@example.com')
 
-    visit artist_album_url(@album.artist, @album)
+    visit artist_album_path(@album.artist, @album)
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'
     fake_stripe_webhook_event_completed(user)
 
-    visit root_url
+    visit root_path
     click_on 'sign up'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'Secret1*3*5*'
@@ -54,7 +54,7 @@ class CollectionTest < ApplicationSystemTestCase
     visit verify_email_url
     assert_text 'Thank you for verifying your email address'
 
-    visit collection_url
+    visit collection_path
     assert_text @album.title
   end
 

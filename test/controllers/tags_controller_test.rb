@@ -6,7 +6,7 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
   test '#show' do
     tag = create(:tag)
 
-    get tag_url(tag)
+    get tag_path(tag)
 
     assert_response :success
   end

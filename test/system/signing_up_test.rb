@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class SigningUpTest < ApplicationSystemTestCase
   test 'signing up' do
-    visit root_url
+    visit root_path
     click_on 'sign up'
     fill_in 'Email', with: 'user@example.com'
     fill_in 'Password', with: 'Secret1*3*5*'

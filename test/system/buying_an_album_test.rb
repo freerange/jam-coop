@@ -10,7 +10,7 @@ class BuyingAnAlbumTest < ApplicationSystemTestCase
   end
 
   test 'purchasing an album' do
-    visit artist_album_url(@album.artist, @album)
+    visit artist_album_path(@album.artist, @album)
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'

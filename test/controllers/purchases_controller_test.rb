@@ -4,14 +4,14 @@ require 'test_helper'
 
 class PurchasesControllerTest < ActionDispatch::IntegrationTest
   test 'show' do
-    get purchase_url(create(:purchase))
+    get purchase_path(create(:purchase))
     assert_response :success
   end
 
   test 'should get new' do
     album = create(:album)
 
-    get new_artist_album_purchase_url(album.artist, album)
+    get new_artist_album_purchase_path(album.artist, album)
 
     assert_response :success
   end
@@ -21,7 +21,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album),
+    post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_redirected_to 'https://stripe.example.com'
@@ -32,11 +32,11 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: false, error: 'error message'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album),
+    post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_equal 'error message', flash[:alert]
-    assert_redirected_to new_artist_album_purchase_url(album.artist, album)
+    assert_redirected_to new_artist_album_purchase_path(album.artist, album)
   end
 
   test 'create creates a new purchase' do
@@ -45,7 +45,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     StripeService.expects(:new).returns(service)
 
     assert_difference('Purchase.count') do
-      post artist_album_purchases_url(album.artist, album),
+      post artist_album_purchases_path(album.artist, album),
            params: { purchase: { price: album.price, contact_opt_in: true } }
     end
   end
@@ -55,7 +55,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album),
+    post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_equal true, Purchase.last.contact_opt_in
@@ -66,7 +66,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album),
+    post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_equal 'cs_test_foo', Purchase.last.stripe_session_id
@@ -79,7 +79,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album),
+    post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_equal user, Purchase.last.user
@@ -90,7 +90,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
 
-    post artist_album_purchases_url(album.artist, album),
+    post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_nil Purchase.last.user

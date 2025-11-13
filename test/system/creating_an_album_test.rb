@@ -11,7 +11,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
   test 'creating an album' do
     log_in_as(@artist_user)
-    visit edit_artist_url(@artist)
+    visit edit_artist_path(@artist)
     click_on 'Add album'
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
@@ -33,7 +33,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     admin = create(:user, admin: true, email: 'admin@example.com')
     log_in_as(admin)
     album = Album.find_by(title: "A Hard Day's Night")
-    visit artist_album_url(album.artist, album)
+    visit artist_album_path(album.artist, album)
     within(admin_section) do
       assert_text 'And I Love Her'
       assert_text 'mp3v0'
@@ -46,7 +46,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     log_in_as(@artist_user)
     album = create(:album, artist: @artist)
 
-    visit edit_artist_url(@artist, album)
+    visit edit_artist_path(@artist, album)
     assert_text album.title
     click_on album.title
     fill_in 'Title', with: 'New Title'
@@ -61,7 +61,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     perform_enqueued_jobs
 
     using_session 'listener' do
-      visit artist_album_url(album.artist, album)
+      visit artist_album_path(album.artist, album)
 
       album.tracks.each do |track|
         assert_has_playable_track(track)
@@ -70,7 +70,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
     using_session 'artist' do
       log_in_as(@artist_user)
-      visit edit_artist_url(@artist)
+      visit edit_artist_path(@artist)
       assert_text album.title
       click_on album.title
 
@@ -96,7 +96,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     perform_enqueued_jobs
 
     using_session 'listener' do
-      visit artist_album_url(album.artist, album)
+      visit artist_album_path(album.artist, album)
 
       assert_text 'Rename the first track'
       assert_text album.reload.tracks[1].title
