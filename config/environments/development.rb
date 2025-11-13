@@ -44,6 +44,7 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
   config.active_record.verbose_query_logs = true
 
+  config.active_job.queue_adapter = :solid_queue
   config.active_job.verbose_enqueue_logs = true
 
   config.assets.quiet = true
@@ -53,8 +54,6 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.generators.apply_rubocop_autocorrect_after_generate!
-
-  config.active_job.queue_adapter = :solid_queue
 
   config.view_component.previews.default_layout = 'component_preview'
 
