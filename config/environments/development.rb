@@ -60,6 +60,7 @@ Rails.application.configure do
   end
 
   config.base_url = ENV.fetch('BASE_URL', 'http://localhost:3000')
+  config.cdn_base_url = ENV.fetch('CDN_BASE_URL', config.base_url)
 
   config.hosts << URI.parse(Rails.configuration.base_url).host
 end

@@ -34,4 +34,5 @@ Rails.application.configure do
   end
 
   config.base_url = 'http://example.com'
+  config.cdn_base_url = config.base_url
 end

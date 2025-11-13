@@ -37,4 +37,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.base_url = ENV.fetch('BASE_URL', 'https://jam.coop')
+  config.cdn_base_url = ENV.fetch('CDN_BASE_URL', 'https://cdn.jam.coop')
 end
