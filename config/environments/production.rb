@@ -2,8 +2,6 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.default_url_options = { host: 'jam.coop', protocol: 'https:' }
-
 Rails.application.configure do
   config.enable_reloading = false
   config.eager_load = true
@@ -37,4 +35,6 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   config.active_record.dump_schema_after_migration = false
+
+  config.base_url = 'https://jam.coop'
 end

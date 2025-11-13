@@ -2,8 +2,6 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.default_url_options[:host] = 'example.com'
-
 Rails.application.configure do
   config.enable_reloading = false
   config.eager_load = ENV['CI'].present?
@@ -34,4 +32,6 @@ Rails.application.configure do
   config.after_initialize do
     Prosopite.raise = true
   end
+
+  config.base_url = 'http://example.com'
 end

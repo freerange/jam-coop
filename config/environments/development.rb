@@ -2,8 +2,6 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.default_url_options = { host: 'localhost', port: 3000 }
-
 Rails.application.configure do
   config.enable_reloading = true
   config.eager_load = false
@@ -60,4 +58,6 @@ Rails.application.configure do
     Prosopite.raise = true
     Prosopite.allow_stack_paths = ['Track#transcode']
   end
+
+  config.base_url = 'http://localhost:3000'
 end
