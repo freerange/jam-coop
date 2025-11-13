@@ -39,6 +39,6 @@ module MusicCoop
 
     # New 7.1 default for this param is true, but causes a test
     # failure in track_test, so retaining the original behaviour
-    Rails.application.config.active_record.run_after_transaction_callbacks_in_order_defined = false
+    config.active_record.run_after_transaction_callbacks_in_order_defined = false
   end
 end
