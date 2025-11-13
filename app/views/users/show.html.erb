@@ -99,5 +99,23 @@
         </div>
       <% end %>
     <% end %>
+
+    <%= render(SidebarSectionComponent.new(title: 'Email preferences')) do |component| %>
+      <% component.with_subtitle do %>
+        <p>Manage which emails you receive from jam.coop.</p>
+      <% end %>
+
+      <%= form_with(model: @user, url: users_newsletter_preference_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
+        <div class="flex items-center gap-3 mb-6">
+          <%= form.check_box :opt_in_to_newsletter, class: 'h-6 w-6 text-amber-600 rounded border-slate-300' %>
+          <label for="user_opt_in_to_newsletter">
+            Newsletter (an occasional email with updates on new features)
+          </label>
+        </div>
+        <div class="flex flex-row justify-end">
+          <%= form.submit "Save changes", class: 'mt-3'%>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 <% end %>

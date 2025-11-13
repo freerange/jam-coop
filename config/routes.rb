@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     resource :password_reset,     only: %i[new edit create update]
   end
 
+  patch 'users/newsletter_preference', to: 'users#update_newsletter_preference'
+
   resources :interests, only: %i[new create] do
     member do
       get :confirm_email

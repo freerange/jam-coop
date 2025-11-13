@@ -7,9 +7,23 @@ class UsersController < ApplicationController
     authorize @user
   end
 
+  def update_newsletter_preference
+    authorize @user
+
+    if @user.update(user_params)
+      redirect_to account_path, notice: 'Newsletter preference updated successfully.'
+    else
+      redirect_to account_path, alert: 'Unable to update newsletter preference.'
+    end
+  end
+
   private
 
   def set_user
     @user = Current.user
+  end
+
+  def user_params
+    params.require(:user).permit(:opt_in_to_newsletter)
   end
 end

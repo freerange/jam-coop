@@ -12,6 +12,16 @@ class UsersControllerTestSignedIn < ActionDispatch::IntegrationTest
     get account_path
     assert_response :success
   end
+
+  test '#update_newsletter_preference can opt out of newsletter' do
+    assert @user.opt_in_to_newsletter
+
+    patch users_newsletter_preference_path, params: { user: { opt_in_to_newsletter: false } }
+
+    assert_redirected_to account_path
+    assert_equal 'Newsletter preference updated successfully.', flash[:notice]
+    assert_not @user.reload.opt_in_to_newsletter
+  end
 end
 
 class UserControllerTestSignedOut < ActionDispatch::IntegrationTest
