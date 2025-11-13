@@ -18,9 +18,14 @@ class EmailSubscriptionChangesController < ApplicationController
   def create
     skip_authorization
 
-    update_sending_suppressed_for(user)
-    update_sending_suppressed_for(interest)
-    update_sending_suppressed_for(purchase)
+    if broadcast?
+      update_newsletter_opt_in_for(user)
+      update_sending_suppressed_for(interest)
+    else
+      update_sending_suppressed_for(user)
+      update_sending_suppressed_for(interest)
+      update_sending_suppressed_for(purchase)
+    end
     render json: { user: { id: user&.id }, interest: { id: interest&.id } }, status: :created
   end
 
@@ -34,6 +39,20 @@ class EmailSubscriptionChangesController < ApplicationController
     else
       recipient.update!(sending_suppressed_at: nil)
     end
+  end
+
+  def update_newsletter_opt_in_for(recipient)
+    return if recipient.blank?
+
+    if params[:SuppressSending]
+      recipient.update!(opt_in_to_newsletter: false)
+    else
+      recipient.update!(opt_in_to_newsletter: true)
+    end
+  end
+
+  def broadcast?
+    params[:MessageStream] == 'broadcast'
   end
 
   def user
