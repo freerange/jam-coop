@@ -68,6 +68,14 @@ class EmailSubscriptionChangesControllerTest < ActionDispatch::IntegrationTest
     assert_not user.reload.suppress_sending?
   end
 
+  test 'raises an exception if the message stream is not known' do
+    params = params(stream: 'unknown-stream')
+    create_user(email: params['Recipient'])
+    post(email_subscription_changes_path, headers:, params:)
+
+    assert_response :unprocessable_content
+  end
+
   test 'ManualSuppression from broadcast sets User#opt_in_to_newsletter false' do
     params = params(stream: 'broadcast', reason: 'ManualSuppression')
     user = create_user(email: params['Recipient'], opt_in_to_newsletter: true)

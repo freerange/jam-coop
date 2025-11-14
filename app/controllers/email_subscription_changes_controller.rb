@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EmailSubscriptionChangesController < ApplicationController
+  class UnknownMessageStream < StandardError; end
+
   TOKEN = Rails.configuration.postmark[:webhooks_token]
 
   skip_forgery_protection
@@ -15,16 +17,26 @@ class EmailSubscriptionChangesController < ApplicationController
     render json: { error: 'invalid', messages: e.record.errors.full_messages }, status: :unprocessable_content
   end
 
+  rescue_from UnknownMessageStream do |e|
+    render json: { error: 'unknown_message_stream', messages: [e.message] }, status: :unprocessable_content
+    Rollbar.error(e.message)
+  end
+
   def create
     skip_authorization
 
-    if broadcast?
+    message_stream = params[:MessageStream]
+
+    case message_stream
+    when 'broadcast'
       update_newsletter_opt_in_for(user)
       update_sending_suppressed_for(interest)
-    else
+    when 'outbound'
       update_sending_suppressed_for(user)
       update_sending_suppressed_for(interest)
       update_sending_suppressed_for(purchase)
+    else
+      raise UnknownMessageStream, "Unknown MessageStream: #{message_stream}"
     end
     render json: { user: { id: user&.id }, interest: { id: interest&.id } }, status: :created
   end
@@ -49,10 +61,6 @@ class EmailSubscriptionChangesController < ApplicationController
     else
       recipient.update!(opt_in_to_newsletter: true)
     end
-  end
-
-  def broadcast?
-    params[:MessageStream] == 'broadcast'
   end
 
   def user
