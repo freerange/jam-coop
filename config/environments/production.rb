@@ -8,7 +8,7 @@ Rails.application.configure do
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
+  config.public_file_server.headers = { 'cache-control' => "public, max-age=#{1.year.to_i}" }
 
   config.assets.compile = false
 
@@ -16,10 +16,9 @@ Rails.application.configure do
 
   config.force_ssl = true
 
-  config.logger = ActiveSupport::Logger.new($stdout)
-                                       .tap  { |logger| logger.formatter = Logger::Formatter.new }
-                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
   config.log_tags = [:request_id]
+  config.logger   = ActiveSupport::TaggedLogging.logger($stdout)
+
   config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
 
   config.active_job.queue_adapter = :solid_queue
@@ -30,11 +29,14 @@ Rails.application.configure do
     api_token: Rails.configuration.postmark[:api_key]
   }
 
+  config.silence_healthcheck_path = '/up'
+
   config.i18n.fallbacks = true
 
   config.active_support.report_deprecations = false
 
   config.active_record.dump_schema_after_migration = false
+  config.active_record.attributes_for_inspect = [:id]
 
   config.base_url = ENV.fetch('BASE_URL', 'https://jam.coop')
   config.cdn_base_url = ENV.fetch('CDN_BASE_URL', 'https://cdn.jam.coop')
