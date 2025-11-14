@@ -39,7 +39,9 @@ If you need to send email via Postmark in development you can set the `USE_POSTM
 
 ## Using Stripe in development
 
-To receive events from Stripe webhooks in your local environment you need to run the Stripe CLI with:
+Get the API Secret key from the Test sandbox in Stripe and set `STRIPE_SECRET_KEY` to this value in your local `.env` file.
+
+To receive events from Stripe webhooks in your local environment you need to run the [Stripe CLI](https://docs.stripe.com/stripe-cli) with:
 
     stripe listen --forward-to localhost:3000/stripe_webhook_events
 
