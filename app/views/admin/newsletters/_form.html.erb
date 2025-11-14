@@ -1,0 +1,10 @@
+<%= form_for([:admin, newsletter], builder: TailwindFormBuilder) do |form| %>
+  <%= render ModelErrorComponent.new(model: newsletter) %>
+  <%= render(SidebarSectionComponent.new(title: 'Details')) do %>
+    <%= form.text_field :title, class: 'w-full mb-3' %>
+    <%= form.textarea :body, rows: 20, class: 'w-full mb-3' %>
+  <% end %>
+  <div class="flex flex-row justify-end">
+    <%= form.submit "Save", class: 'mt-3' %>
+  </div>
+<% end %>

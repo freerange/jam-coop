@@ -1,0 +1,9 @@
+<%= render(SectionComponent.new(title: 'New newsletter')) do %>
+  <div class="flex flex-col gap-3">
+    <%= render BreadcrumbComponent.new(items: [
+        { text: 'My account', link: account_path },
+        { text: 'New newsletter' }
+      ]) %>
+    <%= render "form", newsletter: @newsletter %>
+  </div>
+<% end %>
