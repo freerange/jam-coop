@@ -18,7 +18,9 @@ module Admin
       click_on 'Save'
 
       assert_text 'Newsletter was successfully created.'
-      assert_field 'Title', with: 'New Newsletter Title'
+
+      visit newsletters_path
+      assert_text 'New Newsletter Title'
     end
 
     test 'editing a newsletter' do

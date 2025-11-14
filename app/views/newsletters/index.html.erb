@@ -1,0 +1,17 @@
+<%
+  set_meta_tags(
+    title: "News",
+  )
+%>
+<div class="grid grid-col gap-6">
+  <% @newsletters.each do |newsletter| %>
+    <%= render(SectionComponent.new(title: newsletter.title)) do %>
+      <time class="text-sm text-slate-500 mb-4 block" datetime="<%= newsletter.created_at.iso8601 %>">
+        <%= newsletter.created_at.strftime('%B %d, %Y') %>
+      </time>
+      <div>
+        <%= markdown(newsletter.body) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
