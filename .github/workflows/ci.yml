@@ -88,7 +88,7 @@ jobs:
     needs:
       - linters
       - tests
-    if: ${{ always() }}
+    if: ${{ always() && github.ref == 'refs/heads/main' }}
     steps:
       - name: Slack notification
         uses: justinr636/github-action-slack-notify-build@v1
