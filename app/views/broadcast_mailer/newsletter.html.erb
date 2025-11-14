@@ -6,7 +6,7 @@
       <p>Hey folks!</p>
 
       <p>It's been a while since we sent out some updates
-        about <a href="https://jam.coop">jam.coop</a> and we've added
+        about <%= link_to 'jam.coop', root_url %> and we've added
         a few new features for you to try out. Read on!</p>
 
       <h2>What is jam.coop?</h2>
@@ -15,7 +15,7 @@
         musicians and the people who work here. Owning it together
         means we can rely on it and share in the profits
         together. We've answered some common questions
-        at <a href="https://jam.coop/about">jam.coop/about</a>.</p>
+        at <%= link_to 'jam.coop/about', about_url %>.</p>
 
       <h2>Tagging your music</h2>
 
@@ -25,7 +25,7 @@
         use, but soon we'll let artists add their own too.</p>
 
       <p>If you're an artist, head to
-        your <a href="https://jam.coop/account">account dashboard</a>,
+        your <%= link_to 'account dashboard', account_url %>,
         edit your albums and tag away. Make atmospheric sludge metal?
         We've got your back.</p>
 
@@ -33,7 +33,7 @@
         tagged, and then make it easier for people to find music using
         them. You can get a little peak by following the links on album
         pages, for
-        example <a href="https://jam.coop/tags/ambient">https://jam.coop/tags/ambient</a>.</p>
+        example <%= link_to 'jam.coop/tags/ambient', tag_url('ambient') %>.</p>
 
       <h2>Licensing your music</h2>
 
@@ -54,8 +54,8 @@
       <h2>ATOM FEEDS</h2>
 
       <p>You heard us. Keep up with the latest releases on jam like
-        it's 2005 with our <a href="https://jam.coop/albums.atom">Albums
-          Atom feed</a>.</p>
+        it's 2005 with our <%= link_to 'Albums
+          Atom feed', albums_url(format: 'atom') %>.</p>
 
       <p>We love feeds, so expect artist-specific, genre feeds and
         more soon.</p>
