@@ -35,7 +35,7 @@ gem 'solid_queue', '~> 1.1'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'stripe', '~> 17.2'
-gem 'tailwindcss-rails', '~> 3.0'
+gem 'tailwindcss-rails', '~> 4.4'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'view_component'
