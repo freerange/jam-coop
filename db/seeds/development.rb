@@ -48,3 +48,8 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
     album.published!
   end
 end
+
+Newsletter.create(title: 'Newsletter #1', body: Faker::Markdown.sandwich(sentences: 6, repeat: 3),
+                  published_at: 3.weeks.ago)
+Newsletter.create(title: 'Newsletter #2', body: Faker::Markdown.sandwich(sentences: 6, repeat: 3),
+                  published_at: 1.week.ago)
