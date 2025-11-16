@@ -61,7 +61,7 @@ end
 group :test do
   gem 'capybara'
   gem 'cuprite'
-  gem 'mocha', '~> 2.1'
+  gem 'mocha'
   gem 'rubocop-factory_bot'
   gem 'webmock'
 end

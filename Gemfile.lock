@@ -249,7 +249,7 @@ GEM
       logger
     mini_mime (1.1.5)
     minitest (5.26.1)
-    mocha (2.8.0)
+    mocha (3.0.0.pre.rc.2)
       ruby2_keywords (>= 0.0.5)
     msgpack (1.8.0)
     net-http (0.4.1)
@@ -484,7 +484,7 @@ DEPENDENCIES
   letter_opener
   lookbook (>= 2.3.13)
   meta-tags (~> 2.19)
-  mocha (~> 2.1)
+  mocha
   pg (~> 1.5)
   pg_query
   postmark-rails
