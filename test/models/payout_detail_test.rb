@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class PayoutDetailTest < ActiveSupport::TestCase
-  test 'fixture is valid' do
+  test 'factory is valid' do
     assert build(:payout_detail).valid?
   end
 

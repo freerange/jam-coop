@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class TrackTest < ActiveSupport::TestCase
-  test 'fixture is valid' do
+  test 'factory is valid' do
     assert build(:track).valid?
   end
 

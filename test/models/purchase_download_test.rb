@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class PurchaseDownloadTest < ActiveSupport::TestCase
-  test 'fixture is valid' do
+  test 'factory is valid' do
     assert build(:purchase_download).valid?
   end
 end

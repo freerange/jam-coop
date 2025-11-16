@@ -5,7 +5,7 @@ require 'test_helper'
 class ArtistTest < ActiveSupport::TestCase
   include ActiveJob::TestHelper
 
-  test 'fixture is valid' do
+  test 'factory is valid' do
     assert build(:artist).valid?
   end
 
