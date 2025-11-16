@@ -10,7 +10,7 @@ class PurchaseTest < ActiveSupport::TestCase
   end
 
   test 'is invalid if price is less than the albums suggested price' do
-    album = create(:album, price: '5.00')
+    album = build(:album, price: '5.00')
     purchase = build(:purchase, album:, price: '3.00')
 
     assert_not purchase.valid?

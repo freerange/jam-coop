@@ -6,8 +6,8 @@ class PurchaseMailerTest < ActionMailer::TestCase
   include Rails.application.routes.url_helpers
 
   test 'purchase_completed' do
-    album = create(:album)
-    purchase = create(:purchase, album:, price: album.price, customer_email: 'email@example.com')
+    album = build(:album)
+    purchase = build_stubbed(:purchase, album:, price: album.price, customer_email: 'email@example.com')
 
     mail = PurchaseMailer.with(purchase:).completed
 
@@ -16,7 +16,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
   end
 
   test 'do not send purchase completed email if sending is suppressed' do
-    purchase = create(:purchase, customer_email: 'email@example.com', sending_suppressed_at: Time.current)
+    purchase = build(:purchase, customer_email: 'email@example.com', sending_suppressed_at: Time.current)
     PurchaseMailer.with(purchase:).completed.deliver_now!
     assert_emails 0
   end

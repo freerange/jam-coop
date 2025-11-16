@@ -39,8 +39,8 @@ class AlbumPolicyTest < ActiveSupport::TestCase
   end
 
   test 'a user with an album belonging to their artist' do
-    album = create(:album)
-    user = create(:user, artists: [album.artist])
+    album = build(:album)
+    user = build(:user, artists: [album.artist])
     policy = AlbumPolicy.new(user, album)
 
     assert policy.show?
@@ -64,8 +64,8 @@ class AlbumPolicyTest < ActiveSupport::TestCase
 
   test 'non-signed-in user' do
     non_signed_in_user = NullUser.new
-    draft_album = create(:draft_album)
-    published_album = create(:published_album)
+    draft_album = build(:draft_album)
+    published_album = build(:published_album)
 
     assert_not AlbumPolicy.new(non_signed_in_user, draft_album).show?
     assert AlbumPolicy.new(non_signed_in_user, published_album).show?
@@ -84,8 +84,8 @@ class AlbumPolicyTest < ActiveSupport::TestCase
 
   test 'signed-in user' do
     user = build(:user)
-    draft_album = create(:draft_album)
-    published_album = create(:published_album)
+    draft_album = build(:draft_album)
+    published_album = build(:published_album)
 
     assert_not AlbumPolicy.new(user, draft_album).show?
     assert AlbumPolicy.new(user, published_album).show?
