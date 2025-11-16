@@ -31,7 +31,9 @@ FactoryBot.define do
       end
 
       after(:build) do |album, evaluator|
-        album.tracks = build_list(:track, evaluator.number_of_tracks, album:)
+        album.tracks = build_list(:track, evaluator.number_of_tracks, album:) do |t, i|
+          t.position = i + 1
+        end
       end
     end
   end

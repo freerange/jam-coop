@@ -6,7 +6,7 @@ class StripeServiceTest < ActiveSupport::TestCase
   include Rails.application.routes.url_helpers
 
   def setup
-    @purchase = create(:purchase)
+    @purchase = build_stubbed(:purchase)
   end
 
   test 'creates stripe checkout session with provided success_url' do
@@ -30,8 +30,8 @@ class StripeServiceTest < ActiveSupport::TestCase
   end
 
   test 'adds a product line item if the customer pays the suggested price' do
-    album = create(:album, price: 5.00)
-    purchase = create(:purchase, price: 5.00, album:)
+    album = build_stubbed(:album, price: 5.00)
+    purchase = build_stubbed(:purchase, price: 5.00, album:)
 
     expected_line_item = {
       price_data: {
@@ -53,8 +53,8 @@ class StripeServiceTest < ActiveSupport::TestCase
   end
 
   test 'adds a product line item and a gratuity if the customer pays more than the suggested price' do
-    album = create(:album, price: 5.00)
-    purchase = create(:purchase, price: 8.00, album:)
+    album = build_stubbed(:album, price: 5.00)
+    purchase = build_stubbed(:purchase, price: 8.00, album:)
 
     expected_purchase_line_item = {
       price_data: {

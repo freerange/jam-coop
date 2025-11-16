@@ -64,7 +64,7 @@ class TrackTest < ActiveSupport::TestCase
   end
 
   test '#transcode enqueues transcoding for each format' do
-    track = create(:track)
+    track = build(:track)
 
     Transcode.formats.each_key do |format|
       TranscodeJob.expects(:perform_later).with(track, format: format.to_sym)
@@ -87,7 +87,7 @@ class TrackTest < ActiveSupport::TestCase
   end
 
   test '#preview_duration duration of preview in seconds' do
-    track = create(:track)
+    track = build(:track)
     preview = stub(file: stub(metadata: { 'duration' => 200 }))
     track.stubs(:preview).returns(preview)
 
@@ -95,7 +95,7 @@ class TrackTest < ActiveSupport::TestCase
   end
 
   test '#metadata' do
-    track = create(:track)
+    track = build(:track)
 
     metadata = track.metadata
 
@@ -107,8 +107,8 @@ class TrackTest < ActiveSupport::TestCase
   end
 
   test '#metadata when album has released_on' do
-    album = create(:album, released_on: Time.zone.today)
-    track = create(:track, album:)
+    album = build(:album, released_on: Time.zone.today)
+    track = build(:track, album:)
 
     metadata = track.metadata
 
@@ -116,7 +116,7 @@ class TrackTest < ActiveSupport::TestCase
   end
 
   test '#number' do
-    album = create(:album_with_tracks)
+    album = build(:album_with_tracks)
 
     assert_equal %w[01 02], album.tracks.map(&:number)
   end

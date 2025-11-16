@@ -51,8 +51,8 @@ class ArtistPolicyTest < ActiveSupport::TestCase
   end
 
   test 'a user with an artist' do
-    artist = create(:artist)
-    user = create(:user, artists: [artist])
+    artist = build(:artist)
+    user = build(:user, artists: [artist])
 
     policy = ArtistPolicy.new(user, artist)
 
@@ -64,7 +64,7 @@ class ArtistPolicyTest < ActiveSupport::TestCase
   end
 
   test 'unverified users should not be able to create artists' do
-    user = create(:user, verified: false)
+    user = build(:user, verified: false)
 
     policy = ArtistPolicy.new(user, :_)
 
