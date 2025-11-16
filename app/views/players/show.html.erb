@@ -43,7 +43,7 @@
 
   <% album.tracks.each_with_index do |track, index| %>
     <% if track.preview && track.preview.file %>
-      <div data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= cdn_url(track.preview.file) %>">
+      <div class="hidden" data-player-target="track" data-action="click->player#playTrack" data-track-url="<%= cdn_url(track.preview.file) %>">
         <%= index + 1 %>. <span class="hover:underline cursor-pointer"><%= track.title %></span>
       </div>
     <% end %>
