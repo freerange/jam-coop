@@ -13,7 +13,11 @@ atom_feed(language: 'en-GB', schema_date: 2024) do |f|
     f.entry(album, id:, url:, published:) do |e|
       e.title album.title
       e.author { |a| a.name @artist.name }
-      e.content format_metadata(album.about), type: 'html'
+      html = []
+      html << image_tag(cdn_url(album.cover.representation(resize_to_limit: [750, 750]))) if album.cover.attached?
+      html << format_metadata(album.about)
+      html << link_to('Listen on jam.coop', url)
+      e.content safe_join(html), type: 'html'
     end
   end
 end
