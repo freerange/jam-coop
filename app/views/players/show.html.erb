@@ -1,7 +1,7 @@
 <div class="flex flex-col h-screen" data-controller="player">
-  <div class="flex-1 min-h-0">
+  <div class="flex-1 min-h-0 flex justify-center">
     <% if album.cover.attached? %>
-      <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [750, 750])), alt: 'Album Cover' %>
+      <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [750, 750])), alt: 'Album Cover', class: 'max-h-full max-w-full object-contain' %>
     <% end %>
   </div>
 
