@@ -9,11 +9,6 @@
     <%= album.tracks.first.title %>
   </h3>
 
-  <% if album.preview && album.preview.file %>
-    <audio controls class="hidden" data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(album.preview.file) %>">
-    </audio>
-  <% end %>
-
   <div class="bg-slate-200 cursor-pointer" data-action="click->player#setProgress" data-player-target="progressContainer">
     <div class="w-0 h-4 bg-slate-500" data-player-target="progress"></div>
   </div>
@@ -40,6 +35,11 @@
       </svg>
     </button>
   </div>
+
+  <% if album.preview && album.preview.file %>
+    <audio controls class="hidden" data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(album.preview.file) %>">
+    </audio>
+  <% end %>
 
   <% album.tracks.each_with_index do |track, index| %>
     <% if track.preview && track.preview.file %>
