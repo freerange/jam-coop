@@ -11,7 +11,13 @@ atom_feed(root_url: artists_url, language: 'en-GB', schema_date: 2024) do |f|
     f.entry(artist, id:, published:) do |e|
       e.title artist.name
       e.author { |a| a.name 'jam.coop' }
-      e.content artist.description, type: 'html'
+      html = []
+      if artist.profile_picture.attached?
+        html << image_tag(cdn_url(artist.profile_picture.representation(resize_to_limit: [500, 500])))
+      end
+      html << simple_format(artist.description)
+      html << link_to("View #{artist.name} on jam.coop", artist_url(artist))
+      e.content safe_join(html), type: 'html'
     end
   end
 end
