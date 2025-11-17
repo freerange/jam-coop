@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   get  'about', to: 'pages#about'
   get  'terms', to: 'pages#terms'
-  get  'blog', to: 'pages#blog'
+  get  'blog',  to: redirect('/newsletters')
 
   resources :newsletters, only: %i[index]
 
