@@ -2,7 +2,7 @@
   <%= render ModelErrorComponent.new(model: artist) %>
   <%= form.text_field :name, class: 'w-full mb-3' %>
   <%= form.text_field :location, class: 'w-full mb-3' %>
-  <%= form.text_field :description, class: 'w-full mb-3' %>
+  <%= form.textarea :description, rows: 10, class: 'w-full mb-3' %>
   <% if form.object.profile_picture.attached? %>
     <%= form.label :profile_picture, "Profile picture (#{form.object.profile_picture.filename})" %>
   <% else %>
