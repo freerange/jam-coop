@@ -20,17 +20,17 @@ class PlayersControllerTest < ActionDispatch::IntegrationTest
 
   test '#show displays album title' do
     get artist_album_player_path(@artist, @album)
-    assert_select 'h1', text: @album.title
+    assert_select 'h1', text: /#{@album.title}/
   end
 
   test '#show displays artist name' do
     get artist_album_player_path(@artist, @album)
-    assert_select 'h2', text: @artist.name
+    assert_select 'h1', text: /#{@artist.name}/
   end
 
   test '#show displays title of first track' do
     get artist_album_player_path(@artist, @album)
-    assert_select 'h3', text: @album.tracks.first.title
+    assert_select 'h1', text: /#{@album.tracks.first.title}/
   end
 
   test '#show does not render hidden audio element when tracks have not been transcoded' do

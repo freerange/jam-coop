@@ -6,11 +6,12 @@
   </div>
 
   <div>
-    <h1><%= album.title %></h1>
-    <h2><%= artist.name %></h2>
-    <h3 data-player-target="trackTitle">
-      <%= album.tracks.first.title %>
-    </h3>
+    <h1>
+      <%= album.title %> by <%= artist.name %> - 
+      <span data-player-target="trackTitle">
+        <%= album.tracks.first.title %>
+      </span>
+    </h1>
   </div>
 
   <div>
