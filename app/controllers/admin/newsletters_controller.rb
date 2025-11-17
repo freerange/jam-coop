@@ -4,6 +4,11 @@ module Admin
   class NewslettersController < ApplicationController
     before_action :set_newsletter, only: %i[edit update]
 
+    def index
+      @newsletters = policy_scope(Newsletter)
+      authorize @newsletters
+    end
+
     def new
       @newsletter = Newsletter.new
       authorize @newsletter

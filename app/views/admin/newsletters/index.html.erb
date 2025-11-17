@@ -1,0 +1,16 @@
+<%= render(SectionComponent.new(title: 'Newsletters')) do %>
+  <div class="flex flex-col gap-3">
+    <%= render BreadcrumbComponent.new(items: [
+        { text: 'My account', link: account_path },
+        { text: 'Newsletters' }
+      ]) %>
+
+    <ol>
+      <% @newsletters.each do |newsletter| %>
+        <li><%= link_to newsletter.title, edit_admin_newsletter_path(newsletter), class: 'underline' %></li>
+      <% end %>
+    </ol>
+
+    <%= link_to "Add newsletter", new_admin_newsletter_path, class: 'underline' %>
+  </div>
+<% end %>

@@ -9,6 +9,11 @@ module Admin
       log_in_as(@user)
     end
 
+    test '#index' do
+      get admin_newsletters_path
+      assert_response :success
+    end
+
     test '#new' do
       get new_admin_newsletter_path
       assert_response :success
@@ -70,6 +75,12 @@ module Admin
       log_in_as(@user)
     end
 
+    test '#index not authorized' do
+      get admin_newsletters_path
+      assert_redirected_to root_path
+      assert_equal 'You are not authorized to perform this action.', flash[:alert]
+    end
+
     test '#new not authorized' do
       get new_admin_newsletter_path
       assert_redirected_to root_path
@@ -108,6 +119,11 @@ end
 
 module Admin
   class NewslettersControllerTestSignedOut < ActionDispatch::IntegrationTest
+    test '#index' do
+      get admin_newsletters_path
+      assert_redirected_to log_in_path
+    end
+
     test '#new' do
       get new_admin_newsletter_path
       assert_redirected_to log_in_path
