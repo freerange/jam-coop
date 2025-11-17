@@ -1,5 +1,5 @@
-<div data-controller="player">
-  <div>
+<div class="flex flex-col h-screen" data-controller="player">
+  <div class="flex-1 min-h-0">
     <% if album.cover.attached? %>
       <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [750, 750])), alt: 'Album Cover' %>
     <% end %>
