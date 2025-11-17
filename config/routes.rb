@@ -40,8 +40,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources 'albums', only: %i[index]
-    resources 'newsletters', only: %i[new create edit update]
+    resources 'newsletters', only: %i[index new create edit update]
   end
 
   resources :purchases, only: %i[show]
