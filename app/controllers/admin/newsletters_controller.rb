@@ -38,7 +38,7 @@ module Admin
     end
 
     def newsletter_params
-      params.require(:newsletter).permit(:title, :body)
+      params.require(:newsletter).permit(:title, :body, :published_at)
     end
   end
 end

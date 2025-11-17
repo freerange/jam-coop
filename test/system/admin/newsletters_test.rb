@@ -14,6 +14,7 @@ module Admin
 
       fill_in 'Title', with: 'New Newsletter Title'
       fill_in 'Body', with: 'This is the newsletter body content'
+      fill_in 'Published at', with: Time.zone.local(2025, 11, 17, 10, 52)
 
       click_on 'Save'
 
