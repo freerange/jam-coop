@@ -8,9 +8,9 @@ class NewslettersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'displays newsletters in reverse chronological order' do
-    create(:newsletter, title: 'Older Newsletter', created_at: 2.days.ago)
-    create(:newsletter, title: 'Newer Newsletter', created_at: 1.day.ago)
+  test 'displays newsletters in reverse published_at order' do
+    create(:newsletter, title: 'Newer Newsletter', published_at: 1.day.ago)
+    create(:newsletter, title: 'Older Newsletter', published_at: 2.days.ago)
 
     get newsletters_path
 
