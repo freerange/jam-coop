@@ -24,8 +24,19 @@ class NewslettersControllerTest < ActionDispatch::IntegrationTest
     assert newer_position < older_position, 'Newer newsletter should appear before older newsletter'
   end
 
+  test 'only displays newsletters with published_at' do
+    create(:newsletter, title: 'Published Newsletter', published_at: 1.day.ago)
+    create(:newsletter, title: 'Draft Newsletter', published_at: nil)
+
+    get newsletters_path
+
+    assert_response :success
+    assert_select 'h2', text: 'Published Newsletter'
+    assert_not_select 'h2', text: 'Draft Newsletter'
+  end
+
   test 'renders newsletter body as markdown' do
-    create(:newsletter, title: 'Test Newsletter', body: '# Hello World')
+    create(:newsletter, title: 'Test Newsletter', body: '# Hello World', published_at: Time.zone.now)
 
     get newsletters_path
 
@@ -33,8 +44,8 @@ class NewslettersControllerTest < ActionDispatch::IntegrationTest
     assert_select 'h1', text: 'Hello World'
   end
 
-  test 'displays newsletter creation date' do
-    create(:newsletter, title: 'Test Newsletter', created_at: Time.zone.local(2024, 1, 15))
+  test 'displays newsletter publication date' do
+    create(:newsletter, title: 'Test Newsletter', published_at: Time.zone.local(2024, 1, 15))
 
     get newsletters_path
 
