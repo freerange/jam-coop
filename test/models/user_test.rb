@@ -67,4 +67,12 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal [artist], user.reload.followed_artists
   end
+
+  test '#follow creates a following between the user and artist' do
+    user = create(:user)
+    artist = create(:artist)
+    user.follow(artist)
+
+    assert_not_nil Following.find_by(user:, artist:)
+  end
 end

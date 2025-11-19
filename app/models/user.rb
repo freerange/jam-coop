@@ -46,4 +46,8 @@ class User < ApplicationRecord
   def owns?(album)
     collection.exists?(album:)
   end
+
+  def follow(artist)
+    artist.followers << self
+  end
 end
