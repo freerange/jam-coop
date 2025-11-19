@@ -2,9 +2,9 @@
 
 class AlbumsController < ApplicationController
   before_action :build_album, only: %i[new create]
-  before_action :set_album, except: %i[index new create]
-  skip_before_action :authenticate, only: %i[index show]
-  before_action :authorize_album, except: %i[index]
+  before_action :set_album, except: %i[index new create random]
+  skip_before_action :authenticate, only: %i[index show random]
+  before_action :authorize_album, except: %i[index random]
 
   def index
     authorize Album
@@ -31,6 +31,13 @@ class AlbumsController < ApplicationController
     else
       render :edit, status: :unprocessable_content
     end
+  end
+
+  def random
+    album = Album.published.order('RANDOM()').first
+    authorize album, :show?
+
+    redirect_to artist_album_path(album.artist, album)
   end
 
   private

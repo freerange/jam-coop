@@ -191,6 +191,19 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
     assert_redirected_to log_in_path
   end
 
+  test '#random redirects to a random album' do
+    album = create(:published_album)
+    get random_albums_path
+    assert_redirected_to artist_album_path(album.artist, album)
+  end
+
+  test '#random excludes unpublished albums' do
+    create(:album)
+    album = create(:published_album)
+    get random_albums_path
+    assert_redirected_to artist_album_path(album.artist, album)
+  end
+
   private
 
   def album

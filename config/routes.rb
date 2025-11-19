@@ -51,7 +51,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :albums, only: %i[index]
+  resources :albums, only: %i[index] do
+    collection do
+      get 'random', to: 'albums#random'
+    end
+  end
 
   resources :tracks, only: %i[] do
     member do
