@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :password_reset_tokens, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :purchases, dependent: :destroy
+  has_many :followings, dependent: :destroy
+  has_many :followed_artists, through: :followings, source: :artist
   has_one :payout_detail, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }

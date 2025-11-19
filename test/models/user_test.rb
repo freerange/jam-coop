@@ -59,4 +59,12 @@ class UserTest < ActiveSupport::TestCase
     user.update(verified: false)
     assert_nil purchase.reload.user
   end
+
+  test '#followed_artists' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+
+    assert_equal [artist], user.reload.followed_artists
+  end
 end
