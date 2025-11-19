@@ -15,6 +15,8 @@ class Artist < ApplicationRecord
 
   belongs_to :user, optional: true
   has_many :albums, dependent: :destroy
+  has_many :followings, dependent: :destroy
+  has_many :followers, through: :followings, source: 'user'
   has_one_attached :profile_picture
 
   validates :name, presence: true
