@@ -50,4 +50,8 @@ class User < ApplicationRecord
   def follow(artist)
     artist.followers << self
   end
+
+  def following?(artist)
+    followed_artists.include?(artist)
+  end
 end

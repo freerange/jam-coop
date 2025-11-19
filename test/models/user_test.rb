@@ -75,4 +75,12 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not_nil Following.find_by(user:, artist:)
   end
+
+  test '#following?' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+
+    assert user.following?(artist)
+  end
 end
