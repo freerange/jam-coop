@@ -8,5 +8,6 @@ class FollowingPolicyTest < ActiveSupport::TestCase
     policy = FollowingPolicy.new(user, Following)
 
     assert policy.create?
+    assert policy.destroy?
   end
 end

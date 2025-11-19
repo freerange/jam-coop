@@ -50,7 +50,7 @@ Rails.application.routes.draw do
       resource :player, only: %i[show]
       resources :purchases, only: %i[new create]
     end
-    resource :following, only: %i[create]
+    resource :following, only: %i[create destroy]
   end
 
   resources :albums, only: %i[index] do

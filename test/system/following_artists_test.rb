@@ -20,5 +20,14 @@ class FollowingArtistsTest < ApplicationSystemTestCase
 
     assert_text activity_feed_entry_title
     assert_text activity_feed_entry_date
+
+    visit artist_path(artist)
+    click_on 'Unfollow'
+    assert_text 'You are no longer following artist-name'
+    click_on 'avatar'
+    click_on 'My feed'
+
+    assert_no_text activity_feed_entry_title
+    assert_no_text activity_feed_entry_date
   end
 end

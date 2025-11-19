@@ -40,4 +40,45 @@ class FollowingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 'You are now following artist-name', flash[:notice]
   end
+
+  test '#destroy redirects to login if no user logged in' do
+    artist = create(:artist)
+
+    delete artist_following_path(artist)
+
+    assert_redirected_to log_in_path
+  end
+
+  test "#destroy removes the user from the artist's followers" do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+    log_in_as(user)
+
+    delete artist_following_path(artist)
+
+    assert_equal [], artist.followers
+  end
+
+  test '#destroy redirects to artist page' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+    log_in_as(user)
+
+    delete artist_following_path(artist)
+
+    assert_redirected_to artist_path(artist)
+  end
+
+  test '#destroy sets a flash message' do
+    user = create(:user)
+    artist = create(:artist, name: 'artist-name')
+    create(:following, user:, artist:)
+    log_in_as(user)
+
+    delete artist_following_path(artist)
+
+    assert_equal 'You are no longer following artist-name', flash[:notice]
+  end
 end
