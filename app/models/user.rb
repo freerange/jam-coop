@@ -54,4 +54,8 @@ class User < ApplicationRecord
   def following?(artist)
     followed_artists.include?(artist)
   end
+
+  def unfollow(artist)
+    artist.followers.delete(self)
+  end
 end

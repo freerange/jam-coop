@@ -83,4 +83,14 @@ class UserTest < ActiveSupport::TestCase
 
     assert user.following?(artist)
   end
+
+  test '#unfollow' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+
+    user.unfollow(artist)
+
+    assert_nil Following.find_by(user:, artist:)
+  end
 end
