@@ -26,7 +26,8 @@ class StripeConnectAccountsController < ApplicationController
     resp = Stripe::Account.retrieve(@stripe_connect_account.stripe_identifier)
     @stripe_connect_account.update!(
       details_submitted: resp.details_submitted?,
-      charges_enabled: resp.charges_enabled?
+      charges_enabled: resp.charges_enabled?,
+      payouts_enabled: resp.payouts_enabled?
     )
 
     redirect_to account_path

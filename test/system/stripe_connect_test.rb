@@ -57,7 +57,7 @@ class StripeConnectTest < ApplicationSystemTestCase
       Stripe::AccountLink.construct_from(url: success_stripe_connect_account_url(stripe_account_id))
     )
     Stripe::Account.stubs(:retrieve).with(stripe_account_id).returns(
-      Stripe::Account.construct_from(details_submitted: true, charges_enabled: true)
+      Stripe::Account.construct_from(details_submitted: true, charges_enabled: true, payouts_enabled: false)
     )
   end
 
