@@ -77,7 +77,8 @@ class StripeConnectAccountsControllerSuccessTest < ActionDispatch::IntegrationTe
       'Stripe::Account', {
         id: @stripe_account_id,
         details_submitted?: false,
-        charges_enabled?: false
+        charges_enabled?: false,
+        payouts_enabled?: false
       }
     )
   end
@@ -98,6 +99,15 @@ class StripeConnectAccountsControllerSuccessTest < ActionDispatch::IntegrationTe
     get success_stripe_connect_account_path(@stripe_account_id)
 
     assert @stripe_connect_account.reload.charges_enabled?
+  end
+
+  test '#success updates StripeConnectAccount#payouts_enabled?' do
+    @stripe_account.stubs(payouts_enabled?: true)
+    Stripe::Account.stubs(:retrieve).with(@stripe_account_id).returns(@stripe_account)
+
+    get success_stripe_connect_account_path(@stripe_account_id)
+
+    assert @stripe_connect_account.reload.payouts_enabled?
   end
 
   test '#success redirects to account page' do
