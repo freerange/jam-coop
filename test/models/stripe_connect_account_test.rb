@@ -39,6 +39,15 @@ class StripeConnectAccountTest < ActiveSupport::TestCase
     assert @account.charges_enabled?
   end
 
+  test '#payouts_enabled? is false by default' do
+    assert_not @account.payouts_enabled?
+  end
+
+  test '#payouts_enabled can be set to true' do
+    @account.payouts_enabled = true
+    assert @account.payouts_enabled?
+  end
+
   test "#status returns 'not_started' if #details_submitted? or #charges_enabled? are both false" do
     @account.assign_attributes(details_submitted: false, charges_enabled: false)
     assert_equal 'not_started', @account.status
