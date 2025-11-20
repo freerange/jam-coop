@@ -9,7 +9,7 @@ class StripeWebhookEventsController < ApplicationController
   def create
     skip_authorization
     payload = request.body.read
-    sig_header = request.env['HTTP_STRIPE_SIGNATURE']
+    sig_header = request.headers['Stripe-Signature']
 
     begin
       event = Stripe::Webhook.construct_event(
