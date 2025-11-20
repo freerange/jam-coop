@@ -18,6 +18,12 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'invalid signature in payload' do
+    post stripe_webhook_events_path, params: {}, headers: {}, as: :json
+
+    assert_response :bad_request
+  end
+
   test 'invalid json in payload' do
     Stripe::Webhook.stubs(:construct_event).raises(JSON::ParserError)
 
