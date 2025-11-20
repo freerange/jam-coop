@@ -10,7 +10,9 @@ class StripeServiceTest < ActiveSupport::TestCase
   end
 
   test 'creates stripe checkout session with provided success_url' do
-    Stripe::Checkout::Session.expects(:create).with(has_entry(success_url: purchase_url(@purchase)))
+    Stripe::Checkout::Session.expects(:create).with(
+      has_entry(success_url: purchase_url(@purchase))
+    )
 
     StripeService.new(@purchase).create_checkout_session
   end
@@ -24,7 +26,9 @@ class StripeServiceTest < ActiveSupport::TestCase
   end
 
   test 'creates stripe checkout session using album id as client_reference_id' do
-    Stripe::Checkout::Session.expects(:create).with(has_entry(client_reference_id: @purchase.album.id))
+    Stripe::Checkout::Session.expects(:create).with(
+      has_entry(client_reference_id: @purchase.album.id)
+    )
 
     StripeService.new(@purchase).create_checkout_session
   end
@@ -47,7 +51,9 @@ class StripeServiceTest < ActiveSupport::TestCase
       },
       quantity: 1
     }
-    Stripe::Checkout::Session.expects(:create).with(has_entry(line_items: [expected_line_item]))
+    Stripe::Checkout::Session.expects(:create).with(
+      has_entry(line_items: [expected_line_item])
+    )
 
     StripeService.new(purchase).create_checkout_session
   end
@@ -90,7 +96,9 @@ class StripeServiceTest < ActiveSupport::TestCase
   end
 
   test 'returns an ok status if session created successfully' do
-    Stripe::Checkout::Session.expects(:create).returns(stub(url: 'example.com', id: 'cs_test_foo'))
+    Stripe::Checkout::Session.expects(:create).returns(
+      stub(url: 'example.com', id: 'cs_test_foo')
+    )
 
     response = StripeService.new(@purchase).create_checkout_session
 
