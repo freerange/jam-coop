@@ -18,7 +18,7 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
-  test 'an event that is not checkout.success.completed' do
+  test 'an event that is not checkout.session.completed' do
     event = stub(type: 'an.other.event')
     Stripe::Webhook.stubs(:construct_event).with(payload, 'signature', nil).returns(event)
 
