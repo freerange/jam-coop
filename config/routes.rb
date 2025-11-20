@@ -40,8 +40,10 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources 'newsletters', only: %i[index new create edit update]
     mount MissionControl::Jobs::Engine, at: '/jobs'
+
+    resources 'newsletters', only: %i[index new create edit update]
+    resources :labels, only: %i[create new edit update]
   end
 
   resources :purchases, only: %i[show]
