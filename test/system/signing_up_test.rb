@@ -18,12 +18,4 @@ class SigningUpTest < ApplicationSystemTestCase
     visit verify_email_url
     assert_text 'Thank you for verifying your email address'
   end
-
-  private
-
-  def verify_email_url
-    mail = ActionMailer::Base.deliveries.last
-    verify_email_url = /"(?<url>http.*email_verification.*)"/.match(mail.to_s).named_captures['url']
-    verify_email_url.gsub('http://example.com/', root_url)
-  end
 end

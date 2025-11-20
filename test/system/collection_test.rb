@@ -64,10 +64,4 @@ class CollectionTest < ApplicationSystemTestCase
     amount_tax = 0
     PurchaseCompleteJob.perform_now('cs_test_foo', user.email, amount_tax)
   end
-
-  def verify_email_url
-    mail = ActionMailer::Base.deliveries.last
-    verify_email_url = /"(?<url>http.*email_verification.*)"/.match(mail.to_s).named_captures['url']
-    verify_email_url.gsub('http://example.com/', root_url)
-  end
 end

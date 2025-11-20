@@ -11,6 +11,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :cuprite, options: { headless: }
 
   def setup
+    Rails.application.default_url_options = {
+      host: Capybara.current_session.server.host,
+      port: Capybara.current_session.server.port
+    }
     stub_successful_cloudflare_turnstile_request
   end
 
@@ -38,5 +42,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def stub_stripe_checkout_session
     service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
+  end
+
+  def verify_email_url
+    mail = ActionMailer::Base.deliveries.last
+    uris = URI.extract(mail.to_s, %w[http https])
+    url = uris.find { |u| u.starts_with?(identity_email_verification_url) }
+    url || raise('Email verification URL not found')
   end
 end
