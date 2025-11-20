@@ -17,4 +17,17 @@ class LabelTest < ActiveSupport::TestCase
 
     assert_equal label, Label.friendly.find('jam-records')
   end
+
+  test 'is not valid if logo is not an image' do
+    label = build(:label)
+
+    label.logo.attach(
+      io: Rails.root.join('test/fixtures/files/dummy.pdf').open,
+      filename: 'dummy.pdf',
+      content_type: 'application/pdf'
+    )
+
+    assert_not label.valid?
+    assert_includes label.errors[:logo], 'must be an image file (jpeg, png)'
+  end
 end
