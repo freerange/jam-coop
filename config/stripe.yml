@@ -4,7 +4,7 @@ development:
   endpoint_secret: <%= ENV.fetch('STRIPE_ENDPOINT_SECRET', 'stripe-secret-key') %>
 test:
   secret_key:
-  endpoint_secret:
+  endpoint_secret: s3cr3t
 production:
   secret_key: <%= ENV.fetch('STRIPE_SECRET_KEY') %>
   endpoint_secret: <%= ENV.fetch('STRIPE_ENDPOINT_SECRET') %>
