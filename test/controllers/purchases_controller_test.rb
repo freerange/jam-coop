@@ -18,7 +18,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create redirects to stripe if checkout session successfully created' do
     album = create(:album)
-    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    stub_stripe_checkout_session(success?: true, url: 'https://stripe.example.com')
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -28,7 +28,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create redirects to purchase path if checkout session not successfully created' do
     album = create(:album)
-    stub_stripe_checkout_session(stub(success?: false, error: 'error message'))
+    stub_stripe_checkout_session(success?: false, error: 'error message')
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -39,7 +39,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create creates a new purchase' do
     album = create(:album)
-    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    stub_stripe_checkout_session(success?: true)
 
     assert_difference('Purchase.count') do
       post artist_album_purchases_path(album.artist, album),
@@ -49,7 +49,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create sets the contact_opt_in on the purchase' do
     album = create(:album)
-    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    stub_stripe_checkout_session(success?: true)
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -59,7 +59,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create sets the stripe_session_id on the purchase' do
     album = create(:album)
-    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    stub_stripe_checkout_session(success?: true, id: 'cs_test_foo')
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -71,7 +71,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     user = create(:user)
     log_in_as(user)
     album = create(:album)
-    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    stub_stripe_checkout_session(success?: true)
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -81,7 +81,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'does not set the user when not logged in' do
     album = create(:album)
-    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    stub_stripe_checkout_session(success?: true)
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -91,7 +91,9 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   private
 
-  def stub_stripe_checkout_session(checkout_session)
+  def stub_stripe_checkout_session(**session_attributes)
+    session_attributes.with_defaults!(url: 'https://stripe.example.com', id: 'cs_test_foo')
+    checkout_session = stub(**session_attributes)
     service = stub(create_checkout_session: checkout_session)
     StripeService.stubs(:new).with(instance_of(Purchase)).returns(service)
   end
