@@ -18,8 +18,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create redirects to stripe if checkout session successfully created' do
     album = create(:album)
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
-    StripeService.expects(:new).returns(service)
+    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -29,8 +28,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create redirects to purchase path if checkout session not successfully created' do
     album = create(:album)
-    service = stub(create_checkout_session: stub(success?: false, error: 'error message'))
-    StripeService.expects(:new).returns(service)
+    stub_stripe_checkout_session(stub(success?: false, error: 'error message'))
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -41,8 +39,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create creates a new purchase' do
     album = create(:album)
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
-    StripeService.expects(:new).returns(service)
+    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
 
     assert_difference('Purchase.count') do
       post artist_album_purchases_path(album.artist, album),
@@ -52,8 +49,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create sets the contact_opt_in on the purchase' do
     album = create(:album)
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
-    StripeService.expects(:new).returns(service)
+    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -63,8 +59,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create sets the stripe_session_id on the purchase' do
     album = create(:album)
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
-    StripeService.expects(:new).returns(service)
+    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -76,8 +71,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     user = create(:user)
     log_in_as(user)
     album = create(:album)
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
-    StripeService.expects(:new).returns(service)
+    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
@@ -87,12 +81,18 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   test 'does not set the user when not logged in' do
     album = create(:album)
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
-    StripeService.expects(:new).returns(service)
+    stub_stripe_checkout_session(stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
 
     post artist_album_purchases_path(album.artist, album),
          params: { purchase: { price: album.price, contact_opt_in: true } }
 
     assert_nil Purchase.last.user
+  end
+
+  private
+
+  def stub_stripe_checkout_session(checkout_session)
+    service = stub(create_checkout_session: checkout_session)
+    StripeService.expects(:new).returns(service)
   end
 end
