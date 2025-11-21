@@ -16,10 +16,12 @@ class BroadcastMailerTest < ActionMailer::TestCase
     assert_equal 'broadcast', mail.message.message_stream
   end
 
-  test 'do not send newsletter email if user has sending suppressed' do
+  test 'do not send newsletter email if recipient has sending suppressed' do
     user = create(:user, sending_suppressed_at: Time.current)
+    interest = create(:interest, sending_suppressed_at: Time.current)
 
     BroadcastMailer.newsletter(user).deliver_now!
+    BroadcastMailer.newsletter(interest).deliver_now!
 
     assert_emails 0
   end

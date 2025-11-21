@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class BroadcastMailer < ApplicationMailer
-  def newsletter(user)
-    return if user.suppress_sending?
+  def newsletter(recipient)
+    return if recipient.suppress_sending?
 
     mail(
-      to: user.email,
+      to: recipient.email,
       subject: 'jam.coop - Newsletter #3',
       track_opens: 'true',
       message_stream: 'broadcast'
