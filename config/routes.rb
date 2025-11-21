@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get  'terms', to: 'pages#terms'
   get  'blog',  to: redirect('/newsletters')
 
-  resources :newsletters, only: %i[index]
+  resources :newsletters, only: %i[index show]
 
   get 'account', to: 'users#show'
   get 'collection', to: 'collections#show'

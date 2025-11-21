@@ -1,0 +1,14 @@
+<%
+  set_meta_tags(
+    title: @newsletter.title,
+  )
+%>
+
+<%= render(SectionComponent.new(title: @newsletter.title)) do %>
+  <time class="text-sm text-slate-500 mb-4 block" datetime="<%= @newsletter.published_at.iso8601 %>">
+    <%= @newsletter.published_at.strftime('%B %d, %Y') %>
+  </time>
+  <div>
+    <%= markdown(@newsletter.body) %>
+  </div>
+<% end %>

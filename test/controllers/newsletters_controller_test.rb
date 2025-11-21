@@ -52,4 +52,20 @@ class NewslettersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select 'time[datetime=?]', '2024-01-15T00:00:00Z'
   end
+
+  test 'should get show' do
+    newsletter = create(:newsletter, published_at: Time.zone.now)
+
+    get newsletter_path(newsletter)
+
+    assert_response :success
+  end
+
+  test 'show for an unpublished newsletter should 404' do
+    newsletter = create(:newsletter)
+
+    get newsletter_path(newsletter)
+
+    assert_response :not_found
+  end
 end

@@ -7,4 +7,8 @@ class NewslettersController < ApplicationController
   def index
     @newsletters = Newsletter.where.not(published_at: nil).order(published_at: :desc)
   end
+
+  def show
+    @newsletter = Newsletter.where.not(published_at: nil).find(params[:id])
+  end
 end
