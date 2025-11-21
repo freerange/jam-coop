@@ -59,4 +59,38 @@ class UserTest < ActiveSupport::TestCase
     user.update(verified: false)
     assert_nil purchase.reload.user
   end
+
+  test '#followed_artists' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+
+    assert_equal [artist], user.reload.followed_artists
+  end
+
+  test '#follow creates a following between the user and artist' do
+    user = create(:user)
+    artist = create(:artist)
+    user.follow(artist)
+
+    assert_not_nil Following.find_by(user:, artist:)
+  end
+
+  test '#following?' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+
+    assert user.following?(artist)
+  end
+
+  test '#unfollow' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+
+    user.unfollow(artist)
+
+    assert_nil Following.find_by(user:, artist:)
+  end
 end

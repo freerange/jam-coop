@@ -21,6 +21,21 @@
     <div class="basis-3/4">
       <h2 class="text-2xl font-semibold"><%= @artist.name %></h2>
       <p class="text-slate-400 mb-4"><%= @artist.location %></p>
+      <div class="mb-4">
+        <% if Current.user && Current.user.following?(@artist) %>
+          <%= render(ButtonComponent.new(
+                      text: 'Unfollow',
+                      path: artist_following_path(@artist),
+                      method: :delete
+                    )) %>
+        <% else %>
+          <%= render(ButtonComponent.new(
+                      text: 'Follow',
+                      path: artist_following_path(@artist),
+                      method: :post
+                    )) %>
+        <% end %>
+      </div>
       <p><%= format_metadata(@artist.description) %></p>
     </div>
   </div>

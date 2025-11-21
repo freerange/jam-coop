@@ -260,4 +260,15 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.valid?
     assert_includes album.errors[:number_of_tracks], 'must be greater than 0'
   end
+
+  test '.followed_by includes albums by the artists the user is following' do
+    user = create(:user)
+    artist1 = create(:artist)
+    artist2 = create(:artist)
+    artist1_album = create(:album, artist: artist1)
+    create(:album, artist: artist2)
+    user.follow(artist1)
+
+    assert_equal [artist1_album], Album.followed_by(user)
+  end
 end

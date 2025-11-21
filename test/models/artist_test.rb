@@ -86,4 +86,12 @@ class ArtistTest < ActiveSupport::TestCase
 
     artist.update!(updated_at: Time.current)
   end
+
+  test '#followers' do
+    user = create(:user)
+    artist = create(:artist)
+    create(:following, user:, artist:)
+
+    assert_equal [user], artist.reload.followers
+  end
 end

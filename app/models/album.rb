@@ -35,6 +35,7 @@ class Album < ApplicationRecord
   scope :in_release_order, -> { order(Arel.sql('COALESCE(released_on, first_published_on) DESC NULLS LAST')) }
   scope :best_selling, -> { left_joins(:purchases).group(:id).order('COUNT(purchases.id) DESC') }
   scope :recently_released, -> { where.not(released_on: nil).order(released_on: :desc) }
+  scope :followed_by, ->(user) { where(artist: user.followed_artists) }
 
   after_create :set_first_published_on, if: :published?
   after_update :set_first_published_on, if: :saved_change_to_publication_status_to_published?

@@ -1,0 +1,34 @@
+<%
+  set_meta_tags(
+    title: "Activity",
+  )
+%>
+
+<% if @albums.empty? %>
+  <%= render(SectionComponent.new(title: 'Activity feed')) do %>
+    <p class="class='text-sm text-slate-600">There's nothing in your activity feed at the moment. Follow some artists to be notified of their new album releases.</p>
+  <% end %>
+<% end %>
+
+<div class="grid grid-col gap-6">
+  <% @albums.each do |album| %>
+    <%= render(SectionComponent.new(title: "#{album.artist.name} released an album")) do %>
+      <time class="text-sm text-slate-500 mb-4 block" datetime="<%= album.released_on.iso8601 %>">
+        <%= album.released_on.strftime('%B %d, %Y') %>
+      </time>
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="w-full md:w-1/2">
+          <% if album.cover.attached? %>
+            <%= image_tag cdn_url(album.cover.representation(resize_to_limit: [750, 750])), class: 'w-full border border-slate-200' %>
+          <% end %>
+        </div>
+        <div class="w-full md:w-1/2">
+          <div class="mb-3">
+            <h1 class="text-lg font-medium leading-tight"><%= link_to album.title, artist_album_path(album.artist, album), class: "hover:underline" %></h1>
+            <h2 class="text-sm text-slate-600"><%= link_to album.artist.name, artist_path(album.artist), class: "hover:underline" %></h2>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
