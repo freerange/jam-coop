@@ -11,9 +11,9 @@ class NewsletterTest < ActiveSupport::TestCase
 
   test '#send delivers to Users who have opted in, verified and are not suppressed' do
     newsletter = create(:newsletter)
-    create(:user, verified: true, opt_in_to_newsletter: true, sending_suppressed_at: nil)
+    recipient = create(:user, verified: true, opt_in_to_newsletter: true, sending_suppressed_at: nil)
 
-    assert_enqueued_emails 1 do
+    assert_enqueued_email_with BroadcastMailer, :newsletter, params: { recipient:, newsletter: } do
       newsletter.send_as_email
     end
   end
@@ -47,9 +47,9 @@ class NewsletterTest < ActiveSupport::TestCase
 
   test '#send delivers to Interests who have confirmed and are not suppressed' do
     newsletter = create(:newsletter)
-    create(:interest, email_confirmed: true, sending_suppressed_at: nil)
+    recipient = create(:interest, email_confirmed: true, sending_suppressed_at: nil)
 
-    assert_enqueued_emails 1 do
+    assert_enqueued_email_with BroadcastMailer, :newsletter, params: { recipient:, newsletter: } do
       newsletter.send_as_email
     end
   end

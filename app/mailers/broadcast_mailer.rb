@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class BroadcastMailer < ApplicationMailer
-  def newsletter(recipient, newsletter)
-    return if recipient.suppress_sending?
+  def newsletter
+    recipient = params[:recipient]
+    @newsletter = params[:newsletter]
 
-    @newsletter = newsletter
+    return if recipient.suppress_sending?
 
     mail(
       to: recipient.email,

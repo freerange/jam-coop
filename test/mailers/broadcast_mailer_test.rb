@@ -7,7 +7,7 @@ class BroadcastMailerTest < ActionMailer::TestCase
     user = build(:user, email: 'ann@example.com')
     newsletter = build(:newsletter, title: 'Latest news')
 
-    mail = BroadcastMailer.newsletter(user, newsletter)
+    mail = BroadcastMailer.with(recipient: user, newsletter:).newsletter
 
     assert_match 'jam.coop - Latest news', mail.subject
     assert_equal ['ann@example.com'], mail.to
@@ -20,7 +20,7 @@ class BroadcastMailerTest < ActionMailer::TestCase
     user = build(:user)
     newsletter = build(:newsletter, body: '## Hello')
 
-    mail = BroadcastMailer.newsletter(user, newsletter)
+    mail = BroadcastMailer.with(recipient: user, newsletter:).newsletter
 
     assert_match '<h2>Hello</h2>', mail.body.encoded
   end
@@ -29,7 +29,7 @@ class BroadcastMailerTest < ActionMailer::TestCase
     user = build(:user)
     newsletter = build(:newsletter, body: '## Hello')
 
-    mail = BroadcastMailer.newsletter(user, newsletter)
+    mail = BroadcastMailer.with(recipient: user, newsletter:).newsletter
 
     assert_match '## Hello', mail.body.encoded
   end
@@ -39,8 +39,8 @@ class BroadcastMailerTest < ActionMailer::TestCase
     interest = create(:interest, sending_suppressed_at: Time.current)
     newsletter = create(:newsletter)
 
-    BroadcastMailer.newsletter(user, newsletter).deliver_now!
-    BroadcastMailer.newsletter(interest, newsletter).deliver_now!
+    BroadcastMailer.with(recipient: user, newsletter:).newsletter.deliver_now
+    BroadcastMailer.with(recipient: interest, newsletter:).newsletter.deliver_now
 
     assert_emails 0
   end
