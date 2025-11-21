@@ -12,7 +12,7 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
   end
 
   test '#create creates a Stripe::Account' do
-    Stripe::Account.expects(:create).returns(@stripe_account)
+    Stripe::Account.expects(:create).with({ email: @user.email }).returns(@stripe_account)
 
     post stripe_connect_accounts_path
   end
