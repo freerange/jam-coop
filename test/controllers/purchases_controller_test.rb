@@ -93,8 +93,8 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   def stub_stripe_checkout_session(**session_attributes)
     session_attributes.with_defaults!(url: 'https://stripe.example.com', id: 'cs_test_foo')
-    checkout_session = stub(**session_attributes)
-    service = stub(create_checkout_session: checkout_session)
+    checkout_session = stub('Stripe::Checkout::Session', **session_attributes)
+    service = stub('StripeService', create_checkout_session: checkout_session)
     StripeService.stubs(:new).with(instance_of(Purchase)).returns(service)
   end
 end
