@@ -60,4 +60,13 @@ class PurchaseTest < ActiveSupport::TestCase
       create(:purchase)
     end
   end
+
+  test '#platform_fee_in_pence returns the amount we charge the artist' do
+    album = build(:album, price: 10.00)
+    purchase = build(:purchase, album:, price: 15.00)
+    platform_fee_fraction = Rails.configuration.platform_fee_percentage / 100.0
+    expected_fee_in_pence = (1500 * platform_fee_fraction).to_i
+
+    assert_equal expected_fee_in_pence, purchase.platform_fee_in_pence
+  end
 end
