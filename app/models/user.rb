@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :purchases, dependent: :destroy
   has_many :followings, dependent: :destroy
   has_many :followed_artists, through: :followings, source: :artist
+  has_many :labels, dependent: :destroy
   has_one :payout_detail, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }

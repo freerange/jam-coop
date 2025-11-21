@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources 'newsletters', only: %i[index new create edit update]
+    resources :labels, only: %i[create new edit update]
   end
 
   resources :purchases, only: %i[show]
