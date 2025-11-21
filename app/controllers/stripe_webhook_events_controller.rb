@@ -33,11 +33,7 @@ class StripeWebhookEventsController < ApplicationController
     when 'account.updated'
       account_in_stripe = event.data.object
       account_in_jam = StripeConnectAccount.find_by!(stripe_identifier: account_in_stripe.id)
-      account_in_jam.update!(
-        details_submitted: account_in_stripe.details_submitted?,
-        charges_enabled: account_in_stripe.charges_enabled?,
-        payouts_enabled: account_in_stripe.payouts_enabled?
-      )
+      account_in_jam.sync_from!(account_in_stripe)
     else
       Rails.logger.debug { "Unhandled event type: #{event.type}" }
     end
