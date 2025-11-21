@@ -36,7 +36,9 @@ class StripeConnectAccountsController < ApplicationController
   end
 
   def create_params
-    {}
+    {
+      email: @user.email
+    }
   end
 
   def link_params
