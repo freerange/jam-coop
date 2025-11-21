@@ -29,7 +29,16 @@ class StripeWebhookEventsController < ApplicationController
       stripe_session_id = event.data.object.id
       customer_email = event.data.object.customer_details.email
       amount_tax = event.data.object.total_details.amount_tax
-      PurchaseCompleteJob.perform_later(stripe_session_id, customer_email, amount_tax)
+
+      payment_intent = Stripe::PaymentIntent.retrieve(event.data.object.payment_intent)
+      destination_account_identifier = payment_intent&.transfer_data&.destination
+
+      PurchaseCompleteJob.perform_later(
+        stripe_session_id,
+        customer_email,
+        amount_tax,
+        destination_account_identifier
+      )
     when 'account.updated'
       account_in_stripe = event.data.object
       account_in_jam = StripeConnectAccount.find_by!(stripe_identifier: account_in_stripe.id)

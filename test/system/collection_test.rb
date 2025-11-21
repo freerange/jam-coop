@@ -62,6 +62,7 @@ class CollectionTest < ApplicationSystemTestCase
 
   def fake_stripe_webhook_event_completed(user)
     amount_tax = 0
-    PurchaseCompleteJob.perform_now('cs_test_foo', user.email, amount_tax)
+    destination = nil
+    PurchaseCompleteJob.perform_now('cs_test_foo', user.email, amount_tax, destination)
   end
 end

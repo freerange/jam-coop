@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_21_122841) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_21_144131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -143,10 +143,12 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_21_122841) do
     t.string "customer_email"
     t.decimal "price", precision: 8, scale: 2
     t.datetime "sending_suppressed_at"
+    t.bigint "stripe_connect_account_id"
     t.string "stripe_session_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["album_id"], name: "index_purchases_on_album_id"
+    t.index ["stripe_connect_account_id"], name: "index_purchases_on_stripe_connect_account_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
@@ -355,6 +357,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_21_122841) do
   add_foreign_key "payout_details", "users"
   add_foreign_key "purchase_downloads", "purchases"
   add_foreign_key "purchases", "albums"
+  add_foreign_key "purchases", "stripe_connect_accounts"
   add_foreign_key "purchases", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
