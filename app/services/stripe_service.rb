@@ -41,18 +41,7 @@ class StripeService
   end
 
   def create_checkout_session
-    session = Stripe::Checkout::Session.create(
-      {
-        success_url: purchase_url(@purchase),
-        cancel_url: artist_album_url(@purchase.album.artist, @purchase.album),
-        payment_method_types: ['card'],
-        client_reference_id: @purchase.album.id,
-        allow_promotion_codes: false,
-        mode: 'payment',
-        automatic_tax: { enabled: true },
-        line_items:
-      }
-    )
+    session = Stripe::Checkout::Session.create(checkout_params)
 
     StripeServiceResponse.new(
       status: 'ok',
@@ -71,5 +60,20 @@ class StripeService
     def success?
       status == 'ok'
     end
+  end
+
+  private
+
+  def checkout_params
+    {
+      success_url: purchase_url(@purchase),
+      cancel_url: artist_album_url(@purchase.album.artist, @purchase.album),
+      payment_method_types: ['card'],
+      client_reference_id: @purchase.album.id,
+      allow_promotion_codes: false,
+      mode: 'payment',
+      automatic_tax: { enabled: true },
+      line_items:
+    }
   end
 end
