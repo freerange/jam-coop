@@ -80,4 +80,19 @@ class StripeConnectAccountTest < ActiveSupport::TestCase
     @account.assign_attributes(details_submitted: true, charges_enabled: true)
     assert @account.accepts_payments?
   end
+
+  test '#sync_from! copies state attributes from Stripe::Account' do
+    stripe_account = Stripe::Account.construct_from(
+      details_submitted: true,
+      charges_enabled: true,
+      payouts_enabled: true
+    )
+
+    @account.sync_from!(stripe_account)
+
+    @account.reload
+    assert @account.details_submitted?
+    assert @account.charges_enabled?
+    assert @account.payouts_enabled?
+  end
 end
