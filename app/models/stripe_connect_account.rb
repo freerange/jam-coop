@@ -14,4 +14,8 @@ class StripeConnectAccount < ApplicationRecord
       'not_started'
     end
   end
+
+  def accepts_payments?
+    charges_enabled?
+  end
 end
