@@ -93,6 +93,6 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
   def stub_stripe_checkout_session(checkout_session)
     service = stub(create_checkout_session: checkout_session)
-    StripeService.expects(:new).returns(service)
+    StripeService.stubs(:new).with(instance_of(Purchase)).returns(service)
   end
 end
