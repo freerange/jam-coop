@@ -2,81 +2,18 @@
   <tr>
     <td width="auto"></td>
     <td width="600" background="#ffffff">
+      <%= plain_markdown(@newsletter.body) %>
 
-      <p>Hey folks!</p>
+      <h2>Feedback?</h2>
 
-      <p>It's been a while since we sent out some updates
-        about <%= link_to 'jam.coop', root_url %> and we've added
-        a few new features for you to try out. Read on!</p>
+      <p>We love hearing from you, so hit reply and tell us what you
+        think about jam.</p>
 
-      <h2>What is jam.coop?</h2>
+      <p>Cheers,</p>
 
-      <p>jam.coop is an online record store owned co-operatively by
-        musicians and the people who work here. Owning it together
-        means we can rely on it and share in the profits
-        together. We've answered some common questions
-        at <%= link_to 'jam.coop/about', about_url %>.</p>
+      <p>The jam.coop team at Go Free Range.</p>
 
-      <h2>Tagging your music</h2>
-
-      <p>Artists can now tag their music. We support the same set of
-        genre tags
-        that <a href="https://musicbrainz.org/genres">Musicbrainz</a>
-        use, but soon we'll let artists add their own too.</p>
-
-      <p>If you're an artist, head to
-        your <%= link_to 'account dashboard', account_url %>,
-        edit your albums and tag away. Make atmospheric sludge metal?
-        We've got your back.</p>
-
-      <p>We'll wait a little while until we have some more music
-        tagged, and then make it easier for people to find music using
-        them. You can get a little peak by following the links on album
-        pages, for
-        example <%= link_to 'jam.coop/tags/ambient', tag_url('ambient') %>.</p>
-
-      <h2>Licensing your music</h2>
-
-      <p>We now make it easy to choose a license for your music, for
-        example the Attribution-NoDerivatives Creative Commons
-        license.</p>
-
-      <p>By default everything is "All rights reserved" so if you're
-        an artist there's no need to change anything.</p>
-
-      <h2>More metadata in your downloads</h2>
-
-      <p>If you buy music on jam, and we'd love it if you did, the
-        downloaded files now have a bunch of useful metadata (e.g. proper
-        track numbering, release dates) so that they look great wherever
-        you play them.</p>
-
-      <h2>ATOM FEEDS</h2>
-
-      <p>You heard us. Keep up with the latest releases on jam like
-        it's 2005 with our <%= link_to 'Albums
-          Atom feed', albums_url(format: 'atom') %>.</p>
-
-      <p>We love feeds, so expect artist-specific, genre feeds and
-        more soon.</p>
-
-      <h2>jam.coop in the news</h2>
-
-      <p>Cut off the Spigot wrote about jam.coop in their
-        post <a href="https://cutoffthespigot.substack.com/p/co-op-non-profit-and-other-alternative">Co-Op,
-          Non-Profit, & Other Alternative Music Streaming and Purchasing
-          Platforms to Pay Artists More $$</a>.
-
-        <h2>Feedback?</h2>
-
-        <p>We love hearing from you, so hit reply and tell us what you
-          think about jam.</p>
-
-        <p>Cheers,</p>
-
-        <p>The jam.coop team at Go Free Range.</p>
-
-      </td>
-      <td width="auto"></td>
-    </tr>
-  </table>
+    </td>
+    <td width="auto"></td>
+  </tr>
+</table>

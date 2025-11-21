@@ -18,6 +18,12 @@ module ApplicationHelper
     markdown.render(text).html_safe # rubocop:disable Rails/OutputSafety
   end
 
+  def plain_markdown(text)
+    renderer = Redcarpet::Render::HTML.new
+    markdown = Redcarpet::Markdown.new(renderer)
+    markdown.render(text).html_safe # rubocop:disable Rails/OutputSafety
+  end
+
   def format_metadata(text)
     text_with_links = auto_link(text, html: { class: 'underline' }) do |t|
       t.gsub(%r{http.?://}, '')
