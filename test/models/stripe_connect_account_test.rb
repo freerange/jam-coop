@@ -56,4 +56,19 @@ class StripeConnectAccountTest < ActiveSupport::TestCase
     @account.assign_attributes(details_submitted: true, charges_enabled: true)
     assert_equal 'charges_enabled', @account.status
   end
+
+  test '#accepts_payments? is false if status is not_started' do
+    @account.assign_attributes(details_submitted: false, charges_enabled: false)
+    assert_not @account.accepts_payments?
+  end
+
+  test '#accepts_payments? is false if status is details_submitted' do
+    @account.assign_attributes(details_submitted: true, charges_enabled: false)
+    assert_not @account.accepts_payments?
+  end
+
+  test '#accepts_payments? is true if status is charges_enabled' do
+    @account.assign_attributes(details_submitted: true, charges_enabled: true)
+    assert @account.accepts_payments?
+  end
 end
