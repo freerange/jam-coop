@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_19_135825) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_21_144131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -143,10 +143,12 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_19_135825) do
     t.string "customer_email"
     t.decimal "price", precision: 8, scale: 2
     t.datetime "sending_suppressed_at"
+    t.bigint "stripe_connect_account_id"
     t.string "stripe_session_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["album_id"], name: "index_purchases_on_album_id"
+    t.index ["stripe_connect_account_id"], name: "index_purchases_on_stripe_connect_account_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
@@ -280,6 +282,18 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_19_135825) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  create_table "stripe_connect_accounts", force: :cascade do |t|
+    t.boolean "charges_enabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.boolean "details_submitted", default: false, null: false
+    t.boolean "payouts_enabled", default: false, null: false
+    t.string "stripe_identifier", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["stripe_identifier"], name: "index_stripe_connect_accounts_on_stripe_identifier"
+    t.index ["user_id"], name: "index_stripe_connect_accounts_on_user_id"
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "album_id", null: false
     t.datetime "created_at", null: false
@@ -343,6 +357,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_19_135825) do
   add_foreign_key "payout_details", "users"
   add_foreign_key "purchase_downloads", "purchases"
   add_foreign_key "purchases", "albums"
+  add_foreign_key "purchases", "stripe_connect_accounts"
   add_foreign_key "purchases", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

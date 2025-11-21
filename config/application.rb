@@ -43,5 +43,7 @@ module MusicCoop
 
     config.x.player.height = 450
     config.x.player.width = 435
+
+    config.platform_fee_percentage = 15
   end
 end

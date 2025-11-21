@@ -5,6 +5,8 @@ class Purchase < ApplicationRecord
 
   belongs_to :album
   belongs_to :user, optional: true
+  belongs_to :stripe_connect_account, optional: true
+
   has_many :purchase_downloads, dependent: :destroy
 
   validates :price, presence: true, numericality: true
@@ -28,6 +30,10 @@ class Purchase < ApplicationRecord
     sending_suppressed_at.present?
   end
 
+  def platform_fee_in_pence
+    (price_excluding_gratuity_in_pence * platform_fee_fraction).to_i
+  end
+
   private
 
   def price_is_greater_than_album_price
@@ -39,5 +45,9 @@ class Purchase < ApplicationRecord
   def create_purchase_downloads
     ZipDownloadJob.perform_later(self, format: :mp3v0)
     ZipDownloadJob.perform_later(self, format: :flac)
+  end
+
+  def platform_fee_fraction
+    Rails.configuration.platform_fee_percentage / 100.0
   end
 end
