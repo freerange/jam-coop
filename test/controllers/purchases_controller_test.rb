@@ -16,7 +16,7 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'create redirects to stripe if checkout session successfully created' do
+  test 'create redirects to Stripe if checkout session successfully created' do
     album = create(:album)
     stub_stripe_checkout_session(success?: true, url: 'https://stripe.example.com')
 

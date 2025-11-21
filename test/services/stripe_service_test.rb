@@ -9,7 +9,7 @@ class StripeServiceTest < ActiveSupport::TestCase
     @purchase = build_stubbed(:purchase)
   end
 
-  test 'creates stripe checkout session with provided success_url' do
+  test 'creates Stripe checkout session with provided success_url' do
     Stripe::Checkout::Session.expects(:create).with(
       has_entry(success_url: purchase_url(@purchase))
     )
@@ -17,7 +17,7 @@ class StripeServiceTest < ActiveSupport::TestCase
     StripeService.new(@purchase).create_checkout_session
   end
 
-  test 'creates stripe checkout session with cancel_url' do
+  test 'creates Stripe checkout session with cancel_url' do
     Stripe::Checkout::Session.expects(:create).with(
       has_entry(cancel_url: artist_album_url(@purchase.album.artist, @purchase.album))
     )
@@ -25,7 +25,7 @@ class StripeServiceTest < ActiveSupport::TestCase
     StripeService.new(@purchase).create_checkout_session
   end
 
-  test 'creates stripe checkout session using album id as client_reference_id' do
+  test 'creates Stripe checkout session using album id as client_reference_id' do
     Stripe::Checkout::Session.expects(:create).with(
       has_entry(client_reference_id: @purchase.album.id)
     )
