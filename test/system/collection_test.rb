@@ -61,7 +61,9 @@ class CollectionTest < ApplicationSystemTestCase
   private
 
   def fake_stripe_webhook_event_completed(user)
+    checkout_session_id = 'cs_test_foo'
     amount_tax = 0
-    PurchaseCompleteJob.perform_now('cs_test_foo', user.email, amount_tax)
+    stub_retrieve_stripe_checkout_session(checkout_session_id, user.email, amount_tax)
+    PurchaseCompleteJob.perform_now(checkout_session_id)
   end
 end

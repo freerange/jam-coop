@@ -10,8 +10,9 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     customer_email = 'email@example.com'
     amount_tax = 140
     purchase = create(:purchase, stripe_session_id:)
+    stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
 
-    PurchaseCompleteJob.perform_now(stripe_session_id, customer_email, amount_tax)
+    PurchaseCompleteJob.perform_now(stripe_session_id)
 
     assert purchase.reload.completed
     assert_equal customer_email, purchase.reload.customer_email
@@ -24,8 +25,9 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     customer_email = user.email
     amount_tax = 140
     purchase = create(:purchase, stripe_session_id:)
+    stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
 
-    PurchaseCompleteJob.perform_now(stripe_session_id, customer_email, amount_tax)
+    PurchaseCompleteJob.perform_now(stripe_session_id)
 
     assert_equal user, purchase.reload.user
   end
@@ -36,8 +38,9 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     customer_email = 'non-existant-email'
     amount_tax = 140
     purchase = create(:purchase, user:, stripe_session_id:)
+    stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
 
-    PurchaseCompleteJob.perform_now(stripe_session_id, customer_email, amount_tax)
+    PurchaseCompleteJob.perform_now(stripe_session_id)
 
     assert_equal user, purchase.reload.user
   end
@@ -47,9 +50,10 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     customer_email = 'email@example.com'
     amount_tax = 140
     purchase = create(:purchase, stripe_session_id:)
+    stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
 
     assert_enqueued_email_with PurchaseMailer, :completed, params: { purchase: } do
-      PurchaseCompleteJob.perform_now(stripe_session_id, customer_email, amount_tax)
+      PurchaseCompleteJob.perform_now(stripe_session_id)
     end
   end
 
@@ -58,9 +62,10 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     customer_email = 'email@example.com'
     amount_tax = 140
     purchase = create(:purchase, stripe_session_id:)
+    stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
 
     assert_enqueued_email_with PurchaseMailer, :notify_artist, params: { purchase: } do
-      PurchaseCompleteJob.perform_now(stripe_session_id, customer_email, amount_tax)
+      PurchaseCompleteJob.perform_now(stripe_session_id)
     end
   end
 end

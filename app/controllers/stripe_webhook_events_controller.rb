@@ -27,9 +27,7 @@ class StripeWebhookEventsController < ApplicationController
     case event.type
     when 'checkout.session.completed'
       stripe_session_id = event.data.object.id
-      customer_email = event.data.object.customer_details.email
-      amount_tax = event.data.object.total_details.amount_tax
-      PurchaseCompleteJob.perform_later(stripe_session_id, customer_email, amount_tax)
+      PurchaseCompleteJob.perform_later(stripe_session_id)
     else
       Rails.logger.debug { "Unhandled event type: #{event.type}" }
     end

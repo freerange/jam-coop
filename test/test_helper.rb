@@ -20,6 +20,23 @@ module ActiveSupport
       post(log_in_path, params: { email: user.email, password: 'Secret1*3*5*' })
       user
     end
+
+    private
+
+    def stub_retrieve_stripe_checkout_session(checkout_session_id, customer_email, amount_tax)
+      session = Stripe::Checkout::Session.construct_from(
+        {
+          id: checkout_session_id,
+          customer_details: {
+            email: customer_email
+          },
+          total_details: {
+            amount_tax:
+          }
+        }
+      )
+      Stripe::Checkout::Session.stubs(:retrieve).with(checkout_session_id).returns(session)
+    end
   end
 end
 

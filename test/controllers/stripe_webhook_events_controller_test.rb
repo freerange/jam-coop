@@ -3,15 +3,13 @@
 require 'test_helper'
 
 class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
-  test 'checkout.session.completed marks associated purchase as complete' do
+  test 'checkout.session.completed enqueues a PurchaseCompleteJob' do
     checkout_session_id = 'cs_test_a11boUfs0kYSNA6S3K3z9XdMuXj5RwIdguh67hwQL47YmOjoa1WcUeWivv'
-    customer_email = 'customer@example.com'
-    amount_tax = 140
 
-    params = checkout_session_completed_params(checkout_session_id, customer_email, amount_tax)
+    params = checkout_session_completed_params(checkout_session_id)
     headers = headers_for_event(params)
 
-    PurchaseCompleteJob.expects(:perform_later).with(checkout_session_id, customer_email, amount_tax)
+    PurchaseCompleteJob.expects(:perform_later).with(checkout_session_id)
 
     post stripe_webhook_events_path, params:, headers:, as: :json
 
@@ -43,18 +41,12 @@ class StripeWebhookEventsControllerTest < ActionDispatch::IntegrationTest
 
   private
 
-  def checkout_session_completed_params(checkout_session_id, customer_email, amount_tax)
+  def checkout_session_completed_params(checkout_session_id)
     {
       type: 'checkout.session.completed',
       data: {
         object: {
-          id: checkout_session_id,
-          customer_details: {
-            email: customer_email
-          },
-          total_details: {
-            amount_tax:
-          }
+          id: checkout_session_id
         }
       }
     }
