@@ -150,7 +150,7 @@ GEM
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faker (3.3.1)
+    faker (3.5.2)
       i18n (>= 1.8.11, < 2)
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
@@ -474,7 +474,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   factory_bot_rails
-  faker (~> 3.3)
+  faker (~> 3.5)
   friendly_id (~> 5.5.0)
   hotwire-livereload
   htmlbeautifier
