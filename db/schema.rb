@@ -163,6 +163,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
+  create_table "releases", force: :cascade do |t|
+    t.bigint "album_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "label_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_releases_on_album_id"
+    t.index ["label_id"], name: "index_releases_on_label_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -357,6 +366,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
   add_foreign_key "purchase_downloads", "purchases"
   add_foreign_key "purchases", "albums"
   add_foreign_key "purchases", "users"
+  add_foreign_key "releases", "albums"
+  add_foreign_key "releases", "labels"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
