@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class StripeAccountsController < ApplicationController
+  before_action :set_user
   before_action :set_stripe_account, except: :create
 
   def create
     authorize StripeAccount
 
     account = Stripe::Account.create
-    StripeAccount.create!(user: Current.user, stripe_identifier: account.id)
+    StripeAccount.create!(user: @user, stripe_identifier: account.id)
 
     redirect_to link_stripe_account_path(account.id)
   end
@@ -46,9 +47,13 @@ class StripeAccountsController < ApplicationController
     }
   end
 
+  def set_user
+    @user = Current.user
+  end
+
   def set_stripe_account
     @stripe_account = StripeAccount.find_by!(
-      user: Current.user,
+      user: @user,
       stripe_identifier: account_id
     )
   end
