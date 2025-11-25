@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_19_162945) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_25_153701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -289,6 +289,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_19_162945) do
     t.bigint "user_id"
     t.index ["stripe_identifier"], name: "index_stripe_accounts_on_stripe_identifier"
     t.index ["user_id"], name: "index_stripe_accounts_on_user_id"
+  end
+
+  create_table "stripe_transfers", force: :cascade do |t|
+    t.integer "amount_in_pence", null: false
+    t.datetime "created_at", null: false
+    t.bigint "purchase_id"
+    t.bigint "stripe_account_id"
+    t.datetime "updated_at", null: false
+    t.index ["purchase_id"], name: "index_stripe_transfers_on_purchase_id"
+    t.index ["stripe_account_id"], name: "index_stripe_transfers_on_stripe_account_id"
   end
 
   create_table "taggings", force: :cascade do |t|
