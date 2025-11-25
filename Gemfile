@@ -12,7 +12,7 @@ gem 'aws-sdk-s3'
 gem 'bcrypt', '~> 3.1.20'
 gem 'bootsnap', require: false
 gem 'csv'
-gem 'friendly_id', '~> 5.5.0'
+gem 'friendly_id', '~> 5.5.1'
 gem 'image_processing'
 gem 'importmap-rails'
 gem 'jbuilder'
