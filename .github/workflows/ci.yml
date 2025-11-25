@@ -21,7 +21,7 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
-          bin/rails rubocop
+          bin/rails htmlbeautifier rubocop
 
   tests:
     name: Tests
