@@ -7,9 +7,11 @@ require_relative 'config/application'
 
 Rails.application.load_tasks
 
-Rake::Task['test'].enhance(%i[rubocop htmlbeautifier])
-Rake::Task['test'].enhance do
-  Rake::Task['test:system'].invoke
-end
-
-task lint: %i[rubocop htmlbeautifier]
+Rake::Task['default'].clear.enhance(
+  %w[
+    htmlbeautifier
+    rubocop
+    test
+    test:system
+  ]
+)
