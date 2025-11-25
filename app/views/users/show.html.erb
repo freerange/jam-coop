@@ -78,6 +78,18 @@
       <% end %>
     <% end %>
 
+    <%= render(SidebarSectionComponent.new(title: 'Setup Stripe')) do %>
+      <% if @stripe_account.present? %>
+        <ul>
+          <li>Account ID: <span class="font-bold"><%= @stripe_account.stripe_identifier %></span></li>
+        </ul>
+      <% else %>
+        <%= form_with url: stripe_accounts_path, data: { turbo: false }, class: "contents", builder: TailwindFormBuilder do |form| %>
+          <%= form.submit "Setup Stripe", class: 'mt-3' %>
+        <% end %>
+      <% end %>
+    <% end %>
+
     <%= render(SidebarSectionComponent.new(title: 'Payout details')) do %>
       <p class="text-slate-500 mb-6">We use <a class="underline" href="https://wise.com">Wise</a> to make payouts once a month. Wise will email you at <span class="font-bold"><%= Current.user.email %></span> to ask for your bank details. To make the payment we need the following:</p>
 

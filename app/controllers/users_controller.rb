@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :set_user
+  before_action :set_stripe_account
 
   def show
     authorize @user
@@ -25,5 +26,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:opt_in_to_newsletter)
+  end
+
+  def set_stripe_account
+    @stripe_account = StripeAccount.find_by(user: @user)
   end
 end
