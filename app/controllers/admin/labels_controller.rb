@@ -32,7 +32,11 @@ module Admin
     end
 
     def set_label
-      @label = Current.user.labels.friendly.find(params[:id])
+      @label = Current.user.labels.friendly.includes(
+        releases: {
+          album: [:artist, { cover_attachment: :blob }]
+        }
+      ).find(params[:id])
     end
 
     def authorize_label

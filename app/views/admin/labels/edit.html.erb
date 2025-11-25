@@ -14,6 +14,16 @@
     <% end %>
 
     <div class="grid grid-cols-3 gap-4">
+      <% @label.releases.each do |release| %>
+        <%= link_to(edit_admin_label_release_path(@label, release)) do %>
+          <%= render(CardComponent.new(
+                title: release.album.title,
+                subtitle: release.album.artist.name,
+                image: ( cdn_url(release.album.cover.representation(resize_to_limit: [1000, 1000])) if release.album.cover.representable? )
+              )) %>
+        <% end %>
+      <% end %>
+
       <%= link_to(new_admin_label_release_path(@label)) do %>
         <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
           <div class="grid place-items-center">

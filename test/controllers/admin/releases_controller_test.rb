@@ -14,6 +14,22 @@ module Admin
       get new_admin_label_release_path(@label)
       assert_response :success
     end
+
+    test '#create' do
+      album = create(:album)
+
+      assert_difference '@label.releases.count', 1 do
+        post admin_label_releases_path(@label), params: { release: { album_id: album.id } }
+      end
+      assert_redirected_to edit_admin_label_path(@label)
+    end
+
+    test '#create with invalid params' do
+      assert_no_difference '@label.releases.count' do
+        post admin_label_releases_path(@label), params: { release: { album_id: nil } }
+      end
+      assert_response :unprocessable_content
+    end
   end
 
   class ReleasesControllerTestSignedInAsNonOwner < ActionDispatch::IntegrationTest
@@ -28,6 +44,13 @@ module Admin
       get new_admin_label_release_path(@label)
       assert_response :not_found
     end
+
+    test '#create' do
+      album = create(:album)
+
+      post admin_label_releases_path(@label), params: { release: { album_id: album.id } }
+      assert_response :not_found
+    end
   end
 
   class ReleasesControllerTestSignedOut < ActionDispatch::IntegrationTest
@@ -37,6 +60,12 @@ module Admin
 
     test '#new' do
       get new_admin_label_release_path(@label)
+      assert_redirected_to log_in_path
+    end
+
+    test '#create' do
+      album = create(:album)
+      post admin_label_releases_path(@label), params: { release: { album_id: album.id } }
       assert_redirected_to log_in_path
     end
   end

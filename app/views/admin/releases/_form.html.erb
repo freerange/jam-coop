@@ -1,0 +1,7 @@
+<%= form_for([:admin, label, release], builder: TailwindFormBuilder) do |form| %>
+  <%= render ModelErrorComponent.new(model: release) %>
+  <%= form.select :album_id, Album.releaseable_on(@label).pluck(:title, :id), { label: { text: 'Album' }, class: 'w-full' } %>
+  <div class="flex flex-row justify-end">
+    <%= form.submit "Save release", class: 'mt-3' %>
+  </div>
+<% end %>

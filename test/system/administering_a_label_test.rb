@@ -39,5 +39,18 @@ class AdministeringALabelTest < ApplicationSystemTestCase
     visit account_path
     click_on label.name
     click_on 'Add release'
+    select 'album-name', from: 'Album'
+    click_on 'Save release'
+
+    within(release_section) do
+      assert_text 'album-name'
+      assert_text artist.name
+    end
+  end
+
+  private
+
+  def release_section
+    find('h2', text: 'Release').ancestor('.sidebar-section')
   end
 end
