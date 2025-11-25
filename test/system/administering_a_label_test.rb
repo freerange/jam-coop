@@ -30,4 +30,14 @@ class AdministeringALabelTest < ApplicationSystemTestCase
     click_on 'Save'
     assert_text 'Label was successfully updated'
   end
+
+  test 'adding a release to a label' do
+    artist = create(:artist, user: @user)
+    create(:published_album, artist:, title: 'album-name')
+    label = create(:label, user: @user)
+
+    visit account_path
+    click_on label.name
+    click_on 'Add release'
+  end
 end
