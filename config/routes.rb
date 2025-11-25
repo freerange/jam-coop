@@ -76,7 +76,12 @@ Rails.application.routes.draw do
   get 'thankyou', to: 'interests#thankyou'
   get 'confirmation', to: 'interests#confirmation'
 
-  resources :stripe_accounts, only: %i[create]
+  resources :stripe_accounts, only: %i[create] do
+    member do
+      get :link
+      get :success
+    end
+  end
 
   get 'up' => 'healthchecks#show'
 
