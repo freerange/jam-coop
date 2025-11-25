@@ -41,6 +41,10 @@ class Album < ApplicationRecord
   after_update :set_first_published_on, if: :saved_change_to_publication_status_to_published?
   after_commit :transcode_tracks, on: :update, if: :metadata_or_cover_changed?
 
+  def self.releaseable_on(label)
+    label.user.albums.excluding(label.albums)
+  end
+
   def preview
     first_track_with_preview = tracks.detect(&:preview)
     first_track_with_preview&.preview

@@ -40,6 +40,29 @@ class AlbumTest < ActiveSupport::TestCase
     assert_equal album.tracks, [first_track, second_track]
   end
 
+  test '.releaseable_on includes albums by the labels user' do
+    user = create(:user)
+    artist = create(:artist, user:)
+    album_by_user = create(:album, artist:)
+    album_not_by_user = create(:album)
+    label = create(:label, user:)
+
+    assert Album.releaseable_on(label).include?(album_by_user)
+    assert_not Album.releaseable_on(label).include?(album_not_by_user)
+  end
+
+  test '.releaseable_on includes albums not already released by the labels user' do
+    user = create(:user)
+    artist = create(:artist, user:)
+    unreleased_album = create(:album, artist:)
+    released_album = create(:album, artist:)
+    label = create(:label, user:)
+    create(:release, label:, album: released_album)
+
+    assert Album.releaseable_on(label).include?(unreleased_album)
+    assert_not Album.releaseable_on(label).include?(released_album)
+  end
+
   test 'preview returns a transcode' do
     album = create(:album)
     track = create(:track, album:)

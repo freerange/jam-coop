@@ -7,6 +7,7 @@ class Label < ApplicationRecord
   belongs_to :user
   has_one_attached :logo
   has_many :releases, dependent: :destroy
+  has_many :albums, through: :releases
 
   validates :name, presence: true
   validates(
