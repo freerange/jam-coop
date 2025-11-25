@@ -6,6 +6,7 @@ class Label < ApplicationRecord
   friendly_id :name, use: :slugged
   belongs_to :user
   has_one_attached :logo
+  has_many :releases, dependent: :destroy
 
   validates :name, presence: true
   validates(
