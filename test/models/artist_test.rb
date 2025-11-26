@@ -48,6 +48,13 @@ class ArtistTest < ActiveSupport::TestCase
     assert_equal older_album.first_published_on, artist.first_listed_on
   end
 
+  test 'featured' do
+    create(:artist)
+    featured_artist = create(:artist, featured: true)
+
+    assert_equal [featured_artist], Artist.featured
+  end
+
   test 'uses a friendly id' do
     artist = create(:artist, name: 'Rick Astley')
 

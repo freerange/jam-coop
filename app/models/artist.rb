@@ -22,6 +22,7 @@ class Artist < ApplicationRecord
   validates :name, presence: true
 
   scope :listed, -> { where.associated(:albums).where('albums.publication_status': :published).distinct }
+  scope :featured, -> { where(featured: true) }
 
   after_commit :transcode_albums, on: :update, if: :metadata_changed?
 
