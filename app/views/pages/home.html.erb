@@ -12,19 +12,44 @@
 
 <div class="grid grid-col gap-6">
   <%= render(
-  SectionComponent.new(title: 'Recently released')
+  SectionComponent.new(title: 'Featured Artist')
 ) do %>
-    <%= render(CardGridComponent.new) do %>
-      <% @recently_released_albums.each do |album| %>
-        <%= link_to(artist_album_path(album.artist, album)) do %>
+    <div class="flex flex-col sm:flex-row gap-6">
+      <div class="w-full sm:w-1/2">
+        <%= link_to(artist_path(@featured_artist)) do %>
           <%= render(CardComponent.new(
-          title: album.title,
-          subtitle: album.artist.name,
-          image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
-        )) %>
+      title: '',
+      subtitle: '',
+      image: ( cdn_url(@featured_artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if @featured_artist.profile_picture.representable? )
+      )) %>
         <% end %>
-      <% end %>
-    <% end %>
+      </div>
+      <div class="w-full sm:w-1/2 flex flex-col gap-3 sm:justify-between">
+        <div class="flex flex-col gap-3">
+          <div>
+            <h2 class="text-2xl font-semibold"><%= @featured_artist.name %></h2>
+            <p class="text-slate-400"><%= @featured_artist.location %></p>
+          </div>
+          <p><%= @featured_artist.description %></p>
+        </div>
+        <div>
+          <h3 class="font-semibold">Recent albums</h3>
+          <div class="grid grid-cols-4 gap-3">
+            <% @featured_artist.albums.with_attached_cover.in_release_order.limit(4).each do |album| %>
+              <div>
+                <%= link_to(artist_album_path(album.artist, album)) do %>
+                  <%= render(CardComponent.new(
+                      title: '',
+                      subtitle: '',
+                      image: ( cdn_url(album.cover.representation(resize_to_limit: [300, 300])) if album.cover.representable? )
+      )) %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
 
   <%= render(
