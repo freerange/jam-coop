@@ -55,6 +55,25 @@ class ArtistTest < ActiveSupport::TestCase
     assert_equal [featured_artist], Artist.featured
   end
 
+  test '.of_the_day cycles between featured artists' do
+    first_artist = create(:artist, featured: true)
+    second_artist = create(:artist, featured: true)
+    first_day_of_the_year = Date.parse('1/1/2025')
+
+    travel_to first_day_of_the_year
+    assert_equal first_artist, Artist.of_the_day
+
+    travel_to first_day_of_the_year + 1.day
+    assert_equal second_artist, Artist.of_the_day
+
+    travel_to first_day_of_the_year + 2.days
+    assert_equal first_artist, Artist.of_the_day
+  end
+
+  test '.of_the_day returns nil if there are no featured artists' do
+    assert_nil Artist.of_the_day
+  end
+
   test 'uses a friendly id' do
     artist = create(:artist, name: 'Rick Astley')
 

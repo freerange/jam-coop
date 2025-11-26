@@ -26,6 +26,15 @@ class Artist < ApplicationRecord
 
   after_commit :transcode_albums, on: :update, if: :metadata_changed?
 
+  def self.of_the_day
+    featured_artists = featured.order(:id)
+    count = featured_artists.count
+    return nil if count.zero?
+
+    day_offset = (Time.zone.today.yday - 1) % count
+    featured_artists.offset(day_offset).limit(1).first
+  end
+
   def listed?
     albums.any?(&:published?)
   end
