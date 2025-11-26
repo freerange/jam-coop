@@ -42,7 +42,7 @@ class StripeService
   end
 
   def create_checkout_session
-    session = Stripe::Checkout::Session.create(checkout_params, checkout_options)
+    session = Stripe::Checkout::Session.create(checkout_params)
 
     StripeServiceResponse.new(
       status: 'ok',
@@ -81,12 +81,11 @@ class StripeService
   def payment_intent_data
     return {} unless @stripe_connect_account.accepts_payments?
 
-    { application_fee_amount: @purchase.platform_fee_in_pence }
-  end
-
-  def checkout_options
-    return {} unless @stripe_connect_account.accepts_payments?
-
-    { stripe_account: @stripe_connect_account.stripe_identifier }
+    {
+      application_fee_amount: @purchase.platform_fee_in_pence,
+      transfer_data: {
+        destination: @stripe_connect_account.stripe_identifier
+      }
+    }
   end
 end
