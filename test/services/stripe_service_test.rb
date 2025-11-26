@@ -12,8 +12,7 @@ class StripeServiceTest < ActiveSupport::TestCase
 
   test 'creates Stripe checkout session with provided success_url' do
     Stripe::Checkout::Session.expects(:create).with(
-      has_entry(success_url: purchase_url(@purchase)),
-      anything
+      has_entry(success_url: purchase_url(@purchase))
     )
 
     StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
@@ -21,8 +20,7 @@ class StripeServiceTest < ActiveSupport::TestCase
 
   test 'creates Stripe checkout session with cancel_url' do
     Stripe::Checkout::Session.expects(:create).with(
-      has_entry(cancel_url: artist_album_url(@purchase.album.artist, @purchase.album)),
-      anything
+      has_entry(cancel_url: artist_album_url(@purchase.album.artist, @purchase.album))
     )
 
     StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
@@ -30,8 +28,7 @@ class StripeServiceTest < ActiveSupport::TestCase
 
   test 'creates Stripe checkout session using album id as client_reference_id' do
     Stripe::Checkout::Session.expects(:create).with(
-      has_entry(client_reference_id: @purchase.album.id),
-      anything
+      has_entry(client_reference_id: @purchase.album.id)
     )
 
     StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
@@ -41,19 +38,45 @@ class StripeServiceTest < ActiveSupport::TestCase
     @stripe_connect_account = create(:stripe_connect_account, charges_enabled: true)
 
     Stripe::Checkout::Session.expects(:create).with(
-      anything,
-      has_entry(stripe_account: @stripe_connect_account.stripe_identifier)
+      has_entry(
+        payment_intent_data: has_entry(
+          transfer_data: has_entry(
+            destination: @stripe_connect_account.stripe_identifier
+          )
+        )
+      )
     )
 
     StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
   end
 
-  test 'creates Stripe checkout session with application fee amount if Stripe account accepts payments' do
+  test 'creates Stripe checkout session with application fee in metadata if it accepts payments' do
     @stripe_connect_account = create(:stripe_connect_account, charges_enabled: true)
 
     Stripe::Checkout::Session.expects(:create).with(
-      has_entry(payment_intent_data: { application_fee_amount: @purchase.platform_fee_in_pence }),
-      anything
+      has_entry(
+        payment_intent_data: has_entry(
+          metadata: has_entry(
+            application_fee_amount: @purchase.platform_fee_in_pence
+          )
+        )
+      )
+    )
+
+    StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
+  end
+
+  test 'creates Stripe checkout session with transfer amount if it accepts payments' do
+    @stripe_connect_account = create(:stripe_connect_account, charges_enabled: true)
+
+    Stripe::Checkout::Session.expects(:create).with(
+      has_entry(
+        payment_intent_data: has_entry(
+          transfer_data: has_entry(
+            amount: @purchase.price_in_pence - @purchase.platform_fee_in_pence
+          )
+        )
+      )
     )
 
     StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
@@ -63,8 +86,13 @@ class StripeServiceTest < ActiveSupport::TestCase
     @stripe_connect_account = create(:stripe_connect_account, charges_enabled: false)
 
     Stripe::Checkout::Session.expects(:create).with(
-      anything,
-      Not(has_entry(stripe_account: @stripe_connect_account.stripe_identifier))
+      Not(
+        has_entry(
+          payment_intent_data: has_entry(
+            transfer_data: { destination: @stripe_connect_account.stripe_identifier }
+          )
+        )
+      )
     )
 
     StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
@@ -74,8 +102,13 @@ class StripeServiceTest < ActiveSupport::TestCase
     @stripe_connect_account = create(:stripe_connect_account, charges_enabled: false)
 
     Stripe::Checkout::Session.expects(:create).with(
-      Not(has_entry(application_fee_amount: @purchase.platform_fee_in_pence)),
-      anything
+      Not(
+        has_entry(
+          payment_intent_data: has_entry(
+            application_fee_amount: @purchase.platform_fee_in_pence
+          )
+        )
+      )
     )
 
     StripeService.new(@purchase, @stripe_connect_account).create_checkout_session
@@ -100,8 +133,7 @@ class StripeServiceTest < ActiveSupport::TestCase
       quantity: 1
     }
     Stripe::Checkout::Session.expects(:create).with(
-      has_entry(line_items: [expected_line_item]),
-      anything
+      has_entry(line_items: [expected_line_item])
     )
 
     StripeService.new(purchase, @stripe_connect_account).create_checkout_session
@@ -138,8 +170,7 @@ class StripeServiceTest < ActiveSupport::TestCase
       quantity: 1
     }
     Stripe::Checkout::Session.expects(:create).with(
-      has_entry(line_items: [expected_purchase_line_item, expected_gratuity_line_item]),
-      anything
+      has_entry(line_items: [expected_purchase_line_item, expected_gratuity_line_item])
     )
 
     StripeService.new(purchase, @stripe_connect_account).create_checkout_session
