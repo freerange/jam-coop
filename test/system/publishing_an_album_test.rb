@@ -11,11 +11,10 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
   end
 
   test 'publishing an album' do
-    # Album does not appear in "recently released" section
-    visit root_path
-    within(recently_released) do
-      refute_text @album.title
-    end
+    # Album appears in draft for this user on their artist page
+    visit artist_path(@album.artist)
+    assert_text @album.title
+    assert_text 'draft'
 
     # Artist sets visibility of album to published
     visit artist_path(@album.artist)
@@ -29,18 +28,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
 
     # Listener visits published album page
     visit artist_path(@album.artist)
-    click_on @album.title
-
-    # Album appears in "recently released" section
-    visit root_path
-    within(recently_released) do
-      assert_text @album.title
-    end
-  end
-
-  private
-
-  def recently_released
-    find('h2', text: 'Recently released').ancestor('section')
+    assert_text @album.title
+    refute_text 'draft'
   end
 end
