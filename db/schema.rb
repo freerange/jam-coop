@@ -306,7 +306,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
   create_table "tracks", force: :cascade do |t|
     t.bigint "album_id"
     t.datetime "created_at", null: false
-    t.text "original_data"
     t.integer "position"
     t.string "title"
     t.datetime "updated_at", null: false
