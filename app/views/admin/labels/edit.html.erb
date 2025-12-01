@@ -27,19 +27,21 @@
         <% end %>
       <% end %>
 
-      <%= link_to(new_admin_label_release_path(@label)) do %>
-        <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
-          <div class="grid place-items-center">
-            <div class="flex gap-2 items-center text-amber-600">
-              <span>
-                <svg class="fill-amber-600" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
-                </svg>
-              </span>
-              Add release
+      <% if Album.releaseable_on(@label).any? %>
+        <%= link_to(new_admin_label_release_path(@label)) do %>
+          <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
+            <div class="grid place-items-center">
+              <div class="flex gap-2 items-center text-amber-600">
+                <span>
+                  <svg class="fill-amber-600" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
+                  </svg>
+                </span>
+                Add release
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
   <% end %>
