@@ -48,6 +48,31 @@ class AdministeringALabelTest < ApplicationSystemTestCase
     end
   end
 
+  test 'editing an existing release' do
+    artist = create(:artist, user: @user)
+    album = create(:published_album, artist:, title: 'album-name')
+    create(:published_album, artist:, title: 'other-album')
+    label = create(:label, user: @user)
+    create(:release, label:, album:)
+
+    visit account_path
+    click_on label.name
+
+    within(release_section) do
+      assert_text 'album-name'
+      refute_text 'other-album'
+    end
+
+    click_on 'album-name'
+    select 'other-album', from: 'Album'
+    click_on 'Save release'
+
+    within(release_section) do
+      assert_text 'other-album'
+      refute_text 'album-name'
+    end
+  end
+
   private
 
   def release_section
