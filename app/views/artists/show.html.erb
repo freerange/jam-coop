@@ -10,11 +10,13 @@
 <% end %>
 
 <%= render(SectionComponent.new) do %>
-  <div class="flex flex-col md:flex-row gap-4 border-b-2 border-b-slate-100 pb-6 mb-3">
-    <div class="w-full md:w-1/2">
-      <% if @artist.profile_picture.representable? %>
-        <%= image_tag cdn_url(@artist.profile_picture.representation(resize_to_limit: [500, 500])), class: 'w-full border border-slate-200' %>
-      <% end %>
+  <div class="flex flex-col sm:flex-row gap-4 border-b-2 border-b-slate-100 pb-6 mb-3">
+    <div class="w-full sm:w-1/2">
+      <%= render(CardComponent.new(
+        title: '',
+        subtitle: '',
+        image: ( cdn_url(@artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if @artist.profile_picture.representable? )
+      )) %>
     </div>
     <div class="w-full md:w-1/2 flex flex-col gap-1">
       <div>
@@ -30,14 +32,14 @@
                       text: 'Unfollow',
                       path: artist_following_path(@artist),
               method: :delete,
-              class: 'w-full md:w-auto'
+              class: 'w-full sm:w-auto'
                     )) %>
         <% else %>
           <%= render(ButtonComponent.new(
                       text: 'Follow',
                       path: artist_following_path(@artist),
               method: :post,
-              class: 'w-full md:w-auto'
+              class: 'w-full sm:w-auto'
                     )) %>
         <% end %>
       </div>
