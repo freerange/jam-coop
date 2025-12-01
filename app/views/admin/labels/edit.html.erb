@@ -8,9 +8,12 @@
     <%= render "form", label: @label %>
   <% end %>
 
-  <%= render(SidebarSectionComponent.new(title: 'Release')) do |component| %>
+  <%= render(SidebarSectionComponent.new(title: 'Releases')) do |component| %>
     <% component.with_subtitle do %>
-      <p>Albums that are released by your label.</p>
+      <div class="flex flex-col gap-1">
+        <p>Albums that are released by your label.</p>
+        <p><%= link_to('Add artists', new_artist_path, class: 'underline') %> and their albums to your account first.</p>
+      </div>
     <% end %>
 
     <div class="grid grid-cols-3 gap-4">
