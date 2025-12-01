@@ -13,8 +13,6 @@
   <div class="flex flex-col sm:flex-row gap-4 border-b-2 border-b-slate-100 pb-6 mb-3">
     <div class="w-full sm:w-1/2">
       <%= render(CardComponent.new(
-        title: '',
-        subtitle: '',
         image: ( cdn_url(@artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if @artist.profile_picture.representable? )
       )) %>
     </div>

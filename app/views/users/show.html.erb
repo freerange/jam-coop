@@ -10,8 +10,7 @@
           <%= link_to(edit_artist_path(artist)) do %>
             <%= render(CardComponent.new(
                 title: artist.name,
-                subtitle: '',
-              image: ( cdn_url(artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if artist.profile_picture.representable? )
+                image: ( cdn_url(artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if artist.profile_picture.representable? )
               )) %>
           <% end %>
         <% end %>

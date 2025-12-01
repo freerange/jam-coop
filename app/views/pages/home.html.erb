@@ -19,9 +19,7 @@
         <div class="w-full sm:w-1/2">
           <%= link_to(artist_path(@featured_artist)) do %>
             <%= render(CardComponent.new(
-      title: '',
-      subtitle: '',
-      image: ( cdn_url(@featured_artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if @featured_artist.profile_picture.representable? )
+                image: ( cdn_url(@featured_artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if @featured_artist.profile_picture.representable? )
       )) %>
           <% end %>
         </div>
@@ -40,8 +38,6 @@
                 <div>
                   <%= link_to(artist_album_path(album.artist, album)) do %>
                     <%= render(CardComponent.new(
-                      title: '',
-                      subtitle: '',
                       image: ( cdn_url(album.cover.representation(resize_to_limit: [300, 300])) if album.cover.representable? )
       )) %>
                   <% end %>
