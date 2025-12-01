@@ -33,9 +33,9 @@
             </div>
             <p><%= @featured_artist.description %></p>
           </div>
-          <div>
+          <div class="flex flex-col gap-1">
             <h3 class="font-semibold">Recent albums</h3>
-            <div class="grid grid-cols-4 gap-3">
+            <div class="grid grid-cols-4 gap-2">
               <% @featured_artist.albums.with_attached_cover.in_release_order.limit(4).each do |album| %>
                 <div>
                   <%= link_to(artist_album_path(album.artist, album)) do %>
