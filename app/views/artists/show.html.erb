@@ -10,33 +10,37 @@
 <% end %>
 
 <%= render(SectionComponent.new) do %>
-  <div class="flex flex-row border-b-2 border-b-slate-100 pb-6 mb-3">
-    <div class="basis-1/4 mr-4 m:mr-0">
-      <div class="aspect-w-1 aspect-h-1">
-        <% if @artist.profile_picture.representable? %>
-          <%= image_tag cdn_url(@artist.profile_picture.representation(resize_to_limit: [500, 500])), class: 'object-cover' %>
-        <% end %>
-      </div>
+  <div class="flex flex-col md:flex-row gap-4 border-b-2 border-b-slate-100 pb-6 mb-3">
+    <div class="w-full md:w-1/2">
+      <% if @artist.profile_picture.representable? %>
+        <%= image_tag cdn_url(@artist.profile_picture.representation(resize_to_limit: [500, 500])), class: 'w-full border border-slate-200' %>
+      <% end %>
     </div>
-    <div class="basis-3/4">
-      <h2 class="text-2xl font-semibold"><%= @artist.name %></h2>
-      <p class="text-slate-400 mb-4"><%= @artist.location %></p>
-      <div class="mb-4">
+    <div class="w-full md:w-1/2 flex flex-col gap-1">
+      <div>
+        <h2 class="text-2xl font-semibold"><%= @artist.name %></h2>
+        <p class="text-slate-400 mb-4"><%= @artist.location %></p>
+      </div>
+
+      <p><%= format_metadata(@artist.description) %></p>
+
+      <div>
         <% if Current.user && Current.user.following?(@artist) %>
           <%= render(ButtonComponent.new(
                       text: 'Unfollow',
                       path: artist_following_path(@artist),
-                      method: :delete
+              method: :delete,
+              class: 'w-full md:w-auto'
                     )) %>
         <% else %>
           <%= render(ButtonComponent.new(
                       text: 'Follow',
                       path: artist_following_path(@artist),
-                      method: :post
+              method: :post,
+              class: 'w-full md:w-auto'
                     )) %>
         <% end %>
       </div>
-      <p><%= format_metadata(@artist.description) %></p>
     </div>
   </div>
 
