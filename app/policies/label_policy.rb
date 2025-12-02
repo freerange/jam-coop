@@ -16,4 +16,8 @@ class LabelPolicy < ApplicationPolicy
   def edit?
     user.admin? || user.labels.include?(record)
   end
+
+  def destroy?
+    user.admin? || user.labels.include?(record)
+  end
 end

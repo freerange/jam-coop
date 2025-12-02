@@ -52,6 +52,15 @@ module Admin
       patch admin_label_release_path(@label, release), params: { release: { album_id: nil } }
       assert_response :unprocessable_content
     end
+
+    test '#destroy' do
+      release = create(:release, label: @label)
+
+      assert_difference '@label.releases.count', -1 do
+        delete admin_label_release_path(@label, release)
+      end
+      assert_redirected_to edit_admin_label_path(@label)
+    end
   end
 
   class ReleasesControllerTestSignedInAsNonOwner < ActionDispatch::IntegrationTest
@@ -87,6 +96,13 @@ module Admin
       patch admin_label_release_path(@label, release), params: { release: { album_id: new_album.id } }
       assert_response :not_found
     end
+
+    test '#destroy' do
+      release = create(:release, label: @label)
+
+      delete admin_label_release_path(@label, release)
+      assert_response :not_found
+    end
   end
 
   class ReleasesControllerTestSignedOut < ActionDispatch::IntegrationTest
@@ -116,6 +132,13 @@ module Admin
       new_album = create(:album)
 
       patch admin_label_release_path(@label, release), params: { release: { album_id: new_album.id } }
+      assert_redirected_to log_in_path
+    end
+
+    test '#destroy' do
+      release = create(:release, label: @label)
+
+      delete admin_label_release_path(@label, release)
       assert_redirected_to log_in_path
     end
   end

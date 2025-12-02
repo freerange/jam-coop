@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
     resources 'newsletters', only: %i[index new create edit update]
     resources :labels, only: %i[create new edit update] do
-      resources :releases, only: %i[new edit create update]
+      resources :releases, only: %i[new edit create update destroy]
     end
   end
 

@@ -73,6 +73,30 @@ class AdministeringALabelTest < ApplicationSystemTestCase
     end
   end
 
+  test 'removing an existing release' do
+    artist = create(:artist, user: @user)
+    album = create(:published_album, artist:, title: 'album-name')
+    label = create(:label, user: @user)
+    create(:release, label:, album:)
+
+    visit account_path
+    click_on label.name
+
+    within(release_section) do
+      assert_text 'album-name'
+    end
+
+    click_on 'album-name'
+
+    accept_alert 'Are you sure you want to remove this release?' do
+      click_on 'Remove release'
+    end
+
+    within(release_section) do
+      refute_text 'album-name'
+    end
+  end
+
   private
 
   def release_section

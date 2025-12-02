@@ -3,7 +3,7 @@
 module Admin
   class ReleasesController < ApplicationController
     before_action :set_label
-    before_action :set_release, only: %i[edit update]
+    before_action :set_release, only: %i[edit update destroy]
     before_action :build_release, only: %i[new create]
     before_action :authorize_label
 
@@ -24,6 +24,11 @@ module Admin
       else
         render :new, status: :unprocessable_content
       end
+    end
+
+    def destroy
+      @release.destroy
+      redirect_to edit_admin_label_path(@label)
     end
 
     private
