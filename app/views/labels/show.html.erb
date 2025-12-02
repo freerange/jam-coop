@@ -1,0 +1,35 @@
+<%
+  set_meta_tags(
+    title: @label.name,
+    description: @label.description,
+  )
+%>
+
+<%= render(SectionComponent.new) do %>
+  <div class="flex flex-col sm:flex-row gap-4 border-b-2 border-b-slate-100 pb-6 mb-3">
+    <div class="w-full sm:w-1/3">
+      <%= render(CardComponent.new(
+        image: ( cdn_url(@label.logo.representation(resize_to_limit: [500, 500])) if @label.logo.representable? )
+      )) %>
+    </div>
+    <div class="w-full md:w-2/3 flex flex-col gap-1">
+      <div>
+        <h2 class="text-2xl font-semibold"><%= @label.name %></h2>
+      </div>
+
+      <p><%= format_metadata(@label.description) %></p>
+    </div>
+  </div>
+
+  <%= render(CardGridComponent.new) do %>
+    <% @albums.in_release_order.each do |album| %>
+      <%= link_to(artist_album_path(album.artist, album)) do %>
+        <%= render(CardComponent.new(
+        title: album.title,
+        subtitle: ( album.publication_status if !album.published? ),
+        image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
+      )) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
