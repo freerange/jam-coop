@@ -5,7 +5,7 @@ require 'test_helper'
 module Admin
   class ReleasesControllerTestSignedInAsOwner < ActionDispatch::IntegrationTest
     setup do
-      @user = create(:user)
+      @user = create(:user, labels_enabled: true)
       log_in_as(@user)
       @label = create(:label, user: @user)
     end
@@ -65,7 +65,7 @@ module Admin
 
   class ReleasesControllerTestSignedInAsNonOwner < ActionDispatch::IntegrationTest
     setup do
-      @user = create(:user)
+      @user = create(:user, labels_enabled: true)
       @other_user = create(:user)
       @label = create(:label, user: @other_user)
       log_in_as(@user)

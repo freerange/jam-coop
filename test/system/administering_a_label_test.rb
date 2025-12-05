@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class AdministeringALabelTest < ApplicationSystemTestCase
   setup do
-    @user = create(:user)
+    @user = create(:user, labels_enabled: true)
     log_in_as(@user)
   end
 

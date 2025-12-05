@@ -14,8 +14,8 @@ class LabelPolicyTest < ActiveSupport::TestCase
     assert policy.edit?
   end
 
-  test 'a verified user' do
-    user = build(:user, verified: true)
+  test 'a verified user with labels enabled' do
+    user = build(:user, verified: true, labels_enabled: true)
     label = build(:label)
     policy = LabelPolicy.new(user, label)
 
@@ -23,13 +23,22 @@ class LabelPolicyTest < ActiveSupport::TestCase
     assert policy.create?
   end
 
-  test 'an unverified user' do
-    user = build(:user, verified: true)
+  test 'a verified user without labels enabled' do
+    user = build(:user, verified: true, labels_enabled: false)
     label = build(:label)
     policy = LabelPolicy.new(user, label)
 
-    assert policy.new?
-    assert policy.create?
+    assert_not policy.new?
+    assert_not policy.create?
+  end
+
+  test 'an unverified user' do
+    user = build(:user, verified: false)
+    label = build(:label)
+    policy = LabelPolicy.new(user, label)
+
+    assert_not policy.new?
+    assert_not policy.create?
   end
 
   test 'a user who owns a label' do

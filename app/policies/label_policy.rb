@@ -2,11 +2,11 @@
 
 class LabelPolicy < ApplicationPolicy
   def new?
-    user.admin? || user.verified?
+    user.admin? || (user.verified? && user.labels_enabled?)
   end
 
   def create?
-    user.admin? || user.verified?
+    user.admin? || (user.verified? && user.labels_enabled?)
   end
 
   def update?
