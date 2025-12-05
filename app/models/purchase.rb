@@ -12,6 +12,10 @@ class Purchase < ApplicationRecord
 
   after_create :create_purchase_downloads
 
+  def price_in_pence
+    (price * 100).to_i
+  end
+
   def price_excluding_gratuity_in_pence
     (album.price * 100).to_i
   end
@@ -29,7 +33,7 @@ class Purchase < ApplicationRecord
   end
 
   def platform_fee_in_pence
-    (price_excluding_gratuity_in_pence * platform_fee_fraction).to_i
+    (price_in_pence * platform_fee_fraction).to_i
   end
 
   private

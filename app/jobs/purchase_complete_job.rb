@@ -13,6 +13,5 @@ class PurchaseCompleteJob < ApplicationJob
     purchase.update(user: User.find_by(email: customer_email)) unless purchase.user
 
     PurchaseMailer.with(purchase:).completed.deliver_later
-    PurchaseMailer.with(purchase:).notify_artist.deliver_later
   end
 end

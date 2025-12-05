@@ -28,6 +28,9 @@ class StripeWebhookEventsController < ApplicationController
     when 'checkout.session.completed'
       stripe_session_id = event.data.object.id
       PurchaseCompleteJob.perform_later(stripe_session_id)
+    when 'charge.updated'
+      charge_id = event.data.object.id
+      PayoutJob.perform_later(charge_id)
     when 'account.updated'
       account_in_stripe = event.data.object
       account_in_jam = StripeAccount.find_by!(stripe_identifier: account_in_stripe.id)
