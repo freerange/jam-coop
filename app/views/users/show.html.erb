@@ -33,6 +33,41 @@
 
     <% end %>
 
+    <% if policy(:label).new? %>
+      <%= render(SidebarSectionComponent.new(title: 'Labels')) do |component| %>
+        <% component.with_subtitle do %>
+          <p>Labels associated with your account</p>
+        <% end %>
+
+        <div class="grid grid-cols-3 gap-4">
+          <% @user.labels.each do |label| %>
+            <%= link_to(edit_admin_label_path(label)) do %>
+              <%= render(CardComponent.new(
+                title: label.name,
+                subtitle: '',
+              image: ( cdn_url(label.logo.representation(resize_to_limit: [500, 500])) if label.logo.representable? )
+              )) %>
+            <% end %>
+          <% end %>
+
+          <%= link_to(new_admin_label_path) do %>
+            <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
+              <div class="grid place-items-center">
+                <div class="flex gap-2 items-center text-amber-600">
+                  <span>
+                    <svg class="fill-amber-600" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
+                    </svg>
+                  </span>
+                  Add label
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
     <%= render(SidebarSectionComponent.new(title: 'Password')) do %>
       <%= form_with(url: password_path, method: :patch, builder: TailwindFormBuilder) do |form| %>
         <% if flash[:incorrect_password] %>

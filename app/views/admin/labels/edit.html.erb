@@ -1,0 +1,48 @@
+<%= render(SectionComponent.new(title: 'Edit label')) do %>
+  <%= render BreadcrumbComponent.new(items: [
+      { text: 'My account', link: account_path },
+      { text: 'Edit label' }
+    ]) %>
+
+  <%= render(SidebarSectionComponent.new(title: 'Label details')) do %>
+    <%= render "form", label: @label %>
+  <% end %>
+
+  <%= render(SidebarSectionComponent.new(title: 'Releases')) do |component| %>
+    <% component.with_subtitle do %>
+      <div class="flex flex-col gap-1">
+        <p>Albums that are released by your label.</p>
+        <p><%= link_to('Add artists', new_artist_path, class: 'underline') %> and their albums to your account first.</p>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-3 gap-4">
+      <% @label.releases.each do |release| %>
+        <%= link_to(edit_admin_label_release_path(@label, release)) do %>
+          <%= render(CardComponent.new(
+                title: release.album.title,
+                subtitle: release.album.artist.name,
+                image: ( cdn_url(release.album.cover.representation(resize_to_limit: [1000, 1000])) if release.album.cover.representable? )
+              )) %>
+        <% end %>
+      <% end %>
+
+      <% if Album.releaseable_on(@label).any? %>
+        <%= link_to(new_admin_label_release_path(@label)) do %>
+          <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
+            <div class="grid place-items-center">
+              <div class="flex gap-2 items-center text-amber-600">
+                <span>
+                  <svg class="fill-amber-600" width="14" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 8.5H8V14.5H6V8.5H0V6.5H6V0.5H8V6.5H14V8.5Z" />
+                  </svg>
+                </span>
+                Add release
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

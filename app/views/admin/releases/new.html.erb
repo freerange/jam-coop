@@ -1,0 +1,11 @@
+<%= render(SectionComponent.new(title: 'New release')) do %>
+  <%= render BreadcrumbComponent.new(items: [
+      { text: 'My account', link: account_path },
+      { text: @label.name, link: edit_admin_label_path(@label) },
+      { text: 'New release' }
+    ]) %>
+
+  <%= render(SidebarSectionComponent.new(title: 'Release details')) do %>
+    <%= render "form", label: @label, release: @release %>
+  <% end %>
+<% end %>

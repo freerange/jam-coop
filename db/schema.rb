@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_05_114214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,6 +97,18 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
     t.index ["email"], name: "index_interests_on_email", unique: true
   end
 
+  create_table "labels", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "location"
+    t.string "name", null: false
+    t.string "slug"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["slug"], name: "index_labels_on_slug", unique: true
+    t.index ["user_id"], name: "index_labels_on_user_id"
+  end
+
   create_table "licenses", force: :cascade do |t|
     t.string "code", null: false
     t.datetime "created_at", null: false
@@ -149,6 +161,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
     t.bigint "user_id"
     t.index ["album_id"], name: "index_purchases_on_album_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
+  end
+
+  create_table "releases", force: :cascade do |t|
+    t.bigint "album_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "label_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_releases_on_album_id"
+    t.index ["label_id"], name: "index_releases_on_label_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -325,6 +346,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.string "email", null: false
+    t.boolean "labels_enabled", default: false, null: false
     t.boolean "opt_in_to_newsletter", default: true, null: false
     t.string "password_digest", null: false
     t.datetime "sending_suppressed_at"
@@ -339,11 +361,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_26_095844) do
   add_foreign_key "albums", "licenses"
   add_foreign_key "artists", "users"
   add_foreign_key "email_verification_tokens", "users"
+  add_foreign_key "labels", "users"
   add_foreign_key "password_reset_tokens", "users"
   add_foreign_key "payout_details", "users"
   add_foreign_key "purchase_downloads", "purchases"
   add_foreign_key "purchases", "albums"
   add_foreign_key "purchases", "users"
+  add_foreign_key "releases", "albums"
+  add_foreign_key "releases", "labels"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
