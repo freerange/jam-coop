@@ -43,5 +43,8 @@ module MusicCoop
 
     config.x.player.height = 450
     config.x.player.width = 435
+
+    config.mission_control.jobs.base_controller_class = 'AdminController'
+    config.mission_control.jobs.http_basic_auth_enabled = false
   end
 end
