@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to log_in_path unless Current.user
+    redirect_to main_app.log_in_path unless Current.user
   end
 
   def set_current_request_details
@@ -27,6 +27,6 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:alert] = 'You are not authorized to perform this action.'
-    redirect_back_or_to root_path
+    redirect_back_or_to main_app.root_path
   end
 end
