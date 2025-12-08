@@ -24,6 +24,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:opt_in_to_newsletter)
+    params.expect(user: [:opt_in_to_newsletter])
   end
 end

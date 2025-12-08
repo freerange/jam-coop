@@ -34,6 +34,6 @@ class PayoutDetailsController < ApplicationController
   end
 
   def payout_detail_params
-    params.require(:payout_detail).permit(:name, :country)
+    params.expect(payout_detail: %i[name country])
   end
 end

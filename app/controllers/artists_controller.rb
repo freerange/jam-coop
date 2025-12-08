@@ -78,6 +78,6 @@ class ArtistsController < ApplicationController
   end
 
   def artist_params
-    params.require(:artist).permit(:name, :profile_picture, :location, :description)
+    params.expect(artist: %i[name profile_picture location description])
   end
 end

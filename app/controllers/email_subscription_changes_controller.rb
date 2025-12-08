@@ -64,15 +64,15 @@ class EmailSubscriptionChangesController < ApplicationController
   end
 
   def user
-    @user ||= User.find_by(email: params[:Recipient])
+    User.find_by(email: params[:Recipient])
   end
 
   def interest
-    @interest ||= Interest.find_by(email: params[:Recipient])
+    Interest.find_by(email: params[:Recipient])
   end
 
   def purchase
-    @purchase ||= Purchase.find_by(customer_email: params[:Recipient])
+    Purchase.find_by(customer_email: params[:Recipient])
   end
 
   def authenticate

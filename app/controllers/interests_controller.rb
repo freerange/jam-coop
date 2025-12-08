@@ -37,6 +37,6 @@ class InterestsController < ApplicationController
   private
 
   def interest_params
-    params.require(:interest).permit(:email)
+    params.expect(interest: [:email])
   end
 end

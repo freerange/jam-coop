@@ -46,6 +46,6 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
-    params.require(:purchase).permit(:price, :contact_opt_in)
+    params.expect(purchase: %i[price contact_opt_in])
   end
 end
