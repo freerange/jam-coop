@@ -46,7 +46,7 @@ module Admin
     end
 
     def release_params
-      params.require(:release).permit(:label, :album_id)
+      params.expect(release: %i[label album_id])
     end
 
     def authorize_label

@@ -45,12 +45,13 @@ module Admin
 
     def label_params
       params
-        .require(:label)
-        .permit(
-          :name,
-          :location,
-          :description,
-          :logo
+        .expect(
+          label: %i[
+            name
+            location
+            description
+            logo
+          ]
         )
     end
   end
