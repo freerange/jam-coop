@@ -93,7 +93,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
     track = create(:track, album: @album, title: 'Old name')
 
     patch artist_album_path(@album.artist, @album),
-          params: { album: { title: 'Example', tracks_attributes: { id: track.id, title: 'New name' } } }
+          params: { album: { title: 'Example', tracks_attributes: { '0': { id: track.id, title: 'New name' } } } }
 
     assert_equal 'New name', track.reload.title
   end
@@ -103,7 +103,7 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
     assert_difference('Track.count', -1, 'A Track should be destroyed') do
       patch artist_album_path(@album.artist, @album),
-            params: { album: { title: 'Example', tracks_attributes: { id: track.id, _destroy: true } } }
+            params: { album: { title: 'Example', tracks_attributes: { '0': { id: track.id, _destroy: true } } } }
     end
   end
 end
