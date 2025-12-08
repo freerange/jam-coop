@@ -73,7 +73,7 @@ class AlbumsController < ApplicationController
           :publication_status,
           {
             tag_ids: [],
-            tracks_attributes: %i[id title original _destroy]
+            tracks_attributes: [%i[id title original _destroy]]
           }
         ]
       )
