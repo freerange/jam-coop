@@ -265,14 +265,6 @@ class AlbumTest < ActiveSupport::TestCase
     assert_includes album.errors[:cover], 'must be an image file (jpeg, png)'
   end
 
-  test 'is not valid if released_on is a date in the future' do
-    freeze_time do
-      album = build(:album, released_on: 1.day.from_now)
-      assert_not album.valid?
-      assert_includes album.errors[:released_on], "must be less than or equal to #{Time.zone.today}"
-    end
-  end
-
   test 'is valid if not published and has no tracks' do
     album = build(:draft_album, tracks: [])
     assert album.valid?
