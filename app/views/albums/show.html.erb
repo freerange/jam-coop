@@ -90,7 +90,7 @@
           <% if Current.user && Current.user.owns?(@album) %>
             <p class="mb-2">You own this album:</p>
             <ul class="list-disc list-inside">
-              <% Purchase.find_by(album: @album, user: Current.user).purchase_downloads.each do |download| %>
+              <% Purchase.find_by(album: @album, user: Current.user).purchase_downloads.with_attached_file.each do |download| %>
                 <li><%= text_link_to "Download (#{download.format})", cdn_url(download.file) %></li>
               <% end %>
             </ul>

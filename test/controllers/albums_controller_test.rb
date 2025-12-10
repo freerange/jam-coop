@@ -28,12 +28,15 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
   test '#show shows download links instead of a buy button when album is purchased' do
     create(:purchase, album: @album, price: @album.price, user: @user)
+    perform_enqueued_jobs
     @album.published!
 
     get artist_album_path(@album.artist, @album)
 
     assert_select 'button', text: 'Buy', count: 0
     assert_select 'p', text: 'You own this album:'
+    assert_select 'a', text: 'Download (mp3v0)'
+    assert_select 'a', text: 'Download (flac)'
   end
 
   test '#show shows the transcode state of each track' do
