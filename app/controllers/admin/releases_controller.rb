@@ -46,7 +46,7 @@ module Admin
     end
 
     def release_params
-      params.expect(release: %i[label album_id])
+      params.expect(release: %i[label album_id catalogue_number])
     end
 
     def authorize_label

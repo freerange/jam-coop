@@ -1,6 +1,10 @@
 <%= form_for([:admin, label, release], builder: TailwindFormBuilder) do |form| %>
   <%= render ModelErrorComponent.new(model: release) %>
-  <%= form.select :album_id, Album.releaseable_on(@label).or(Album.where(id: release.album_id)).pluck(:title, :id).uniq, { label: { text: 'Album' }, class: 'w-full' } %>
+
+  <%= form.select :album_id, Album.releaseable_on(@label).or(Album.where(id: release.album_id)).pluck(:title, :id).uniq, { label: { text: 'Album' }, class: 'w-full mb-3' } %>
+
+  <%= form.text_field :catalogue_number, { label: { text: 'Catalogue number (optional)' }, placeholder: 'e.g. jam-123', class: 'w-full' } %>
+
   <div class='flex flex-row justify-end gap-3 mt-3'>
     <% if release.persisted? %>
       <%= form.button 'Remove release', type: :submit, formmethod: :delete, data: { turbo_confirm: 'Are you sure you want to remove this release?' }, class: 'border border-red-600 hover:bg-red-300 font-medium py-3 px-5 w-full sm:w-auto' %>

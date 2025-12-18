@@ -33,19 +33,24 @@ class AdministeringALabelTest < ApplicationSystemTestCase
 
   test 'adding a release to a label' do
     artist = create(:artist, user: @user)
-    create(:published_album, artist:, title: 'album-name')
+    album = create(:published_album, artist:, title: 'album-name')
     label = create(:label, user: @user)
 
     visit account_path
     click_on label.name
     click_on 'Add release'
     select 'album-name', from: 'Album'
+    fill_in 'Catalogue number', with: 'jam-123'
     click_on 'Save release'
 
     within(release_section) do
       assert_text 'album-name'
       assert_text artist.name
     end
+
+    visit artist_album_path(artist, album)
+    assert_text 'album-name'
+    assert_text 'jam-123'
   end
 
   test 'editing an existing release' do
