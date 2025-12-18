@@ -149,6 +149,9 @@
       <p><strong>Released:</strong> <%= @album.released_on.strftime('%B %-d, %Y') %></p>
     <% end %>
 
+    <% if @album.releases.first&.catalogue_number.present? %>
+      <p><strong>Label:</strong> <%= link_to(@album.releases.first.label.name, label_path(@album.releases.first.label), class: 'underline') %> (<%= @album.releases.first.catalogue_number %>)</p>
+    <% end %>
     <% if @album.license.source %>
       <p><strong>License:</strong> <%= link_to @album.license.label, @album.license.source, class: 'underline' %></p>
     <% else %>
