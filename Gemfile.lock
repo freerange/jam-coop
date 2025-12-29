@@ -387,7 +387,7 @@ GEM
     rexml (3.4.4)
     rollbar (3.7.0)
     rouge (4.6.1)
-    rss (0.3.1)
+    rss (0.3.2)
       rexml
     rubocop (1.81.7)
       json (~> 2.3)
