@@ -1,0 +1,55 @@
+name: CDK Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: cdk-deploy-main
+  cancel-in-progress: false
+
+jobs:
+  cdk-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    env:
+      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AWS_ROLE_NAME: ${{ vars.AWS_ROLE_NAME }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE_NAME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: aws-cdk
+
+      - name: Run build
+        run: npm run build
+        working-directory: aws-cdk
+
+      - name: CDK Deploy (development)
+        run: |
+          npx cdk deploy CertificateDevelopmentStack MusicCoopDevelopmentStack --require-approval never
+        working-directory: aws-cdk
+
+      - name: CDK Deploy (production)
+        run: |
+          npx cdk deploy CertificateProductionStack MusicCoopProductionStack --require-approval never
+        working-directory: aws-cdk
