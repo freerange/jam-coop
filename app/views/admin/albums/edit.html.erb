@@ -8,4 +8,13 @@
 
     <%= render "form", album: @album %>
   </div>
+
+  <%= render(SidebarSectionComponent.new(title: 'Manage tracks')) do %>
+    <ul>
+      <% @album.tracks.each do |track| %>
+        <li><%= track.position %> - <%= track.title %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
 <% end %>
