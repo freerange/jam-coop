@@ -49,6 +49,13 @@ Rails.application.routes.draw do
     resources :artists do
       resources :albums, only: %i[new edit create update]
     end
+
+    resources :tracks, only: %i[] do
+      member do
+        post 'move_higher'
+        post 'move_lower'
+      end
+    end
   end
 
   resources :purchases, only: %i[show]
@@ -64,13 +71,6 @@ Rails.application.routes.draw do
   resources :albums, only: %i[index] do
     collection do
       get 'random', to: 'albums#random'
-    end
-  end
-
-  resources :tracks, only: %i[] do
-    member do
-      post 'move_higher'
-      post 'move_lower'
     end
   end
 

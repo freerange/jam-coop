@@ -123,8 +123,8 @@
 
           <% if policy(track).reorder? %>
             <div>
-              <%= text_link_to 'Up', move_higher_track_path(track), data: { turbo_method: :post } %>
-              <%= text_link_to 'Down', move_lower_track_path(track), data: { turbo_method: :post } %>
+              <%= text_link_to 'Up', move_higher_admin_track_path(track), data: { turbo_method: :post } %>
+              <%= text_link_to 'Down', move_lower_admin_track_path(track), data: { turbo_method: :post } %>
             </div>
           <% end %>
         </div>
