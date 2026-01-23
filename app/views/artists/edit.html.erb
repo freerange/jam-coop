@@ -11,7 +11,7 @@
   <%= render(SidebarSectionComponent.new(title: 'Albums')) do %>
     <div class="grid grid-cols-3 gap-4">
       <% @artist.albums.includes(cover_attachment: :blob).in_release_order.each do |album| %>
-        <%= link_to(edit_artist_album_path(album.artist, album)) do %>
+        <%= link_to(edit_admin_artist_album_path(album.artist, album)) do %>
           <%= render(CardComponent.new(
       title: album.title,
       subtitle: ( album.publication_status if !album.published? ),
@@ -20,7 +20,7 @@
         <% end %>
       <% end %>
 
-      <%= link_to(new_artist_album_path(@artist)) do %>
+      <%= link_to(new_admin_artist_album_path(@artist)) do %>
         <div class="border border-slate-500 border-dashed hover:border-solid aspect-w-1 aspect-h-1">
           <div class="grid place-items-center">
             <div class="flex gap-2 items-center text-amber-600">

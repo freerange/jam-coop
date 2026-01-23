@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag 'tom-select' %>
 
-<%= form_for([album.artist, album], builder: TailwindFormBuilder, data: { controller: 'multiple-upload', action: 'direct-upload:initialize->multiple-upload#init direct-upload:progress->multiple-upload#progress' }) do |form| %>
+<%= form_for([:admin, album.artist, album], builder: TailwindFormBuilder, data: { controller: 'multiple-upload', action: 'direct-upload:initialize->multiple-upload#init direct-upload:progress->multiple-upload#progress' }) do |form| %>
   <%= render ModelErrorComponent.new(model: album) %>
 
   <%= render(SidebarSectionComponent.new(title: 'Details')) do %>

@@ -55,60 +55,6 @@ class AlbumsControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
 
     assert_select 'p', 'Released: June 20, 2023'
   end
-
-  test '#new' do
-    get new_artist_album_path(@album.artist)
-    assert_response :success
-  end
-
-  test '#create' do
-    assert_difference('Album.count') do
-      post artist_albums_path(@album.artist), params: {
-        album: { title: 'Example', cover: fixture_file_upload('cover.png'), license_id: License.first.id }
-      }
-    end
-
-    assert_redirected_to artist_album_path(@album.artist, Album.last)
-  end
-
-  test '#create enqueues transcoding' do
-    assert_enqueued_with(job: TranscodeJob) do
-      post artist_albums_path(@album.artist), params: {
-        album: { title: 'Example',
-                 cover: fixture_file_upload('cover.png'),
-                 license_id: License.first.id,
-                 tracks_attributes: { '0': { title: 'Test', original: fixture_file_upload('one.wav') } } }
-      }
-    end
-  end
-
-  test '#edit' do
-    get edit_artist_album_path(@album.artist, @album)
-    assert_response :success
-  end
-
-  test '#update' do
-    patch artist_album_path(@album.artist, @album), params: { album: { title: 'Example' } }
-    assert_redirected_to artist_album_path(@album.artist, @album)
-  end
-
-  test '#update accepts attributes for tracks' do
-    track = create(:track, album: @album, title: 'Old name')
-
-    patch artist_album_path(@album.artist, @album),
-          params: { album: { title: 'Example', tracks_attributes: { '0': { id: track.id, title: 'New name' } } } }
-
-    assert_equal 'New name', track.reload.title
-  end
-
-  test '#update allows tracks to be destroyed' do
-    track = create(:track, album: @album, title: 'Old name')
-
-    assert_difference('Track.count', -1, 'A Track should be destroyed') do
-      patch artist_album_path(@album.artist, @album),
-            params: { album: { title: 'Example', tracks_attributes: { '0': { id: track.id, _destroy: true } } } }
-    end
-  end
 end
 
 class AlbumsControllerTestSignedInAsArtist < ActionDispatch::IntegrationTest
@@ -187,26 +133,6 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
   test '#show renders twitter:player:width meta tag' do
     get artist_album_path(album.artist, album)
     assert_select %(meta[name="twitter:player:width"][content="#{Rails.configuration.x.player.width}"])
-  end
-
-  test '#new' do
-    get new_artist_album_path(album.artist)
-    assert_redirected_to log_in_path
-  end
-
-  test '#create' do
-    post artist_albums_path(album.artist), params: { album: { title: 'Example' } }
-    assert_redirected_to log_in_path
-  end
-
-  test '#edit' do
-    get edit_artist_album_path(album.artist, album)
-    assert_redirected_to log_in_path
-  end
-
-  test '#update' do
-    patch artist_album_path(album.artist, album), params: { album: { title: 'Example' } }
-    assert_redirected_to log_in_path
   end
 
   test '#random redirects to a random album' do

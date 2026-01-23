@@ -14,7 +14,7 @@ class TaggingAnAlbumTest < ApplicationSystemTestCase
 
   # test 'creating an album' do
   #   log_in_as(@artist_user)
-  #   visit edit_artist_album_path(@artist, @album)
+  #   visit edit_admin_artist_album_path(@artist, @album)
 
   #   select 'jazz', from: 'Tags'
   #   select 'folk', from: 'Tags'
