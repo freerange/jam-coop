@@ -1,0 +1,53 @@
+name: CDK Deploy Trigger
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  parse-command:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/deploy') &&
+      (contains(fromJSON('["OWNER"]'), github.event.comment.author_association) ||
+       github.event.comment.user.login == 'dependabot[bot]')
+    outputs:
+      environment: ${{ steps.parse.outputs.environment }}
+      pr_ref: ${{ steps.pr.outputs.ref }}
+    steps:
+      - name: React to comment
+        run: |
+          gh api repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions \
+            -f content=rocket
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Get PR ref
+        id: pr
+        run: |
+          PR_REF=$(gh pr view ${{ github.event.issue.number }} --json headRefName -q .headRefName)
+          echo "ref=$PR_REF" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Parse environment from comment
+        id: parse
+        run: |
+          COMMENT="${{ github.event.comment.body }}"
+          if [[ "$COMMENT" == *"/deploy aws-cdk-development"* ]]; then
+            echo "environment=aws-cdk-development" >> $GITHUB_OUTPUT
+          elif [[ "$COMMENT" == *"/deploy aws-cdk-production"* ]]; then
+            echo "environment=aws-cdk-production" >> $GITHUB_OUTPUT
+          else
+            echo ":x: Invalid deployment target. Use '/deploy aws-cdk-development' or '/deploy aws-cdk-production'"
+            exit 1
+          fi
+
+  deploy:
+    needs: parse-command
+    uses: ./.github/workflows/cdk-deploy.yml
+    with:
+      environment-name: ${{ needs.parse-command.outputs.environment }}
+      ref: ${{ needs.parse-command.outputs.pr_ref }}

@@ -1,0 +1,61 @@
+name: CDK Diff
+
+on:
+  workflow_call:
+    inputs:
+      stack-names:
+        required: true
+        type: string
+    outputs:
+      empty:
+        value: ${{ jobs.cdk-diff.outputs.empty }}
+
+jobs:
+  cdk-diff:
+    name: Run cdk diff against stacks
+    runs-on: ubuntu-latest
+    outputs:
+      empty: ${{ steps.changes.outputs.empty }}
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    env:
+      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AWS_ROLE_NAME: ${{ vars.AWS_ROLE_NAME }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE_NAME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: aws-cdk
+
+      - name: Run build
+        run: npm run build
+        working-directory: aws-cdk
+
+      - name: CDK Diff
+        run: |
+          npx cdk diff ${{ inputs.stack-names }} --no-color > cdk-diff-output.txt
+        working-directory: aws-cdk
+
+      - name: Post CDK Diff Comment in PR
+        id: changes
+        uses: towardsthecloud/aws-cdk-diff-pr-commenter@v1
+        with:
+          header: CDK Diff for ${{ inputs.environment-name }} environment
+          diff-file: aws-cdk/cdk-diff-output.txt
+          aws-region: ${{ env.AWS_REGION }}
