@@ -51,5 +51,6 @@ jobs:
 
       - name: CDK Deploy
         run: |
-          npx cdk deploy ${{ env.AWS_CDK_STACK_NAMES }} --require-approval never
+          # npx cdk deploy ${{ env.AWS_CDK_STACK_NAMES }} --require-approval never
+          echo "${{ inputs.environment-name }} - ${{ inputs.ref }} - ${{ env.AWS_CDK_STACK_NAMES }}"
         working-directory: aws-cdk
