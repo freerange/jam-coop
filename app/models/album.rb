@@ -14,8 +14,8 @@ class Album < ApplicationRecord
   has_many :tags, -> { order :name }, through: :taggings
   has_one_attached :cover
   belongs_to :license
-  has_many :releases, dependent: :destroy
-  has_many :labels, through: :releases
+  has_one :release, dependent: :destroy
+  has_one :label, through: :release
 
   accepts_nested_attributes_for :tracks, reject_if: :all_blank, allow_destroy: true
 
