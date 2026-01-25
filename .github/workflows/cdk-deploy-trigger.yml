@@ -8,17 +8,15 @@ on:
 jobs:
   parse-command:
     runs-on: ubuntu-latest
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/deploy') &&
+      (contains(fromJSON('["OWNER"]'), github.event.comment.author_association) ||
+       github.event.comment.user.login == 'dependabot[bot]')
     outputs:
       environment: ${{ steps.parse.outputs.environment }}
       pr_ref: ${{ steps.pr.outputs.ref }}
     steps:
-      - name: Debug output
-        run: |
-          echo "Is PR: ${{ github.event.issue.pull_request }}"
-          echo "Author: ${{ github.event.comment.user.login }}"
-          echo "Association: ${{ github.event.comment.author_association }}"
-          echo "Comment body: ${{ github.event.comment.body }}"
-
       - name: React to comment
         run: |
           gh api repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions \
