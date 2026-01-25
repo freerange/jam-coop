@@ -7,7 +7,7 @@ class LabelsController < ApplicationController
   def show
     skip_authorization
 
-    @albums = @label.albums.includes(cover_attachment: :blob)
+    @albums = policy_scope(@label.albums.includes(:artist)).includes(cover_attachment: :blob)
   end
 
   private
