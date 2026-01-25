@@ -8,8 +8,6 @@ on:
 jobs:
   parse-command:
     runs-on: ubuntu-latest
-    if: |
-      github.event.issue.pull_request
     outputs:
       environment: ${{ steps.parse.outputs.environment }}
       pr_ref: ${{ steps.pr.outputs.ref }}
