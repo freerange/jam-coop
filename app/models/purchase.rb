@@ -10,7 +10,7 @@ class Purchase < ApplicationRecord
   validates :price, presence: true, numericality: true
   validate :price_is_greater_than_album_price, unless: -> { price.blank? }
 
-  after_create :create_purchase_downloads
+  after_commit :create_purchase_downloads, on: :create
 
   def price_excluding_gratuity_in_pence
     (album.price * 100).to_i
