@@ -31,7 +31,7 @@ jobs:
     if: needs.files-check.outputs.changed == 'true'
     uses: ./.github/workflows/cdk-diff.yml
     with:
-      environment: aws-cdk-development
+      environment-name: aws-cdk-development
       stack-names: "CertificateDevelopmentStack MusicCoopDevelopmentStack"
 
   cdk-diff-production:
@@ -42,7 +42,7 @@ jobs:
     if: needs.files-check.outputs.changed == 'true' && needs.cdk-diff-development.outputs.empty == 'true'
     uses: ./.github/workflows/cdk-diff.yml
     with:
-      environment: aws-cdk-production
+      environment-name: aws-cdk-production
       stack-names: "CertificateProductionStack MusicCoopProductionStack"
 
   cdk-status-check:
