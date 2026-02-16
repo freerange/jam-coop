@@ -3,6 +3,9 @@ name: CDK Diff
 on:
   workflow_call:
     inputs:
+      environment-name:
+        required: true
+        type: string
       stack-names:
         required: true
         type: string
