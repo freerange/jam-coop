@@ -93,4 +93,14 @@ class UserTest < ActiveSupport::TestCase
 
     assert_nil Following.find_by(user:, artist:)
   end
+
+  test '#stripe_connect_enabled? defaults to false' do
+    user = build(:user)
+    assert_not user.stripe_connect_enabled?
+  end
+
+  test '#stripe_connect_enabled? can be set to true' do
+    user = build(:user, stripe_connect_enabled: true)
+    assert user.stripe_connect_enabled?
+  end
 end

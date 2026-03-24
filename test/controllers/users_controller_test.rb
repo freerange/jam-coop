@@ -13,6 +13,21 @@ class UsersControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test '#show does not display button to setup Stripe Connect if Stripe Connect is disabled for user' do
+    @user.update!(stripe_connect_enabled: false)
+    get account_path
+
+    assert_select 'input[type=submit][value=?]', 'Setup Stripe Connect', count: 0
+  end
+
+  test '#show displays button to setup Stripe Connect if Stripe Connect is enabled for user' do
+    @user.update!(stripe_connect_enabled: true)
+
+    get account_path
+
+    assert_select 'input[type=submit][value=?]', 'Setup Stripe Connect'
+  end
+
   test '#update_newsletter_preference can opt out of newsletter' do
     assert @user.opt_in_to_newsletter
 
