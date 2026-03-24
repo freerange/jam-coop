@@ -89,7 +89,7 @@ class StripeConnectTest < ApplicationSystemTestCase
   end
 
   def artist_user
-    @artist_user ||= create(:user)
+    @artist_user ||= create(:user, stripe_connect_enabled: true)
   end
 
   def artist
