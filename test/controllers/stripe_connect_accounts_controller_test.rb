@@ -4,11 +4,19 @@ require 'test_helper'
 
 class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTest
   setup do
-    @user = create(:user)
+    @user = create(:user, stripe_connect_enabled: true)
     log_in_as(@user)
 
     @stripe_account = stub('Stripe::Account', id: 'acct-id')
     Stripe::Account.stubs(:create).returns(@stripe_account)
+  end
+
+  test '#create redirects to account page if Stripe Connect is disabled for user' do
+    @user.update!(stripe_connect_enabled: false)
+    post stripe_connect_accounts_path
+
+    assert_redirected_to account_path
+    assert_equal 'Stripe Connect is not available', flash[:alert]
   end
 
   test '#create creates a Stripe::Account' do
@@ -34,7 +42,7 @@ end
 
 class StripeConnectAccountsControllerLinkTest < ActionDispatch::IntegrationTest
   setup do
-    @user = create(:user)
+    @user = create(:user, stripe_connect_enabled: true)
     log_in_as(@user)
 
     @stripe_account_id = 'acct-id'
@@ -67,7 +75,7 @@ end
 
 class StripeConnectAccountsControllerSuccessTest < ActionDispatch::IntegrationTest
   setup do
-    @user = create(:user)
+    @user = create(:user, stripe_connect_enabled: true)
     log_in_as(@user)
 
     @stripe_account_id = 'acct-id'

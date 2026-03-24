@@ -2,6 +2,7 @@
 
 class StripeConnectAccountsController < ApplicationController
   before_action :set_user
+  before_action :ensure_stripe_connect_available
   before_action :set_stripe_connect_account, except: %i[create]
 
   def create
@@ -52,6 +53,12 @@ class StripeConnectAccountsController < ApplicationController
 
   def set_user
     @user = Current.user
+  end
+
+  def ensure_stripe_connect_available
+    return if @user.stripe_connect_enabled?
+
+    redirect_to account_path, alert: 'Stripe Connect is not available'
   end
 
   def set_stripe_connect_account
