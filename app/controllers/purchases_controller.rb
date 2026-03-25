@@ -50,6 +50,6 @@ class PurchasesController < ApplicationController
   end
 
   def stripe_connect_account
-    StripeConnectAccount.find_or_initialize_by(user: artist.user)
+    artist.user.stripe_connect_account || StripeConnectAccount.new
   end
 end
