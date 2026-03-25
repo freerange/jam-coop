@@ -40,7 +40,7 @@
         <% end %>
 
         <div class="grid grid-cols-3 gap-4">
-          <% @user.labels.each do |label| %>
+          <% @user.labels.includes(logo_attachment: :blob).each do |label| %>
             <%= link_to(edit_admin_label_path(label)) do %>
               <%= render(CardComponent.new(
                 title: label.name,
