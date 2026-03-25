@@ -3,12 +3,14 @@
 <p>Good news! You sold a copy of your album <%= @purchase.album.title %>
   for <%= number_to_currency(@purchase.price, unit: "£") %>.</p>
 
-<% if @user.payout_detail %>
-  <p>You have already provided your payout details. If you need to, you can <%= link_to 'change them', account_url %>.</p>
-<% else %>
-  <p><b>Important:</b> we need to know <%= link_to 'some details', account_url %> before we can make a
-    payment to you.</p>
-<% end %>
+<p>
+  <% if @user.payout_detail %>
+    You have already provided your payout details. If you need to, you can <%= link_to 'change them', account_url %>.
+  <% else %>
+    <b>Important:</b> we need to know <%= link_to 'some details', account_url %> before we can make a
+      payment to you.
+  <% end %>
+</p>
 
 <p>Thank you for selling your music with us,</p>
 
