@@ -9,7 +9,7 @@ class StripeConnectAccountsController < ApplicationController
     authorize StripeConnectAccount
 
     account = Stripe::Account.create(create_params)
-    StripeConnectAccount.create!(user: @user, stripe_identifier: account.id)
+    @user.create_stripe_connect_account!(stripe_identifier: account.id)
 
     redirect_to link_stripe_connect_account_path(account.id)
   end
@@ -62,9 +62,9 @@ class StripeConnectAccountsController < ApplicationController
   end
 
   def set_stripe_connect_account
-    @stripe_connect_account = StripeConnectAccount.find_by!(
-      user: @user,
-      stripe_identifier: account_id
-    )
+    @stripe_connect_account = @user.stripe_connect_account
+    return if @stripe_connect_account.stripe_identifier == account_id
+
+    raise ActiveRecord::RecordNotFound, 'StripeConnectAccount not found'
   end
 end

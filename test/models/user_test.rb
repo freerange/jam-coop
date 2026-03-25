@@ -103,4 +103,18 @@ class UserTest < ActiveSupport::TestCase
     user = build(:user, stripe_connect_enabled: true)
     assert user.stripe_connect_enabled?
   end
+
+  test 'can have associated StripeConnectAccount' do
+    user = create(:user)
+    attributes = attributes_for(:stripe_connect_account)
+    user.create_stripe_connect_account!(attributes)
+    assert_equal attributes[:stripe_identifier], user.stripe_connect_account.stripe_identifier
+  end
+
+  test 'destroys associated StripeConnectAccount on destruction' do
+    stripe_connect_account = build(:stripe_connect_account)
+    user = create(:user, stripe_connect_account:)
+    user.destroy!
+    assert_not StripeConnectAccount.exists?(id: stripe_connect_account.id)
+  end
 end

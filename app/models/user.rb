@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :followed_artists, through: :followings, source: :artist
   has_many :labels, dependent: :destroy
   has_one :payout_detail, dependent: :destroy
+  has_one :stripe_connect_account, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, allow_nil: true, length: { minimum: 12 }
