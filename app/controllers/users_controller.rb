@@ -28,6 +28,6 @@ class UsersController < ApplicationController
   end
 
   def set_stripe_account
-    @stripe_account = StripeConnectAccount.find_by(user: @user)
+    @stripe_account = @user.stripe_connect_account
   end
 end
