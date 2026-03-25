@@ -15,6 +15,8 @@ class PurchaseMailer < ApplicationMailer
     return unless (@user = @purchase.album.artist.user)
     return if @user.suppress_sending?
 
+    @stripe_account = @user.stripe_connect_account
+
     mail to: @user.email, subject: "You have sold a copy of #{@purchase.album.title}"
   end
 end
