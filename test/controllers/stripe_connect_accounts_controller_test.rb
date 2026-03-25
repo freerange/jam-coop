@@ -46,7 +46,7 @@ class StripeConnectAccountsControllerLinkTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
 
     @stripe_account_id = 'acct-id'
-    StripeConnectAccount.create!(user: @user, stripe_identifier: @stripe_account_id)
+    @user.create_stripe_connect_account!(stripe_identifier: @stripe_account_id)
 
     url = success_stripe_connect_account_url(@stripe_account_id)
     @stripe_account_link = stub('Stripe::AccountLink', url:)
@@ -79,7 +79,7 @@ class StripeConnectAccountsControllerSuccessTest < ActionDispatch::IntegrationTe
     log_in_as(@user)
 
     @stripe_account_id = 'acct-id'
-    @stripe_connect_account = StripeConnectAccount.create!(user: @user, stripe_identifier: @stripe_account_id)
+    @stripe_connect_account = @user.create_stripe_connect_account!(stripe_identifier: @stripe_account_id)
 
     @stripe_account = stub(
       'Stripe::Account', {
