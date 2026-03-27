@@ -5,12 +5,19 @@ class Purchase < ApplicationRecord
 
   belongs_to :album
   belongs_to :user, optional: true
+  belongs_to :payout, optional: true
   has_many :purchase_downloads, dependent: :destroy
 
   validates :price, presence: true, numericality: true
   validate :price_is_greater_than_album_price, unless: -> { price.blank? }
 
   after_commit :create_purchase_downloads, on: :create
+
+  scope :without_payout, -> { where(payout_id: nil) }
+
+  def stripe_payout
+    payout&.stripe? ? payout : nil
+  end
 
   def price_excluding_gratuity_in_pence
     (album.price * 100).to_i
