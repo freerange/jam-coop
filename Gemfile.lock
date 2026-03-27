@@ -213,7 +213,7 @@ GEM
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
     jmespath (1.6.2)
-    json (2.19.2)
+    json (2.19.3)
     language_server-protocol (3.17.0.5)
     launchy (3.1.1)
       addressable (~> 2.8)
@@ -249,8 +249,8 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
-    meta-tags (2.22.2)
-      actionpack (>= 6.0.0, < 8.2)
+    meta-tags (2.23.0)
+      actionpack (>= 6.0.0)
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -502,7 +502,7 @@ DEPENDENCIES
   jbuilder
   letter_opener
   lookbook (>= 2.3.13)
-  meta-tags (~> 2.19)
+  meta-tags (~> 2.23)
   mission_control-jobs
   mocha
   pg (~> 1.5)
