@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class ButtonComponent < ViewComponent::Base
-  def initialize(text:, path:, **options)
+  def initialize(text:, path:, link: false, **options)
     @text = text
     @path = path
     @options = options
+    @link = link
     @additional_classes = options.slice(:class)
   end
 
