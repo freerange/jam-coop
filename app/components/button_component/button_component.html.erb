@@ -1,1 +1,5 @@
-<%= button_to(@text, @path, **@options, class: classes) %>
+<% if @link %>
+  <%= link_to(@text, @path, **@options, class: classes) %>
+<% else %>
+  <%= button_to(@text, @path, **@options, class: classes) %>
+<% end %>
