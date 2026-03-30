@@ -5,6 +5,7 @@ class Purchase < ApplicationRecord
 
   belongs_to :album
   belongs_to :user, optional: true
+  belongs_to :payout, optional: true
   has_many :purchase_downloads, dependent: :destroy
 
   validates :price, presence: true, numericality: true
