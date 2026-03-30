@@ -55,4 +55,9 @@ class PayoutTest < ActiveSupport::TestCase
     payout = create(:payout)
     assert_not payout.stripe?
   end
+
+  test 'amount is in pounds' do
+    payout = create(:payout, amount_in_pence: 456)
+    assert_in_delta 4.56, payout.amount, 0.001
+  end
 end

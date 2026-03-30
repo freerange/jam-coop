@@ -15,4 +15,8 @@ class Payout < ApplicationRecord
   def stripe?
     payout_type == STRIPE_TYPE
   end
+
+  def amount
+    amount_in_pence / 100.0
+  end
 end
