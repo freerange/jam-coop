@@ -12,11 +12,11 @@ class PurchaseMailer < ApplicationMailer
   def notify_artist
     @purchase = params[:purchase]
 
-    return unless (@user = @purchase.seller)
-    return if @user.suppress_sending?
+    return unless (@seller = @purchase.seller)
+    return if @seller.suppress_sending?
 
-    @stripe_account = @user.stripe_connect_account
+    @stripe_account = @seller.stripe_connect_account
 
-    mail to: @user.email, subject: "You have sold a copy of #{@purchase.album.title}"
+    mail to: @seller.email, subject: "You have sold a copy of #{@purchase.album.title}"
   end
 end
