@@ -70,4 +70,13 @@ class PurchaseTest < ActiveSupport::TestCase
     purchase = create(:purchase, payout:)
     assert_equal payout, purchase.payout
   end
+
+  test '.without_payout' do
+    payout = build(:payout)
+    purchase_with_payout = create(:purchase, payout:)
+    purchase_without_payout = create(:purchase)
+    purchases = Purchase.without_payout
+    assert_includes purchases, purchase_without_payout
+    assert_not_includes purchases, purchase_with_payout
+  end
 end
