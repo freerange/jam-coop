@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :followings, dependent: :destroy
   has_many :followed_artists, through: :followings, source: :artist
   has_many :labels, dependent: :destroy
+  has_many :payouts, dependent: :destroy
   has_one :payout_detail, dependent: :destroy
   has_one :stripe_connect_account, dependent: :destroy
 
