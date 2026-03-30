@@ -13,6 +13,8 @@ class Purchase < ApplicationRecord
 
   after_commit :create_purchase_downloads, on: :create
 
+  scope :without_payout, -> { where(payout_id: nil) }
+
   def price_in_pence
     (price * 100).to_i
   end
