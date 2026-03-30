@@ -16,8 +16,7 @@ class PurchaseCompleteJob < ApplicationJob
 
     payment_intent = Stripe::PaymentIntent.retrieve(stripe_session.payment_intent)
     if payment_intent.transfer_data.present?
-      seller = purchase.album.artist.user
-      payout = seller.payouts.create!(
+      payout = purchase.seller.payouts.create!(
         payout_type: Payout::STRIPE_TYPE,
         transaction_reference: payment_intent.id,
         destination_reference: payment_intent.transfer_data.destination,

@@ -73,7 +73,7 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
 
     PurchaseCompleteJob.perform_now(stripe_session_id)
 
-    payouts = purchase.album.artist.user.payouts
+    payouts = purchase.seller.payouts
     assert_equal 1, payouts.length
     payout = payouts.last
     assert payout.stripe?

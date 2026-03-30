@@ -17,9 +17,9 @@ class PurchaseExporter
           purchase.id,
           (purchase.price * 100).to_i,
           purchase.amount_tax,
-          purchase.album.artist.user.email,
-          purchase.album.artist.user.payout_detail&.name,
-          purchase.album.artist.user.payout_detail&.country,
+          purchase.seller.email,
+          purchase.seller.payout_detail&.name,
+          purchase.seller.payout_detail&.country,
           purchase.album.title,
           purchase.album.artist.name
         ]

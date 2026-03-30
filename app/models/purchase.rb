@@ -8,6 +8,9 @@ class Purchase < ApplicationRecord
   belongs_to :payout, optional: true
   has_many :purchase_downloads, dependent: :destroy
 
+  has_one :artist, through: :album
+  has_one :seller, through: :artist, source: :user, class_name: 'User'
+
   validates :price, presence: true, numericality: true
   validate :price_is_greater_than_album_price, unless: -> { price.blank? }
 

@@ -16,7 +16,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
   end
 
   test 'do not send purchase completed email if sending is suppressed' do
-    purchase = build(:purchase, customer_email: 'email@example.com', sending_suppressed_at: Time.current)
+    purchase = create(:purchase, customer_email: 'email@example.com', sending_suppressed_at: Time.current)
     PurchaseMailer.with(purchase:).completed.deliver_now!
     assert_emails 0
   end
@@ -25,7 +25,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     user = build(:user)
     album = build(:album)
     user.artists << album.artist
-    purchase = build(:purchase, album:, price: 7.00)
+    purchase = create(:purchase, album:, price: 7.00)
 
     mail = PurchaseMailer.with(purchase:).notify_artist
 
@@ -40,7 +40,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     album = build(:album)
     user.artists << album.artist
     payout = build(:stripe_payout, amount_in_pence: 550, platform_fee_in_pence: 150)
-    purchase = build(:purchase, album:, price: 7.00, payout:)
+    purchase = create(:purchase, album:, price: 7.00, payout:)
 
     mail = PurchaseMailer.with(purchase:).notify_artist
 
@@ -58,7 +58,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     user = build(:user, stripe_connect_account:)
     album = build(:album)
     user.artists << album.artist
-    purchase = build(:purchase, album:, price: 7.00)
+    purchase = create(:purchase, album:, price: 7.00)
 
     mail = PurchaseMailer.with(purchase:).notify_artist
 
@@ -70,7 +70,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
   test 'notify_artist does not send if the artist has no associated user' do
     artist = build(:artist, user: nil)
     album = build(:album, artist:)
-    purchase = build(:purchase, album:, price: 7.00)
+    purchase = create(:purchase, album:, price: 7.00)
 
     PurchaseMailer.with(purchase:).notify_artist.deliver_now!
     assert_emails 0
@@ -80,7 +80,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     user = build(:user)
     album = build(:album)
     user.artists << album.artist
-    purchase = build(:purchase, album:, price: 7.00)
+    purchase = create(:purchase, album:, price: 7.00)
 
     mail = PurchaseMailer.with(purchase:).notify_artist
     assert_includes mail.body.to_s, account_url
@@ -91,7 +91,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     build(:payout_detail, user:)
     album = build(:album)
     user.artists << album.artist
-    purchase = build(:purchase, album:, price: 7.00)
+    purchase = create(:purchase, album:, price: 7.00)
 
     mail = PurchaseMailer.with(purchase:).notify_artist
     assert_includes mail.body.to_s, account_url
@@ -101,7 +101,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     user = build(:user, sending_suppressed_at: Time.current)
     album = build(:album)
     user.artists << album.artist
-    purchase = build(:purchase, album:, price: 7.00)
+    purchase = create(:purchase, album:, price: 7.00)
 
     PurchaseMailer.with(purchase:).notify_artist.deliver_now!
     assert_emails 0
