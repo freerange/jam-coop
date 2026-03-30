@@ -19,4 +19,8 @@ class Payout < ApplicationRecord
   def amount
     amount_in_pence / 100.0
   end
+
+  def platform_fee
+    platform_fee_in_pence / 100.0
+  end
 end
