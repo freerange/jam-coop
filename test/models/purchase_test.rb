@@ -79,4 +79,21 @@ class PurchaseTest < ActiveSupport::TestCase
     assert_includes purchases, purchase_without_payout
     assert_not_includes purchases, purchase_with_payout
   end
+
+  test '#stripe_payout returns nil if no payout' do
+    purchase_without_payout = build(:purchase)
+    assert_nil purchase_without_payout.stripe_payout
+  end
+
+  test '#stripe_payout returns nil if payout is not stripe' do
+    payout = build(:payout)
+    purchase_with_non_stripe_payout = build(:purchase, payout:)
+    assert_nil purchase_with_non_stripe_payout.stripe_payout
+  end
+
+  test '#stripe_payout returns payout if payout is stripe' do
+    stripe_payout = build(:stripe_payout)
+    purchase_with_stripe_payout = build(:purchase, payout: stripe_payout)
+    assert_equal stripe_payout, purchase_with_stripe_payout.stripe_payout
+  end
 end
