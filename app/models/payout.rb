@@ -2,6 +2,7 @@
 
 class Payout < ApplicationRecord
   belongs_to :user
+  has_many :purchases, dependent: :nullify
 
   validates :payout_type, presence: true
   validates :transaction_reference, presence: true

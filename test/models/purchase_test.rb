@@ -64,4 +64,10 @@ class PurchaseTest < ActiveSupport::TestCase
 
     assert_equal expected_fee_in_pence, purchase.platform_fee_in_pence
   end
+
+  test 'can be associated with a payout' do
+    payout = build(:payout)
+    purchase = create(:purchase, payout:)
+    assert_equal payout, purchase.payout
+  end
 end

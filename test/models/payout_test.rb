@@ -32,4 +32,17 @@ class PayoutTest < ActiveSupport::TestCase
     payout = create(:payout, user:)
     assert_equal user, payout.user
   end
+
+  test 'has many purchases' do
+    purchases = build_list(:purchase, 2)
+    payout = create(:payout, purchases:)
+    assert_equal purchases, payout.purchases
+  end
+
+  test 'foreign key on purchases is nullified on destruction' do
+    purchases = build_list(:purchase, 2)
+    payout = create(:payout, purchases:)
+    payout.destroy!
+    assert purchases.map(&:reload).map(&:payout).all?(&:nil?)
+  end
 end
