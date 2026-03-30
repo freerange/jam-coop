@@ -15,7 +15,7 @@
       <%= link_to "Stripe account", link_stripe_connect_account_url(@stripe_account.stripe_identifier) %>,
       but it's not yet ready to receive payments.
     <% else %>
-      <% if @user.payout_detail %>
+      <% if @seller.payout_detail %>
         You have already provided your payout details. If you need to, you can <%= link_to 'change them', account_url %>.
       <% else %>
         <b>Important:</b> we need to know <%= link_to 'some details', account_url %> before we can make a
