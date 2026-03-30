@@ -49,12 +49,12 @@ class PurchaseExporterTest < ActiveSupport::TestCase
 
     export = PurchaseExporter.new(@today).to_csv
 
-    assert_includes export, purchase.album.artist.user.email
+    assert_includes export, purchase.seller.email
   end
 
   test 'export includes artists payout details' do
     purchase = create(:purchase, created_at: Date.new(2023, 12, 1))
-    payout_detail = create(:payout_detail, user: purchase.album.artist.user)
+    payout_detail = create(:payout_detail, user: purchase.seller)
 
     export = PurchaseExporter.new(@today).to_csv
 
