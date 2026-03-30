@@ -9,4 +9,8 @@ FactoryBot.define do
     amount_in_pence { 500 }
     platform_fee_in_pence { 100 }
   end
+
+  factory :stripe_payout, parent: :payout do
+    payout_type { Payout::STRIPE_TYPE }
+  end
 end

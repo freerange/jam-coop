@@ -45,4 +45,14 @@ class PayoutTest < ActiveSupport::TestCase
     payout.destroy!
     assert purchases.map(&:reload).map(&:payout).all?(&:nil?)
   end
+
+  test 'is Stripe payout if payout_type is stripe' do
+    payout = create(:stripe_payout)
+    assert payout.stripe?
+  end
+
+  test 'is not Stripe payout if payout_type is not stripe' do
+    payout = create(:payout)
+    assert_not payout.stripe?
+  end
 end
