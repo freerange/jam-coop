@@ -60,4 +60,9 @@ class PayoutTest < ActiveSupport::TestCase
     payout = create(:payout, amount_in_pence: 456)
     assert_in_delta 4.56, payout.amount, 0.001
   end
+
+  test 'platform_fee is in pounds' do
+    payout = create(:payout, platform_fee_in_pence: 123)
+    assert_in_delta 1.23, payout.platform_fee, 0.001
+  end
 end
