@@ -35,6 +35,9 @@ class StripeConnectTest < ApplicationSystemTestCase
 
     assert_equal album.price + gratuity, purchase.price
     assert_equal amount_tax, purchase.amount_tax
+
+    assert_equal album.price + gratuity, purchase.stripe_payout.amount
+    assert_equal album.price * platform_fee_fraction, purchase.stripe_payout.platform_fee
   end
 
   private
@@ -64,6 +67,7 @@ class StripeConnectTest < ApplicationSystemTestCase
   def stub_stripe_checkout_flow
     Stripe::Checkout::Session.stubs(:create).returns(stripe_checkout_session)
     Stripe::Checkout::Session.stubs(:retrieve).with(stripe_session_id).returns(stripe_checkout_session)
+    Stripe::PaymentIntent.stubs(:retrieve).with(payment_intent_id).returns(stripe_payment_intent)
     PurchaseCompleteJob.perform_later(stripe_session_id)
   end
 
@@ -76,7 +80,8 @@ class StripeConnectTest < ApplicationSystemTestCase
       },
       total_details: {
         amount_tax:
-      }
+      },
+      payment_intent: payment_intent_id
     )
   end
 
@@ -84,12 +89,41 @@ class StripeConnectTest < ApplicationSystemTestCase
     'cs_test_foo'
   end
 
+  def stripe_payment_intent
+    Stripe::PaymentIntent.construct_from(
+      id: payment_intent_id,
+      metadata: {
+        application_fee_amount:
+      },
+      transfer_data: {
+        destination: stripe_account_id,
+        amount:
+      }
+    )
+  end
+
+  def payment_intent_id
+    'pi_test_foo'
+  end
+
   def tax_percent
     20
   end
 
+  def amount
+    (album.price + gratuity) * 100
+  end
+
   def amount_tax
     album.price * 100 * tax_percent / 100.0
+  end
+
+  def application_fee_amount
+    album.price * 100 * platform_fee_fraction
+  end
+
+  def platform_fee_fraction
+    Rails.configuration.platform_fee_percentage / 100.0
   end
 
   def artist_user

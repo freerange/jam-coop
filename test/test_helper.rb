@@ -50,7 +50,7 @@ module ActiveSupport
         {
           id: payment_intent_id,
           amount:,
-          application_fee_amount:,
+          metadata: { application_fee_amount: },
           transfer_data:
         }
       )
