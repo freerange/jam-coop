@@ -117,4 +117,17 @@ class UserTest < ActiveSupport::TestCase
     user.destroy!
     assert_not StripeConnectAccount.exists?(id: stripe_connect_account.id)
   end
+
+  test 'has many payouts' do
+    payouts = build_list(:payout, 2)
+    user = create(:user, payouts:)
+    assert_equal payouts, user.payouts
+  end
+
+  test 'destroys dependent payouts on destruction' do
+    payouts = build_list(:payout, 2)
+    user = create(:user, payouts:)
+    user.destroy!
+    assert payouts.all?(&:destroyed?)
+  end
 end
