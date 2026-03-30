@@ -61,6 +61,30 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     end
   end
 
+  test 'it creates a payout associated with the seller and the purchase' do
+    stripe_session_id = 'session-id'
+    customer_email = 'email@example.com'
+    amount_tax = 140
+    purchase = create(:purchase, stripe_session_id:)
+    session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
+    payment_intent_id = session.payment_intent
+    destination = 'acct_1T7Y4RLr1GW0yJYq'
+    stub_retrieve_stripe_payment_intent(payment_intent_id, 550, 150, { destination: })
+
+    PurchaseCompleteJob.perform_now(stripe_session_id)
+
+    payouts = purchase.album.artist.user.payouts
+    assert_equal 1, payouts.length
+    payout = payouts.last
+    assert payout.stripe?
+    assert_equal payout.transaction_reference, payment_intent_id
+    assert_equal payout.destination_reference, destination
+    assert_equal payout.amount_in_pence, 550
+    assert_equal payout.platform_fee_in_pence, 150
+
+    assert_equal payout, purchase.reload.payout
+  end
+
   test 'it emails the artist' do
     stripe_session_id = 'session-id'
     customer_email = 'email@example.com'
