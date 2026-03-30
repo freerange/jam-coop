@@ -15,6 +15,10 @@ class Purchase < ApplicationRecord
 
   scope :without_payout, -> { where(payout_id: nil) }
 
+  def stripe_payout
+    payout&.stripe? ? payout : nil
+  end
+
   def price_in_pence
     (price * 100).to_i
   end
