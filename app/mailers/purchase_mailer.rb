@@ -12,7 +12,7 @@ class PurchaseMailer < ApplicationMailer
   def notify_artist
     @purchase = params[:purchase]
 
-    return unless (@user = @purchase.album.artist.user)
+    return unless (@user = @purchase.seller)
     return if @user.suppress_sending?
 
     @stripe_account = @user.stripe_connect_account
