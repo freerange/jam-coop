@@ -25,6 +25,16 @@ class PurchaseExporterTest < ActiveSupport::TestCase
     assert_not_includes export, excluded_purchase.id
   end
 
+  test 'export only includes purchases without a corresponding payout' do
+    included_purchase = create(:purchase, completed: true, created_at: Date.new(2023, 12, 1))
+    payout = build(:stripe_payout)
+    excluded_purchase = create(:purchase, completed: true, created_at: Date.new(2023, 12, 1), payout:)
+    export = PurchaseExporter.new(@today).to_csv
+
+    assert_includes export, included_purchase.id
+    assert_not_includes export, excluded_purchase.id
+  end
+
   test 'export includes purchase details' do
     create(:purchase, price: 7.00, amount_tax: 123, created_at: Date.new(2023, 12, 1))
 
