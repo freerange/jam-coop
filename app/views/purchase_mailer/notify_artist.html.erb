@@ -4,21 +4,23 @@
   for <%= number_to_currency(@purchase.price, unit: "£") %>.</p>
 
 <p>
-  <% if @stripe_account %>
-    <% if @stripe_account.accepts_payments? %>
-      A payment has been made to your
-      <%= link_to "Stripe account", link_stripe_connect_account_url(@stripe_account.stripe_identifier) %>.
-    <% else %>
+  <% if @purchase.stripe_payout %>
+    A payment of <%= number_to_currency(@purchase.stripe_payout.amount, unit: "£") %> has been made to your
+    <%= link_to "Stripe account", link_stripe_connect_account_url(@stripe_account.stripe_identifier) %>.
+    A platform fee of <%= number_to_currency(@purchase.stripe_payout.platform_fee, unit: "£") %> was deducted.
+    Other Stripe fees may have been incurred (e.g. currency conversion fees).
+  <% else %>
+    <% if @stripe_account && !@stripe_account.accepts_payments? %>
       You've started connecting a
       <%= link_to "Stripe account", link_stripe_connect_account_url(@stripe_account.stripe_identifier) %>,
       but it's not yet ready to receive payments.
-    <% end %>
-  <% else %>
-    <% if @user.payout_detail %>
-      You have already provided your payout details. If you need to, you can <%= link_to 'change them', account_url %>.
     <% else %>
-      <b>Important:</b> we need to know <%= link_to 'some details', account_url %> before we can make a
-      payment to you.
+      <% if @user.payout_detail %>
+        You have already provided your payout details. If you need to, you can <%= link_to 'change them', account_url %>.
+      <% else %>
+        <b>Important:</b> we need to know <%= link_to 'some details', account_url %> before we can make a
+        payment to you.
+      <% end %>
     <% end %>
   <% end %>
 </p>
