@@ -9,7 +9,7 @@ class StripeConnectAccountsController < ApplicationController
     authorize StripeConnectAccount
 
     account = Stripe::Account.create(create_params)
-    @user.create_stripe_connect_account!(stripe_identifier: account.id)
+    @user.create_stripe_connect_account(stripe_identifier: account.id)
 
     redirect_to link_stripe_connect_account_path(account.id)
   rescue Stripe::StripeError => e
