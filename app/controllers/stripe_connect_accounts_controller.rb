@@ -12,6 +12,9 @@ class StripeConnectAccountsController < ApplicationController
     @user.create_stripe_connect_account!(stripe_identifier: account.id)
 
     redirect_to link_stripe_connect_account_path(account.id)
+  rescue Stripe::StripeError => e
+    Rollbar.error(e)
+    redirect_to account_path, alert: 'Error creating Stripe Connect account'
   end
 
   def link

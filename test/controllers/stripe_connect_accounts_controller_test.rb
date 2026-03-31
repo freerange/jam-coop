@@ -38,6 +38,23 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
 
     assert_redirected_to link_stripe_connect_account_path(@stripe_account.id)
   end
+
+  test '#create redirects to account page if error creating Stripe account via API' do
+    Stripe::Account.stubs(:create).raises(Stripe::StripeError.new)
+
+    post stripe_connect_accounts_path
+
+    assert_redirected_to account_path
+    assert_equal 'Error creating Stripe Connect account', flash[:alert]
+  end
+
+  test '#create reports exception to Rollbar if error creating Stripe account via API' do
+    stripe_error = Stripe::StripeError.new
+    Stripe::Account.stubs(:create).raises(stripe_error)
+    Rollbar.expects(:error).with(stripe_error)
+
+    post stripe_connect_accounts_path
+  end
 end
 
 class StripeConnectAccountsControllerLinkTest < ActionDispatch::IntegrationTest
