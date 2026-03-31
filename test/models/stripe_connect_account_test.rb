@@ -16,11 +16,6 @@ class StripeConnectAccountTest < ActiveSupport::TestCase
     assert_not @account.valid?
   end
 
-  test 'is invalid without stripe identifier' do
-    @account.stripe_identifier = nil
-    assert_not @account.valid?
-  end
-
   test '#details_submitted? is false by default' do
     assert_not @account.details_submitted?
   end

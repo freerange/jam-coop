@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_151136) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_31_155018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -322,7 +322,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_151136) do
     t.datetime "created_at", null: false
     t.boolean "details_submitted", default: false, null: false
     t.boolean "payouts_enabled", default: false, null: false
-    t.string "stripe_identifier", null: false
+    t.string "stripe_identifier"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["stripe_identifier"], name: "index_stripe_connect_accounts_on_stripe_identifier"
