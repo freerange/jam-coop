@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, :set_stripe_account
+  before_action :set_user
 
   def show
     authorize @user
@@ -25,9 +25,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.expect(user: [:opt_in_to_newsletter])
-  end
-
-  def set_stripe_account
-    @stripe_account = @user.stripe_connect_account
   end
 end
