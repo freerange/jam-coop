@@ -3,7 +3,8 @@
     <%= render BreadcrumbComponent.new(items: [
         { text: 'My account', link: account_path },
         { text: @album.artist.name, link: edit_artist_path(@album.artist) },
-        { text: @album.title }
+        { text: @album.title, link: admin_artist_album_path(@album.artist, @album) },
+        { text: 'Edit' }
       ]) %>
 
     <%= render "form", album: @album %>
