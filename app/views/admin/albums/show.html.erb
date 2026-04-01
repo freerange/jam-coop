@@ -1,0 +1,70 @@
+<%= render(SectionComponent.new(title: @album.title)) do %>
+  <div class="flex flex-col gap-6">
+    <%= render BreadcrumbComponent.new(items: [
+        { text: 'My account', link: account_path },
+        { text: @album.artist.name, link: edit_artist_path(@album.artist) },
+        { text: @album.title }
+      ]) %>
+  </div>
+
+  <%= render(SidebarSectionComponent.new(title: 'Details')) do %>
+    <div class="flex flex-col gap-3">
+      <div class="w-full md:w-1/2">
+        <% if @album.cover.attached? %>
+          <%= image_tag cdn_url(@album.cover.representation(resize_to_limit: [750, 750])), class: 'w-full border border-slate-200' %>
+        <% end %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="font-semibold text-gray-700">Title</div>
+        <div><%= @album.title %></div>
+
+        <div class="font-semibold text-gray-700">About</div>
+        <div><%= @album.about.truncate_words(30) %></div>
+
+        <div class="font-semibold text-gray-700">Credits</div>
+        <div><%= @album.credits.truncate_words(30) %></div>
+
+        <div class="font-semibold text-gray-700">Released</div>
+        <div><%= @album.released_on %></div>
+
+        <div class="font-semibold text-gray-700">License</div>
+        <div><%= @album.license.label %></div>
+
+        <div class="font-semibold text-gray-700">Tags</div>
+        <div><%= @album.tags.join(',') %></div>
+
+        <div class="font-semibold text-gray-700">Price</div>
+        <div><%= @album.price %></div>
+
+        <div class="font-semibold text-gray-700">Visibility</div>
+        <div><%= @album.publication_status %></div>
+      </div>
+
+      <div class="flex flex-row justify-end">
+        <%= render(ButtonComponent.new(
+          text: 'Edit details',
+          path: edit_admin_artist_album_path(@album.artist, @album),
+          link: true
+          )) %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render(SidebarSectionComponent.new(title: 'Tracks')) do %>
+    <ul>
+      <% @album.tracks.each do |track| %>
+        <li><%= track.position %> - <%= track.title %></li>
+      <% end %>
+    </ul>
+    <div class="flex flex-row justify-end">
+      <%= render(ButtonComponent.new(
+          text: 'Add track',
+          path: new_admin_artist_album_track_path(@album.artist, @album),
+          link: true
+          )) %>
+    </div>
+
+  <% end %>
+
+<% end %>
