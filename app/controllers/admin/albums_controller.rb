@@ -3,9 +3,10 @@
 module Admin
   class AlbumsController < ApplicationController
     before_action :build_album, only: %i[new create]
-    before_action :set_album, only: %i[edit update]
+    before_action :set_album, only: %i[show edit update]
     before_action :authorize_album
 
+    def show; end
     def new; end
     def edit; end
 
