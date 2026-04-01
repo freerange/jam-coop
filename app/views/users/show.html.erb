@@ -121,7 +121,7 @@
         <%= form.text_field :name, placeholder: 'Bartholomew J. Simpson', class: 'w-full' %>
         <p class="text-slate-500 italic text-sm mb-3">Your full name as used on your bank account.</p>
 
-        <%= form.select :country, options_for_payout_details_country_select, include_blank: true, label: { text: 'Country / Region' }, class: 'w-full' %>
+        <%= form.select :country, options_for_payout_details_country_select, include_blank: true, class: 'w-full' %>
         <p class="text-slate-500 italic text-sm mb-3">We support payouts to the regions/countries <a href="https://wise.com/help/articles/2571942/what-countriesregions-can-i-send-to" class="underline">that Wise supports</a>.</p>
 
         <div class="flex flex-row justify-end">
