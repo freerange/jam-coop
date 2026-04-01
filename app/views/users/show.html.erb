@@ -113,7 +113,7 @@
     <% end %>
 
     <%= render(SidebarSectionComponent.new(title: 'Payout details')) do %>
-      <p class="text-slate-500 mb-6">We use <a class="underline" href="https://wise.com">Wise</a> to make payouts once a month. Wise will email you at <span class="font-bold"><%= Current.user.email %></span> to ask for your bank details. To make the payment we need the following:</p>
+      <p class="text-slate-500 mb-6">We use <a class="underline" href="https://wise.com">Wise</a> to payout to your bank account once a month. Wise will email you at <span class="font-bold"><%= Current.user.email %></span> to ask for your bank details. To make the payment we need the following:</p>
 
       <% payout_detail = @user.payout_detail || PayoutDetail.new(user: @user) %>
       <%= form_with(model: payout_detail, class: "contents", builder: TailwindFormBuilder) do |form| %>
