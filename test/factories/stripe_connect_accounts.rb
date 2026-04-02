@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :stripe_connect_account do
     user
+    country_code { 'GB' }
     sequence(:stripe_identifier) { |n| "stripe-identifier-#{n}" }
   end
 end

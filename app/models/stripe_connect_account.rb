@@ -3,6 +3,8 @@
 class StripeConnectAccount < ApplicationRecord
   belongs_to :user
 
+  validates :country_code, presence: true
+
   def sync_from!(stripe_account)
     update!(
       details_submitted: stripe_account.details_submitted?,

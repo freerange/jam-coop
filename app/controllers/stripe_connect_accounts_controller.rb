@@ -8,13 +8,19 @@ class StripeConnectAccountsController < ApplicationController
   def create
     authorize StripeConnectAccount
 
-    account = Stripe::Account.create(create_params)
-    @user.create_stripe_connect_account(
-      **stripe_connect_account_params,
-      stripe_identifier: account.id
+    account_in_jam = @user.build_stripe_connect_account(
+      stripe_connect_account_params
     )
+    if account_in_jam.valid?
+      account_in_stripe = Stripe::Account.create(create_params)
+      account_in_jam.stripe_identifier = account_in_stripe.id
+      account_in_jam.save!
 
-    redirect_to link_stripe_connect_account_path(account.id)
+      redirect_to link_stripe_connect_account_path(account_in_stripe.id)
+    else
+      flash.now[:alert] = 'Stripe Connect account is invalid'
+      render 'users/show', status: :unprocessable_content
+    end
   rescue Stripe::StripeError => e
     Rollbar.error(e)
     redirect_to account_path, alert: 'Error creating Stripe Connect account'
