@@ -145,7 +145,7 @@
           <%= form_with(model: stripe_connect_account, data: { turbo: false }, class: "contents", builder: TailwindFormBuilder) do |form| %>
             <%= render ModelErrorComponent.new(model: stripe_connect_account, model_name: 'Stripe Connect account') %>
             <%= form.select :country_code, options_for_stripe_connect_country_select, include_blank: true, class: 'w-full' %>
-            <p class="text-slate-500 italic text-sm mb-3">The country/region in which the account holder resides, or in which the business is legally established.</p>
+            <p class="text-slate-500 italic text-sm mb-3">The country/region in which the account holder resides, or in which the business is legally established. We currently only support payouts to Stripe accounts in the United Kingdom.</p>
             <div class="flex flex-row justify-end">
               <%= form.submit "Connect Stripe", class: 'mt-3' %>
             </div>
