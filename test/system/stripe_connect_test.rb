@@ -9,10 +9,15 @@ class StripeConnectTest < ApplicationSystemTestCase
     log_in_as(artist_user)
     visit account_path
 
-    click_on 'Connect Stripe'
+    country_option = '🇬🇧 United Kingdom (GBP)'
+    within(stripe_connect_section) do
+      select country_option, from: 'Country / Region'
+      click_on 'Connect Stripe'
+    end
 
     assert_equal account_path, current_path
     assert_text "Account ID: #{stripe_account_id}"
+    assert_text "Country / Region: #{country_option}"
     assert_text 'Your Stripe account is connected'
 
     create_published_album
@@ -69,5 +74,9 @@ class StripeConnectTest < ApplicationSystemTestCase
 
   def create_published_album
     create(:transcode, track: album.tracks.first)
+  end
+
+  def stripe_connect_section
+    find('h2', text: 'Stripe').ancestor('.sidebar-section')
   end
 end

@@ -13,7 +13,7 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
 
   test '#create redirects to account page if Stripe Connect is disabled for user' do
     @user.update!(stripe_connect_enabled: false)
-    post stripe_connect_accounts_path
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: 'GB' } }
 
     assert_redirected_to account_path
     assert_equal 'Stripe Connect is not available', flash[:alert]
@@ -35,15 +35,34 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
   end
 
   test '#create redirects to the link action' do
-    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: 'GB' } }
 
     assert_redirected_to link_stripe_connect_account_path(@stripe_account.id)
+  end
+
+  test '#create re-renders account page with flash alert if validation fails' do
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
+
+    assert_response :unprocessable_content
+    assert_equal 'Stripe Connect account is invalid', flash[:alert]
+  end
+
+  test '#create does not create a Stripe::Account if validation fails' do
+    Stripe::Account.expects(:create).never
+
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
+  end
+
+  test '#create does not create a StripeConnectAccount if validation fails' do
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
+
+    assert_nil @user.reload.stripe_connect_account
   end
 
   test '#create redirects to account page if error creating Stripe account via API' do
     Stripe::Account.stubs(:create).raises(Stripe::StripeError.new)
 
-    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: 'GB' } }
 
     assert_redirected_to account_path
     assert_equal 'Error creating Stripe Connect account', flash[:alert]
@@ -54,7 +73,7 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
     Stripe::Account.stubs(:create).raises(stripe_error)
     Rollbar.expects(:error).with(stripe_error)
 
-    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: 'GB' } }
   end
 end
 
@@ -64,7 +83,8 @@ class StripeConnectAccountsControllerLinkTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
 
     @stripe_account_id = 'acct-id'
-    @user.create_stripe_connect_account!(stripe_identifier: @stripe_account_id)
+    attributes = attributes_for(:stripe_connect_account, stripe_identifier: @stripe_account_id)
+    @user.create_stripe_connect_account!(attributes)
 
     url = success_stripe_connect_account_url(@stripe_account_id)
     @stripe_account_link = stub('Stripe::AccountLink', url:)
@@ -97,7 +117,8 @@ class StripeConnectAccountsControllerSuccessTest < ActionDispatch::IntegrationTe
     log_in_as(@user)
 
     @stripe_account_id = 'acct-id'
-    @stripe_connect_account = @user.create_stripe_connect_account!(stripe_identifier: @stripe_account_id)
+    attributes = attributes_for(:stripe_connect_account, stripe_identifier: @stripe_account_id)
+    @stripe_connect_account = @user.create_stripe_connect_account!(attributes)
 
     @stripe_account = stub(
       'Stripe::Account', {
