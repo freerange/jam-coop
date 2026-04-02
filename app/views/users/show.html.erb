@@ -117,9 +117,18 @@
 
       <%= render(SidebarSectionComponent.new(title: 'Stripe')) do %>
         <% if stripe_connect_account.persisted? %>
+          <p class="text-slate-500 mb-6">
+            <% if stripe_connect_account.accepts_payments? %>
+              Your <a class="underline" href="https://stripe.com">Stripe</a> account is <span class="font-bold">connected</span>.
+              We will automatically make payments to this account on every purchase.
+            <% else %>
+              You've started connecting a <a class="underline" href="https://stripe.com">Stripe</a> account,
+              but it's <span class="font-bold">not yet ready</span> to receive payments.
+              Edit the account to address any outstanding issues.
+            <% end %>
+          </p>
           <ul>
             <li>Account ID: <span class="font-bold"><%= stripe_connect_account.stripe_identifier %></span></li>
-            <li>Status: <span class="font-bold"><%= stripe_connect_account.status.humanize %></span></li>
           </ul>
           <div class="flex flex-row justify-end">
             <%= render(ButtonComponent.new(
