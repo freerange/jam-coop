@@ -20,21 +20,22 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
   end
 
   test '#create creates a Stripe::Account' do
-    Stripe::Account.expects(:create).with({ email: @user.email }).returns(@stripe_account)
+    Stripe::Account.expects(:create).with({ email: @user.email, country: 'GB' }).returns(@stripe_account)
 
-    post stripe_connect_accounts_path
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: 'GB' } }
   end
 
   test '#create creates a StripeConnectAccount to store the Stripe account ID' do
-    post stripe_connect_accounts_path
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: 'GB' } }
 
     connect_account = StripeConnectAccount.last
     assert_equal @user, connect_account.user
+    assert_equal 'GB', connect_account.country_code
     assert_equal @stripe_account.id, connect_account.stripe_identifier
   end
 
   test '#create redirects to the link action' do
-    post stripe_connect_accounts_path
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
 
     assert_redirected_to link_stripe_connect_account_path(@stripe_account.id)
   end
@@ -42,7 +43,7 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
   test '#create redirects to account page if error creating Stripe account via API' do
     Stripe::Account.stubs(:create).raises(Stripe::StripeError.new)
 
-    post stripe_connect_accounts_path
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
 
     assert_redirected_to account_path
     assert_equal 'Error creating Stripe Connect account', flash[:alert]
@@ -53,7 +54,7 @@ class StripeConnectAccountsControllerCreateTest < ActionDispatch::IntegrationTes
     Stripe::Account.stubs(:create).raises(stripe_error)
     Rollbar.expects(:error).with(stripe_error)
 
-    post stripe_connect_accounts_path
+    post stripe_connect_accounts_path, params: { stripe_connect_account: { country_code: '' } }
   end
 end
 
