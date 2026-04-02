@@ -9,7 +9,10 @@ class StripeConnectAccountsController < ApplicationController
     authorize StripeConnectAccount
 
     account = Stripe::Account.create(create_params)
-    @user.create_stripe_connect_account(stripe_identifier: account.id)
+    @user.create_stripe_connect_account(
+      **stripe_connect_account_params,
+      stripe_identifier: account.id
+    )
 
     redirect_to link_stripe_connect_account_path(account.id)
   rescue Stripe::StripeError => e
@@ -39,9 +42,14 @@ class StripeConnectAccountsController < ApplicationController
     params[:id]
   end
 
+  def stripe_connect_account_params
+    params.expect(stripe_connect_account: [:country_code])
+  end
+
   def create_params
     {
-      email: @user.email
+      email: @user.email,
+      country: stripe_connect_account_params[:country_code]
     }
   end
 
