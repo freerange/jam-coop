@@ -2,7 +2,7 @@
   <% if show_header? %>
     <div class="flex justify-between content-baseline">
       <% if @title %>
-        <h2 id="<%= @title.parameterize %>" class="text-slate-800 font-semibold text-lg"><%= @title %></h2>
+        <h2 class="text-slate-800 font-semibold text-lg"><%= @title %></h2>
       <% end %>
       <% if @link_text && @link_path %>
         <%= link_to @link_text, @link_path, class: 'text-red-400 hover:underline' %>
