@@ -13,7 +13,7 @@ class StripeConnectTest < ApplicationSystemTestCase
 
     assert_equal account_path, current_path
     assert_text "Account ID: #{stripe_account_id}"
-    assert_text 'Status: Charges enabled'
+    assert_text 'Your Stripe account is connected'
 
     create_published_album
     stub_stripe_purchase_service
