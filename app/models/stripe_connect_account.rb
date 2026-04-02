@@ -3,7 +3,7 @@
 class StripeConnectAccount < ApplicationRecord
   belongs_to :user
 
-  validates :country_code, presence: true
+  validates :country_code, presence: true, inclusion: { in: ['GB'], message: 'is not supported', allow_blank: true }
 
   def sync_from!(stripe_account)
     update!(
