@@ -23,6 +23,13 @@ class StripeConnectAccountTest < ActiveSupport::TestCase
   test 'is invalid without country code' do
     @account.country_code = nil
     assert_not @account.valid?
+    assert_equal ["can't be blank"], @account.errors[:country_code]
+  end
+
+  test 'is invalid when country code is not GB' do
+    @account.country_code = 'FR'
+    assert_not @account.valid?
+    assert_equal ['is not supported'], @account.errors[:country_code]
   end
 
   test '#details_submitted? can be set to true' do
