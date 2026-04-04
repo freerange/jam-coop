@@ -44,7 +44,7 @@ class UsersControllerTestSignedIn < ActionDispatch::IntegrationTest
     end
   end
 
-  test '#show displays status if Stripe Connect account has charges enabled' do
+  test '#show displays status if Stripe Connect account has charges enabled, but payouts disabled' do
     @user.update!(stripe_connect_enabled: true)
     attributes = attributes_for(:stripe_connect_account, charges_enabled: true)
     @user.create_stripe_connect_account(attributes)
@@ -54,7 +54,25 @@ class UsersControllerTestSignedIn < ActionDispatch::IntegrationTest
     assert_select stripe_connect_section_selector do
       assert_select(
         'p',
-        'Your Stripe account is connected. We will automatically make payments to this account on every purchase.'
+        'Your Stripe account is connected. We will automatically make payments to this account on every purchase. ' \
+        'However, your Stripe account is not yet ready to payout to your bank account. ' \
+        'Edit the account to address any outstanding issues.'
+      )
+    end
+  end
+
+  test '#show displays status if Stripe Connect account has charged enabled and payouts enabled' do
+    @user.update!(stripe_connect_enabled: true)
+    attributes = attributes_for(:stripe_connect_account, charges_enabled: true, payouts_enabled: true)
+    @user.create_stripe_connect_account(attributes)
+
+    get account_path
+
+    assert_select stripe_connect_section_selector do
+      assert_select(
+        'p',
+        'Your Stripe account is connected. We will automatically make payments to this account on every purchase. ' \
+        'Your Stripe account is ready to payout to your bank account.'
       )
     end
   end
