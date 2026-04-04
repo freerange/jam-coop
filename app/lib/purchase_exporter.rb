@@ -17,9 +17,9 @@ class PurchaseExporter
           purchase.id,
           (purchase.price * 100).to_i,
           purchase.amount_tax,
-          purchase.album.artist.user.email,
-          purchase.album.artist.user.payout_detail&.name,
-          purchase.album.artist.user.payout_detail&.country,
+          purchase.seller.email,
+          purchase.seller.payout_detail&.name,
+          purchase.seller.payout_detail&.country,
           purchase.album.title,
           purchase.album.artist.name
         ]
@@ -30,6 +30,9 @@ class PurchaseExporter
   private
 
   def purchases
-    Purchase.where(created_at: @date.last_month.beginning_of_month...@date.beginning_of_month).where(completed: true)
+    Purchase
+      .where(created_at: @date.last_month.beginning_of_month...@date.beginning_of_month)
+      .where(completed: true)
+      .without_payout
   end
 end

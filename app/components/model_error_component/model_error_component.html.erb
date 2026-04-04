@@ -1,5 +1,5 @@
 <%= render(ErrorBoxComponent.new(
-  title: "#{pluralize(@model.errors.count, "error")} prohibited this #{@model.model_name.human.downcase} from being saved"
+  title: "#{pluralize(@model.errors.count, "error")} prohibited this #{@model_name} from being saved"
 )) do %>
   <ul>
     <% @model.errors.each do |error| %>
