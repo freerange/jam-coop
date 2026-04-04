@@ -121,6 +121,12 @@
             <% if stripe_connect_account.accepts_payments? %>
               Your <a class="underline" href="https://stripe.com">Stripe</a> account is <span class="font-bold">connected</span>.
               We will automatically make payments to this account on every purchase.
+              <% if stripe_connect_account.payouts_enabled? %>
+                Your Stripe account is <span class="font-bold">ready</span> to payout to your bank account.
+              <% else %>
+                However, your Stripe account is <span class="font-bold">not yet ready</span> to payout to your bank account.
+                Edit the account to address any outstanding issues.
+              <% end %>
             <% else %>
               You've started connecting a <a class="underline" href="https://stripe.com">Stripe</a> account,
               but it's <span class="font-bold">not yet ready</span> to receive payments.
