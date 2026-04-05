@@ -3,9 +3,27 @@
     <%= render BreadcrumbComponent.new(items: [
         { text: 'My account', link: account_path },
         { text: @album.artist.name, link: edit_artist_path(@album.artist) },
-        { text: @album.title }
+        { text: @album.title, link: admin_artist_album_path(@album.artist, @album) },
+        { text: 'Edit' }
       ]) %>
 
     <%= render "form", album: @album %>
   </div>
+
+  <%= render(SidebarSectionComponent.new(title: 'Manage tracks')) do %>
+    <ul>
+      <% @album.tracks.each do |track| %>
+        <li><%= track.position %> - <%= track.title %></li>
+      <% end %>
+    </ul>
+    <div class="flex flex-row justify-end">
+      <%= render(ButtonComponent.new(
+          text: 'Add track',
+          path: new_admin_artist_album_track_path(@album.artist, @album),
+          link: true
+          )) %>
+    </div>
+
+  <% end %>
+
 <% end %>

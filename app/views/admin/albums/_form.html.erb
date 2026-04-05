@@ -87,14 +87,14 @@
     <% end %>
   <% end %>
 
-  <div class="flex sm:flex-row flex-col items-start justify-between gap-6">
-    <p class="text-sm italic">By uploading your music you confirm you have read
-      and agree to our <%= text_link_to "Terms of use", terms_path %>.
-      In particular you must own the rights to, or have permission
-      from the rights-holder for any music or other content you
-      upload.
-    </p>
+  <p class="mb-3">By uploading your music you confirm you have read
+    and agree to our <%= text_link_to "Terms of use", terms_path %>.
+    In particular you must own the rights to, or have permission
+    from the rights-holder for any music or other content you
+    upload.
+  </p>
 
-    <%= form.submit "Save", class: 'w-full sm:w-fit', data: { 'multiple-upload-target': "save" } %>
+  <div class="flex flex-row justify-end">
+    <%= form.submit "Save", class: 'mt-3', data: { 'multiple-upload-target': "save" } %>
   </div>
 <% end %>

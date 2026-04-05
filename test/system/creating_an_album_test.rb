@@ -49,6 +49,8 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     visit edit_artist_path(@artist, album)
     assert_text album.title
     click_on album.title
+    click_on 'Edit details'
+    assert_text "Editing #{album.title}"
     fill_in 'Title', with: 'New Title'
     click_on 'Save'
     assert_text 'New Title'
@@ -73,6 +75,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       visit edit_artist_path(@artist)
       assert_text album.title
       click_on album.title
+      click_on 'Edit details'
 
       within(tracks_section) do
         first_track = first('div[data-testid="track-data"]', minimum: 0)
