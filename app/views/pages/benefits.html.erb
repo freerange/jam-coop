@@ -1,0 +1,58 @@
+<%
+  set_meta_tags(
+    title: "Why join jam.coop? Benefits for artists.",
+  )
+%>
+
+<h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">Why join jam.coop? <span class="text-amber-600">Benefits for artists.</span></h1>
+
+<div class="max-w-3xl mb-6">
+  <p class="mb-3 text-slate-600">We're building a music platform that works for everyone. Here's why you should be part of it.</p>
+</div>
+
+<div class="grid grid-col gap-6">
+  <%= render(
+    SectionComponent.new
+  ) do %>
+    <div class="flex flex-col sm:flex-row gap-6">
+      <div class="w-full sm:w-1/2">
+        <%= render(CardComponent.new(
+          image: "https://picsum.photos/1000/1000?random=1"
+        )) %>
+      </div>
+      <div class="w-full sm:w-1/2 flex flex-col gap-3 sm:justify-between">
+        <div class="flex flex-col gap-3">
+          <div>
+            <h2 class="text-2xl font-semibold">Lorem ipsum dolor sit amet</h2>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <ul class="list-disc list-inside">
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</li>
+            <li>Lorem ipsum dolor sit amet.</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render(
+    SectionComponent.new
+  ) do %>
+    <div class="flex flex-col sm:flex-row-reverse gap-6">
+      <div class="w-full sm:w-1/2">
+        <%= render(CardComponent.new(
+          image: "https://picsum.photos/1000/1000?random=2"
+        )) %>
+      </div>
+      <div class="w-full sm:w-1/2 flex flex-col gap-3 sm:justify-between">
+        <div class="flex flex-col gap-3">
+          <div>
+            <h2 class="text-2xl font-semibold">Lorem ipsum dolor sit amet</h2>
+          </div>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
