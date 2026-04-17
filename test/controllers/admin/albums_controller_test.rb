@@ -10,6 +10,11 @@ module Admin
       log_in_as(@user)
     end
 
+    test '#show' do
+      get admin_artist_album_path(@album.artist, @album)
+      assert_response :success
+    end
+
     test '#new' do
       get new_admin_artist_album_path(@album.artist)
       assert_response :success
@@ -66,6 +71,11 @@ module Admin
   end
 
   class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
+    test '#show' do
+      get admin_artist_album_path(album.artist, album)
+      assert_redirected_to log_in_path
+    end
+
     test '#new' do
       get new_admin_artist_album_path(album.artist)
       assert_redirected_to log_in_path
