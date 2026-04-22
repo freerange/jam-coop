@@ -7,7 +7,7 @@
 <h1 class="text-4xl tracking-tight leading-10 font-extrabold mb-3">Why join jam.coop? <span class="text-amber-600">Benefits for artists.</span></h1>
 
 <div class="max-w-3xl mb-6">
-  <p class="mb-3 text-slate-600">We're building a music platform that works for everyone. Here's why you should be part of it.</p>
+  <p class="mb-3 text-slate-600">We're building a music platform owned and controlled by artists. Here's why you should be part of it.</p>
 </div>
 
 <div class="grid grid-col gap-6">
@@ -15,22 +15,17 @@
     SectionComponent.new
   ) do %>
     <div class="flex flex-col sm:flex-row gap-6">
-      <div class="w-full sm:w-1/2">
+      <div class="w-full sm:w-1/3">
         <%= render(CardComponent.new(
-          image: "https://picsum.photos/1000/1000?random=1"
+          image: "https://picsum.photos/500/500?random=1"
         )) %>
       </div>
-      <div class="w-full sm:w-1/2 flex flex-col gap-3 sm:justify-between">
+      <div class="w-full sm:w-2/3 flex flex-col gap-3 sm:justify-between">
         <div class="flex flex-col gap-3">
           <div>
-            <h2 class="text-2xl font-semibold">Lorem ipsum dolor sit amet</h2>
+            <h2 class="text-2xl font-semibold">Enshittification-proof business model</h2>
           </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <ul class="list-disc list-inside">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</li>
-            <li>Lorem ipsum dolor sit amet.</li>
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-          </ul>
+          <p class="text-xl">jam.coop is a <span class="font-semibold">co-operative</span>. That means we're owned and controlled by artists, fans and the people who build the platform. No external shareholders asking for their cut. No venture capitalists buying a piece of us. We're keeping things <span class="font-semibold">simple</span> and <span class="font-semibold">open</span>. And when we make a profit, we'll all benefit.</p>
         </div>
       </div>
     </div>
@@ -39,18 +34,38 @@
   <%= render(
     SectionComponent.new
   ) do %>
-    <div class="flex flex-col sm:flex-row-reverse gap-6">
-      <div class="w-full sm:w-1/2">
+    <div class="flex flex-col sm:flex-row gap-6">
+      <div class="w-full sm:w-1/3">
+        <%= render(CardComponent.new(
+          image: "https://picsum.photos/500/500?random=1"
+        )) %>
+      </div>
+      <div class="w-full sm:w-2/3 flex flex-col gap-3 sm:justify-between">
+        <div class="flex flex-col gap-3">
+          <div>
+            <h2 class="text-2xl font-semibold">You make the music. We'll handle the rest</h2>
+          </div>
+          <p class="text-xl">Upload your music to jam.coop and take advantage of our simple artist and album pages, community management tools, payment processing, transcoding, MP3 metadata generation and much more. Less <span class="italic">faff</span>, more time in the studio.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render(
+    SectionComponent.new
+  ) do %>
+    <div class="flex flex-col sm:flex-row gap-6">
+      <div class="w-full sm:w-1/3">
         <%= render(CardComponent.new(
           image: "https://picsum.photos/1000/1000?random=2"
         )) %>
       </div>
-      <div class="w-full sm:w-1/2 flex flex-col gap-3 sm:justify-between">
+      <div class="w-full sm:w-2/3 flex flex-col gap-3 sm:justify-between">
         <div class="flex flex-col gap-3">
           <div>
-            <h2 class="text-2xl font-semibold">Lorem ipsum dolor sit amet</h2>
+            <h2 class="text-2xl font-semibold">A revenue stream you can rely on</h2>
           </div>
-          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p class="text-xl">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
       </div>
     </div>
