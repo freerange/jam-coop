@@ -93,4 +93,41 @@ class UserTest < ActiveSupport::TestCase
 
     assert_nil Following.find_by(user:, artist:)
   end
+
+  test '#stripe_connect_enabled? defaults to false' do
+    user = build(:user)
+    assert_not user.stripe_connect_enabled?
+  end
+
+  test '#stripe_connect_enabled? can be set to true' do
+    user = build(:user, stripe_connect_enabled: true)
+    assert user.stripe_connect_enabled?
+  end
+
+  test 'can have associated StripeConnectAccount' do
+    user = create(:user)
+    attributes = attributes_for(:stripe_connect_account)
+    user.create_stripe_connect_account!(attributes)
+    assert_equal attributes[:stripe_identifier], user.stripe_connect_account.stripe_identifier
+  end
+
+  test 'destroys associated StripeConnectAccount on destruction' do
+    stripe_connect_account = build(:stripe_connect_account)
+    user = create(:user, stripe_connect_account:)
+    user.destroy!
+    assert_not StripeConnectAccount.exists?(id: stripe_connect_account.id)
+  end
+
+  test 'has many payouts' do
+    payouts = build_list(:payout, 2)
+    user = create(:user, payouts:)
+    assert_equal payouts, user.payouts
+  end
+
+  test 'destroys dependent payouts on destruction' do
+    payouts = build_list(:payout, 2)
+    user = create(:user, payouts:)
+    user.destroy!
+    assert payouts.all?(&:destroyed?)
+  end
 end

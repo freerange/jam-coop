@@ -3,12 +3,27 @@
 <p>Good news! You sold a copy of your album <%= @purchase.album.title %>
   for <%= number_to_currency(@purchase.price, unit: "£") %>.</p>
 
-<% if @user.payout_detail %>
-  <p>You have already provided your payout details. If you need to, you can <%= link_to 'change them', account_url %>.</p>
-<% else %>
-  <p><b>Important:</b> we need to know <%= link_to 'some details', account_url %> before we can make a
-    payment to you.</p>
-<% end %>
+<p>
+  <% if @purchase.stripe_payout %>
+    A payment of <%= number_to_currency(@purchase.stripe_payout.amount, unit: "£") %> has been made to your
+    <%= link_to "Stripe account", link_stripe_connect_account_url(@stripe_account.stripe_identifier) %>.
+    A platform fee of <%= number_to_currency(@purchase.stripe_payout.platform_fee, unit: "£") %> was deducted.
+    Other Stripe fees may have been incurred (e.g. currency conversion fees).
+  <% else %>
+    <% if @stripe_account && !@stripe_account.accepts_payments? %>
+      You've started connecting a
+      <%= link_to "Stripe account", link_stripe_connect_account_url(@stripe_account.stripe_identifier) %>,
+      but it's not yet ready to receive payments.
+    <% else %>
+      <% if @seller.payout_detail %>
+        You have already provided your payout details. If you need to, you can <%= link_to 'change them', account_url %>.
+      <% else %>
+        <b>Important:</b> we need to know <%= link_to 'some details', account_url %> before we can make a
+        payment to you.
+      <% end %>
+    <% end %>
+  <% end %>
+</p>
 
 <p>Thank you for selling your music with us,</p>
 
