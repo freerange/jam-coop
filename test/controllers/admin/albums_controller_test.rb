@@ -27,7 +27,7 @@ module Admin
         }
       end
 
-      assert_redirected_to artist_album_path(@album.artist, Album.last)
+      assert_redirected_to admin_artist_album_path(@album.artist, Album.last)
     end
 
     test '#create enqueues transcoding' do
@@ -48,7 +48,7 @@ module Admin
 
     test '#update' do
       patch admin_artist_album_path(@album.artist, @album), params: { album: { title: 'Example' } }
-      assert_redirected_to artist_album_path(@album.artist, @album)
+      assert_redirected_to admin_artist_album_path(@album.artist, @album)
     end
 
     test '#update accepts attributes for tracks' do
