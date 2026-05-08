@@ -55,4 +55,16 @@ class ButtonComponentTest < ViewComponent::TestCase
     assert_selector('a[text()="Link"]')
     assert_selector('a.additional-css-class')
   end
+
+  def test_button_has_a_secondary_style
+    render_inline(
+      ButtonComponent.new(
+        text: 'Link',
+        path: 'https://example.com',
+        secondary: true
+      )
+    )
+
+    assert_selector('button.bg-white')
+  end
 end
