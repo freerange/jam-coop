@@ -16,7 +16,7 @@ module Admin
       @track = @album.tracks.new(track_params)
 
       if @track.save
-        redirect_to edit_admin_artist_album_path(@track.artist, @track.album), notice: 'Track added'
+        redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track added'
       else
         render :new, status: :unprocessable_content
       end

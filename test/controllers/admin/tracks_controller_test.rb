@@ -22,7 +22,7 @@ module Admin
           track: { title: 'New Track', original: fixture_file_upload('one.wav', 'audio/wav') }
         }
       end
-      assert_redirected_to edit_admin_artist_album_path(@album.artist, @album)
+      assert_redirected_to admin_artist_album_path(@album.artist, @album)
     end
   end
 
@@ -46,7 +46,7 @@ module Admin
           track: { title: 'New Track', original: fixture_file_upload('one.wav', 'audio/wav') }
         }
       end
-      assert_redirected_to edit_admin_artist_album_path(@album.artist, @album)
+      assert_redirected_to admin_artist_album_path(@album.artist, @album)
     end
 
     test 'should move track higher' do
