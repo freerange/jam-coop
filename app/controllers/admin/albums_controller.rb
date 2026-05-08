@@ -21,7 +21,7 @@ module Admin
 
     def update
       if @album.update(album_params)
-        redirect_to artist_album_path(@album.artist, @album), notice: 'Artist was successfully updated.'
+        redirect_to artist_album_path(@album.artist, @album), notice: 'Album was successfully updated.'
       else
         render :edit, status: :unprocessable_content
       end
