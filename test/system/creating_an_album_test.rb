@@ -93,6 +93,9 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       end
 
       click_on 'Save'
+      assert_text 'Album was successfully updated'
+
+      visit artist_album_path(album.artist, album)
       assert_text 'This album is published'
     end
 
