@@ -16,8 +16,9 @@
 
     <%= form.file_field :original, accept: 'audio/x-wav', direct_upload: true, class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
 
-    <div class="flex flex-row justify-end">
-      <%= form.submit "Save", class: 'mt-3' %>
+    <div class="flex flex-row gap-3 justify-end">
+      <%= render(ButtonComponent.new(text: 'Cancel', path: admin_artist_album_path(track.album.artist, track.album), link: true, secondary: true)) %>
+      <%= form.submit "Add track" %>
     </div>
   <% end %>
 <% end %>
