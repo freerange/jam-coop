@@ -34,3 +34,5 @@ en:
     attributes:
       payout_detail:
         country: Country / Region
+      stripe_connect_account:
+        country_code: Country / Region

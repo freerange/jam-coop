@@ -5,12 +5,22 @@ class Purchase < ApplicationRecord
 
   belongs_to :album
   belongs_to :user, optional: true
+  belongs_to :payout, optional: true
   has_many :purchase_downloads, dependent: :destroy
+
+  has_one :artist, through: :album
+  has_one :seller, through: :artist, source: :user, class_name: 'User'
 
   validates :price, presence: true, numericality: true
   validate :price_is_greater_than_album_price, unless: -> { price.blank? }
 
   after_commit :create_purchase_downloads, on: :create
+
+  scope :without_payout, -> { where(payout_id: nil) }
+
+  def stripe_payout
+    payout&.stripe? ? payout : nil
+  end
 
   def price_excluding_gratuity_in_pence
     (album.price * 100).to_i
@@ -28,6 +38,10 @@ class Purchase < ApplicationRecord
     sending_suppressed_at.present?
   end
 
+  def platform_fee_in_pence
+    (price_excluding_gratuity_in_pence * platform_fee_fraction).to_i
+  end
+
   private
 
   def price_is_greater_than_album_price
@@ -39,5 +53,9 @@ class Purchase < ApplicationRecord
   def create_purchase_downloads
     ZipDownloadJob.perform_later(self, format: :mp3v0)
     ZipDownloadJob.perform_later(self, format: :flac)
+  end
+
+  def platform_fee_fraction
+    Rails.configuration.platform_fee_percentage / 100.0
   end
 end

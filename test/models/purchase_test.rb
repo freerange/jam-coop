@@ -55,4 +55,45 @@ class PurchaseTest < ActiveSupport::TestCase
       create(:purchase)
     end
   end
+
+  test '#platform_fee_in_pence returns the amount we charge the artist' do
+    album = build(:album, price: '10.00')
+    purchase = build(:purchase, album:, price: '20.00')
+    platform_fee_fraction = Rails.configuration.platform_fee_percentage / 100.0
+    expected_fee_in_pence = (purchase.price_excluding_gratuity_in_pence * platform_fee_fraction).to_i
+
+    assert_equal expected_fee_in_pence, purchase.platform_fee_in_pence
+  end
+
+  test 'can be associated with a payout' do
+    payout = build(:payout)
+    purchase = create(:purchase, payout:)
+    assert_equal payout, purchase.payout
+  end
+
+  test '.without_payout' do
+    payout = build(:payout)
+    purchase_with_payout = create(:purchase, payout:)
+    purchase_without_payout = create(:purchase)
+    purchases = Purchase.without_payout
+    assert_includes purchases, purchase_without_payout
+    assert_not_includes purchases, purchase_with_payout
+  end
+
+  test '#stripe_payout returns nil if no payout' do
+    purchase_without_payout = build(:purchase)
+    assert_nil purchase_without_payout.stripe_payout
+  end
+
+  test '#stripe_payout returns nil if payout is not stripe' do
+    payout = build(:payout)
+    purchase_with_non_stripe_payout = build(:purchase, payout:)
+    assert_nil purchase_with_non_stripe_payout.stripe_payout
+  end
+
+  test '#stripe_payout returns payout if payout is stripe' do
+    stripe_payout = build(:stripe_payout)
+    purchase_with_stripe_payout = build(:purchase, payout: stripe_payout)
+    assert_equal stripe_payout, purchase_with_stripe_payout.stripe_payout
+  end
 end

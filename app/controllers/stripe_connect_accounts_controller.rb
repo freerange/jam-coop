@@ -1,0 +1,87 @@
+# frozen_string_literal: true
+
+class StripeConnectAccountsController < ApplicationController
+  before_action :set_user
+  before_action :ensure_stripe_connect_available
+  before_action :set_stripe_connect_account, except: %i[create]
+
+  def create
+    authorize StripeConnectAccount
+
+    account_in_jam = @user.build_stripe_connect_account(
+      stripe_connect_account_params
+    )
+    if account_in_jam.valid?
+      account_in_stripe = Stripe::Account.create(create_params)
+      account_in_jam.stripe_identifier = account_in_stripe.id
+      account_in_jam.save!
+
+      redirect_to link_stripe_connect_account_path(account_in_stripe.id)
+    else
+      flash.now[:alert] = 'Stripe Connect account is invalid'
+      render 'users/show', status: :unprocessable_content
+    end
+  rescue Stripe::StripeError => e
+    Rollbar.error(e)
+    redirect_to account_path, alert: 'Error creating Stripe Connect account'
+  end
+
+  def link
+    authorize @stripe_connect_account
+
+    account_link = Stripe::AccountLink.create(link_params)
+    redirect_to account_link.url, allow_other_host: true
+  end
+
+  def success
+    authorize @stripe_connect_account
+
+    resp = Stripe::Account.retrieve(@stripe_connect_account.stripe_identifier)
+    @stripe_connect_account.sync_from!(resp)
+
+    redirect_to account_path
+  end
+
+  private
+
+  def account_id
+    params[:id]
+  end
+
+  def stripe_connect_account_params
+    params.expect(stripe_connect_account: [:country_code])
+  end
+
+  def create_params
+    {
+      email: @user.email,
+      country: stripe_connect_account_params[:country_code]
+    }
+  end
+
+  def link_params
+    {
+      account: account_id,
+      refresh_url: link_stripe_connect_account_url(account_id),
+      return_url: success_stripe_connect_account_url(account_id),
+      type: 'account_onboarding'
+    }
+  end
+
+  def set_user
+    @user = Current.user
+  end
+
+  def ensure_stripe_connect_available
+    return if @user.stripe_connect_enabled?
+
+    redirect_to account_path, alert: 'Stripe Connect is not available'
+  end
+
+  def set_stripe_connect_account
+    @stripe_connect_account = @user.stripe_connect_account
+    return if @stripe_connect_account.stripe_identifier == account_id
+
+    raise ActiveRecord::RecordNotFound, 'StripeConnectAccount not found'
+  end
+end
