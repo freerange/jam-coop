@@ -16,15 +16,14 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
 
-    within(tracks_section) do
-      click_on 'Add track'
-      fill_in 'Title', with: 'And I Love Her'
-      attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
-    end
-
     click_on 'Save'
+    click_on 'Add track'
 
-    assert_text "A Hard Day's Night"
+    assert_text 'New track'
+    fill_in 'Title', with: 'And I Love Her'
+    attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
+    click_on 'Add track'
+
     sign_out
 
     perform_enqueued_jobs
