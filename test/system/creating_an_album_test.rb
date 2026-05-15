@@ -49,7 +49,10 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     visit edit_artist_path(@artist, album)
     assert_text album.title
     click_on album.title
-    click_on 'Edit details'
+    within(details_section) do
+      assert_text album.title
+      click_on 'Edit details'
+    end
     assert_text "Editing #{album.title}"
     fill_in 'Title', with: 'New Title'
     click_on 'Save'
@@ -118,6 +121,10 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
   def tracks_section
     find('h2', text: 'Tracks').ancestor('.sidebar-section')
+  end
+
+  def details_section
+    find('h2', text: 'Details').ancestor('.sidebar-section')
   end
 
   def admin_section
