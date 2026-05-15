@@ -5,7 +5,7 @@ require 'test_helper'
 module Admin
   class TracksControllerTestAsArtist < ActionDispatch::IntegrationTest
     setup do
-      @album = create(:draft_album)
+      @album = create(:draft_album, :with_tracks)
       user = create(:user)
       user.artists << @album.artist
       log_in_as(user)
@@ -22,6 +22,17 @@ module Admin
           track: { title: 'New Track', original: fixture_file_upload('one.wav', 'audio/wav') }
         }
       end
+      assert_redirected_to admin_artist_album_path(@album.artist, @album)
+    end
+
+    test 'should get edit' do
+      get edit_admin_artist_album_track_path(@album.artist, @album, @album.tracks.first)
+      assert_response :success
+    end
+
+    test 'should update track' do
+      patch admin_artist_album_track_path(@album.artist, @album, @album.tracks.first),
+            params: { track: { title: 'New title' } }
       assert_redirected_to admin_artist_album_path(@album.artist, @album)
     end
   end
