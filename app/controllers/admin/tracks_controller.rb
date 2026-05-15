@@ -2,12 +2,18 @@
 
 module Admin
   class TracksController < ApplicationController
-    before_action :set_album, only: %i[new create]
+    before_action :set_album, only: %i[new create edit update]
 
     def new
       authorize @album
 
       @track = @album.tracks.new
+    end
+
+    def edit
+      authorize @album
+
+      @track = Track.find(params[:id])
     end
 
     def create
@@ -19,6 +25,18 @@ module Admin
         redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track added'
       else
         render :new, status: :unprocessable_content
+      end
+    end
+
+    def update
+      authorize @album
+
+      @track = Track.find(params[:id])
+
+      if @track.update(track_params)
+        redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track updated'
+      else
+        render :edit, status: :unprocessable_content
       end
     end
 

@@ -73,29 +73,21 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     end
 
     using_session 'artist' do
+      track = album.tracks.first
+
       log_in_as(@artist_user)
       visit edit_artist_path(@artist)
       assert_text album.title
       click_on album.title
-      click_on 'Edit details'
 
-      within(tracks_section) do
-        first_track = first('div[data-testid="track-data"]', minimum: 0)
-        within(first_track) do
-          fill_in 'Title', with: 'Rename the first track'
-        end
+      click_on track.title
 
-        click_on 'Add track'
-
-        new_track = all('div[data-testid="track-data"]', minimum: 0).last
-        within(new_track) do
-          fill_in 'Title', with: 'And I Love Her'
-          attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
-        end
+      within(details_section) do
+        fill_in 'Title', with: 'Rename the first track'
       end
 
       click_on 'Save'
-      assert_text 'Album was successfully updated'
+      assert_text 'Track updated'
 
       visit artist_album_path(album.artist, album)
       assert_text 'This album is published'
@@ -107,11 +99,9 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       visit artist_album_path(album.artist, album)
 
       assert_text 'Rename the first track'
-      assert_text album.reload.tracks[1].title
-      assert_text 'And I Love Her'
 
       album.tracks.each do |track|
-        assert_has_playable_track(track)
+        assert_has_playable_track(track.reload)
       end
     end
   end
