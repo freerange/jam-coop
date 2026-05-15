@@ -54,7 +54,7 @@
   <%= render(SidebarSectionComponent.new(title: 'Tracks')) do %>
     <ul>
       <% @album.tracks.each do |track| %>
-        <li><%= track.position %> - <%= track.title %></li>
+        <li><%= track.position %> - <%= link_to(track.title, edit_admin_artist_album_track_path(@album.artist, @album, track), class: 'underline') %></li>
       <% end %>
     </ul>
     <div class="flex flex-row justify-end">
