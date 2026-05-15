@@ -59,8 +59,7 @@ module Admin
             :license_id,
             :publication_status,
             {
-              tag_ids: [],
-              tracks_attributes: [%i[id title original _destroy]]
+              tag_ids: []
             }
           ]
         )
