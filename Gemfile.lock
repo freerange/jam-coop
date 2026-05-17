@@ -540,7 +540,7 @@ DEPENDENCIES
   zaru (~> 1.0)
 
 RUBY VERSION
-  ruby 4.0.4p0
+  ruby 4.0.3
 
 BUNDLED WITH
   4.0.11
