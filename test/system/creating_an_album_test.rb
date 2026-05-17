@@ -10,34 +10,37 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   end
 
   test 'creating an album' do
-    log_in_as(@artist_user)
-    visit edit_artist_path(@artist)
-    click_on 'Add album'
-    fill_in 'Title', with: "A Hard Day's Night"
-    attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
+    using_session 'artist' do
+      log_in_as(@artist_user)
+      visit edit_artist_path(@artist)
+      click_on 'Add album'
+      fill_in 'Title', with: "A Hard Day's Night"
+      attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
 
-    click_on 'Save'
-    click_on 'Add track'
+      click_on 'Save'
+      click_on 'Add track'
 
-    assert_text 'New track'
-    fill_in 'Title', with: 'And I Love Her'
-    attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
-    click_on 'Add track'
-
-    sign_out
+      assert_text 'New track'
+      fill_in 'Title', with: 'And I Love Her'
+      attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
+      click_on 'Add track'
+      assert_text '1 - And I Love Her'
+    end
 
     perform_enqueued_jobs
 
-    # Admin checks transcodes
-    admin = create(:user, admin: true, email: 'admin@example.com')
-    log_in_as(admin)
-    album = Album.find_by(title: "A Hard Day's Night")
-    visit artist_album_path(album.artist, album)
-    within(admin_section) do
-      assert_text 'And I Love Her'
-      assert_text 'mp3v0'
-      assert_text 'mp3128k'
-      assert_text 'flac'
+    using_session 'admin' do
+      # Admin checks transcodes
+      admin = create(:user, admin: true, email: 'admin@example.com')
+      log_in_as(admin)
+      album = Album.find_by(title: "A Hard Day's Night")
+      visit artist_album_path(album.artist, album)
+      within(admin_section) do
+        assert_text 'And I Love Her'
+        assert_text 'mp3v0'
+        assert_text 'mp3128k'
+        assert_text 'flac'
+      end
     end
   end
 
