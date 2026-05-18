@@ -4,9 +4,15 @@
 
 This is a Rails app running on the version of Ruby specified in `.ruby-version` and the version of Node specified in `.node-version`. If you're using `asdf` you can install the correct versions of Ruby and Node locally with `asdf install`. If you're using `mise` you can install the correct versions of Ruby and Node locally with `mise install`.
 
-We're using PostgreSQL 15 in production, so it's recommended you run that in development too. On OS X you can use homebrew
+We're using PostgreSQL 15 in production, so it's recommended you run that in development too. You can use `mise` for this too. Once `mise` has installed postgres, start it with
 
-    brew install postgresql@15
+    postgres -D $PGDATA
+
+You'll need to create a database user
+
+    psql -U postgres
+    # CREATE USER <username>;
+    # ALTER USER <username> WITH SUPERUSER;
 
 We're using Rails 7's default image processor library `vips`, which you need to install
 
@@ -16,10 +22,9 @@ Copy the example `.env` file
 
     cp `.env.example .env`
 
-From there proceed as usual for local rails app development
+Then
 
-    rails db:setup
-    ./bin/dev
+    bin/setup
 
 The app should be running on [http://localhost:3000/](http://localhost:3000/)
 
