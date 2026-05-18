@@ -3,16 +3,17 @@
 module Admin
   class AlbumsController < ApplicationController
     before_action :build_album, only: %i[new create]
-    before_action :set_album, only: %i[edit update]
+    before_action :set_album, only: %i[show edit update]
     before_action :authorize_album
 
+    def show; end
     def new; end
     def edit; end
 
     def create
       if @album.save
         @album.transcode_tracks
-        redirect_to artist_album_path(@album.artist, @album), notice: 'Album was successfully created.'
+        redirect_to admin_artist_album_path(@album.artist, @album), notice: 'Album was successfully created.'
       else
         render :new, status: :unprocessable_content
       end
@@ -20,7 +21,7 @@ module Admin
 
     def update
       if @album.update(album_params)
-        redirect_to artist_album_path(@album.artist, @album), notice: 'Artist was successfully updated.'
+        redirect_to admin_artist_album_path(@album.artist, @album), notice: 'Album was successfully updated.'
       else
         render :edit, status: :unprocessable_content
       end
@@ -58,8 +59,7 @@ module Admin
             :license_id,
             :publication_status,
             {
-              tag_ids: [],
-              tracks_attributes: [%i[id title original _destroy]]
+              tag_ids: []
             }
           ]
         )

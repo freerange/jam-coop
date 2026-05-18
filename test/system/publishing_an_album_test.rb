@@ -23,7 +23,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     assert_checked_field 'Draft'
     choose 'Published'
     click_on 'Save'
-    assert_text 'Artist was successfully updated'
+    assert_text 'Album was successfully updated'
     sign_out
 
     # Listener visits published album page

@@ -8,7 +8,8 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
 
   TEXT_FIELD_STYLE = 'border border-slate-200 outline-none px-3 py-2'
   SELECT_FIELD_STYLE = 'block'
-  SUBMIT_BUTTON_STYLE = 'py-3 px-5 bg-amber-500 hover:bg-amber-400 text-white font-medium cursor-pointer'
+  SUBMIT_BUTTON_STYLE = 'py-3 px-5 bg-amber-500 hover:bg-amber-400 text-white
+    font-medium cursor-pointer disabled:bg-gray-50 disabled:text-gray-500'
 
   text_field_helpers.each do |field_method|
     class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1 # rubocop:disable Style/DocumentDynamicEvalDefinition
