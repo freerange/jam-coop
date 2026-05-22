@@ -172,7 +172,7 @@ GEM
     ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
-    friendly_id (5.6.0)
+    friendly_id (5.7.0)
       activerecord (>= 4.0.0)
     fugit (1.12.1)
       et-orbi (~> 1.4)
@@ -499,7 +499,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker (~> 3.5)
-  friendly_id (~> 5.6.0)
+  friendly_id (~> 5.7.0)
   hotwire-livereload
   htmlbeautifier
   image_processing
