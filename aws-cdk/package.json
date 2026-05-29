@@ -14,7 +14,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^25.9.1",
     "jest": "^30.4.2",
-    "ts-jest": "^29.4.9",
+    "ts-jest": "^29.4.11",
     "aws-cdk": "2.1124.1",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.3"
