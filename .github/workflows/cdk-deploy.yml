@@ -25,7 +25,7 @@ jobs:
       AWS_CDK_STACK_NAMES: ${{ vars.AWS_CDK_STACK_NAMES }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
         with:
           ref: ${{ inputs.ref }}
           fetch-depth: 0
