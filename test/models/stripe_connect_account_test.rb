@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class StripeConnectAccountTest < ActiveSupport::TestCase
+  include ActionMailer::TestHelper
+
   setup do
     @account = build(:stripe_connect_account)
   end
@@ -83,5 +85,41 @@ class StripeConnectAccountTest < ActiveSupport::TestCase
     assert @account.details_submitted?
     assert @account.charges_enabled?
     assert @account.payouts_enabled?
+  end
+
+  test '#sync_from! does not email seller when their Stripe account is ready to accept payments or make payments' do
+    stripe_account = Stripe::Account.construct_from(
+      details_submitted: true,
+      charges_enabled: false,
+      payouts_enabled: false
+    )
+
+    assert_no_enqueued_emails do
+      @account.sync_from!(stripe_account)
+    end
+  end
+
+  test '#sync_from! emails seller when their Stripe account is ready to accept payments' do
+    stripe_account = Stripe::Account.construct_from(
+      details_submitted: true,
+      charges_enabled: true,
+      payouts_enabled: false
+    )
+
+    assert_enqueued_email_with StripeConnectAccountMailer, :charges_enabled, params: { account: @account } do
+      @account.sync_from!(stripe_account)
+    end
+  end
+
+  test '#sync_from! emails seller when their Stripe account is ready to make payouts' do
+    stripe_account = Stripe::Account.construct_from(
+      details_submitted: true,
+      charges_enabled: true,
+      payouts_enabled: true
+    )
+
+    assert_enqueued_email_with StripeConnectAccountMailer, :payouts_enabled, params: { account: @account } do
+      @account.sync_from!(stripe_account)
+    end
   end
 end

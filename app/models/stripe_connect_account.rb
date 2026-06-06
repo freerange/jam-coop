@@ -11,9 +11,15 @@ class StripeConnectAccount < ApplicationRecord
       charges_enabled: stripe_account.charges_enabled?,
       payouts_enabled: stripe_account.payouts_enabled?
     )
+    mailer.charges_enabled.deliver_later if charges_enabled? && charges_enabled_previously_changed?
+    mailer.payouts_enabled.deliver_later if payouts_enabled? && payouts_enabled_previously_changed?
   end
 
   def accepts_payments?
     charges_enabled?
+  end
+
+  def mailer
+    StripeConnectAccountMailer.with(account: self)
   end
 end
