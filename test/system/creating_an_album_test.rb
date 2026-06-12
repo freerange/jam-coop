@@ -23,7 +23,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       assert_text 'New track'
       fill_in 'Title', with: 'And I Love Her'
       attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
-      click_on 'Add track'
+      click_on 'Save'
       assert_text '1 - And I Love Her'
     end
 
