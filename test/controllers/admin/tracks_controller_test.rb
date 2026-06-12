@@ -35,6 +35,12 @@ module Admin
             params: { track: { title: 'New title' } }
       assert_redirected_to admin_artist_album_path(@album.artist, @album)
     end
+
+    test 'should delete track' do
+      assert_difference('Track.count', -1) do
+        delete admin_artist_album_track_path(@album.artist, @album, @album.tracks.first)
+      end
+    end
   end
 
   class TracksControllerTestAsAdmin < ActionDispatch::IntegrationTest
