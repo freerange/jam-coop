@@ -31,6 +31,9 @@
 
     <div class="flex flex-row gap-3 justify-end">
       <%= render(ButtonComponent.new(text: 'Cancel', path: admin_artist_album_path(track.album.artist, track.album), link: true, secondary: true)) %>
+      <% if action_name == "new" %>
+        <%= form.submit "Save and add another", data: { 'direct-upload-target': 'submit' }, secondary: true %>
+      <% end %>
       <%= form.submit "Save", data: { 'direct-upload-target': 'submit' } %>
     </div>
   <% end %>

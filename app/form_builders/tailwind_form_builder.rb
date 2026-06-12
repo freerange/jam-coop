@@ -10,6 +10,9 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
   SELECT_FIELD_STYLE = 'block'
   SUBMIT_BUTTON_STYLE = 'py-3 px-5 bg-amber-500 hover:bg-amber-400 text-white
     font-medium cursor-pointer disabled:bg-gray-50 disabled:text-gray-500'
+  SECONDARY_SUBMIT_BUTTON_STYLE = 'py-3 px-5 border border-2 border-amber-500
+    hover:bg-amber-500 hover:text-white text-gray-800 font-medium
+    cursor-pointer disabled:bg-gray-50 disabled:text-gray-500'
 
   text_field_helpers.each do |field_method|
     class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1 # rubocop:disable Style/DocumentDynamicEvalDefinition
@@ -25,7 +28,11 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
 
   def submit(value = nil, options = {})
     custom_opts, opts = partition_custom_opts(options)
-    classes = apply_style_classes(SUBMIT_BUTTON_STYLE, custom_opts)
+    classes = if custom_opts[:secondary]
+                apply_style_classes(SECONDARY_SUBMIT_BUTTON_STYLE, custom_opts)
+              else
+                apply_style_classes(SUBMIT_BUTTON_STYLE, custom_opts)
+              end
 
     super(value, { class: classes }.merge(opts))
   end
@@ -116,7 +123,7 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     classes + border_color_classes(object_method) + " #{custom_opts[:class]}"
   end
 
-  CUSTOM_OPTS = %i[label class].freeze # rubocop:disable Lint/UselessConstantScoping
+  CUSTOM_OPTS = %i[label class secondary].freeze # rubocop:disable Lint/UselessConstantScoping
   def partition_custom_opts(opts)
     opts.partition { |k, _v| CUSTOM_OPTS.include?(k) }.map(&:to_h)
   end

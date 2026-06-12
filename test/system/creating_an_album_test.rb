@@ -23,8 +23,12 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       assert_text 'New track'
       fill_in 'Title', with: 'And I Love Her'
       attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
+      click_on 'Save and add another'
+      fill_in 'Title', with: 'Eight days a week'
+      attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
       click_on 'Save'
       assert_text '1 - And I Love Her'
+      assert_text '2 - Eight days a week'
     end
 
     perform_enqueued_jobs

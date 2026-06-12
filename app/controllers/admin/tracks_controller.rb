@@ -22,7 +22,11 @@ module Admin
       @track = @album.tracks.new(track_params)
 
       if @track.save
-        redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track added'
+        if params[:commit] == 'Save and add another'
+          redirect_to new_admin_artist_album_track_path(@track.artist, @track.album), notice: 'Track added'
+        else
+          redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track added'
+        end
       else
         render :new, status: :unprocessable_content
       end
