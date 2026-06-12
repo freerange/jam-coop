@@ -52,9 +52,14 @@
   <% end %>
 
   <%= render(SidebarSectionComponent.new(title: 'Tracks')) do %>
-    <ul>
+    <ul class='divide-y divide-gray-200 -mt-3 mb-3'>
       <% @album.tracks.each do |track| %>
-        <li><%= track.position %> - <%= link_to(track.title, edit_admin_artist_album_track_path(@album.artist, @album, track), class: 'underline') %></li>
+        <li class='py-3 flex justify-between items-center'>
+          <div>
+            <span class="text-gray-500 mr-3"><%= track.position %></span>
+            <%= link_to(track.title, edit_admin_artist_album_track_path(@album.artist, @album, track), class: 'underline hover:bg-amber-500') %>
+          </div>
+        </li>
       <% end %>
     </ul>
     <div class="flex flex-row justify-end">
@@ -64,7 +69,5 @@
           link: true
           )) %>
     </div>
-
   <% end %>
-
 <% end %>
