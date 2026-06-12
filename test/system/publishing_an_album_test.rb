@@ -20,6 +20,7 @@ class PublishingAnAlbumTest < ApplicationSystemTestCase
     visit artist_path(@album.artist)
     click_on @album.title.to_s
     click_on 'Edit'
+    click_on 'Edit details'
     assert_checked_field 'Draft'
     choose 'Published'
     click_on 'Save'
