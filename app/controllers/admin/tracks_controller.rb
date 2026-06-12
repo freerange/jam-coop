@@ -2,7 +2,7 @@
 
 module Admin
   class TracksController < ApplicationController
-    before_action :set_album, only: %i[new create edit update]
+    before_action :set_album, only: %i[new create edit update destroy]
 
     def new
       authorize @album
@@ -42,6 +42,14 @@ module Admin
       else
         render :edit, status: :unprocessable_content
       end
+    end
+
+    def destroy
+      authorize @album
+
+      @track = Track.find(params[:id])
+      @track.destroy
+      redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track deleted'
     end
 
     def move_higher

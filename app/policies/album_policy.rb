@@ -36,4 +36,8 @@ class AlbumPolicy < ApplicationPolicy
   def new?
     user.admin? || user.artists.include?(record.artist)
   end
+
+  def destroy?
+    user.admin? || user.artists.include?(record.artist)
+  end
 end
