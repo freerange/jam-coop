@@ -17,6 +17,11 @@ class PurchaseTest < ActiveSupport::TestCase
     assert purchase.errors[:price].include? 'Price must be more than £5.00'
   end
 
+  test '#price_in_pence' do
+    purchase = build(:purchase, price: 7.00)
+    assert_equal 700, purchase.price_in_pence
+  end
+
   test '#price_excluding_gratuity_in_pence is the album price excluding gratuity' do
     album = build(:album, price: '5.00')
     purchase_without_gratuity = build(:purchase, album:, price: '5.00')
