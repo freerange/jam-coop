@@ -12,6 +12,10 @@ class Purchase < ApplicationRecord
 
   after_commit :create_purchase_downloads, on: :create
 
+  def price_in_pence
+    (price * 100).to_i
+  end
+
   def price_excluding_gratuity_in_pence
     (album.price * 100).to_i
   end
