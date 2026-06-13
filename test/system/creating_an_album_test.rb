@@ -10,36 +10,63 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
   end
 
   test 'creating an album' do
+    using_session 'artist' do
+      log_in_as(@artist_user)
+      visit edit_artist_path(@artist)
+      click_on 'Add album'
+      fill_in 'Title', with: "A Hard Day's Night"
+      attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
+
+      click_on 'Save'
+      click_on 'Add track'
+
+      assert_text 'New track'
+      fill_in 'Title', with: 'And I Love Her'
+      attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
+      click_on 'Save and add another'
+      fill_in 'Title', with: 'Eight days a week'
+      attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
+      click_on 'Save'
+      assert_text '1 And I Love Her'
+      assert_text '2 Eight days a week'
+    end
+
+    perform_enqueued_jobs
+
+    using_session 'admin' do
+      # Admin checks transcodes
+      admin = create(:user, admin: true, email: 'admin@example.com')
+      log_in_as(admin)
+      album = Album.find_by(title: "A Hard Day's Night")
+      visit artist_album_path(album.artist, album)
+      within(admin_section) do
+        assert_text 'And I Love Her'
+        assert_text 'mp3v0'
+        assert_text 'mp3128k'
+        assert_text 'flac'
+      end
+    end
+  end
+
+  test 'creating an album by uploading multiple wav files' do
     log_in_as(@artist_user)
     visit edit_artist_path(@artist)
     click_on 'Add album'
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
 
-    within(tracks_section) do
-      click_on 'Add track'
-      fill_in 'Title', with: 'And I Love Her'
-      attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
-    end
+    click_on 'Save'
+    click_on 'Add multiple tracks'
 
+    assert_text 'Files must be in wav format'
+    attach_file 'Upload file', [Rails.root.join('test/fixtures/files/one.wav'),
+                                Rails.root.join('test/fixtures/files/two.wav'),
+                                Rails.root.join('test/fixtures/files/three.wav')]
     click_on 'Save'
 
-    assert_text "A Hard Day's Night"
-    sign_out
-
-    perform_enqueued_jobs
-
-    # Admin checks transcodes
-    admin = create(:user, admin: true, email: 'admin@example.com')
-    log_in_as(admin)
-    album = Album.find_by(title: "A Hard Day's Night")
-    visit artist_album_path(album.artist, album)
-    within(admin_section) do
-      assert_text 'And I Love Her'
-      assert_text 'mp3v0'
-      assert_text 'mp3128k'
-      assert_text 'flac'
-    end
+    assert_text '1 one'
+    assert_text '2 two'
+    assert_text '3 three'
   end
 
   test 'editing an album' do
@@ -49,6 +76,11 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     visit edit_artist_path(@artist, album)
     assert_text album.title
     click_on album.title
+    within(details_section) do
+      assert_text album.title
+      click_on 'Edit details'
+    end
+    assert_text "Editing #{album.title}"
     fill_in 'Title', with: 'New Title'
     click_on 'Save'
     assert_text 'New Title'
@@ -69,27 +101,23 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     end
 
     using_session 'artist' do
+      track = album.tracks.first
+
       log_in_as(@artist_user)
       visit edit_artist_path(@artist)
       assert_text album.title
       click_on album.title
 
-      within(tracks_section) do
-        first_track = first('div[data-testid="track-data"]', minimum: 0)
-        within(first_track) do
-          fill_in 'Title', with: 'Rename the first track'
-        end
+      click_on track.title
 
-        click_on 'Add track'
-
-        new_track = all('div[data-testid="track-data"]', minimum: 0).last
-        within(new_track) do
-          fill_in 'Title', with: 'And I Love Her'
-          attach_file 'File', Rails.root.join('test/fixtures/files/track.wav')
-        end
+      within(details_section) do
+        fill_in 'Title', with: 'Rename the first track'
       end
 
       click_on 'Save'
+      assert_text 'Track updated'
+
+      visit artist_album_path(album.artist, album)
       assert_text 'This album is published'
     end
 
@@ -99,11 +127,9 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       visit artist_album_path(album.artist, album)
 
       assert_text 'Rename the first track'
-      assert_text album.reload.tracks[1].title
-      assert_text 'And I Love Her'
 
       album.tracks.each do |track|
-        assert_has_playable_track(track)
+        assert_has_playable_track(track.reload)
       end
     end
   end
@@ -112,6 +138,10 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
   def tracks_section
     find('h2', text: 'Tracks').ancestor('.sidebar-section')
+  end
+
+  def details_section
+    find('h2', text: 'Details').ancestor('.sidebar-section')
   end
 
   def admin_section
