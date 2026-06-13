@@ -48,6 +48,27 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     end
   end
 
+  test 'creating an album by uploading multiple wav files' do
+    log_in_as(@artist_user)
+    visit edit_artist_path(@artist)
+    click_on 'Add album'
+    fill_in 'Title', with: "A Hard Day's Night"
+    attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
+
+    click_on 'Save'
+    click_on 'Add multiple tracks'
+
+    assert_text 'Files must be in wav format'
+    attach_file 'Upload file', [Rails.root.join('test/fixtures/files/one.wav'),
+                                Rails.root.join('test/fixtures/files/two.wav'),
+                                Rails.root.join('test/fixtures/files/three.wav')]
+    click_on 'Save'
+
+    assert_text '1 one'
+    assert_text '2 two'
+    assert_text '3 three'
+  end
+
   test 'editing an album' do
     log_in_as(@artist_user)
     album = create(:album, artist: @artist)

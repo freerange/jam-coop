@@ -25,6 +25,33 @@ module Admin
       assert_redirected_to admin_artist_album_path(@album.artist, @album)
     end
 
+    test 'should create multiple tracks' do
+      blobs = [
+        ActiveStorage::Blob.create_and_upload!(
+          io: file_fixture('one.wav').open,
+          filename: 'one.wav',
+          content_type: 'audio/wav'
+        ),
+        ActiveStorage::Blob.create_and_upload!(
+          io: file_fixture('two.wav').open,
+          filename: 'two.wav',
+          content_type: 'audio/wav'
+        )
+      ]
+
+      assert_difference('Track.count', 2) do
+        post create_multiple_admin_artist_album_tracks_path(@album.artist, @album), params: {
+          original: blobs.map(&:signed_id)
+        }
+      end
+
+      track1, track2 = Track.last(2)
+      assert_equal(track1.title, 'one')
+      assert_equal(track2.title, 'two')
+      assert_redirected_to admin_artist_album_path(@album.artist, @album)
+      assert_equal 'Tracks added', flash[:notice]
+    end
+
     test 'should get edit' do
       get edit_admin_artist_album_track_path(@album.artist, @album, @album.tracks.first)
       assert_response :success

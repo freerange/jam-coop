@@ -56,6 +56,10 @@ Rails.application.routes.draw do
     resources :artists do
       resources :albums, only: %i[show new edit create update] do
         resources :tracks, only: %i[new create edit update destroy] do
+          collection do
+            get 'multiple'
+            post 'create_multiple'
+          end
           member do
             post 'move_higher'
             post 'move_lower'
