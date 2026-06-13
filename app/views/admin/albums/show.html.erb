@@ -75,7 +75,13 @@
         </li>
       <% end %>
     </ul>
-    <div class="flex flex-row justify-end">
+    <div class="flex flex-row justify-end gap-3">
+      <%= render(ButtonComponent.new(
+          text: 'Add multiple tracks',
+          path: multiple_admin_artist_album_tracks_path(@album.artist, @album),
+          link: true,
+          secondary: true
+          )) %>
       <%= render(ButtonComponent.new(
           text: 'Add track',
           path: new_admin_artist_album_track_path(@album.artist, @album),

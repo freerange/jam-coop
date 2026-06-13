@@ -37,6 +37,14 @@ class AlbumPolicy < ApplicationPolicy
     user.admin? || user.artists.include?(record.artist)
   end
 
+  def multiple?
+    user.admin? || user.artists.include?(record.artist)
+  end
+
+  def create_multiple?
+    user.admin? || user.artists.include?(record.artist)
+  end
+
   def destroy?
     user.admin? || user.artists.include?(record.artist)
   end

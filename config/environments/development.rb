@@ -55,7 +55,7 @@ Rails.application.configure do
 
   config.after_initialize do
     Prosopite.raise = true
-    Prosopite.allow_stack_paths = ['Track#transcode', 'Admin::TracksController#destroy']
+    Prosopite.allow_stack_paths = ['Track#transcode', 'Admin::TracksController#destroy', 'Admin::TracksController#create_multiple']
   end
 
   config.base_url = ENV.fetch('BASE_URL', 'http://localhost:3000')
