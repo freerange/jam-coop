@@ -68,6 +68,26 @@ module Admin
         delete admin_artist_album_track_path(@album.artist, @album, @album.tracks.first)
       end
     end
+
+    test '#move_higher should move the last track to the first position' do
+      @track = @album.tracks.last
+
+      assert_difference -> { @track.reload.position }, -1 do
+        post move_higher_admin_artist_album_track_path(@track.artist, @track.album, @track)
+      end
+
+      assert_redirected_to admin_artist_album_path(@track.artist, @track.album)
+    end
+
+    test '#move_lower should move the first track to the last position' do
+      @track = @album.tracks.first
+
+      assert_difference -> { @track.reload.position }, 1 do
+        post move_lower_admin_artist_album_track_path(@track.artist, @track.album, @track)
+      end
+
+      assert_redirected_to admin_artist_album_path(@track.artist, @track.album)
+    end
   end
 
   class TracksControllerTestAsAdmin < ActionDispatch::IntegrationTest
@@ -91,16 +111,6 @@ module Admin
         }
       end
       assert_redirected_to admin_artist_album_path(@album.artist, @album)
-    end
-
-    test 'should move track higher' do
-      post move_higher_admin_artist_album_track_path(@track.artist, @track.album, @track)
-      assert_redirected_to artist_album_path(@track.artist, @track.album)
-    end
-
-    test 'should move track lower' do
-      post move_lower_admin_artist_album_track_path(@track.artist, @track.album, @track)
-      assert_redirected_to artist_album_path(@track.artist, @track.album)
     end
   end
 end

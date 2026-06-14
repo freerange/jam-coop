@@ -2,7 +2,7 @@
 
 module Admin
   class TracksController < ApplicationController
-    before_action :set_album, only: %i[new multiple create create_multiple edit update destroy]
+    before_action :set_album, only: %i[new multiple create create_multiple edit update destroy move_higher move_lower]
 
     def new
       authorize @album
@@ -75,21 +75,19 @@ module Admin
     end
 
     def move_higher
+      authorize @album
+
       @track = Track.find(params[:id])
-      authorize @track
-
       @track.move_higher
-
-      redirect_to artist_album_path(@track.artist, @track.album)
+      redirect_to admin_artist_album_path(@track.artist, @track.album)
     end
 
     def move_lower
+      authorize @album
+
       @track = Track.find(params[:id])
-      authorize @track
-
       @track.move_lower
-
-      redirect_to artist_album_path(@track.artist, @track.album)
+      redirect_to admin_artist_album_path(@track.artist, @track.album)
     end
 
     private
