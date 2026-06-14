@@ -2,7 +2,7 @@
 
 module Admin
   class TracksController < ApplicationController
-    before_action :set_album, only: %i[new multiple create create_multiple edit update destroy move_higher move_lower]
+    before_action :set_album
 
     def new
       authorize @album
