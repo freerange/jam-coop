@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1.306.0
@@ -46,7 +46,7 @@ jobs:
         run: sudo apt-get install -y ffmpeg
 
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1.306.0
@@ -107,7 +107,7 @@ jobs:
       - tests
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
         with:
           fetch-depth: 0
       - name: Promote main -> production
