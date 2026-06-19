@@ -37,6 +37,17 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_artist_album_purchase_path(album.artist, album)
   end
 
+  test "passes the artist's user's Stripe Connect account to the Stripe service" do
+    album = create(:album)
+    stripe_connect_account = create(:stripe_connect_account, user: album.artist.user)
+    checkout_session = stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo')
+    service = stub(create_checkout_session: checkout_session)
+    StripeService.expects(:new).with(anything, stripe_connect_account).returns(service)
+
+    post artist_album_purchases_path(album.artist, album),
+         params: { purchase: { price: album.price, contact_opt_in: true } }
+  end
+
   test 'create creates a new purchase' do
     album = create(:album)
     stub_stripe_checkout_session(success?: true)
@@ -95,6 +106,9 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
     session_attributes.with_defaults!(url: 'https://stripe.example.com', id: 'cs_test_foo')
     checkout_session = stub('Stripe::Checkout::Session', **session_attributes)
     service = stub('StripeService', create_checkout_session: checkout_session)
-    StripeService.stubs(:new).with(instance_of(Purchase)).returns(service)
+    StripeService.stubs(:new).with(
+      instance_of(Purchase),
+      instance_of(StripeConnectAccount)
+    ).returns(service)
   end
 end

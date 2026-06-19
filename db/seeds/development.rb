@@ -6,7 +6,13 @@ User.create!(email: 'admin@example.com', password: 'admin-jam-coop', verified: t
 User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
 
 6.times do |i|
-  user = User.create(email: "artist-#{i}@example.com", password: "artist-#{i}-jam-coop", verified: true)
+  stripe_connect_enabled = i < 3
+  user = User.create(
+    email: "artist-#{i}@example.com",
+    password: "artist-#{i}-jam-coop",
+    verified: true,
+    stripe_connect_enabled:
+  )
   artist = Artist.create!(
     name: Faker::Music.band,
     location: [Faker::Address.city, Faker::Address.country].join(', '),
