@@ -9,7 +9,7 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     stripe_session_id = 'session-id'
     customer_email = 'email@example.com'
     amount_tax = 140
-    purchase = create(:purchase, price: 7.00, stripe_session_id:)
+    purchase = create(:purchase, price: 7.00, stripe_session_id:, completed: false)
     session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
     stub_retrieve_stripe_payment_intent(session.payment_intent)
 
@@ -25,7 +25,7 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     user = create(:user)
     customer_email = user.email
     amount_tax = 140
-    purchase = create(:purchase, price: 7.00, stripe_session_id:)
+    purchase = create(:purchase, price: 7.00, stripe_session_id:, completed: false)
     session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
     stub_retrieve_stripe_payment_intent(session.payment_intent)
 
@@ -39,7 +39,7 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     user = create(:user)
     customer_email = 'non-existant-email'
     amount_tax = 140
-    purchase = create(:purchase, price: 7.00, user:, stripe_session_id:)
+    purchase = create(:purchase, price: 7.00, user:, stripe_session_id:, completed: false)
     session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
     stub_retrieve_stripe_payment_intent(session.payment_intent)
 
@@ -52,7 +52,7 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     stripe_session_id = 'session-id'
     customer_email = 'email@example.com'
     amount_tax = 140
-    purchase = create(:purchase, price: 7.00, stripe_session_id:)
+    purchase = create(:purchase, price: 7.00, stripe_session_id:, completed: false)
     session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
     stub_retrieve_stripe_payment_intent(session.payment_intent)
 
@@ -61,11 +61,24 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     end
   end
 
+  test 'it does send any emails if purchase already complete' do
+    stripe_session_id = 'session-id'
+    customer_email = 'email@example.com'
+    amount_tax = 140
+    create(:purchase, price: 7.00, stripe_session_id:, completed: true, customer_email:, amount_tax:)
+    session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
+    stub_retrieve_stripe_payment_intent(session.payment_intent)
+
+    assert_no_enqueued_emails do
+      PurchaseCompleteJob.perform_now(stripe_session_id)
+    end
+  end
+
   test 'it creates a payout associated with the seller and the purchase' do
     stripe_session_id = 'session-id'
     customer_email = 'email@example.com'
     amount_tax = 140
-    purchase = create(:purchase, price: 7.00, stripe_session_id:)
+    purchase = create(:purchase, price: 7.00, stripe_session_id:, completed: false)
     session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
     payment_intent_id = session.payment_intent
     destination = 'acct_1T7Y4RLr1GW0yJYq'
@@ -85,11 +98,26 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     assert_equal payout, purchase.reload.payout
   end
 
-  test 'it emails the artist' do
+  test 'it does not create a payout if there is no payment intent' do
     stripe_session_id = 'session-id'
     customer_email = 'email@example.com'
     amount_tax = 140
     purchase = create(:purchase, price: 7.00, stripe_session_id:)
+    session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax, nil)
+    payment_intent_id = session.payment_intent
+    destination = 'acct_1T7Y4RLr1GW0yJYq'
+    stub_retrieve_stripe_payment_intent(payment_intent_id, 840, 105, { destination:, amount: 700 })
+
+    PurchaseCompleteJob.perform_now(stripe_session_id)
+
+    assert_equal 0, purchase.seller.payouts.count
+  end
+
+  test 'it emails the artist' do
+    stripe_session_id = 'session-id'
+    customer_email = 'email@example.com'
+    amount_tax = 140
+    purchase = create(:purchase, price: 7.00, stripe_session_id:, completed: false)
     session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax)
     stub_retrieve_stripe_payment_intent(session.payment_intent)
 
