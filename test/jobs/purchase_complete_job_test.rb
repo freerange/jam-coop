@@ -85,6 +85,21 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     assert_equal payout, purchase.reload.payout
   end
 
+  test 'it does not create a payout if there is no payment intent' do
+    stripe_session_id = 'session-id'
+    customer_email = 'email@example.com'
+    amount_tax = 140
+    purchase = create(:purchase, price: 7.00, stripe_session_id:)
+    session = stub_retrieve_stripe_checkout_session(stripe_session_id, customer_email, amount_tax, nil)
+    payment_intent_id = session.payment_intent
+    destination = 'acct_1T7Y4RLr1GW0yJYq'
+    stub_retrieve_stripe_payment_intent(payment_intent_id, 840, 105, { destination:, amount: 700 })
+
+    PurchaseCompleteJob.perform_now(stripe_session_id)
+
+    assert_equal 0, purchase.seller.payouts.count
+  end
+
   test 'it emails the artist' do
     stripe_session_id = 'session-id'
     customer_email = 'email@example.com'

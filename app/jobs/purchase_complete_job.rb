@@ -14,16 +14,18 @@ class PurchaseCompleteJob < ApplicationJob
 
     PurchaseMailer.with(purchase:).completed.deliver_later
 
-    payment_intent = Stripe::PaymentIntent.retrieve(stripe_session.payment_intent)
-    if payment_intent.transfer_data.present?
-      payout = purchase.seller.payouts.create!(
-        payout_type: Payout::STRIPE_TYPE,
-        transaction_reference: payment_intent.id,
-        destination_reference: payment_intent.transfer_data.destination,
-        amount_in_pence: payment_intent.transfer_data.amount,
-        platform_fee_in_pence: payment_intent.metadata.application_fee_amount
-      )
-      purchase.update!(payout:)
+    if (payment_intent_id = stripe_session.payment_intent)
+      payment_intent = Stripe::PaymentIntent.retrieve(payment_intent_id)
+      if payment_intent.transfer_data.present?
+        payout = purchase.seller.payouts.create!(
+          payout_type: Payout::STRIPE_TYPE,
+          transaction_reference: payment_intent_id,
+          destination_reference: payment_intent.transfer_data.destination,
+          amount_in_pence: payment_intent.transfer_data.amount,
+          platform_fee_in_pence: payment_intent.metadata.application_fee_amount
+        )
+        purchase.update!(payout:)
+      end
     end
 
     PurchaseMailer.with(purchase:).notify_artist.deliver_later
