@@ -42,7 +42,7 @@
         <div><%= @album.price %></div>
 
         <div class="font-semibold text-gray-700">Visibility</div>
-        <div><%= @album.publication_status %></div>
+        <div><%= link_to(@album.publication_status, artist_album_path(@album.artist, @album), class: 'underline') %></div>
       </div>
 
       <div class="flex flex-row justify-end">
