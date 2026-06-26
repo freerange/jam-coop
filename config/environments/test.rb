@@ -23,6 +23,7 @@ Rails.application.configure do
 
   config.after_initialize do
     Prosopite.raise = true
+    Prosopite.allow_stack_paths = ['Admin::TracksController#create_multiple']
   end
 
   config.base_url = 'http://example.com'

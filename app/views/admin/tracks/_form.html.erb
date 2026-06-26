@@ -1,0 +1,42 @@
+<%= form_for([:admin, track.album.artist, track.album, track], data: { controller: 'direct-upload', action: 'direct-uploads:start->direct-upload#start direct-uploads:end->direct-upload#end' }, builder: TailwindFormBuilder) do |form| %>
+  <%= render ModelErrorComponent.new(model: track) %>
+
+  <%= render(SidebarSectionComponent.new(title: 'Details')) do %>
+    <%= form.text_field :title, class: 'w-full mb-6', required: true %>
+  <% end %>
+
+  <%= render(SidebarSectionComponent.new(title: 'File')) do |component| %>
+    <% component.with_subtitle do %>
+      <p>File must be in <strong>wav</strong> format.</p>
+
+      <% if form.object.original.attached? %>
+        <p class="mt-3">Select a new file to replace it. Leave empty to keep the current file.</p>
+      <% end %>
+    <% end %>
+
+    <div data-direct-upload-target="fileInput">
+      <% if form.object.original.attached? %>
+        <p class="mb-3"><span class="font-medium text-slate-700">Current file:</span> <%= form.object.original.filename %></p>
+        <%= form.labels :original, text: "Replace file" %>
+      <% else %>
+        <%= form.labels :original, text: "Upload file" %>
+      <% end %>
+
+      <%= form.file_field :original,
+        accept: 'audio/x-wav',
+        direct_upload: true,
+        data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error direct-upload:start->direct-upload#fileStart' },
+        class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
+    </div>
+
+    <div data-direct-upload-target="progress" class="invisible"></div>
+
+    <div class="flex flex-row gap-3 justify-end">
+      <%= render(ButtonComponent.new(text: 'Cancel', path: admin_artist_album_path(track.album.artist, track.album), link: true, secondary: true)) %>
+      <% if action_name == "new" %>
+        <%= form.submit "Save and add another", data: { 'direct-upload-target': 'submit' }, secondary: true %>
+      <% end %>
+      <%= form.submit "Save", data: { 'direct-upload-target': 'submit' } %>
+    </div>
+  <% end %>
+<% end %>
