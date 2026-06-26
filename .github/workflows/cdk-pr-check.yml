@@ -12,7 +12,7 @@ jobs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
