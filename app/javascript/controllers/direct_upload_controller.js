@@ -6,7 +6,7 @@ export default class extends Controller {
 
   start() {
     this.progressTarget.classList.remove("invisible")
-    this.submitTarget.setAttribute("disabled", true)
+    this.submitTargets.map((target) => target.setAttribute("disabled", true))
   }
 
   end() {
