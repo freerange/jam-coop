@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <meta name="view-transition" content="same-origin" />
+<% end %>
+
 <%= render(SectionComponent.new(title: @album.title)) do %>
   <div class="flex flex-col gap-6">
     <%= render BreadcrumbComponent.new(items: [
@@ -54,7 +58,7 @@
   <%= render(SidebarSectionComponent.new(title: 'Tracks')) do %>
     <ul class='divide-y divide-gray-200 -mt-3 mb-3'>
       <% @album.tracks.each do |track| %>
-        <li class='py-3 flex justify-between items-center'>
+        <li class='py-3 flex justify-between items-center' style="view-transition-name: track-<%= track.id %>">
           <div>
             <span class="text-gray-500 mr-3"><%= track.position %></span>
             <%= link_to(track.title, edit_admin_artist_album_track_path(@album.artist, @album, track), class: 'underline hover:bg-amber-500') %>
