@@ -16,16 +16,18 @@
           <p>Files must be in <strong>wav</strong> format. File names will be used as track names but can be edited later.</p>
         <% end %>
 
-        <%= form.labels :original, text: "Upload files" %>
+        <div data-direct-upload-target="fileInput">
+          <%= form.labels :original, text: "Upload files" %>
 
-        <%= form.file_field :original,
-        accept: 'audio/x-wav',
-        direct_upload: true,
-        multiple: true,
-        data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error' },
-        class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
+          <%= form.file_field :original,
+              accept: 'audio/x-wav',
+              direct_upload: true,
+              multiple: true,
+              data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error direct-upload:start->direct-upload#fileStart', 'direct-upload-target':'fileInput' },
+              class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
+        </div>
 
-        <progress data-direct-upload-target="progress" value="0" max="100" class="w-full mb-3 invisible">32%</progress>
+        <div data-direct-upload-target="progress" class="invisible"></div>
 
         <div class="flex flex-row gap-3 justify-end">
           <%= render(ButtonComponent.new(text: 'Cancel', path: admin_artist_album_path(@album.artist, @album), link: true, secondary: true)) %>

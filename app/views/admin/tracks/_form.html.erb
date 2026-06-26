@@ -14,20 +14,22 @@
       <% end %>
     <% end %>
 
-    <% if form.object.original.attached? %>
-      <p class="mb-3"><span class="font-medium text-slate-700">Current file:</span> <%= form.object.original.filename %></p>
-      <%= form.labels :original, text: "Replace file" %>
-    <% else %>
-      <%= form.labels :original, text: "Upload file" %>
-    <% end %>
+    <div data-direct-upload-target="fileInput">
+      <% if form.object.original.attached? %>
+        <p class="mb-3"><span class="font-medium text-slate-700">Current file:</span> <%= form.object.original.filename %></p>
+        <%= form.labels :original, text: "Replace file" %>
+      <% else %>
+        <%= form.labels :original, text: "Upload file" %>
+      <% end %>
 
-    <%= form.file_field :original,
+      <%= form.file_field :original,
         accept: 'audio/x-wav',
         direct_upload: true,
-        data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error' },
+        data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error direct-upload:start->direct-upload#fileStart' },
         class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
+    </div>
 
-    <progress data-direct-upload-target="progress" value="0" max="100" class="w-full mb-3 invisible">32%</progress>
+    <div data-direct-upload-target="progress" class="invisible"></div>
 
     <div class="flex flex-row gap-3 justify-end">
       <%= render(ButtonComponent.new(text: 'Cancel', path: admin_artist_album_path(track.album.artist, track.album), link: true, secondary: true)) %>
