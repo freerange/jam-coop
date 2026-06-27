@@ -23,12 +23,7 @@ class AlbumsController < ApplicationController
   private
 
   def set_album
-    @album = artist.albums.includes(
-      tracks: [
-        { transcodes: { file_attachment: :blob } },
-        { original_attachment: :blob }
-      ]
-    ).friendly.find(params[:id])
+    @album = artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params[:id])
   end
 
   def artist

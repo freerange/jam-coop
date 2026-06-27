@@ -19,11 +19,7 @@ class PlayersController < ApplicationController
   private
 
   def album
-    @album ||= artist.albums.includes(
-      tracks: [
-        { transcodes: { file_attachment: :blob } }
-      ]
-    ).friendly.find(params[:album_id])
+    @album ||= artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params[:album_id])
   end
 
   def artist
