@@ -13,7 +13,7 @@ class ButtonComponent < ViewComponent::Base
   def classes
     default_classes =
       if @secondary
-        %w[p-3 bg-white hover:bg-gray-100 text-gray-800 font-medium border border-gray-500 cursor-pointer
+        %w[p-3 bg-white hover:bg-gray-100 text-gray-800 font-medium border border-2 border-gray-300 cursor-pointer
            disabled:bg-slate-300 disabled:cursor-not-allowed]
       else
         %w[p-3 bg-amber-500 hover:bg-amber-400 text-white font-medium cursor-pointer
