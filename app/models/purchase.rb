@@ -16,6 +16,7 @@ class Purchase < ApplicationRecord
 
   after_commit :create_purchase_downloads, on: :create
 
+  scope :completed, -> { where(completed: true) }
   scope :without_payout, -> { where(payout_id: nil) }
 
   def stripe_payout

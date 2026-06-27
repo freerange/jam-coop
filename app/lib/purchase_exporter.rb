@@ -32,7 +32,7 @@ class PurchaseExporter
   def purchases
     Purchase
       .where(created_at: @date.last_month.beginning_of_month...@date.beginning_of_month)
-      .where(completed: true)
+      .completed
       .without_payout
   end
 end
