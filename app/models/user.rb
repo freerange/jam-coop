@@ -44,7 +44,7 @@ class User < ApplicationRecord
   end
 
   def collection
-    purchases.where(completed: true)
+    purchases.completed
   end
 
   def owns?(album)

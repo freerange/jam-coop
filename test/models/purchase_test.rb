@@ -101,4 +101,10 @@ class PurchaseTest < ActiveSupport::TestCase
     purchase_with_stripe_payout = build(:purchase, payout: stripe_payout)
     assert_equal stripe_payout, purchase_with_stripe_payout.stripe_payout
   end
+
+  test '.completed only returns completed purchases' do
+    create(:purchase, completed: false)
+    complete_purchase = create(:purchase, completed: true)
+    assert_equal [complete_purchase], Purchase.completed
+  end
 end

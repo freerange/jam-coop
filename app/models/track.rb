@@ -17,6 +17,8 @@ class Track < ApplicationRecord
   after_create :transcode
   after_commit :transcode, on: %i[update], if: :metadata_or_original_changed?
 
+  scope :with_attachments, -> { with_attached_original.includes(:transcodes).merge(Transcode.with_attached_file) }
+
   def preview
     transcodes.select(&:mp3128k?).first
   end

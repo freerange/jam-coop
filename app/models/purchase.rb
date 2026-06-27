@@ -6,7 +6,7 @@ class Purchase < ApplicationRecord
   belongs_to :album
   belongs_to :user, optional: true
   belongs_to :payout, optional: true
-  has_many :purchase_downloads, dependent: :destroy
+  has_many :purchase_downloads, -> { with_attached_file }, dependent: :destroy, inverse_of: :purchase
 
   has_one :artist, through: :album
   has_one :seller, through: :artist, source: :user, class_name: 'User'
@@ -16,6 +16,7 @@ class Purchase < ApplicationRecord
 
   after_commit :create_purchase_downloads, on: :create
 
+  scope :completed, -> { where(completed: true) }
   scope :without_payout, -> { where(payout_id: nil) }
 
   def stripe_payout
