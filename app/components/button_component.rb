@@ -20,6 +20,7 @@ class ButtonComponent < ViewComponent::Base
            disabled:bg-slate-300 disabled:cursor-not-allowed]
       end
 
+    default_classes << %w[text-center inline-block] if @link
     default_classes << @additional_classes[:class]
     default_classes.flatten.join(' ')
   end
