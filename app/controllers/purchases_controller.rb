@@ -6,7 +6,7 @@ class PurchasesController < ApplicationController
   before_action :skip_authorization
 
   def show
-    @purchase = Purchase.includes(purchase_downloads: { file_attachment: :blob }).find(params[:id])
+    @purchase = Purchase.find(params[:id])
   end
 
   def new
