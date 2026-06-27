@@ -52,7 +52,7 @@
     upload.
   </p>
 
-  <div class="flex flex-row justify-end gap-3">
+  <div class="flex flex-col sm:flex-row justify-end gap-3">
     <% if action_name == "edit" %>
       <%= render(ButtonComponent.new(text: 'Cancel', path: admin_artist_album_path(album.artist, album), link: true, secondary: true)) %>
     <% elsif action_name == "new" %>

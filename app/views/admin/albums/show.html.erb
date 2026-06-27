@@ -45,7 +45,7 @@
         <div><%= link_to(@album.publication_status, artist_album_path(@album.artist, @album), class: 'underline') %></div>
       </div>
 
-      <div class="flex flex-row justify-end">
+      <div class="flex flex-col sm:flex-row justify-end">
         <%= render(ButtonComponent.new(
           text: 'Edit details',
           path: edit_admin_artist_album_path(@album.artist, @album),
@@ -102,7 +102,7 @@
         </li>
       <% end %>
     </ul>
-    <div class="flex flex-row justify-end gap-3">
+    <div class="flex flex-col sm:flex-row justify-end gap-3">
       <%= render(ButtonComponent.new(
           text: 'Add multiple tracks',
           path: multiple_admin_artist_album_tracks_path(@album.artist, @album),
