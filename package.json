@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "playwright:version": "playwright --version | sed 's/^Version //'"
+  },
   "dependencies": {
     "playwright": "^1.61.1"
   }
