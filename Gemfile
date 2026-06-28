@@ -61,6 +61,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'capybara-playwright-driver'
   gem 'cuprite'
   gem 'mocha'
   gem 'rubocop-factory_bot'
