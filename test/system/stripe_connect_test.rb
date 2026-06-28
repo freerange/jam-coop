@@ -30,6 +30,7 @@ class StripeConnectTest < ApplicationSystemTestCase
       click_on 'Buy'
       fill_in 'Price', with: album.price + gratuity
       click_on 'Checkout'
+      assert_current_path fake_stripe_checkout_path
 
       perform_enqueued_jobs
 

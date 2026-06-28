@@ -15,6 +15,7 @@ class CollectionTest < ApplicationSystemTestCase
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'
+    assert_current_path fake_stripe_checkout_path
     fake_stripe_webhook_event_completed(@user)
     visit collection_path
     assert_text @album.title
@@ -27,6 +28,7 @@ class CollectionTest < ApplicationSystemTestCase
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'
+    assert_current_path fake_stripe_checkout_path
     fake_stripe_webhook_event_completed(@user)
 
     log_in_as(@user)
@@ -41,6 +43,7 @@ class CollectionTest < ApplicationSystemTestCase
     click_on 'Buy'
     fill_in 'Price', with: @album.price
     click_on 'Checkout'
+    assert_current_path fake_stripe_checkout_path
     fake_stripe_webhook_event_completed(user)
 
     visit root_path

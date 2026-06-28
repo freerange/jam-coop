@@ -12,6 +12,7 @@ module Identity
     test 'sending a password reset email' do
       visit log_in_path
       click_on 'Forgot your password?'
+      assert_selector 'h2', text: 'Forgot your password?'
 
       fill_in 'Email', with: @user.email
       click_on 'Send password reset email'
@@ -21,6 +22,7 @@ module Identity
 
     test 'updating password' do
       visit edit_identity_password_reset_path(sid: @sid)
+      assert_text 'Reset your password'
 
       fill_in 'New password', with: 'Secret6*4*2*'
       fill_in 'Confirm new password', with: 'Secret6*4*2*'
