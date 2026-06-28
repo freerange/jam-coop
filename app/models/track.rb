@@ -54,4 +54,11 @@ class Track < ApplicationRecord
   def number
     position.to_s.rjust(2, '0')
   end
+
+  def as_json(*)
+    {
+      title:,
+      url: preview&.file ? Rails.application.routes.url_helpers.cdn_url(preview.file) : nil
+    }
+  end
 end
