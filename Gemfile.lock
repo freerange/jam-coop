@@ -137,9 +137,6 @@ GEM
     css_parser (1.22.0)
       addressable
     csv (3.3.5)
-    cuprite (0.17)
-      capybara (~> 3.0)
-      ferrum (~> 0.17.0)
     date (3.5.1)
     debug (1.11.1)
       irb (~> 1.10)
@@ -166,12 +163,6 @@ GEM
       logger
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
-    ferrum (0.17.1)
-      addressable (~> 2.5)
-      base64 (~> 0.2)
-      concurrent-ruby (~> 1.1)
-      webrick (~> 1.7)
-      websocket-driver (~> 0.7)
     ffi (1.17.2)
     ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-darwin)
@@ -479,7 +470,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webrick (1.9.1)
     websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
@@ -508,7 +498,6 @@ DEPENDENCIES
   capybara
   capybara-playwright-driver
   csv
-  cuprite
   debug
   dotenv-rails
   factory_bot_rails
