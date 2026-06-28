@@ -40,7 +40,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def stub_stripe_checkout_session
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    service = stub(create_checkout_session: stub(success?: true, url: fake_stripe_checkout_path, id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
   end
 

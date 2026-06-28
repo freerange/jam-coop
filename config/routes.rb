@@ -118,4 +118,6 @@ Rails.application.routes.draw do
       )
     end
   end
+
+  get '/fake-stripe-checkout', to: proc { [200, {}, []] } if Rails.env.test?
 end
