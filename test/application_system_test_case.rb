@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'capybara/cuprite'
 require 'support/screenshot_helper_with_multiple_sessions'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include ActionMailer::TestHelper
 
   headless = ActiveRecord::Type::Boolean.new.cast(ENV.fetch('HEADLESS', true))
-  driven_by :cuprite, options: { headless: }
+  driven_by :playwright, options: { headless: }
 
   def setup
     Rails.application.default_url_options = {
