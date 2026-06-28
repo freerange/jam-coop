@@ -4,7 +4,6 @@ require 'application_system_test_case'
 
 class CreatingAnAlbumTest < ApplicationSystemTestCase
   setup do
-    skip 'flakey test'
     @artist = create(:artist)
     create(:license)
     @artist_user = create(:user, artists: [@artist])
@@ -25,9 +24,12 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       fill_in 'Title', with: 'And I Love Her'
       attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
       click_on 'Save and add another'
+      assert_text 'Track added'
+      assert_text 'New track'
       fill_in 'Title', with: 'Eight days a week'
       attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
       click_on 'Save'
+      assert_text 'Track added'
       assert_text '1 And I Love Her'
       assert_text '2 Eight days a week'
     end
@@ -64,6 +66,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
                                 Rails.root.join('test/fixtures/files/two.wav'),
                                 Rails.root.join('test/fixtures/files/three.wav')]
     click_on 'Save'
+    assert_text 'Tracks added'
 
     assert_text '1 one'
     assert_text '2 two'
@@ -84,6 +87,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     assert_text "Editing #{album.title}"
     fill_in 'Title', with: 'New Title'
     click_on 'Save'
+    assert_text 'Album was successfully updated'
     assert_text 'New Title'
   end
 
@@ -106,10 +110,12 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
       log_in_as(@artist_user)
       visit edit_artist_path(@artist)
+      assert_text "Editing #{@artist.name}"
       assert_text album.title
       click_on album.title
 
       click_on track.title
+      assert_text 'Edit track'
 
       within(details_section) do
         fill_in 'Title', with: 'Rename the first track'
