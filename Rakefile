@@ -13,5 +13,6 @@ Rake::Task['default'].clear.enhance(
     rubocop
     test
     test:system
+    test:playwright
   ]
 )
