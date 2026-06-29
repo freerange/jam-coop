@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "playwright": "^1.61.1"
+  },
+  "allowScripts": {
+    "fsevents@2.3.2": true
+  }
+}
