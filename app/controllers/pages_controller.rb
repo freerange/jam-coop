@@ -9,6 +9,11 @@ class PagesController < ApplicationController
     @best_selling_albums = Album.best_selling.includes(:artist, { cover_attachment: :blob }).limit(4)
   end
 
-  def about; end
-  def terms; end
+  def about
+    render layout: 'docs'
+  end
+
+  def terms
+    render layout: 'docs'
+  end
 end
