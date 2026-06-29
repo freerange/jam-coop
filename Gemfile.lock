@@ -255,6 +255,10 @@ GEM
     matrix (0.4.3)
     meta-tags (2.22.2)
       actionpack (>= 6.0.0, < 8.2)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2026.0414)
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -302,6 +306,10 @@ GEM
     pg (1.6.2-x86_64-linux)
     pg_query (6.1.0)
       google-protobuf (>= 3.25.3)
+    playwright-ruby-client (1.60.0)
+      base64
+      concurrent-ruby (>= 1.1.6)
+      mime-types (>= 3.0)
     postmark (1.24.0)
       json
     postmark-rails (0.22.1)
@@ -513,6 +521,7 @@ DEPENDENCIES
   mocha
   pg (~> 1.5)
   pg_query
+  playwright-ruby-client
   postmark-rails
   propshaft
   prosopite

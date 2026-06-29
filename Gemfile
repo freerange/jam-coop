@@ -48,6 +48,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'htmlbeautifier'
   gem 'lookbook', '>= 2.3.13'
+  gem 'playwright-ruby-client'
 end
 
 group :development do
