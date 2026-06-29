@@ -53,6 +53,12 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
       - name: Setup dummy application environment using dotenv
         run: cp .env.example .env.test
 
@@ -74,6 +80,14 @@ jobs:
           FERRUM_PROCESS_TIMEOUT: 30
           FERRUM_DEFAULT_TIMEOUT: 30
         run: bin/rails test:all
+
+      - name: Run Playwright tests
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: myapp
+          PGPASSWORD: password
+        run: bin/rake test:playwright
 
       - name: Upload system test screenshots
         if: ${{ failure() }}
