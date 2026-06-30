@@ -2,12 +2,14 @@
 
 require 'test_helper'
 require 'support/screenshot_helper_with_multiple_sessions'
+require 'support/playwright_session_tracing'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include ActionMailer::TestHelper
+  include PlaywrightSessionTracing
 
   headless = ActiveRecord::Type::Boolean.new.cast(ENV.fetch('HEADLESS', true))
-  driven_by :playwright, options: { headless: }
+  driven_by :playwright, options: { headless:, tracesDir: PlaywrightSessionTracing::ROOT_PATH }
 
   def setup
     Rails.application.default_url_options = {
