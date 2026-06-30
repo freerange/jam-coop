@@ -34,7 +34,7 @@ Linters and test can be run using the default `rake` task.
 
 To run the system tests in a visible/headed browser set the `HEADLESS` environment variable to false. For example: to run all system tests in a visible browser, execute `HEADLESS=false rails test test/system`.
 
-If a system test fails, screenshots will be saved for each session in `tmp/screenshots`. These are also made available as downloadable artifacts in the CI build.
+If a system test fails, screenshots and Playwright traces will be saved for each session in `tmp/screenshots` and `tmp/playwright-traces` respectively. These are also made available as downloadable artifacts in the CI build. You can view a Playwright trace by running `npx playwright show-trace tmp/playwright-traces/<test-name>-<session-name>.zip` or by dropping the zip file into [the online viewer](https://trace.playwright.dev/). 
 
 ## Credentials
 
