@@ -105,12 +105,14 @@ jobs:
           PGPASSWORD: password
         run: bin/rails test:system
 
-      - name: Upload system test screenshots
+      - name: Upload system test screenshots & traces
         if: ${{ failure() }}
         uses: actions/upload-artifact@v7
         with:
           name: System test screenshots
-          path: tmp/screenshots
+          path: |
+            - tmp/screenshots
+            - tmp/playwright-traces
 
   notify:
     name: Notify
