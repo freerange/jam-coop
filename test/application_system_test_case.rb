@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'capybara/cuprite'
 require 'support/screenshot_helper_with_multiple_sessions'
+require 'support/playwright_session_tracing'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include ActionMailer::TestHelper
+  include PlaywrightSessionTracing
 
   headless = ActiveRecord::Type::Boolean.new.cast(ENV.fetch('HEADLESS', true))
-  driven_by :cuprite, options: { headless: }
+  driven_by :playwright, options: { headless:, tracesDir: PlaywrightSessionTracing::ROOT_PATH }
 
   def setup
     Rails.application.default_url_options = {
@@ -40,7 +41,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def stub_stripe_checkout_session
-    service = stub(create_checkout_session: stub(success?: true, url: 'https://stripe.example.com', id: 'cs_test_foo'))
+    service = stub(create_checkout_session: stub(success?: true, url: fake_stripe_checkout_path, id: 'cs_test_foo'))
     StripeService.expects(:new).returns(service)
   end
 
