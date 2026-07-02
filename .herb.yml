@@ -32,6 +32,10 @@ version: 0.10.1
 #     - 'public/**/*'
 #     - 'tmp/**/*'
 
+files:
+  exclude:
+    - 'aws-cdk/**/*'
+
 # engine:
 #   validators:
 #     security: true       # default: true
