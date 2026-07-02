@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@herb-tools/linter": "^0.10.1"
+  }
+}
