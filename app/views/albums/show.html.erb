@@ -54,7 +54,7 @@
         </div>
 
         <% if @album.preview && @album.preview.file %>
-          <audio controls class='w-full hidden' data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(@album.preview.file) %>">
+          <audio controls class="w-full hidden" data-player-target="audio" data-action="ended->player#ended timeupdate->player#progress" src="<%= cdn_url(@album.preview.file) %>">
           </audio>
         <% end %>
 
@@ -145,11 +145,12 @@
     <% if @album.release && @album.release.catalogue_number.present? %>
       <p><strong>Label:</strong> <%= link_to(@album.release.label.name, label_path(@album.release.label), class: 'underline') %> (<%= @album.release.catalogue_number %>)</p>
     <% end %>
-    <% if @album.license.source %>
-      <p><strong>License:</strong> <%= link_to @album.license.label, @album.license.source, class: 'underline' %></p>
-    <% else %>
-      <p><strong>License:</strong> <%= @album.license.label %></p>
-    <% end %>
+    <p>
+      <strong>License:</strong>
+      <% if @album.license.source %> <%= link_to @album.license.label, @album.license.source, class: 'underline' %>
+      <% else %> <%= @album.license.label %>
+      <% end %>
+    </p>
 
     <% if @album.tags.any? %>
       <p><strong>Tags:</strong> <%= safe_join(@album.tags.map { |t| link_to(t.name, tag_path(t), class: 'underline') }, ', ') %></p>

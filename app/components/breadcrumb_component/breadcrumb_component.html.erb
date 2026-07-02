@@ -2,7 +2,7 @@
   <% items.each_with_index do |item, index| %>
     <li><%= breadcrumb_item(item) %></li>
     <% unless index == items.length - 1 %>
-      <li class='hidden sm:inline text-slate-400'>/</li>
+      <li class="hidden sm:inline text-slate-400">/</li>
     <% end %>
   <% end %>
 </ol>
