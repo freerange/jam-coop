@@ -71,16 +71,48 @@ jobs:
           PGHOST: localhost
           PGUSER: myapp
           PGPASSWORD: password
-          FERRUM_PROCESS_TIMEOUT: 30
-          FERRUM_DEFAULT_TIMEOUT: 30
-        run: bin/rails test:all
+        run: bin/rails test
 
-      - name: Upload system test screenshots
+      - name: Install Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Identify playwright version
+        id: identify-playwright-version
+        run: echo "playwright_version=$(npm run --silent playwright:version)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache playwright dependencies
+        uses: actions/cache@v5
+        id: cache-playwright-deps
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-v${{ steps.identify-playwright-version.outputs.playwright_version }}
+
+      - name: Install playwright
+        if: ${{ steps.cache-playwright-deps.outputs.cache-hit != 'true' }}
+        run: npx playwright install --with-deps chromium
+
+      - name: Run system tests
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: myapp
+          PGPASSWORD: password
+        run: bin/rails test:system
+
+      - name: Upload system test screenshots & traces
         if: ${{ failure() }}
         uses: actions/upload-artifact@v7
         with:
           name: System test screenshots
-          path: tmp/screenshots
+          path: |
+            - tmp/screenshots
+            - tmp/playwright-traces
 
   notify:
     name: Notify

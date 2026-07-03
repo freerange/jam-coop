@@ -11,6 +11,7 @@ class AdministeringALabelTest < ApplicationSystemTestCase
   test 'creating a new label' do
     visit account_path
     click_on 'Add label'
+    assert_text 'New label'
     fill_in 'Name', with: 'Jam Records'
     fill_in 'Location', with: 'London, United Kingdom'
     fill_in 'Description', with: 'Jam Records is the in-house record label for jam.coop'
@@ -25,6 +26,7 @@ class AdministeringALabelTest < ApplicationSystemTestCase
 
     visit account_path
     click_on label.name
+    assert_text 'Edit label'
     fill_in 'Name', with: 'A new name'
 
     click_on 'Save'
@@ -43,6 +45,7 @@ class AdministeringALabelTest < ApplicationSystemTestCase
     fill_in 'Catalogue number', with: 'jam-123'
     click_on 'Save release'
 
+    assert_text 'Edit label'
     within(release_section) do
       assert_text 'album-name'
       assert_text artist.name
@@ -72,6 +75,7 @@ class AdministeringALabelTest < ApplicationSystemTestCase
     select 'other-album', from: 'Album'
     click_on 'Save release'
 
+    assert_text 'Edit label'
     within(release_section) do
       assert_text 'other-album'
       refute_text 'album-name'
@@ -92,11 +96,13 @@ class AdministeringALabelTest < ApplicationSystemTestCase
     end
 
     click_on 'album-name'
+    assert_text 'Edit release'
 
     accept_alert 'Are you sure you want to remove this release?' do
       click_on 'Remove release'
     end
 
+    assert_text 'Edit label'
     within(release_section) do
       refute_text 'album-name'
     end

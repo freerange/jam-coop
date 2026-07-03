@@ -30,6 +30,7 @@ class StripeConnectTest < ApplicationSystemTestCase
       click_on 'Buy'
       fill_in 'Price', with: album.price + gratuity
       click_on 'Checkout'
+      assert_current_path fake_stripe_checkout_path
 
       perform_enqueued_jobs
 
@@ -83,7 +84,7 @@ class StripeConnectTest < ApplicationSystemTestCase
   def stripe_checkout_session
     Stripe::Checkout::Session.construct_from(
       id: stripe_session_id,
-      url: 'https://stripe.example.com',
+      url: fake_stripe_checkout_path,
       customer_details: {
         email: 'fan@example.com'
       },
