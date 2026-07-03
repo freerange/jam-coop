@@ -7,7 +7,7 @@ export default class extends Controller {
   start() {
     this.progressTarget.classList.remove("invisible")
     this.fileInputTarget.classList.add("hidden")
-    this.submitTargets.map((target) => target.setAttribute("disabled", true))
+    this.submitTargets.forEach((target) => target.disabled = true)
   }
 
   end() {
