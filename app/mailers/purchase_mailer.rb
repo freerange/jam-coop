@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PurchaseMailer < ApplicationMailer
+  helper StripeConnectAccountHelper
+
   def completed
     @purchase = params[:purchase]
 

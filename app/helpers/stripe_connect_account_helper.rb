@@ -8,4 +8,8 @@ module StripeConnectAccountHelper
   def stripe_connect_country_text_from_country_code(country_code)
     options_for_stripe_connect_country_select.find { |_, cc| cc == country_code }&.first
   end
+
+  def stripe_dashboard_url
+    'https://dashboard.stripe.com/'
+  end
 end

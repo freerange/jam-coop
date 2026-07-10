@@ -4,6 +4,7 @@ require 'test_helper'
 
 class PurchaseMailerTest < ActionMailer::TestCase
   include Rails.application.routes.url_helpers
+  include StripeConnectAccountHelper
 
   test 'purchase_completed' do
     album = build(:album)
@@ -48,7 +49,7 @@ class PurchaseMailerTest < ActionMailer::TestCase
     assert_equal [seller.email], mail.to
     assert_includes mail.body.to_s, 'for £7.00'
     assert_includes mail.body.to_s, 'A payment of £5.95 has been made to your'
-    assert_includes mail.body.to_s, link_stripe_connect_account_url(stripe_connect_account.stripe_identifier)
+    assert_includes mail.body.to_s, stripe_dashboard_url
     assert_includes mail.body.to_s, 'A platform fee of £1.05 was deducted.'
     assert_includes mail.body.to_s, 'Other Stripe fees may have been incurred (e.g. currency conversion fees).'
   end

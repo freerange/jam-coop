@@ -72,7 +72,9 @@ class UsersControllerTestSignedIn < ActionDispatch::IntegrationTest
       assert_select(
         'p',
         'Your Stripe account is connected. We will automatically make payments to this account on every purchase. ' \
-        'Your Stripe account is ready to payout to your bank account.'
+        'Your Stripe account is ready to payout to your bank account. ' \
+        'View payments and payouts in your Stripe dashboard. ' \
+        'You may need to select the jam.coop account if your user has multiple accounts.'
       )
     end
   end

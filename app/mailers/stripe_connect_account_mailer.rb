@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class StripeConnectAccountMailer < ApplicationMailer
+  helper StripeConnectAccountHelper
+
   def charges_enabled
     @account = params[:account]
 
