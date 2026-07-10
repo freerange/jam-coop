@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     get 'alternatives'
     get 'privacy-policy'
   end
+  get '/docs', to: redirect('/docs/about')
   get '/about', to: redirect('/docs/about')
   get '/terms', to: redirect('/docs/terms')
 
