@@ -15,6 +15,7 @@ Rails.application.configure do
 
   config.active_storage.service = :test
 
+  config.action_mailer.show_previews = true
   config.action_mailer.delivery_method = :test
 
   config.active_support.deprecation = :stderr
