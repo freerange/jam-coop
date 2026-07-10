@@ -7,9 +7,8 @@ class PurchaseMailerPreview < ActionMailer::Preview
   # Preview this email at http://localhost:3000/rails/mailers/purchase_mailer/notify_artist
   def notify_artist
     seller = build(:user)
-    album = build(:album)
-    seller.artists << album.artist
-    purchase = build(:purchase, album:, price: album.price)
+    purchase = build_stubbed(:purchase)
+    purchase.define_singleton_method(:seller) { seller }
 
     PurchaseMailer.with(purchase:).notify_artist
   end
