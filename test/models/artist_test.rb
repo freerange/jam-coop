@@ -80,7 +80,7 @@ class ArtistTest < ActiveSupport::TestCase
     assert_equal artist, Artist.friendly.find('rick-astley')
   end
 
-  test 'uses slug candidates in case of clashses' do
+  test 'uses slug candidates in case of clashes' do
     assert_equal 'rick-astley', create(:artist, name: 'Rick Astley').slug
     assert_equal 'rick-astley-music', create(:artist, name: 'Rick Astley').slug
     assert_equal 'rick-astley-sounds', create(:artist, name: 'Rick Astley').slug
