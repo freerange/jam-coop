@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get 'about'
     get 'terms'
     get 'ai-policy'
+    get 'alternatives'
   end
   get '/about', to: redirect('/docs/about')
   get '/terms', to: redirect('/docs/terms')
