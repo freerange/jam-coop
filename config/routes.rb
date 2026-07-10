@@ -11,9 +11,14 @@ Rails.application.routes.draw do
   post 'sign_up', to: 'registrations#create'
   get  'sign_up', to: 'registrations#new'
 
-  get  'about', to: 'pages#about'
-  get  'terms', to: 'pages#terms'
-  get  'blog',  to: redirect('/newsletters')
+  namespace :docs do
+    get 'about'
+    get 'terms'
+  end
+  get '/about', to: redirect('/docs/about')
+  get '/terms', to: redirect('/docs/terms')
+
+  get 'blog', to: redirect('/newsletters')
 
   resources :newsletters, only: %i[index show]
 

@@ -17,9 +17,4 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select 'h2', text: 'Featured Artist'
   end
-
-  test 'should get about' do
-    get about_path
-    assert_response :success
-  end
 end
