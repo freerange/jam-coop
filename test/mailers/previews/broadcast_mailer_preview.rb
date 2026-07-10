@@ -2,11 +2,14 @@
 
 # Preview all emails at http://localhost:3000/rails/mailers/broadcast_mailer
 class BroadcastMailerPreview < ActionMailer::Preview
-  def newsletter
-    user = User.create_with(password: SecureRandom.hex).find_or_create_by!(email: 'helen@example.com')
-    newsletter = Newsletter.build(title: 'Newsletter preview', body:)
+  include FactoryBot::Syntax::Methods
 
-    BroadcastMailer.newsletter(user, newsletter)
+  # Preview this email at http://localhost:3000/rails/mailers/broadcast_mailer/newsletter
+  def newsletter
+    recipient = build(:user)
+    newsletter = build(:newsletter)
+
+    BroadcastMailer.with(recipient:, newsletter:).newsletter
   end
 
   private
