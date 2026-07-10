@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   namespace :docs do
     get 'about'
     get 'terms'
+    get 'ai-policy'
   end
   get '/about', to: redirect('/docs/about')
   get '/terms', to: redirect('/docs/terms')

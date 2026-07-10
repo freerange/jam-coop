@@ -6,4 +6,5 @@ class DocsController < ApplicationController
 
   def about; end
   def terms; end
+  def ai_policy; end
 end
