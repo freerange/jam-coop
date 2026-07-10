@@ -53,7 +53,7 @@ Rails.application.routes.draw do
     resources :labels, only: %i[create new edit update] do
       resources :releases, only: %i[new edit create update destroy]
     end
-    resources :artists do
+    resources :artists, only: [] do
       resources :albums, only: %i[show new edit create update] do
         resources :tracks, only: %i[new create edit update destroy] do
           collection do
