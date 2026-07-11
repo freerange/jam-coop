@@ -2,7 +2,6 @@
 
 class PayoutsController < ApplicationController
   def index
-    @payouts = Current.user.stripe_payouts.order(:created_at)
-    authorize @payouts
+    @payouts = authorize Current.user.stripe_payouts.order(:created_at)
   end
 end

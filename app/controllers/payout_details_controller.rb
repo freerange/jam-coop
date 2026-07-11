@@ -4,8 +4,7 @@ class PayoutDetailsController < ApplicationController
   before_action :set_user
 
   def create
-    @payout_detail = PayoutDetail.new(payout_detail_params.merge(user: @user))
-    authorize @payout_detail
+    @payout_detail = authorize PayoutDetail.new(payout_detail_params.merge(user: @user))
 
     if @payout_detail.save
       redirect_to account_path, notice: 'Payout details added'
@@ -15,9 +14,7 @@ class PayoutDetailsController < ApplicationController
   end
 
   def update
-    @payout_detail = PayoutDetail.find_by!(user: @user)
-
-    authorize @payout_detail
+    @payout_detail = authorize PayoutDetail.find_by!(user: @user)
 
     if @payout_detail.update(payout_detail_params)
       redirect_to account_path, notice: 'Payout details updated'

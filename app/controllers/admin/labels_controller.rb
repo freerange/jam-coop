@@ -4,7 +4,6 @@ module Admin
   class LabelsController < ApplicationController
     before_action :build_label, only: %i[new create]
     before_action :set_label, only: %i[edit update]
-    before_action :authorize_label
 
     def new; end
     def edit; end
@@ -28,19 +27,15 @@ module Admin
     private
 
     def build_label
-      @label = Current.user.labels.new(params[:label].present? ? label_params : {})
+      @label = authorize Current.user.labels.new(params[:label].present? ? label_params : {})
     end
 
     def set_label
-      @label = Current.user.labels.friendly.includes(
+      @label = authorize Current.user.labels.friendly.includes(
         releases: {
           album: [:artist, { cover_attachment: :blob }]
         }
       ).find(params[:id])
-    end
-
-    def authorize_label
-      authorize @label
     end
 
     def label_params

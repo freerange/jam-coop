@@ -5,7 +5,6 @@ module Admin
     before_action :set_label
     before_action :set_release, only: %i[edit update destroy]
     before_action :build_release, only: %i[new create]
-    before_action :authorize_label
 
     def new; end
     def edit; end
@@ -34,7 +33,7 @@ module Admin
     private
 
     def set_label
-      @label = Current.user.labels.friendly.find(params[:label_id])
+      @label = authorize Current.user.labels.friendly.find(params[:label_id])
     end
 
     def set_release
@@ -47,10 +46,6 @@ module Admin
 
     def release_params
       params.expect(release: %i[label album_id catalogue_number])
-    end
-
-    def authorize_label
-      authorize @label
     end
   end
 end

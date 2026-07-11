@@ -6,9 +6,7 @@ class StripeConnectAccountsController < ApplicationController
   before_action :set_stripe_connect_account, except: %i[create]
 
   def create
-    authorize StripeConnectAccount
-
-    account_in_jam = @user.build_stripe_connect_account(
+    account_in_jam = authorize @user.build_stripe_connect_account(
       stripe_connect_account_params
     )
     if account_in_jam.valid?
@@ -27,15 +25,11 @@ class StripeConnectAccountsController < ApplicationController
   end
 
   def link
-    authorize @stripe_connect_account
-
     account_link = Stripe::AccountLink.create(link_params)
     redirect_to account_link.url, allow_other_host: true
   end
 
   def success
-    authorize @stripe_connect_account
-
     resp = Stripe::Account.retrieve(@stripe_connect_account.stripe_identifier)
     @stripe_connect_account.sync_from!(resp)
 
@@ -79,7 +73,7 @@ class StripeConnectAccountsController < ApplicationController
   end
 
   def set_stripe_connect_account
-    @stripe_connect_account = @user.stripe_connect_account
+    @stripe_connect_account = authorize @user.stripe_connect_account
     return if @stripe_connect_account.stripe_identifier == account_id
 
     raise ActiveRecord::RecordNotFound, 'StripeConnectAccount not found'

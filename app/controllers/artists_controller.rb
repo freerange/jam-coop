@@ -28,8 +28,7 @@ class ArtistsController < ApplicationController
   end
 
   def create
-    @artist = Artist.new(artist_params.merge(user: Current.user))
-    authorize @artist
+    @artist = authorize Artist.new(artist_params.merge(user: Current.user))
 
     respond_to do |format|
       if @artist.save

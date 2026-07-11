@@ -5,8 +5,6 @@ module Identity
     before_action :set_user
 
     def update
-      authorize @user
-
       if !@user.authenticate(params[:current_password])
         flash[:emails_update_password_incorrect] = 'The password you entered is incorrect'
         redirect_to account_path
@@ -20,7 +18,7 @@ module Identity
     private
 
     def set_user
-      @user = Current.user
+      @user = authorize Current.user
     end
 
     def resend_verification_email_and_redirect

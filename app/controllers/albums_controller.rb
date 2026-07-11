@@ -3,7 +3,6 @@
 class AlbumsController < ApplicationController
   before_action :set_album, except: %i[index random]
   skip_before_action :authenticate, only: %i[index show random]
-  before_action :authorize_album, except: %i[index random]
 
   def index
     authorize Album
@@ -23,14 +22,10 @@ class AlbumsController < ApplicationController
   private
 
   def set_album
-    @album = artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params[:id])
+    @album = authorize artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params[:id])
   end
 
   def artist
     Artist.friendly.find(params[:artist_id])
-  end
-
-  def authorize_album
-    authorize @album
   end
 end

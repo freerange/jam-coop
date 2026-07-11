@@ -3,13 +3,9 @@
 class UsersController < ApplicationController
   before_action :set_user
 
-  def show
-    authorize @user
-  end
+  def show; end
 
   def update_newsletter_preference
-    authorize @user
-
     if @user.update(user_params)
       redirect_to account_path, notice: 'Newsletter preference updated successfully.'
     else
@@ -20,7 +16,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = Current.user
+    @user = authorize Current.user
   end
 
   def user_params
