@@ -71,4 +71,12 @@ class ArtistPolicyTest < ActiveSupport::TestCase
     assert_not policy.create?
     assert_not policy.new?
   end
+
+  test 'anyone can view an artist' do
+    user = NullUser.new
+
+    policy = ArtistPolicy.new(user, :_)
+
+    assert policy.show?
+  end
 end
