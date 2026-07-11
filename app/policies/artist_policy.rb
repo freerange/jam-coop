@@ -11,6 +11,10 @@ class ArtistPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    true
+  end
+
   def destroy?
     user.admin?
   end

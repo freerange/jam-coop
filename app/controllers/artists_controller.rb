@@ -9,25 +9,18 @@ class ArtistsController < ApplicationController
   end
 
   def show
-    skip_authorization
-
     @albums = policy_scope(@artist.albums).includes(cover_attachment: :blob)
   end
 
   def new
-    @artist = Artist.new
+    @artist = authorize Artist.new
     @user = Current.user
-
-    authorize @artist
   end
 
-  def edit
-    authorize @artist
-  end
+  def edit; end
 
   def create
-    @artist = Artist.new(artist_params.merge(user: Current.user))
-    authorize @artist
+    @artist = authorize Artist.new(artist_params.merge(user: Current.user))
 
     respond_to do |format|
       if @artist.save
@@ -46,8 +39,6 @@ class ArtistsController < ApplicationController
   end
 
   def update
-    authorize @artist
-
     respond_to do |format|
       if @artist.update(artist_params)
         format.html { redirect_to artist_path(@artist), notice: 'Artist was successfully updated.' }
@@ -60,7 +51,6 @@ class ArtistsController < ApplicationController
   end
 
   def destroy
-    authorize @artist
     @artist.destroy
 
     respond_to do |format|
@@ -72,7 +62,7 @@ class ArtistsController < ApplicationController
   private
 
   def set_artist
-    @artist = Artist.friendly.find(params[:id])
+    @artist = authorize Artist.friendly.find(params[:id])
   end
 
   def artist_params
