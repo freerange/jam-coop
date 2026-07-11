@@ -5,8 +5,6 @@ class ArtistsController < ApplicationController
   skip_before_action :authenticate, only: %i[index show]
 
   def index
-    skip_authorization
-
     @artists = policy_scope(Artist).includes(:albums, profile_picture_attachment: :blob)
   end
 
