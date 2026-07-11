@@ -5,10 +5,10 @@ class NewslettersController < ApplicationController
   before_action :skip_authorization
 
   def index
-    @newsletters = Newsletter.where.not(published_at: nil).order(published_at: :desc)
+    @newsletters = Newsletter.published.order(published_at: :desc)
   end
 
   def show
-    @newsletter = Newsletter.where.not(published_at: nil).find(params[:id])
+    @newsletter = Newsletter.published.find(params[:id])
   end
 end
