@@ -116,8 +116,7 @@ class AlbumsControllerTestSignedOut < ActionDispatch::IntegrationTest
 
     get artist_album_path(draft_album.artist, draft_album), headers: { 'HTTP_REFERER' => previous_path }
 
-    assert_redirected_to previous_path
-    assert_equal 'You are not authorized to perform this action.', flash[:alert]
+    assert_not_authorized(redirected_to: previous_path)
   end
 
   test '#show renders twitter:player meta tag' do

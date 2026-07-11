@@ -27,8 +27,7 @@ module Admin
 
       get admin_payouts_path
 
-      assert_redirected_to root_path
-      assert_equal 'You are not authorized to perform this action.', flash[:alert]
+      assert_not_authorized
     end
 
     test '#index redirects to login if user is not logged in' do

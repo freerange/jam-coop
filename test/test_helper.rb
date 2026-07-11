@@ -4,12 +4,14 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
 require 'webmock/minitest'
+require 'support/authorization_assertions'
 
 module ActiveSupport
   class TestCase
     parallelize(workers: 1)
 
     include FactoryBot::Syntax::Methods
+    include AuthorizationAssertions
 
     WebMock.disable_net_connect!(allow_localhost: true)
 
