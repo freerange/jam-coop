@@ -9,7 +9,7 @@ class InterestsController < ApplicationController
   end
 
   def create
-    @interest = Interest.find_or_create_by(interest_params)
+    @interest = Interest.find_or_initialize_by(interest_params)
 
     if @interest.save
       InterestsMailer.confirm(@interest).deliver_later
