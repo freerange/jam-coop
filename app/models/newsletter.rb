@@ -6,6 +6,10 @@ class Newsletter < ApplicationRecord
 
   scope :published, -> { where.not(published_at: nil) }
 
+  def published?
+    published_at.present?
+  end
+
   def send_as_email
     users = User.where(verified: true, opt_in_to_newsletter: true, sending_suppressed_at: nil)
     users.find_each do |user|
