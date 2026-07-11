@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   resource :payout_detail, only: %i[create update]
   resolve('PayoutDetail') { [:payout_detail] }
 
+  resources :payouts, only: %i[index]
+
   namespace :identity do
     resource :email,              only: %i[update]
     resource :email_verification, only: %i[show create]
