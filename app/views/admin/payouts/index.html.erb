@@ -1,28 +1,7 @@
 <%= render(SectionComponent.new(title: 'Payouts')) do %>
   <div class="flex flex-col divide-y divide-slate-300">
     <% if @payouts.any? %>
-      <table class="table-auto w-full">
-        <thead class="bg-slate-300">
-          <tr>
-            <th class="text-left">Date</th>
-            <th class="text-left">Amount</th>
-            <th class="text-left">Platform fee</th>
-            <th class="text-left">Transaction ref</th>
-            <th class="text-left">Destination ref</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @payouts.each do |payout| %>
-            <tr>
-              <td class="border"><%= payout.created_at.to_date %></td>
-              <td class="border"><%= number_to_currency(payout.amount, unit: "£") %></td>
-              <td class="border"><%= number_to_currency(payout.platform_fee, unit: "£") %></td>
-              <td class="border"><%= payout.transaction_reference %></td>
-              <td class="border"><%= payout.destination_reference %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render partial: 'payouts/table', locals: { payouts: @payouts } %>
     <% else %>
       <p class="text-slate-500 mb-6">
         There aren't any payouts yet.
