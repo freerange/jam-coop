@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :followed_artists, through: :followings, source: :artist
   has_many :labels, dependent: :destroy
   has_many :payouts, dependent: :destroy
+  has_many :stripe_payouts, -> { stripe }, class_name: 'Payout', inverse_of: false, dependent: nil
   has_one :payout_detail, dependent: :destroy
   has_one :stripe_connect_account, dependent: :destroy
 
