@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   namespace :admin do
     mount MissionControl::Jobs::Engine, at: '/jobs'
 
-    resources 'newsletters', only: %i[index new create edit update]
+    resources :newsletters, only: %i[index new create edit update]
     resources :labels, only: %i[create new edit update] do
       resources :releases, only: %i[new edit create update destroy]
     end
@@ -66,12 +66,12 @@ Rails.application.routes.draw do
       resources :albums, only: %i[show new edit create update] do
         resources :tracks, only: %i[new create edit update destroy] do
           collection do
-            get 'multiple'
-            post 'create_multiple'
+            get :multiple
+            post :create_multiple
           end
           member do
-            post 'move_higher'
-            post 'move_lower'
+            post :move_higher
+            post :move_lower
           end
         end
       end
