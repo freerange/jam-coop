@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     mount MissionControl::Jobs::Engine, at: '/jobs'
 
     resources :newsletters, only: %i[index new create edit update]
+    resources :payouts, only: %i[index]
     resources :labels, only: %i[create new edit update] do
       resources :releases, only: %i[new edit create update destroy]
     end
