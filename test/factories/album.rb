@@ -17,6 +17,7 @@ FactoryBot.define do
     released_on { Time.zone.today }
     license
     terms_of_use { true }
+    ai_policy { true }
 
     after(:build) do |album|
       album.cover.attach(

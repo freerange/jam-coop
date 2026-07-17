@@ -27,7 +27,8 @@ module Admin
             title: 'Example',
             cover: fixture_file_upload('cover.png'),
             license_id: License.first.id,
-            terms_of_use: true
+            terms_of_use: true,
+            ai_policy: true
           }
         }
       end

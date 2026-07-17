@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Album < ApplicationRecord
+  DATE_OF_INTRODUCTION_OF_AI_POLICY = Date.new(2026, 7, 18)
+
   extend FriendlyId
 
   friendly_id :title, use: :scoped, scope: :artist
@@ -31,6 +33,7 @@ class Album < ApplicationRecord
     }
   )
   validates :terms_of_use, acceptance: true
+  validates :ai_policy, acceptance: true, unless: :created_before_introduction_of_ai_policy?
 
   scope :published, -> { where(publication_status: :published) }
   scope :draft, -> { where(publication_status: :draft) }
@@ -66,6 +69,10 @@ class Album < ApplicationRecord
 
   def metadata_or_cover_changed?
     title_previously_changed? || attachment_changes['cover'].present?
+  end
+
+  def created_before_introduction_of_ai_policy?
+    created_at && created_at < DATE_OF_INTRODUCTION_OF_AI_POLICY
   end
 
   private

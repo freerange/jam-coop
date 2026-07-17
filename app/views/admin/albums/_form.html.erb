@@ -55,6 +55,17 @@
     </div>
   <% end %>
 
+  <% unless album.created_before_introduction_of_ai_policy? %>
+    <%= render(SidebarSectionComponent.new(title: 'AI Policy')) do %>
+      <%= form.labels :ai_policy, class: 'hidden' %>
+      <div class="flex gap-3 items-top">
+        <%= form.check_box :ai_policy, class: 'mt-1' %>
+        <p>I have read and agree to the <%= text_link_to "AI Policy", docs_ai_policy_path %>.
+          I have not used generative AI in the production of this music, artwork or other content.
+        </p>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="flex flex-col sm:flex-row justify-end gap-3">
     <% if action_name == "edit" %>

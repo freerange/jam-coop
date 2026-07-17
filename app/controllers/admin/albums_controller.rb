@@ -54,6 +54,7 @@ module Admin
             :license_id,
             :publication_status,
             :terms_of_use,
+            :ai_policy,
             {
               tag_ids: []
             }
