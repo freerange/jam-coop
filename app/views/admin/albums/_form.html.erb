@@ -45,12 +45,26 @@
     <% end %>
   <% end %>
 
-  <p class="mb-3">By uploading your music you confirm you have read
-    and agree to our <%= text_link_to "Terms of use", docs_terms_path %>.
-    In particular you must own the rights to, or have permission
-    from the rights-holder for any music or other content you
-    upload.
-  </p>
+  <%= render(SidebarSectionComponent.new(title: 'Terms and conditions')) do %>
+    <%= form.labels :terms_of_use, class: 'hidden' %>
+    <div class="flex gap-3 items-top">
+    <%= form.check_box :terms_of_use, class: 'mt-1' %>
+    <p>I have read and agree to the <%= text_link_to "Terms of use", docs_terms_path %>.
+      I own the rights to, or have permission from the rights-holder to upload this music.
+    </p>
+    </div>
+  <% end %>
+
+  <%= render(SidebarSectionComponent.new(title: 'AI Policy')) do %>
+    <%= form.labels :ai_policy, class: 'hidden' %>
+    <div class="flex gap-3 items-top">
+    <%= form.check_box :ai_policy, class: 'mt-1' %>
+    <p>I have read and agree to the <%= text_link_to "AI Policy", docs_ai_policy_path %>.
+      I have not used generative AI in the production of this music, artwork or other content.
+    </p>
+    </div>
+  <% end %>
+
 
   <div class="flex flex-col sm:flex-row justify-end gap-3">
     <% if action_name == "edit" %>

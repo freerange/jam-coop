@@ -243,6 +243,11 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.valid?
   end
 
+  test 'is invalid if terms of use are not accepted' do
+    album = build(:album, terms_of_use: false)
+    assert_not album.valid?
+  end
+
   test 'is not valid if cover is not present' do
     album = Album.new
 
