@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_02_105524) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_17_152417) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_02_105524) do
     t.integer "publication_status", default: 0, null: false
     t.date "released_on"
     t.string "slug"
+    t.boolean "terms_of_use", default: false, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["artist_id"], name: "index_albums_on_artist_id"

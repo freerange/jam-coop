@@ -30,6 +30,7 @@ class Album < ApplicationRecord
       message: 'must be an image file (jpeg, png)'
     }
   )
+  validates :terms_of_use, acceptance: true
 
   scope :published, -> { where(publication_status: :published) }
   scope :draft, -> { where(publication_status: :draft) }
