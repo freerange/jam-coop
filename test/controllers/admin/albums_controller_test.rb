@@ -23,7 +23,12 @@ module Admin
     test '#create' do
       assert_difference('Album.count') do
         post admin_artist_albums_path(@album.artist), params: {
-          album: { title: 'Example', cover: fixture_file_upload('cover.png'), license_id: License.first.id }
+          album: {
+            title: 'Example',
+            cover: fixture_file_upload('cover.png'),
+            license_id: License.first.id,
+            terms_of_use: true
+          }
         }
       end
 
