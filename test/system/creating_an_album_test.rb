@@ -16,6 +16,8 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
       click_on 'Add album'
       fill_in 'Title', with: "A Hard Day's Night"
       attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
+      check 'album_terms_of_use'
+      check 'album_ai_policy'
 
       click_on 'Save'
       click_on 'Add track'
@@ -57,6 +59,8 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     click_on 'Add album'
     fill_in 'Title', with: "A Hard Day's Night"
     attach_file 'Cover', Rails.root.join('test/fixtures/files/cover.png')
+    check 'album_terms_of_use'
+    check 'album_ai_policy'
 
     click_on 'Save'
     click_on 'Add multiple tracks'
