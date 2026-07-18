@@ -33,12 +33,11 @@
 
     <% end %>
 
-    <% if policy(:label).new? %>
-      <%= render(SidebarSectionComponent.new(title: 'Labels')) do |component| %>
-        <% component.with_subtitle do %>
-          <p>Labels associated with your account</p>
-        <% end %>
-
+    <%= render(SidebarSectionComponent.new(title: 'Labels')) do |component| %>
+      <% component.with_subtitle do %>
+        <p>Labels associated with your account</p>
+      <% end %>
+      <% if policy(:label).new? %>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
           <% @user.labels.includes(logo_attachment: :blob).each do |label| %>
             <%= link_to(edit_admin_label_path(label)) do %>
@@ -65,6 +64,8 @@
             </div>
           <% end %>
         </div>
+      <% else %>
+        <p>Do you run a record label? If you would like to preview our features for labels please <a href="mailto:contact@jam.coop" class="underline">send us an email</a> and we'll get you started.</p>
       <% end %>
     <% end %>
 
