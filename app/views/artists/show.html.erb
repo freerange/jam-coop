@@ -41,18 +41,25 @@
                     )) %>
         <% end %>
       </div>
-    </div>
-  </div>
 
-  <%= render(CardGridComponent.new) do %>
-    <% @albums.in_release_order.each do |album| %>
-      <%= link_to(artist_album_path(album.artist, album)) do %>
-        <%= render(CardComponent.new(
+      <div>
+        <ol>
+          <% @artist.profile_links.each do |link| %>
+            <li><%= link_to link.url, link.url, class: 'underline' %></li>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%= render(CardGridComponent.new) do %>
+      <% @albums.in_release_order.each do |album| %>
+        <%= link_to(artist_album_path(album.artist, album)) do %>
+          <%= render(CardComponent.new(
         title: album.title,
         subtitle: ( album.publication_status if !album.published? ),
         image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
       )) %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
-<% end %>
