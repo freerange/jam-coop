@@ -8,6 +8,20 @@
     <%= render "form", artist: @artist %>
   <% end %>
 
+  <%= render(SidebarSectionComponent.new(title: 'Profile links')) do |component| %>
+    <% component.with_subtitle do %>
+      <p>These links will be shown on your <%= link_to 'profile page', artist_path(@artist), class: 'underline' %>.</p>
+    <% end %>
+
+    <div class="flex flex-col sm:flex-row justify-end gap-3">
+      <%= render(ButtonComponent.new(
+          text: 'Add link',
+          path: new_admin_artist_profile_link_path(@artist),
+          link: true
+          )) %>
+    </div>
+  <% end %>
+
   <%= render(SidebarSectionComponent.new(title: 'Albums')) do %>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
       <% @artist.albums.includes(cover_attachment: :blob).in_release_order.each do |album| %>
