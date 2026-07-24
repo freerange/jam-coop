@@ -87,7 +87,7 @@ jobs:
         run: echo "playwright_version=$(npm run --silent playwright:version)" >> "$GITHUB_OUTPUT"
 
       - name: Cache playwright dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         id: cache-playwright-deps
         with:
           path: ~/.cache/ms-playwright
