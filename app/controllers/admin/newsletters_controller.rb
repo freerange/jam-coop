@@ -5,20 +5,18 @@ module Admin
     before_action :set_newsletter, only: %i[edit update]
 
     def index
-      @newsletters = policy_scope(Newsletter)
-      authorize @newsletters
+      authorize [:admin, Album]
+      @newsletters = policy_scope([:admin, Newsletter])
     end
 
     def new
-      @newsletter = Newsletter.new
-      authorize @newsletter
+      @newsletter = authorize([:admin, Newsletter.new])
     end
 
     def edit; end
 
     def create
-      @newsletter = Newsletter.new(newsletter_params)
-      authorize @newsletter
+      @newsletter = authorize([:admin, Newsletter.new(newsletter_params)])
 
       if @newsletter.save
         redirect_to edit_admin_newsletter_path(@newsletter), notice: 'Newsletter was successfully created.'
@@ -38,8 +36,7 @@ module Admin
     private
 
     def set_newsletter
-      @newsletter = Newsletter.find(params[:id])
-      authorize @newsletter
+      @newsletter = authorize([:admin, Newsletter.find(params[:id])])
     end
 
     def newsletter_params

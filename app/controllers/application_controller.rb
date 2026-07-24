@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_current_request_details
   before_action :authenticate
-  after_action :verify_authorized
+  after_action :verify_pundit_authorization
 
   private
 
@@ -17,6 +17,15 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     redirect_to main_app.log_in_path unless Current.user
+  end
+
+  def verify_pundit_authorization
+    excluded_controller_names = ['albums']
+    if (action_name == 'index') && excluded_controller_names.exclude?(controller_name)
+      verify_policy_scoped
+    else
+      verify_authorized
+    end
   end
 
   def set_current_request_details

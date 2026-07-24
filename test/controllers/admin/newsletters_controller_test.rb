@@ -77,14 +77,12 @@ module Admin
 
     test '#index not authorized' do
       get admin_newsletters_path
-      assert_redirected_to root_path
-      assert_equal 'You are not authorized to perform this action.', flash[:alert]
+      assert_not_authorized
     end
 
     test '#new not authorized' do
       get new_admin_newsletter_path
-      assert_redirected_to root_path
-      assert_equal 'You are not authorized to perform this action.', flash[:alert]
+      assert_not_authorized
     end
 
     test '#create not authorized' do
@@ -94,15 +92,13 @@ module Admin
         }
       end
 
-      assert_redirected_to root_path
-      assert_equal 'You are not authorized to perform this action.', flash[:alert]
+      assert_not_authorized
     end
 
     test '#edit not authorized' do
       newsletter = create(:newsletter)
       get edit_admin_newsletter_path(newsletter)
-      assert_redirected_to root_path
-      assert_equal 'You are not authorized to perform this action.', flash[:alert]
+      assert_not_authorized
     end
 
     test '#update not authorized' do
@@ -111,8 +107,7 @@ module Admin
         newsletter: { title: 'Updated Title' }
       }
 
-      assert_redirected_to root_path
-      assert_equal 'You are not authorized to perform this action.', flash[:alert]
+      assert_not_authorized
     end
   end
 end

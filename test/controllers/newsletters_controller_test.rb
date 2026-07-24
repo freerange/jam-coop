@@ -66,6 +66,6 @@ class NewslettersControllerTest < ActionDispatch::IntegrationTest
 
     get newsletter_path(newsletter)
 
-    assert_response :not_found
+    assert_redirected_to root_path
   end
 end
