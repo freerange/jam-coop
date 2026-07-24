@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   resource :payout_detail, only: %i[create update]
   resolve('PayoutDetail') { [:payout_detail] }
 
+  resources :payouts, only: %i[index]
+
   namespace :identity do
     resource :email,              only: %i[update]
     resource :email_verification, only: %i[show create]
@@ -59,6 +61,7 @@ Rails.application.routes.draw do
     mount MissionControl::Jobs::Engine, at: '/jobs'
 
     resources :newsletters, only: %i[index new create edit update]
+    resources :payouts, only: %i[index]
     resources :labels, only: %i[create new edit update] do
       resources :releases, only: %i[new edit create update destroy]
     end

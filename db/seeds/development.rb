@@ -5,14 +5,22 @@ Rails.logger.info 'Seeding development environment'
 User.create!(email: 'admin@example.com', password: 'admin-jam-coop', verified: true, admin: true)
 User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
 
-6.times do |i|
-  stripe_connect_enabled = i < 3
+users = (0..5).map do |i|
   user = User.create(
     email: "artist-#{i}@example.com",
     password: "artist-#{i}-jam-coop",
     verified: true,
-    stripe_connect_enabled:
+    stripe_connect_enabled: i < 4
   )
+  if i < 3
+    user.create_stripe_connect_account!(
+      details_submitted: i < 3,
+      charges_enabled: i < 2,
+      payouts_enabled: i < 1,
+      country_code: 'GB',
+      stripe_identifier: "stripe-identifier-#{i}"
+    )
+  end
   artist = Artist.create!(
     name: Faker::Music.band,
     location: [Faker::Address.city, Faker::Address.country].join(', '),
@@ -53,6 +61,19 @@ User.create!(email: 'fan@example.com', password: 'fan-jam-coop', verified: true)
 
     album.published!
   end
+  user
+end
+
+3.times do |i|
+  amount_in_pence = 500 + (500 * i)
+  users.first.payouts.create!(
+    payout_type: Payout::STRIPE_TYPE,
+    transaction_reference: "transaction-ref-#{i}",
+    destination_reference: "destination-ref-#{i}",
+    amount_in_pence:,
+    platform_fee_in_pence: amount_in_pence * 0.15,
+    created_at: i.days.ago
+  )
 end
 
 Newsletter.create(title: 'Newsletter #1', body: Faker::Markdown.sandwich(sentences: 6, repeat: 3),

@@ -1,0 +1,10 @@
+<%= render(SectionComponent.new(title: 'Payouts')) do %>
+  <div class="flex flex-col divide-y divide-slate-300">
+    <% if @payouts.any? %>
+      <%= render partial: 'payouts/table', locals: { payouts: @payouts } %>
+    <% else %>
+      <p class="text-slate-500 mb-6">
+        There aren't any payouts yet.
+      </p>
+    <% end %>
+  <% end %>

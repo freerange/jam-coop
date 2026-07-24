@@ -12,6 +12,8 @@ class Payout < ApplicationRecord
   validates :amount_in_pence, presence: true
   validates :platform_fee_in_pence, presence: true
 
+  scope :stripe, -> { where(payout_type: STRIPE_TYPE) }
+
   def stripe?
     payout_type == STRIPE_TYPE
   end
