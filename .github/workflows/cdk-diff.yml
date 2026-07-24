@@ -57,7 +57,7 @@ jobs:
 
       - name: Post CDK Diff Comment in PR
         id: changes
-        uses: towardsthecloud/aws-cdk-diff-pr-commenter@v1
+        uses: towardsthecloud/aws-cdk-diff-pr-commenter@v1.4.0
         with:
           header: CDK Diff for ${{ inputs.environment-name }} environment
           diff-file: aws-cdk/cdk-diff-output.txt
