@@ -13,6 +13,17 @@
       <p>These links will be shown on your <%= link_to 'profile page', artist_path(@artist), class: 'underline' %>.</p>
     <% end %>
 
+    <ul class='divide-y divide-gray-200 -mt-3 mb-3'>
+      <% @artist.profile_links.each do |link| %>
+        <li class='py-3 flex justify-between items-center' style="view-transition-name: link-<%= link.id %>">
+          <div>
+            <span class="text-gray-500 mr-3"><%= link.position %></span>
+            <%= link_to(link.url, edit_admin_artist_profile_link_path(@artist, link), class: 'underline hover:bg-amber-500') %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+
     <div class="flex flex-col sm:flex-row justify-end gap-3">
       <%= render(ButtonComponent.new(
           text: 'Add link',
