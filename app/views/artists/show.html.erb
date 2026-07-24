@@ -10,56 +10,66 @@
 <% end %>
 
 <%= render(SectionComponent.new) do %>
-  <div class="flex flex-col sm:flex-row gap-4 border-b-2 border-b-slate-100 pb-6 mb-3">
-    <div class="w-full sm:w-1/2">
-      <%= render(CardComponent.new(
-        image: ( cdn_url(@artist.profile_picture.representation(resize_to_limit: [1000, 1000])) if @artist.profile_picture.representable? )
-      )) %>
-    </div>
-    <div class="w-full md:w-1/2 flex flex-col gap-1">
+  <div class="flex flex-col gap-6">
+    <div class="flex gap-3">
+      <% if @artist.profile_picture.representable? %>
+        <%= image_tag(cdn_url(@artist.profile_picture.representation(resize_to_limit: [1000, 1000])), class: 'size-24 sm:size-auto') %>
+      <% end %>
+
       <div>
         <h2 class="text-2xl font-semibold"><%= @artist.name %></h2>
         <p class="text-slate-400 mb-4"><%= @artist.location %></p>
       </div>
-
-      <p><%= format_metadata(@artist.description) %></p>
-
-      <div>
-        <% if Current.user && Current.user.following?(@artist) %>
-          <%= render(ButtonComponent.new(
-                      text: 'Unfollow',
-                      path: artist_following_path(@artist),
-              method: :delete,
-              class: 'w-full sm:w-auto'
-                    )) %>
-        <% else %>
-          <%= render(ButtonComponent.new(
-                      text: 'Follow',
-                      path: artist_following_path(@artist),
-              method: :post,
-              class: 'w-full sm:w-auto'
-                    )) %>
-        <% end %>
-      </div>
-
-      <div>
-        <ol>
-          <% @artist.profile_links.each do |link| %>
-            <li><%= link_to link.url, link.url, class: 'underline' %></li>
-          <% end %>
-        </div>
-      </div>
     </div>
 
-    <%= render(CardGridComponent.new) do %>
-      <% @albums.in_release_order.each do |album| %>
-        <%= link_to(artist_album_path(album.artist, album)) do %>
-          <%= render(CardComponent.new(
-        title: album.title,
-        subtitle: ( album.publication_status if !album.published? ),
-        image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
-      )) %>
+    <div>
+      <p><%= format_metadata(@artist.description) %></p>
+    </div>
+
+    <div>
+      <ol class="flex flex-col gap-3">
+        <% @artist.profile_links.each do |link| %>
+          <li class="flex gap-1 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+            </svg>
+
+            <%= link_to link.url, link.url, class: 'underline' %>
+          </li>
         <% end %>
+      </ol>
+    </div>
+
+    <div>
+      <% if Current.user && Current.user.following?(@artist) %>
+        <%= render(ButtonComponent.new(
+        text: 'Unfollow',
+        path: artist_following_path(@artist),
+        method: :delete,
+        class: 'w-full sm:w-auto'
+        )) %>
+      <% else %>
+        <%= render(ButtonComponent.new(
+        text: 'Follow',
+        path: artist_following_path(@artist),
+        method: :post,
+        class: 'w-full sm:w-auto'
+        )) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%= render(SectionComponent.new) do %>
+  <%= render(CardGridComponent.new) do %>
+    <% @albums.in_release_order.each do |album| %>
+      <%= link_to(artist_album_path(album.artist, album)) do %>
+        <%= render(CardComponent.new(
+    title: album.title,
+    subtitle: ( album.publication_status if !album.published? ),
+    image: ( cdn_url(album.cover.representation(resize_to_limit: [1000, 1000])) if album.cover.representable? )
+    )) %>
       <% end %>
     <% end %>
   <% end %>
+<% end %>
