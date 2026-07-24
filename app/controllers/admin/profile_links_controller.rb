@@ -10,6 +10,12 @@ module Admin
       authorize @profile_link
     end
 
+    def edit
+      @profile_link = @artist.profile_links.find(params[:id])
+
+      authorize @profile_link
+    end
+
     def create
       @profile_link = @artist.profile_links.build(profile_link_params)
 
@@ -19,6 +25,18 @@ module Admin
         redirect_to edit_artist_path(@artist), notice: 'Link added'
       else
         render :new, status: :unprocessable_content
+      end
+    end
+
+    def update
+      @profile_link = @artist.profile_links.find(params[:id])
+
+      authorize @profile_link
+
+      if @profile_link.update(profile_link_params)
+        redirect_to edit_artist_path(@artist), notice: 'Link updated'
+      else
+        render :edit, status: :unprocessable_content
       end
     end
 

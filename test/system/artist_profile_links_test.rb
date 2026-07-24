@@ -21,4 +21,18 @@ class ArtistProfileLinksTest < ApplicationSystemTestCase
     visit artist_path(@artist)
     assert_link 'http://artist.example.com'
   end
+
+  test 'editing a profile link' do
+    create(:profile_link, artist: @artist, url: 'http://old.example.com')
+    visit edit_artist_path(@artist)
+
+    click_on 'http://old.example.com'
+    assert_text 'Link details'
+    fill_in 'URL', with: 'http://new.example.com'
+    click_on 'Save'
+    assert_text 'Link updated'
+
+    visit artist_path(@artist)
+    assert_link 'http://new.example.com'
+  end
 end
