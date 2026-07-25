@@ -33,9 +33,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     log_in_as @user
 
     delete session_path(@user.sessions.last)
-    assert_redirected_to sessions_path
-
-    follow_redirect!
     assert_redirected_to log_in_path
   end
 

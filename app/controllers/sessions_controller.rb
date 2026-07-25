@@ -5,12 +5,6 @@ class SessionsController < ApplicationController
 
   before_action :set_session, only: :destroy
 
-  def index
-    authorize Session
-
-    @sessions = Current.user.sessions.order(created_at: :desc)
-  end
-
   def new
     skip_authorization
   end
@@ -33,7 +27,7 @@ class SessionsController < ApplicationController
     skip_authorization
 
     @session.destroy
-    redirect_to(sessions_path, notice: 'That session has been logged out')
+    redirect_to(log_in_path, notice: 'That session has been logged out')
   end
 
   private
