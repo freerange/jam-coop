@@ -15,8 +15,7 @@ class PayoutDetailsController < ApplicationController
   end
 
   def update
-    @payout_detail = @user.payout_detail
-    raise ActiveRecord::RecordNotFound unless @payout_detail
+    @payout_detail = PayoutDetail.find_by!(user: @user)
 
     authorize @payout_detail
 
