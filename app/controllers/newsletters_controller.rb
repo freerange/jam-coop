@@ -5,7 +5,7 @@ class NewslettersController < ApplicationController
   before_action :skip_authorization
 
   def index
-    @newsletters = Newsletter.published.order(published_at: :desc)
+    @newsletters = policy_scope(Newsletter).published.order(published_at: :desc)
   end
 
   def show

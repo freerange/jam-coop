@@ -5,7 +5,7 @@ module Admin
     before_action :set_newsletter, only: %i[edit update]
 
     def index
-      @newsletters = policy_scope(Newsletter)
+      @newsletters = policy_scope(Newsletter).all
       authorize @newsletters
     end
 
