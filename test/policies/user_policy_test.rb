@@ -11,6 +11,7 @@ class UserPolicyTest < ActiveSupport::TestCase
     assert policy.show?
     assert policy.edit?
     assert policy.update?
+    assert policy.update_newsletter_preference?
     assert policy.create?
     assert policy.new?
   end
@@ -23,6 +24,7 @@ class UserPolicyTest < ActiveSupport::TestCase
     assert policy.show?
     assert policy.edit?
     assert policy.update?
+    assert policy.update_newsletter_preference?
     assert_not policy.create?
     assert_not policy.new?
   end
