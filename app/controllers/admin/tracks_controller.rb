@@ -5,27 +5,19 @@ module Admin
     before_action :set_album
 
     def new
-      authorize @album
-
-      @track = @album.tracks.new
+      @track = authorize @album.tracks.new
     end
 
     def multiple
-      authorize @album
-
-      @track = @album.tracks.new
+      @track = authorize @album.tracks.new
     end
 
     def edit
-      authorize @album
-
-      @track = Track.find(params[:id])
+      @track = authorize Track.find(params[:id])
     end
 
     def create
-      authorize @album
-
-      @track = @album.tracks.new(track_params)
+      @track = authorize @album.tracks.new(track_params)
 
       if @track.save
         if params[:commit] == 'Save and add another'
@@ -39,11 +31,9 @@ module Admin
     end
 
     def create_multiple
-      authorize @album
-
       @tracks = params[:original].compact_blank.map do |original|
         blob = ActiveStorage::Blob.find_signed!(original)
-        Track.new(album: @album, original:, title: blob.filename.base)
+        authorize Track.new(album: @album, original:, title: blob.filename.base)
       end
 
       if @tracks.all?(&:save)
@@ -55,9 +45,7 @@ module Admin
     end
 
     def update
-      authorize @album
-
-      @track = Track.find(params[:id])
+      @track = authorize Track.find(params[:id])
 
       if @track.update(track_params)
         redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track updated'
@@ -67,25 +55,19 @@ module Admin
     end
 
     def destroy
-      authorize @album
-
-      @track = Track.find(params[:id])
+      @track = authorize Track.find(params[:id])
       @track.destroy
       redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track deleted'
     end
 
     def move_higher
-      authorize @album
-
-      @track = Track.find(params[:id])
+      @track = authorize Track.find(params[:id])
       @track.move_higher
       redirect_to admin_artist_album_path(@track.artist, @track.album)
     end
 
     def move_lower
-      authorize @album
-
-      @track = Track.find(params[:id])
+      @track = authorize Track.find(params[:id])
       @track.move_lower
       redirect_to admin_artist_album_path(@track.artist, @track.album)
     end
