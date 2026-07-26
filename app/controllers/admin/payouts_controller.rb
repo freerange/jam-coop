@@ -3,7 +3,7 @@
 module Admin
   class PayoutsController < AdminController
     def index
-      @payouts = Payout.stripe.order(:created_at)
+      @payouts = policy_scope(Payout).stripe.order(:created_at)
     end
   end
 end
