@@ -14,4 +14,8 @@ class NullUserTest < ActiveSupport::TestCase
   test 'is not signed in' do
     assert_not @user.signed_in?
   end
+
+  test 'has no artists' do
+    assert @user.artists.empty?
+  end
 end

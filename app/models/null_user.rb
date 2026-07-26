@@ -6,7 +6,7 @@ class NullUser
   end
 
   def artists
-    []
+    Artist.none
   end
 
   def verified?

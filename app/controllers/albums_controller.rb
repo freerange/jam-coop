@@ -7,7 +7,12 @@ class AlbumsController < ApplicationController
   def index
     authorize Album
 
-    @albums = Album.includes(:artist, { cover_attachment: :blob }).published.order(first_published_on: :desc).limit(20)
+    @albums =
+      policy_scope(Album)
+      .includes(:artist, { cover_attachment: :blob })
+      .published
+      .order(first_published_on: :desc)
+      .limit(20)
   end
 
   def show; end

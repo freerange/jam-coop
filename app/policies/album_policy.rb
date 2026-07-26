@@ -3,10 +3,10 @@
 class AlbumPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.admin? || scope.map(&:artist).uniq.all? { |a| user.artists.include?(a) }
+      if user.admin?
         scope.all
       else
-        scope.published
+        scope.published.or(scope.where(artist_id: user.artists.select(:id)))
       end
     end
   end
