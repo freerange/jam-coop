@@ -9,9 +9,7 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
-  def update_newsletter_preference?
-    true
-  end
+  alias update_newsletter_preference? update?
 
   def create?
     user.admin?
