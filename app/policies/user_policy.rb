@@ -9,6 +9,7 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  alias update_password? update?
   alias update_newsletter_preference? update?
 
   def create?

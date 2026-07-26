@@ -4,7 +4,7 @@ class PasswordsController < ApplicationController
   before_action :set_user
 
   def update
-    authorize @user
+    authorize @user, :update_password?
 
     if !@user.authenticate(params[:current_password])
       flash[:incorrect_password] = 'The current password you entered is incorrect'
