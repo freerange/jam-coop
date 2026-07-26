@@ -4,12 +4,16 @@ module Admin
   class ReleasesController < ApplicationController
     before_action :set_label
     before_action :set_release, only: %i[edit update destroy]
-    before_action :build_release, only: %i[new create]
 
-    def new; end
+    def new
+      @release = authorize @label.releases.new
+    end
+
     def edit; end
 
     def create
+      @release = authorize @label.releases.new(release_params)
+
       if @release.save
         redirect_to edit_admin_label_path(@label)
       else
@@ -38,10 +42,6 @@ module Admin
 
     def set_release
       @release = authorize @label.releases.find(params[:id])
-    end
-
-    def build_release
-      @release = authorize @label.releases.new(params[:release].present? ? release_params : {})
     end
 
     def release_params
