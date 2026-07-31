@@ -35,7 +35,7 @@ module Admin
         releases: {
           album: [:artist, { cover_attachment: :blob }]
         }
-      ).find(params[:id])
+      ).find(params.expect(:id))
     end
 
     def label_params

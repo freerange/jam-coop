@@ -13,6 +13,6 @@ class LabelsController < ApplicationController
   private
 
   def set_label
-    @label = Label.friendly.find(params[:id])
+    @label = Label.friendly.find(params.expect(:id))
   end
 end

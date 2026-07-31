@@ -6,7 +6,7 @@ class TagsController < ApplicationController
   def show
     skip_authorization
 
-    @tag = Tag.friendly.find(params[:id])
+    @tag = Tag.friendly.find(params.expect(:id))
     @albums = @tag.albums.includes(:artist, cover_attachment: :blob)
   end
 end

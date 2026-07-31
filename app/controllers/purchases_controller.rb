@@ -6,7 +6,7 @@ class PurchasesController < ApplicationController
   before_action :skip_authorization
 
   def show
-    @purchase = Purchase.find(params[:id])
+    @purchase = Purchase.find(params.expect(:id))
   end
 
   def new
@@ -38,11 +38,11 @@ class PurchasesController < ApplicationController
   private
 
   def set_album
-    @album = artist.albums.friendly.find(params[:album_id])
+    @album = artist.albums.friendly.find(params.expect(:album_id))
   end
 
   def artist
-    Artist.includes(:user).friendly.find(params[:artist_id])
+    Artist.includes(:user).friendly.find(params.expect(:artist_id))
   end
 
   def purchase_params

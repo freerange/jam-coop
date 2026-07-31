@@ -13,7 +13,7 @@ module Admin
     end
 
     def edit
-      @track = authorize Track.find(params[:id])
+      @track = authorize Track.find(params.expect(:id))
     end
 
     def create
@@ -45,7 +45,7 @@ module Admin
     end
 
     def update
-      @track = authorize Track.find(params[:id])
+      @track = authorize Track.find(params.expect(:id))
 
       if @track.update(track_params)
         redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track updated'
@@ -55,19 +55,19 @@ module Admin
     end
 
     def destroy
-      @track = authorize Track.find(params[:id])
+      @track = authorize Track.find(params.expect(:id))
       @track.destroy
       redirect_to admin_artist_album_path(@track.artist, @track.album), notice: 'Track deleted'
     end
 
     def move_higher
-      @track = authorize Track.find(params[:id])
+      @track = authorize Track.find(params.expect(:id))
       @track.move_higher
       redirect_to admin_artist_album_path(@track.artist, @track.album)
     end
 
     def move_lower
-      @track = authorize Track.find(params[:id])
+      @track = authorize Track.find(params.expect(:id))
       @track.move_lower
       redirect_to admin_artist_album_path(@track.artist, @track.album)
     end
@@ -75,7 +75,7 @@ module Admin
     private
 
     def set_album
-      @album = Album.friendly.find(params[:album_id])
+      @album = Album.friendly.find(params.expect(:album_id))
     end
 
     def track_params

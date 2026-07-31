@@ -9,6 +9,6 @@ class NewslettersController < ApplicationController
   end
 
   def show
-    @newsletter = Newsletter.published.find(params[:id])
+    @newsletter = Newsletter.published.find(params.expect(:id))
   end
 end

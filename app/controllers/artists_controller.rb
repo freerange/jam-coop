@@ -64,7 +64,7 @@ class ArtistsController < ApplicationController
   private
 
   def set_artist
-    @artist = authorize Artist.friendly.find(params[:id])
+    @artist = authorize Artist.friendly.find(params.expect(:id))
   end
 
   def artist_params
