@@ -35,7 +35,7 @@ module Admin
     private
 
     def set_newsletter
-      @newsletter = authorize Newsletter.find(params[:id])
+      @newsletter = authorize Newsletter.find(params.expect(:id))
     end
 
     def newsletter_params

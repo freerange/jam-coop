@@ -37,11 +37,11 @@ module Admin
     private
 
     def set_label
-      @label = Current.user.labels.friendly.find(params[:label_id])
+      @label = Current.user.labels.friendly.find(params.expect(:label_id))
     end
 
     def set_release
-      @release = authorize @label.releases.find(params[:id])
+      @release = authorize @label.releases.find(params.expect(:id))
     end
 
     def release_params
