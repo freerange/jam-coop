@@ -97,3 +97,19 @@ The old `post_server_item` token can be expired once the application has been re
 ## RAILS_MASTER_KEY
 
 This variable is used to encrypt `credentials` files in Rails. We do not use this feature, so this token does not need to be rotated.
+
+## AWS_ACCESS_KEY_ID & AWS_SECRET_ACCESS_KEY
+
+Sign into the "Music Co-op" AWS account.
+
+Navigate to the "music-coop-s3-user-production" IAM user.
+
+In the "Access keys" section of the "Security credentials" tab, click "Create access key".
+
+Select the "CLI" use case, check the "I understand..." checkbox and click "Next".
+
+Leave the "Description tag value" blank and click "Create access key".
+
+Save the new credentials ("Access key" & "Secret access key") immediately in the "AWS (Music Co-op) - music-coop-s3-user-production" 1Password entry.
+
+Once the app has been deployed and you've checked users can upload music and artwork, you can deactivate the old access key and then eventually delete it.
