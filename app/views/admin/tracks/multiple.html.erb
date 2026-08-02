@@ -13,14 +13,15 @@
 
       <%= render(SidebarSectionComponent.new(title: 'Files')) do |component| %>
         <% component.with_subtitle do %>
-          <p>Files must be in <strong>wav</strong> format. File names will be used as track names but can be edited later.</p>
+          <p class="mb-3">Files must be in <strong>wav</strong> or <strong>flac</strong> format.</p>
+          <p>File names will be used as track names but can be edited later.</p>
         <% end %>
 
         <div data-direct-upload-target="fileInput">
           <%= form.labels :original, text: "Upload files" %>
 
           <%= form.file_field :original,
-              accept: 'audio/x-wav',
+              accept: 'audio/x-wav,audio/flac',
               direct_upload: true,
               multiple: true,
               data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error direct-upload:start->direct-upload#fileStart', 'direct-upload-target':'fileInput' },

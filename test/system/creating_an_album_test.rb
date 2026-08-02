@@ -24,7 +24,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
 
       assert_text 'New track'
       fill_in 'Title', with: 'And I Love Her'
-      attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.wav')
+      attach_file 'Upload file', Rails.root.join('test/fixtures/files/track.flac')
       click_on 'Save and add another'
       assert_text 'Track added'
       assert_text 'New track'
@@ -65,7 +65,7 @@ class CreatingAnAlbumTest < ApplicationSystemTestCase
     click_on 'Save'
     click_on 'Add multiple tracks'
 
-    assert_text 'Files must be in wav format'
+    assert_text 'Files must be in wav or flac format'
     attach_file 'Upload file', [Rails.root.join('test/fixtures/files/one.wav'),
                                 Rails.root.join('test/fixtures/files/two.wav'),
                                 Rails.root.join('test/fixtures/files/three.wav')]

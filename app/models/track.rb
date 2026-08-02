@@ -11,7 +11,7 @@ class Track < ApplicationRecord
   has_one_attached :original
   validates :original,
             attached: { message: 'file cannot be missing' },
-            content_type: { in: 'audio/x-wav', message: 'must be a WAV file' }
+            content_type: { in: ['audio/x-wav', 'audio/flac'], message: 'must be a WAV or FLAC file' }
   validates :title, presence: true
 
   after_create :transcode
