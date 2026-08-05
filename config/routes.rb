@@ -110,6 +110,8 @@ Rails.application.routes.draw do
 
   get 'up' => 'healthchecks#show'
 
+  post '/rails/active_storage/direct_uploads', to: 'direct_uploads#create', as: :direct_uploads
+
   direct :cdn do |model, options|
     expires_in = options.delete(:expires_in) { ActiveStorage.urls_expire_in }
 
