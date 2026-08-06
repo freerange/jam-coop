@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Track < ApplicationRecord
+  include AttachmentMethods
+
   belongs_to :album
   acts_as_list scope: :album
 
@@ -9,9 +11,7 @@ class Track < ApplicationRecord
   delegate :artist, :draft?, to: :album
 
   has_one_attached :original
-  validates :original,
-            attached: { message: 'file cannot be missing' },
-            content_type: { in: OriginalAudio.content_types, message: "must be an audio file (WAV, FLAC)" }
+  validates_original_audio :original, required: true
   validates :title, presence: true
 
   after_create :transcode
