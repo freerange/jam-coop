@@ -14,8 +14,8 @@ class Label < ApplicationRecord
     :logo,
     attached: { message: 'file cannot be missing' },
     content_type: {
-      in: %w[image/jpeg image/png],
-      message: 'must be an image file (jpeg, png)'
+      in: Image.content_types,
+      message: "must be an image file (#{Image.file_types.join(', ')})"
     }
   )
 end

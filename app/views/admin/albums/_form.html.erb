@@ -29,7 +29,7 @@
       <%= form.labels :cover, text: "Cover" %>
     <% end %>
 
-    <%= form.file_field :cover, accept: %w[image/jpeg image/png], class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
+    <%= form.file_field :cover, accept: Image.content_types, class: 'block border border-slate-200 mb-3 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
   <% end %>
 
   <%= render(SidebarSectionComponent.new(title: 'Purchase options')) do %>

@@ -21,8 +21,8 @@ class Artist < ApplicationRecord
 
   validates :name, presence: true
   validates :profile_picture, content_type: {
-    in: %w[image/jpeg image/png],
-    message: 'must be an image file (jpeg, png)'
+    in: Image.content_types,
+    message: "must be an image file (#{Image.file_types.join(', ')})"
   }
 
   scope :listed, -> { where.associated(:albums).where('albums.publication_status': :published).distinct }
