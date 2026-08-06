@@ -23,7 +23,7 @@
       <% end %>
 
       <%= form.file_field :original,
-        accept: 'audio/x-wav,audio/flac',
+        accept: %w[audio/x-wav audio/flac],
         direct_upload: true,
         data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error direct-upload:start->direct-upload#fileStart' },
         class: 'block border border-slate-200 mb-2 file:mr-3 file:px-3 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>

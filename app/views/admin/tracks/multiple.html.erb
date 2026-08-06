@@ -21,7 +21,7 @@
           <%= form.labels :original, text: "Upload files" %>
 
           <%= form.file_field :original,
-              accept: 'audio/x-wav,audio/flac',
+              accept: ['audio/x-wav', 'audio/flac'],
               direct_upload: true,
               multiple: true,
               data: { action: 'direct-upload:progress->direct-upload#progress direct-upload:error->direct-upload#error direct-upload:start->direct-upload#fileStart', 'direct-upload-target':'fileInput' },
