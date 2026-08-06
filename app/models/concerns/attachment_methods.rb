@@ -19,8 +19,8 @@ module AttachmentMethods
     def validates_image(attribute, required: false)
       options = {
         content_type: {
-          in: Image.content_types,
-          message: "must be an image file (#{Image.file_types.join(', ')})"
+          in: GenericImage.content_types,
+          message: "must be an image file (#{GenericImage.file_types.join(', ')})"
         }
       }
       options[:attached] = { message: 'file cannot be missing' } if required

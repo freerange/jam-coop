@@ -75,7 +75,7 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def image_field(method, options = {})
-    file_field(method, options.with_defaults(accept: Image.content_types))
+    file_field(method, options.with_defaults(accept: GenericImage.content_types))
   end
 
   def original_audio_field(method, options = {})

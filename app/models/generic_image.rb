@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Image
+module GenericImage
   class << self
     def content_types = %w[image/jpeg image/png]
 
