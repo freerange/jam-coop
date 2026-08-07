@@ -51,7 +51,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'faker', '~> 3.5'
+  gem 'faker', '~> 3.8'
   gem 'hotwire-livereload'
   gem 'letter_opener'
   gem 'redis'
