@@ -120,4 +120,17 @@ class ArtistTest < ActiveSupport::TestCase
 
     assert_equal [user], artist.reload.followers
   end
+
+  test 'is not valid if profile picture is not an image' do
+    artist = Artist.new
+
+    artist.profile_picture.attach(
+      io: Rails.root.join('test/fixtures/files/dummy.pdf').open,
+      filename: 'dummy.pdf',
+      content_type: 'application/pdf'
+    )
+
+    assert_not artist.valid?
+    assert_includes artist.errors[:profile_picture], 'must be an image file (jpeg, png)'
+  end
 end

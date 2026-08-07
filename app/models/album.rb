@@ -4,6 +4,7 @@ class Album < ApplicationRecord
   DATE_OF_INTRODUCTION_OF_AI_POLICY = Date.new(2026, 7, 18)
 
   extend FriendlyId
+  include AttachmentMethods
 
   friendly_id :title, use: :scoped, scope: :artist
 
@@ -24,14 +25,7 @@ class Album < ApplicationRecord
   validates :title, presence: true
   validates :price, presence: true, numericality: true
   validates :number_of_tracks, comparison: { greater_than: 0 }, if: :published?
-  validates(
-    :cover,
-    attached: { message: 'file cannot be missing' },
-    content_type: {
-      in: %w[image/jpeg image/png],
-      message: 'must be an image file (jpeg, png)'
-    }
-  )
+  validates_image :cover, required: true
   validates :terms_of_use, acceptance: true
   validates :ai_policy, acceptance: true, unless: :created_before_introduction_of_ai_policy?
 

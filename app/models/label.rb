@@ -2,6 +2,7 @@
 
 class Label < ApplicationRecord
   extend FriendlyId
+  include AttachmentMethods
 
   friendly_id :name, use: :slugged
   belongs_to :user
@@ -10,12 +11,5 @@ class Label < ApplicationRecord
   has_many :albums, through: :releases
 
   validates :name, presence: true
-  validates(
-    :logo,
-    attached: { message: 'file cannot be missing' },
-    content_type: {
-      in: %w[image/jpeg image/png],
-      message: 'must be an image file (jpeg, png)'
-    }
-  )
+  validates_image :logo, required: true
 end

@@ -74,6 +74,14 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     @template.content_tag('div', label + error_label, { class: 'flex flex-col items-start' })
   end
 
+  def image_field(method, options = {})
+    file_field(method, options.with_defaults(accept: GenericImage.content_types))
+  end
+
+  def original_audio_field(method, options = {})
+    file_field(method, options.with_defaults(accept: OriginalAudio.content_types))
+  end
+
   private
 
   def text_like_field(field_method, object_method, options = {})

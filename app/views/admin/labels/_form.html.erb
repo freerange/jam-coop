@@ -8,7 +8,7 @@
   <% else %>
     <%= form.label :logo, "Logo" %>
   <% end %>
-  <%= form.file_field :logo, class: 'mb-3 block border border-slate-200 mb-6 file:mr-3 file:px-5 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
+  <%= form.image_field :logo, class: 'mb-3 block border border-slate-200 mb-6 file:mr-3 file:px-5 file:py-3 w-full file:border-0 file:bg-amber-500 hover:file:bg-amber-400 file:text-white file:font-medium' %>
 
   <div class="flex flex-row justify-end">
     <%= form.submit "Save changes", class: 'mt-3' %>
