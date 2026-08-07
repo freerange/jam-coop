@@ -432,7 +432,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    rubyzip (3.2.2)
+    rubyzip (3.4.1)
     securerandom (0.4.1)
     solid_queue (1.4.0)
       activejob (>= 7.1)
@@ -533,7 +533,7 @@ DEPENDENCIES
   rubocop-capybara
   rubocop-factory_bot
   rubocop-rails
-  rubyzip (~> 3.2)
+  rubyzip (~> 3.4)
   solid_queue (~> 1.4)
   stimulus-rails
   stripe (~> 18.2)
