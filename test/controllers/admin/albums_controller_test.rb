@@ -25,7 +25,7 @@ module Admin
         post admin_artist_albums_path(@album.artist), params: {
           album: {
             title: 'Example',
-            cover: fixture_file_upload('cover.png'),
+            cover: fixture_file_upload('cover.png', 'image/png'),
             license_id: License.first.id,
             terms_of_use: true,
             ai_policy: true

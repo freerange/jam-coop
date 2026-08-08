@@ -12,7 +12,8 @@ module AttachmentMethods
         },
         size: {
           less_than: 1.gigabyte
-        }
+        },
+        processable_file: true
       }
       options[:attached] = { message: 'file cannot be missing' } if required
 
@@ -27,7 +28,8 @@ module AttachmentMethods
         },
         size: {
           less_than: 10.megabytes
-        }
+        },
+        processable_file: true
       }
       options[:attached] = { message: 'file cannot be missing' } if required
 

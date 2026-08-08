@@ -23,7 +23,7 @@ module Admin
     test '#create' do
       assert_difference('@user.labels.count') do
         post admin_labels_path, params: {
-          label: { name: 'Test Label', logo: fixture_file_upload('cover.png') }
+          label: { name: 'Test Label', logo: fixture_file_upload('cover.png', 'image/png') }
         }
       end
 
