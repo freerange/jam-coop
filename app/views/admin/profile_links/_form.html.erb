@@ -1,0 +1,12 @@
+<%= form_for([:admin, profile_link.artist, profile_link], builder: TailwindFormBuilder) do |form| %>
+  <%= render ModelErrorComponent.new(model: profile_link) %>
+
+  <%= render(SidebarSectionComponent.new(title: 'Link details')) do %>
+    <%= form.text_field :url, label: { text: 'URL (e.g. https://mastodon.social/@jamcoop)' }, class: 'w-full mb-6', required: true %>
+  <% end %>
+
+  <div class="flex flex-col sm:flex-row gap-3 justify-end">
+    <%= render(ButtonComponent.new(text: 'Cancel', path: edit_artist_path(profile_link.artist), link: true, secondary: true)) %>
+    <%= form.submit "Save" %>
+  </div>
+<% end %>

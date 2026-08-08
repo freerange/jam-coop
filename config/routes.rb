@@ -78,6 +78,7 @@ Rails.application.routes.draw do
           end
         end
       end
+      resources :profile_links
     end
   end
 
