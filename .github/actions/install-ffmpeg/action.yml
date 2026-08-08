@@ -1,0 +1,12 @@
+name: Install ffmpeg package
+
+runs:
+  using: composite
+  steps:
+    - name: Update package index files
+      shell: bash
+      run: sudo apt-get update
+
+    - name: Install ffmpeg
+      shell: bash
+      run: sudo apt-get install -y ffmpeg
