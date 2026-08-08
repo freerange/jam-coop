@@ -8,8 +8,13 @@ module AttachmentMethods
       options = {
         content_type: {
           in: OriginalAudio.content_types,
+          spoofing_protection: true,
           message: "must be an audio file (#{OriginalAudio.file_types.join(', ')})"
-        }
+        },
+        size: {
+          less_than: 1.gigabyte
+        },
+        processable_file: true
       }
       options[:attached] = { message: 'file cannot be missing' } if required
 
@@ -20,8 +25,13 @@ module AttachmentMethods
       options = {
         content_type: {
           in: GenericImage.content_types,
+          spoofing_protection: true,
           message: "must be an image file (#{GenericImage.file_types.join(', ')})"
-        }
+        },
+        size: {
+          less_than: 10.megabytes
+        },
+        processable_file: true
       }
       options[:attached] = { message: 'file cannot be missing' } if required
 
