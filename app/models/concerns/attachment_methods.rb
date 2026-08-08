@@ -9,6 +9,9 @@ module AttachmentMethods
         content_type: {
           in: OriginalAudio.content_types,
           message: "must be an audio file (#{OriginalAudio.file_types.join(', ')})"
+        },
+        size: {
+          less_than: 1.gigabyte
         }
       }
       options[:attached] = { message: 'file cannot be missing' } if required
@@ -21,6 +24,9 @@ module AttachmentMethods
         content_type: {
           in: GenericImage.content_types,
           message: "must be an image file (#{GenericImage.file_types.join(', ')})"
+        },
+        size: {
+          less_than: 10.megabytes
         }
       }
       options[:attached] = { message: 'file cannot be missing' } if required
