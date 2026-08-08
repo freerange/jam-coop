@@ -8,6 +8,7 @@ module AttachmentMethods
       options = {
         content_type: {
           in: OriginalAudio.content_types,
+          spoofing_protection: true,
           message: "must be an audio file (#{OriginalAudio.file_types.join(', ')})"
         },
         size: {
@@ -24,6 +25,7 @@ module AttachmentMethods
       options = {
         content_type: {
           in: GenericImage.content_types,
+          spoofing_protection: true,
           message: "must be an image file (#{GenericImage.file_types.join(', ')})"
         },
         size: {
