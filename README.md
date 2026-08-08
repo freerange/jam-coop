@@ -18,6 +18,10 @@ We're using Rails' default image processor library `vips`, which you need to ins
 
     brew install libvips
 
+We're using [FFmpeg](https://ffmpeg.org/) to transcode original audio into formats suitable for download. You need to install it:
+
+    brew install ffmpeg
+
 Copy the example `.env` file
 
     cp `.env.example .env`
