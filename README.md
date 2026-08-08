@@ -14,7 +14,7 @@ You'll need to create a database user
     # CREATE USER <username>;
     # ALTER USER <username> WITH SUPERUSER;
 
-We're using Rails 7's default image processor library `vips`, which you need to install
+We're using Rails' default image processor library `vips`, which you need to install
 
     brew install libvips
 
