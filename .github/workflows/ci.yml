@@ -45,7 +45,7 @@ jobs:
       - name: Install libvips package
         uses: ./.github/actions/install-libvips
 
-      - name: Install libvips package
+      - name: Install ffmpeg package
         uses: ./.github/actions/install-ffmpeg
 
       - name: Setup Ruby and install gems
