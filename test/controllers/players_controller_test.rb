@@ -5,7 +5,7 @@ require 'test_helper'
 class PlayersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @artist = create(:artist)
-    @album = create(:album, :with_tracks, artist: @artist)
+    @album = create(:album, :with_tracks, :published, artist: @artist)
   end
 
   test '#show responds with 200 OK' do

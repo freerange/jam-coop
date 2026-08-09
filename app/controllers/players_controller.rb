@@ -12,14 +12,14 @@ class PlayersController < ApplicationController
 
   helper_method :album, :artist
 
-  def show
-    skip_authorization
-  end
+  def show; end
 
   private
 
   def album
-    @album ||= artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params.expect(:album_id))
+    @album ||= authorize(
+      artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params.expect(:album_id))
+    )
   end
 
   def artist
