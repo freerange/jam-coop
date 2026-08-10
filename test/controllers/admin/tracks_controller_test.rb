@@ -52,6 +52,29 @@ module Admin
       assert_equal 'Tracks added', flash[:notice]
     end
 
+    test 'should obtains track title from metadata or filename when creating multiple tracks' do
+      blobs = [
+        ActiveStorage::Blob.create_and_upload!(
+          io: file_fixture('track-with-title.flac').open,
+          filename: 'track-with-title.flac',
+          content_type: 'audio/flac'
+        ),
+        ActiveStorage::Blob.create_and_upload!(
+          io: file_fixture('track.flac').open,
+          filename: 'track.flac',
+          content_type: 'audio/flac'
+        )
+      ]
+
+      post create_multiple_admin_artist_album_tracks_path(@album.artist, @album), params: {
+        original: blobs.map(&:signed_id)
+      }
+
+      track1, track2 = Track.last(2)
+      assert_equal(track1.title, 'track-title')
+      assert_equal(track2.title, 'track')
+    end
+
     test 'should get edit' do
       get edit_admin_artist_album_track_path(@album.artist, @album, @album.tracks.first)
       assert_response :success

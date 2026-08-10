@@ -120,4 +120,22 @@ class TrackTest < ActiveSupport::TestCase
 
     assert_equal %w[01 02], album.tracks.map(&:number)
   end
+
+  test '.title_from when track has metadata' do
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: file_fixture('track-with-title.flac').open,
+      filename: 'track-with-title.flac',
+      content_type: 'audio/flac'
+    )
+    assert_equal 'track-title', Track.title_from(blob)
+  end
+
+  test '.title_from when track does not have metadata' do
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: file_fixture('track.flac').open,
+      filename: 'track.flac',
+      content_type: 'audio/flac'
+    )
+    assert_equal 'track', Track.title_from(blob)
+  end
 end
