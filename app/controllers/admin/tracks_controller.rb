@@ -33,7 +33,7 @@ module Admin
     def create_multiple
       @tracks = params[:original].compact_blank.map do |original|
         blob = ActiveStorage::Blob.find_signed!(original)
-        authorize Track.new(album: @album, original:, title: blob.filename.base)
+        authorize Track.new(album: @album, original:, title: Track.title_from(blob))
       end
 
       if @tracks.all?(&:save)

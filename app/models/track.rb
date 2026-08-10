@@ -19,6 +19,11 @@ class Track < ApplicationRecord
 
   scope :with_attachments, -> { with_attached_original.includes(:transcodes).merge(Transcode.with_attached_file) }
 
+  def self.title_from(blob)
+    metadata = ReadMetadataCommand.new(blob).execute
+    metadata[:title].presence || blob.filename.base
+  end
+
   def preview
     transcodes.select(&:mp3128k?).first
   end
