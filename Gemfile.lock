@@ -395,7 +395,7 @@ GEM
     rexml (3.4.4)
     rollbar (3.8.0)
     rouge (4.6.1)
-    rss (0.3.2)
+    rss (0.3.3)
       rexml
     rubocop (1.88.0)
       json (~> 2.3)
