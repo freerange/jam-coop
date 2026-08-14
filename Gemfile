@@ -41,7 +41,7 @@ gem 'tailwindcss-rails', '~> 3.0'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'view_component'
-gem 'zaru', '~> 1.0'
+gem 'zaru', '~> 1.1'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
