@@ -477,7 +477,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.44)
-    zaru (1.0.1)
+    zaru (1.1)
     zeitwerk (2.8.3)
 
 PLATFORMS
@@ -541,7 +541,7 @@ DEPENDENCIES
   tzinfo-data
   view_component
   webmock
-  zaru (~> 1.0)
+  zaru (~> 1.1)
 
 RUBY VERSION
   ruby 4.0.3
