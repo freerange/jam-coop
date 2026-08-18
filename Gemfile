@@ -67,3 +67,4 @@ group :test do
   gem 'rubocop-factory_bot'
   gem 'webmock'
 end
+gem 'avo', '>= 4.0.0'
