@@ -1,6 +1,6 @@
 <div class="relative" data-controller="avatar-menu">
   <button id="avatar" data-action="click->avatar-menu#toggle keydown@document->avatar-menu#escape" class="relative z-10 block w-8 h-8 rounded-full bg-white border border-slate-200  focus:outline-none focus:border-amber-500 overflow-hidden">
-    <%= image_tag avatar(user), class: "object-cover" %>
+    <%= image_tag user.avatar, class: "object-cover" %>
   </button>
 
   <button data-avatar-menu-target="clear" data-action="avatar-menu#close" tabindex="-1" class="fixed inset-0 h-full w-full cursor-default hidden"></button>

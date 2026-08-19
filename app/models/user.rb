@@ -63,4 +63,8 @@ class User < ApplicationRecord
   def unfollow(artist)
     artist.followers.delete(self)
   end
+
+  def avatar
+    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}?d=mp"
+  end
 end
