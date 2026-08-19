@@ -8,10 +8,6 @@ module ApplicationHelper
     link_to(*, **kwargs)
   end
 
-  def avatar(user)
-    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}?d=mp"
-  end
-
   def markdown(text)
     renderer = Renderers::TailwindMarkdownRenderer.new
     markdown = Redcarpet::Markdown.new(renderer)
