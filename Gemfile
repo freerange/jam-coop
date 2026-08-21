@@ -29,6 +29,7 @@ gem 'rack-maintenance'
 gem 'rails', '~> 8.1'
 gem 'rails_autolink', '~> 1.1'
 gem 'rails_cloudflare_turnstile'
+gem 'ransack'
 gem 'redcarpet', '~> 3.6'
 gem 'rollbar'
 gem 'rss'
@@ -67,3 +68,4 @@ group :test do
   gem 'rubocop-factory_bot'
   gem 'webmock'
 end
+gem 'avo', '>= 4.0.0'

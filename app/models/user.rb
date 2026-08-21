@@ -36,6 +36,10 @@ class User < ApplicationRecord
     Purchase.where(customer_email: email).update(user: self) if verified
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[email]
+  end
+
   def suppress_sending?
     sending_suppressed_at.present?
   end
@@ -62,5 +66,9 @@ class User < ApplicationRecord
 
   def unfollow(artist)
     artist.followers.delete(self)
+  end
+
+  def avatar
+    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}?d=mp"
   end
 end
