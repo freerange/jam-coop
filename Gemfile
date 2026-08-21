@@ -36,7 +36,7 @@ gem 'ruby-vips'
 gem 'rubyzip', '~> 3.4'
 gem 'solid_queue', '~> 1.6'
 gem 'stimulus-rails'
-gem 'stripe', '~> 19.4'
+gem 'stripe', '~> 19.5'
 gem 'tailwindcss-rails', '~> 3.0'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
