@@ -11,7 +11,7 @@ class AvoControllerTestSignedInAsAdmin < ActionDispatch::IntegrationTest
   test 'root' do
     get avo.root_path
 
-    assert_redirected_to avo.resources_payout_details_path
+    assert_redirected_to avo.resources_albums_path
   end
 end
 
