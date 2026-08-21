@@ -399,6 +399,10 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.4.2)
+    ransack (4.4.1)
+      activerecord (>= 7.2)
+      activesupport (>= 7.2)
+      i18n
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
@@ -555,6 +559,7 @@ DEPENDENCIES
   rails (~> 8.1)
   rails_autolink (~> 1.1)
   rails_cloudflare_turnstile
+  ransack
   redcarpet (~> 3.6)
   redis
   rollbar
