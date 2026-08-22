@@ -144,4 +144,17 @@ class PurchaseTest < ActiveSupport::TestCase
     complete_purchase = create(:purchase, completed: true)
     assert_equal [complete_purchase], Purchase.completed
   end
+
+  test '.for_seller' do
+    user = create(:user)
+    artist = create(:artist, user:)
+    album = create(:album, artist: artist)
+    purchase = create(:purchase, album:, price: album.price)
+    purchase_from_another_seller = create(:purchase)
+
+    relation = Purchase.for_seller(user)
+
+    assert_includes relation, purchase
+    assert_not_includes relation, purchase_from_another_seller
+  end
 end

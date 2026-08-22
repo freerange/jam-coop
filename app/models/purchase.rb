@@ -18,6 +18,7 @@ class Purchase < ApplicationRecord
 
   scope :completed, -> { where(completed: true) }
   scope :without_payout, -> { where(payout_id: nil) }
+  scope :for_seller, ->(seller) { joins(:seller).merge(Artist.for_user(seller)) }
 
   def stripe_payout
     payout&.stripe? ? payout : nil
