@@ -52,7 +52,11 @@ class Purchase < ApplicationRecord
   end
 
   def platform_fee_in_pence
-    (price_in_pence * platform_fee_fraction).to_i
+    (platform_fee * 100).to_i
+  end
+
+  def platform_fee
+    price * platform_fee_fraction
   end
 
   private
