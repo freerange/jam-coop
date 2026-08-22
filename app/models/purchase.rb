@@ -40,7 +40,11 @@ class Purchase < ApplicationRecord
   end
 
   def gratuity_in_pence
-    ((price - album.price) * 100).to_i
+    (gratuity * 100).to_i
+  end
+
+  def gratuity
+    price - price_excluding_gratuity
   end
 
   def suppress_sending?

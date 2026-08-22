@@ -49,6 +49,13 @@ class PurchaseTest < ActiveSupport::TestCase
     assert purchase_with_gratuity.gratuity?
   end
 
+  test '#gratuity' do
+    album = build(:album, price: '5.00')
+    purchase = build(:purchase, album:, price: '7.00')
+
+    assert_equal 2.00, purchase.gratuity
+  end
+
   test '#gratuity_in_pence' do
     album = build(:album, price: '5.00')
     purchase = build(:purchase, album:, price: '7.00')
