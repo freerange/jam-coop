@@ -28,7 +28,11 @@ class Purchase < ApplicationRecord
   end
 
   def price_excluding_gratuity_in_pence
-    (album.price * 100).to_i
+    (price_excluding_gratuity * 100).to_i
+  end
+
+  def price_excluding_gratuity
+    album.price
   end
 
   def gratuity?

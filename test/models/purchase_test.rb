@@ -22,6 +22,15 @@ class PurchaseTest < ActiveSupport::TestCase
     assert_equal 700, purchase.price_in_pence
   end
 
+  test '#price_excluding_gratuity is the album price excluding gratuity' do
+    album = build(:album, price: '5.00')
+    purchase_without_gratuity = build(:purchase, album:, price: '5.00')
+    purchase_with_gratuity = build(:purchase, album:, price: '7.00')
+
+    assert_equal 5.00, purchase_without_gratuity.price_excluding_gratuity
+    assert_equal 5.00, purchase_with_gratuity.price_excluding_gratuity
+  end
+
   test '#price_excluding_gratuity_in_pence is the album price excluding gratuity' do
     album = build(:album, price: '5.00')
     purchase_without_gratuity = build(:purchase, album:, price: '5.00')
