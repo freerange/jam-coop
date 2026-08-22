@@ -22,6 +22,15 @@ class PurchaseTest < ActiveSupport::TestCase
     assert_equal 700, purchase.price_in_pence
   end
 
+  test '#price_excluding_gratuity is the album price excluding gratuity' do
+    album = build(:album, price: '5.00')
+    purchase_without_gratuity = build(:purchase, album:, price: '5.00')
+    purchase_with_gratuity = build(:purchase, album:, price: '7.00')
+
+    assert_equal 5.00, purchase_without_gratuity.price_excluding_gratuity
+    assert_equal 5.00, purchase_with_gratuity.price_excluding_gratuity
+  end
+
   test '#price_excluding_gratuity_in_pence is the album price excluding gratuity' do
     album = build(:album, price: '5.00')
     purchase_without_gratuity = build(:purchase, album:, price: '5.00')
@@ -38,6 +47,13 @@ class PurchaseTest < ActiveSupport::TestCase
 
     assert_not purchase_without_gratuity.gratuity?
     assert purchase_with_gratuity.gratuity?
+  end
+
+  test '#gratuity' do
+    album = build(:album, price: '5.00')
+    purchase = build(:purchase, album:, price: '7.00')
+
+    assert_equal 2.00, purchase.gratuity
   end
 
   test '#gratuity_in_pence' do
@@ -61,6 +77,15 @@ class PurchaseTest < ActiveSupport::TestCase
     end
   end
 
+  test '#platform_fee returns the amount we charge the artist' do
+    album = build(:album, price: 10.00)
+    purchase = build(:purchase, album:, price: 15.00)
+    platform_fee_fraction = Rails.configuration.platform_fee_percentage / 100.0
+    expected_fee = 15.00 * platform_fee_fraction
+
+    assert_equal expected_fee, purchase.platform_fee
+  end
+
   test '#platform_fee_in_pence returns the amount we charge the artist' do
     album = build(:album, price: 10.00)
     purchase = build(:purchase, album:, price: 15.00)
@@ -68,6 +93,18 @@ class PurchaseTest < ActiveSupport::TestCase
     expected_fee_in_pence = (1500 * platform_fee_fraction).to_i
 
     assert_equal expected_fee_in_pence, purchase.platform_fee_in_pence
+  end
+
+  test '#tax returns the amount of tax in pounds' do
+    purchase = build(:purchase, amount_tax: 150)
+
+    assert_equal 1.50, purchase.tax
+  end
+
+  test '#tax returns nil if amount of tax is nil' do
+    purchase = build(:purchase, amount_tax: nil)
+
+    assert_nil purchase.tax
   end
 
   test 'can be associated with a payout' do
@@ -106,5 +143,18 @@ class PurchaseTest < ActiveSupport::TestCase
     create(:purchase, completed: false)
     complete_purchase = create(:purchase, completed: true)
     assert_equal [complete_purchase], Purchase.completed
+  end
+
+  test '.for_seller' do
+    user = create(:user)
+    artist = create(:artist, user:)
+    album = create(:album, artist: artist)
+    purchase = create(:purchase, album:, price: album.price)
+    purchase_from_another_seller = create(:purchase)
+
+    relation = Purchase.for_seller(user)
+
+    assert_includes relation, purchase
+    assert_not_includes relation, purchase_from_another_seller
   end
 end

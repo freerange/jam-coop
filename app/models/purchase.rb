@@ -18,6 +18,7 @@ class Purchase < ApplicationRecord
 
   scope :completed, -> { where(completed: true) }
   scope :without_payout, -> { where(payout_id: nil) }
+  scope :for_seller, ->(seller) { joins(:seller).merge(Artist.for_user(seller)) }
 
   def stripe_payout
     payout&.stripe? ? payout : nil
@@ -28,7 +29,11 @@ class Purchase < ApplicationRecord
   end
 
   def price_excluding_gratuity_in_pence
-    (album.price * 100).to_i
+    (price_excluding_gratuity * 100).to_i
+  end
+
+  def price_excluding_gratuity
+    album.price
   end
 
   def gratuity?
@@ -36,7 +41,11 @@ class Purchase < ApplicationRecord
   end
 
   def gratuity_in_pence
-    ((price - album.price) * 100).to_i
+    (gratuity * 100).to_i
+  end
+
+  def gratuity
+    price - price_excluding_gratuity
   end
 
   def suppress_sending?
@@ -44,7 +53,15 @@ class Purchase < ApplicationRecord
   end
 
   def platform_fee_in_pence
-    (price_in_pence * platform_fee_fraction).to_i
+    (platform_fee * 100).to_i
+  end
+
+  def platform_fee
+    price * platform_fee_fraction
+  end
+
+  def tax
+    amount_tax && (amount_tax / 100.0)
   end
 
   private
