@@ -56,7 +56,7 @@ group :development do
   gem 'faker', '~> 3.8'
   gem 'hotwire-livereload'
   gem 'letter_opener'
-  gem 'redis'
+  gem 'redis', '~> 5.0'
   gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
 end
