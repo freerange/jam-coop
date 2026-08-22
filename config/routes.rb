@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    root 'pages#home'
     mount MissionControl::Jobs::Engine, at: '/jobs'
 
     resources :newsletters, only: %i[index new create edit update]

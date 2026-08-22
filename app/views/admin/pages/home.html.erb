@@ -1,0 +1,7 @@
+<%= render(SectionComponent.new(title: 'Admin')) do %>
+  <ul>
+    <li><%= link_to 'Newsletters', admin_newsletters_path %></li>
+    <li><%= link_to 'Payouts', admin_payouts_path %></li>
+    <li><%= link_to 'Purchases', admin_purchases_path %></li>
+  </ul>
+<% end %>
