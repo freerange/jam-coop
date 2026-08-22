@@ -59,6 +59,10 @@ class Purchase < ApplicationRecord
     price * platform_fee_fraction
   end
 
+  def tax
+    amount_tax && (amount_tax / 100.0)
+  end
+
   private
 
   def price_is_greater_than_album_price

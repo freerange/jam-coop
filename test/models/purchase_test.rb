@@ -95,6 +95,18 @@ class PurchaseTest < ActiveSupport::TestCase
     assert_equal expected_fee_in_pence, purchase.platform_fee_in_pence
   end
 
+  test '#tax returns the amount of tax in pounds' do
+    purchase = build(:purchase, amount_tax: 150)
+
+    assert_equal 1.50, purchase.tax
+  end
+
+  test '#tax returns nil if amount of tax is nil' do
+    purchase = build(:purchase, amount_tax: nil)
+
+    assert_nil purchase.tax
+  end
+
   test 'can be associated with a payout' do
     payout = build(:payout)
     purchase = create(:purchase, payout:)
