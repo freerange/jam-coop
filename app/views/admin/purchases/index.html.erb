@@ -1,0 +1,40 @@
+<%= render(SectionComponent.new(title: 'Purchases')) do %>
+  <div class="flex flex-col divide-y divide-slate-300">
+    <% if @purchases.any? %>
+      <table class="table-auto w-full">
+        <thead class="bg-slate-300">
+          <tr>
+            <th class="text-left">Date</th>
+            <th class="text-left">Artist</th>
+            <th class="text-left">Album</th>
+            <th class="text-left">Album price</th>
+            <th class="text-left">Gratuity</th>
+            <th class="text-left">Total price</th>
+            <th class="text-left">Tax</th>
+            <th class="text-left">Platform fee</th>
+            <th class="text-left">Stripe session ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @purchases.each do |purchase| %>
+            <tr>
+              <td class="border"><%= purchase.created_at.to_date %></td>
+              <td class="border"><%= purchase.album.artist.name %></td>
+              <td class="border"><%= purchase.album.title %></td>
+              <td class="border"><%= number_to_currency(purchase.price_excluding_gratuity, unit: "£") %></td>
+              <td class="border"><%= number_to_currency(purchase.gratuity, unit: "£") %></td>
+              <td class="border"><%= number_to_currency(purchase.price, unit: "£") %></td>
+              <td class="border"><%= number_to_currency(purchase.tax, unit: "£") %></td>
+              <td class="border"><%= number_to_currency(purchase.platform_fee, unit: "£") %></td>
+              <td class="border"><%= purchase.stripe_session_id %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-slate-500 mb-6">
+        There aren't any purchases yet.
+      </p>
+    <% end %>
+  </div>
+<% end %>
