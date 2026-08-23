@@ -69,7 +69,7 @@ class Purchase < ApplicationRecord
   def price_is_greater_than_album_price
     return true if price >= album.price
 
-    errors.add(:price, "Price must be more than #{number_to_currency(album.price, unit: '£')}")
+    errors.add(:price, "must be more than #{number_to_currency(album.price, unit: '£')}")
   end
 
   def create_purchase_downloads

@@ -14,7 +14,7 @@ class PurchaseTest < ActiveSupport::TestCase
     purchase = build(:purchase, album:, price: '3.00')
 
     assert_not purchase.valid?
-    assert purchase.errors[:price].include? 'Price must be more than £5.00'
+    assert purchase.errors[:price].include? 'must be more than £5.00'
   end
 
   test '#price_in_pence' do
