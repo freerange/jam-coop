@@ -26,7 +26,7 @@
               <td class="border"><%= number_to_currency(purchase.price, unit: "£") %></td>
               <td class="border"><%= number_to_currency(purchase.tax, unit: "£") %></td>
               <td class="border"><%= number_to_currency(purchase.platform_fee, unit: "£") %></td>
-              <td class="border"><%= purchase.payment_intent_id %></td>
+              <td class="border"><%= link_to_payment_intent purchase, class: 'hover:underline' %></td>
             </tr>
           <% end %>
         </tbody>
