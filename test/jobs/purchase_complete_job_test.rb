@@ -20,6 +20,18 @@ class PurchaseCompleteJobTest < ActiveJob::TestCase
     assert_equal 140, purchase.reload.amount_tax
   end
 
+  test 'it sets the payment intent ID on the purchase' do
+    stripe_session_id = 'session-id'
+    purchase = create(:purchase, price: 7.00, stripe_session_id:, completed: false)
+    session = stub_retrieve_stripe_checkout_session(stripe_session_id, 'email@example.com', 140)
+    payment_intent_id = session.payment_intent
+    stub_retrieve_stripe_payment_intent(payment_intent_id)
+
+    PurchaseCompleteJob.perform_now(stripe_session_id)
+
+    assert_equal payment_intent_id, purchase.reload.payment_intent_id
+  end
+
   test 'associates the purchase with a user if one exists with this customer_email' do
     stripe_session_id = 'session-id'
     user = create(:user)

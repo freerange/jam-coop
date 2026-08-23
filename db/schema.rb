@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_17_155129) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_23_090948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -168,6 +168,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_17_155129) do
     t.boolean "contact_opt_in", default: false, null: false
     t.datetime "created_at", null: false
     t.string "customer_email"
+    t.string "payment_intent_id"
     t.bigint "payout_id"
     t.decimal "price", precision: 8, scale: 2
     t.datetime "sending_suppressed_at"

@@ -28,6 +28,7 @@ class PurchaseCompleteJob < ApplicationJob
         )
         purchase.update!(payout:)
       end
+      purchase.update!(payment_intent_id:)
     end
 
     PurchaseMailer.with(purchase:).notify_artist.deliver_later
