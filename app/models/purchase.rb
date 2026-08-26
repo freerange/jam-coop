@@ -12,7 +12,7 @@ class Purchase < ApplicationRecord
   has_one :seller, through: :artist, source: :user, class_name: 'User'
 
   validates :price, presence: true, numericality: true
-  validate :price_is_greater_than_album_price, unless: -> { price.blank? }
+  validate :price_is_greater_than_album_price, unless: -> { price.blank? }, on: :create
 
   after_commit :create_purchase_downloads, on: :create
 

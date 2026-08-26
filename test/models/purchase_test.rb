@@ -9,12 +9,19 @@ class PurchaseTest < ActiveSupport::TestCase
     assert build(:purchase).valid?
   end
 
-  test 'is invalid if price is less than the albums suggested price' do
+  test 'is invalid if price is less than the albums suggested price on creation' do
     album = build(:album, price: '5.00')
     purchase = build(:purchase, album:, price: '3.00')
 
-    assert_not purchase.valid?
+    assert_not purchase.save
     assert purchase.errors[:price].include? 'must be more than £5.00'
+  end
+
+  test 'is valid if price is less than the albums suggested price on update' do
+    album = build(:album, price: '5.00')
+    purchase = create(:purchase, album:, price: '5.00')
+
+    assert purchase.update(price: '3.00')
   end
 
   test '#price_in_pence' do
