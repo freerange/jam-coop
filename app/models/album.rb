@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Album < ApplicationRecord
-  DATE_OF_INTRODUCTION_OF_AI_POLICY = Date.new(2026, 7, 18)
+  AI_POLICY_INTRODUCED_AT = Time.zone.parse('2026-07-18 18:00 +0000')
 
   extend FriendlyId
   include AttachmentMethods
@@ -66,7 +66,7 @@ class Album < ApplicationRecord
   end
 
   def created_before_introduction_of_ai_policy?
-    created_at && created_at < DATE_OF_INTRODUCTION_OF_AI_POLICY
+    created_at && created_at < AI_POLICY_INTRODUCED_AT
   end
 
   private
