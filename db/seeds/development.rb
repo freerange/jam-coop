@@ -38,6 +38,8 @@ users = (0..5).map do |i|
       about: Faker::Lorem.paragraph,
       credits: Faker::Lorem.paragraph,
       license: License.find_by(code: 'all_rights_reserved'),
+      terms_of_use: true,
+      ai_policy: true,
       released_on: Time.zone.today,
       artist:
     )
