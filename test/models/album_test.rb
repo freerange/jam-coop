@@ -254,8 +254,14 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test 'is valid if ai policy is not accepted and created before introduction of policy' do
-    album = create(:album, ai_policy: false, created_at: Album::DATE_OF_INTRODUCTION_OF_AI_POLICY - 1.day)
+    album = create(:album, ai_policy: false, created_at: Album::AI_POLICY_INTRODUCED_AT - 1.minute)
     assert album.valid?
+  end
+
+  test 'is invalid if ai policy is not accepted and created at the time the policy was introduced' do
+    album = build(:album, ai_policy: false, created_at: Album::AI_POLICY_INTRODUCED_AT)
+    album.save
+    assert_not album.valid?
   end
 
   test 'is not valid if cover is not present' do
