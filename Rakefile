@@ -11,6 +11,7 @@ Rake::Task['default'].clear.enhance(
   %w[
     htmlbeautifier
     rubocop
+    factory_bot:lint
     test
     test:system
   ]
