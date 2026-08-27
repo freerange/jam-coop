@@ -5,6 +5,13 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+
+    env:
+      RAILS_ENV: test
+      PGHOST: localhost
+      PGUSER: myapp
+      PGPASSWORD: password
+
     services:
       postgres:
         image: postgres:15-alpine
@@ -33,26 +40,14 @@ jobs:
         run: cp .env.example .env.test
 
       - name: Setup test database
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: myapp
-          PGPASSWORD: password
         run: |
           bin/rails db:setup
 
       - name: Run linters
-        env:
-          RAILS_ENV: test
         run: |
           bin/rails htmlbeautifier rubocop
 
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: myapp
-          PGPASSWORD: password
         run: bin/rails test
 
       - name: Install Node
@@ -80,11 +75,6 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run system tests
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: myapp
-          PGPASSWORD: password
         run: bin/rails test:system
 
       - name: Upload system test screenshots & traces
