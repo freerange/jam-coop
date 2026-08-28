@@ -428,8 +428,8 @@ GEM
     rouge (4.6.1)
     rss (0.3.3)
       rexml
-    rubocop (1.89.0)
-      json (~> 2.3)
+    rubocop (1.90.0)
+      json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
       parallel (>= 1.10)
