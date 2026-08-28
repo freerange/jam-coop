@@ -12,4 +12,6 @@ class Label < ApplicationRecord
 
   validates :name, presence: true
   validates_image :logo, required: true
+
+  scope :with_albums, -> { joins(:albums).distinct }
 end

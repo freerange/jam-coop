@@ -30,4 +30,16 @@ class LabelTest < ActiveSupport::TestCase
     assert_not label.valid?
     assert_includes label.errors[:logo], 'must be an image file (jpeg, png)'
   end
+
+  test '.with_albums' do
+    album = create(:album)
+    label_with_albums = create(:label)
+    create(:release, album:, label: label_with_albums)
+    label_without_albums = create(:label)
+
+    scope = Label.with_albums
+
+    assert_includes scope, label_with_albums
+    assert_not_includes scope, label_without_albums
+  end
 end
