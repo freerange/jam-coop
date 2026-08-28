@@ -18,7 +18,7 @@ class Album < ApplicationRecord
   has_one_attached :cover
   belongs_to :license
   has_one :release, dependent: :destroy
-  has_one :label, through: :release
+  has_one :label, through: :release, inverse_of: :albums
 
   accepts_nested_attributes_for :tracks, reject_if: :all_blank, allow_destroy: true
 
