@@ -4,7 +4,7 @@ class Artist < ApplicationRecord
   extend FriendlyId
   include AttachmentMethods
 
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: %i[slugged finders]
 
   def slug_candidates
     [

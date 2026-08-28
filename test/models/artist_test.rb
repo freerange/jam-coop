@@ -77,7 +77,7 @@ class ArtistTest < ActiveSupport::TestCase
   test 'uses a friendly id' do
     artist = create(:artist, name: 'Rick Astley')
 
-    assert_equal artist, Artist.friendly.find('rick-astley')
+    assert_equal artist, Artist.find('rick-astley')
   end
 
   test 'uses slug candidates in case of clashes' do

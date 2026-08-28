@@ -12,7 +12,7 @@ class AlbumTest < ActiveSupport::TestCase
   test 'uses a friendly id' do
     album = create(:album, title: 'Who? What? Where?')
 
-    assert_equal album, Album.friendly.find('who-what-where')
+    assert_equal album, Album.find('who-what-where')
   end
 
   test 'scopes the slug to the parent artist' do

@@ -3,7 +3,7 @@
 class Tag < ApplicationRecord
   extend FriendlyId
 
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: %i[slugged finders]
 
   validates :name, presence: true, uniqueness: true
   validates :musicbrainz_id, uniqueness: { allow_blank: true }

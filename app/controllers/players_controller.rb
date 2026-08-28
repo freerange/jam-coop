@@ -18,12 +18,12 @@ class PlayersController < ApplicationController
 
   def album
     @album ||= authorize(
-      artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params.expect(:album_id))
+      artist.albums.includes(:tracks).merge(Track.with_attachments).find(params.expect(:album_id))
     )
   end
 
   def artist
-    @artist ||= Artist.friendly.find(params.expect(:artist_id))
+    @artist ||= Artist.find(params.expect(:artist_id))
   end
 
   def allow_iframe

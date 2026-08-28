@@ -75,7 +75,7 @@ module Admin
     private
 
     def set_album
-      @album = Album.friendly.find(params.expect(:album_id))
+      @album = Album.find(params.expect(:album_id))
     end
 
     def track_params

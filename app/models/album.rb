@@ -6,7 +6,7 @@ class Album < ApplicationRecord
   extend FriendlyId
   include AttachmentMethods
 
-  friendly_id :title, use: :scoped, scope: :artist
+  friendly_id :title, use: %i[scoped finders], scope: :artist
 
   enum :publication_status, { draft: 0, published: 1 }
 

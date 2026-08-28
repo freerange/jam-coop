@@ -37,7 +37,7 @@ module Admin
     private
 
     def set_label
-      @label = Current.user.labels.friendly.find(params.expect(:label_id))
+      @label = Current.user.labels.find(params.expect(:label_id))
     end
 
     def set_release

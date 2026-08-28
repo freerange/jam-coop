@@ -15,7 +15,7 @@ class LabelTest < ActiveSupport::TestCase
   test 'uses a friendly id' do
     label = create(:label, name: 'Jam Records')
 
-    assert_equal label, Label.friendly.find('jam-records')
+    assert_equal label, Label.find('jam-records')
   end
 
   test 'is not valid if logo is not an image' do

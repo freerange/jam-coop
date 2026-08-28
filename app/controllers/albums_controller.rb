@@ -27,10 +27,10 @@ class AlbumsController < ApplicationController
   private
 
   def set_album
-    @album = authorize artist.albums.includes(:tracks).merge(Track.with_attachments).friendly.find(params.expect(:id))
+    @album = authorize artist.albums.includes(:tracks).merge(Track.with_attachments).find(params.expect(:id))
   end
 
   def artist
-    Artist.friendly.find(params.expect(:artist_id))
+    Artist.find(params.expect(:artist_id))
   end
 end

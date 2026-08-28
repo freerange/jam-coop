@@ -38,11 +38,11 @@ class PurchasesController < ApplicationController
   private
 
   def set_album
-    @album = artist.albums.friendly.find(params.expect(:album_id))
+    @album = artist.albums.find(params.expect(:album_id))
   end
 
   def artist
-    Artist.includes(:user).friendly.find(params.expect(:artist_id))
+    Artist.includes(:user).find(params.expect(:artist_id))
   end
 
   def purchase_params
