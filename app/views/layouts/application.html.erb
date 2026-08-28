@@ -16,6 +16,7 @@
 
       <footer class="flex flex-col gap-6 mt-2 mb-4 text-slate-400 text-sm px-2 sm:px-0">
         <div class="flex flex-col gap-3">
+          <%= render partial: 'layouts/permanent_player' %>
           <div>
             <p><%= link_to "News", newsletters_path, class: "underline" %></p>
             <p><%= link_to "About", docs_about_path, class: "underline" %></p>

@@ -1,0 +1,15 @@
+<div id="permanent-player-container" data-turbo-permanent>
+  <div id="permanent-player" data-controller="permanent-player" class="hidden text-slate-800 text-xl">
+    <audio controls data-permanent-player-target="audio" data-action="ended->permanent-player#ended timeupdate->permanent-player#progress" class="hidden"></audio>
+
+    <button data-action="permanent-player#selectPreviousTrack">Previous</button>
+    <button data-action="permanent-player#play">Play</button>
+    <button data-action="permanent-player#pause">Pause</button>
+    <button data-action="permanent-player#selectNextTrack">Next</button>
+
+    <span data-permanent-player-target="title"></span>
+    <span data-permanent-player-target="progress"></span>
+
+    <button data-action="permanent-player#close">Close</button>
+  </div>
+</div>

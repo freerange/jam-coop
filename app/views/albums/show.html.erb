@@ -105,6 +105,8 @@
             <p class="text-xs text-slate-600"><%= number_to_currency(@album.price, unit: '£') %> or more. Digital download. MP3 and FLAC</p>
           <% end %>
         </div>
+
+        <%= render partial: 'play_button', locals: { album: @album } %>
       </div>
     </div>
 
