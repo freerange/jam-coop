@@ -59,7 +59,8 @@ Rails.application.configure do
       'Track#transcode',
       'Admin::TracksController#destroy',
       'Admin::TracksController#create_multiple',
-      /Avo::/
+      /Avo::/,
+      /MissionControl::Jobs/
     ]
   end
 
