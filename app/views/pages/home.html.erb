@@ -51,7 +51,23 @@
   <% end %>
 
   <%= render(
-  SectionComponent.new(title: 'Best selling')
+  SectionComponent.new(title: 'Labels', link_text: 'More labels', link_path: labels_path)
+) do %>
+    <%= render(CardGridComponent.new) do %>
+      <% @featured_labels.each do |label| %>
+        <%= link_to(label_path(label)) do %>
+          <%= render(CardComponent.new(
+          title: label.name,
+          subtitle: pluralize(label.releases.size, 'release'),
+          image: ( cdn_url(label.logo.representation(resize_to_limit: [500, 500])) if label.logo.representable? )
+        )) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render(
+  SectionComponent.new(title: 'Best selling albums')
 ) do %>
     <%= render(CardGridComponent.new) do %>
       <% @best_selling_albums.each do |album| %>

@@ -7,6 +7,7 @@ class PagesController < ApplicationController
   def home
     @featured_artist = Artist.of_the_day
     @best_selling_albums = Album.best_selling.includes(:artist, { cover_attachment: :blob }).limit(4)
+    @featured_labels = Label.featured.limit(4)
   end
 
   def about
