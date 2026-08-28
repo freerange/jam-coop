@@ -3,6 +3,6 @@
     "playwright:version": "playwright --version | sed 's/^Version //'"
   },
   "dependencies": {
-    "playwright": "^1.61.1"
+    "playwright": "^1.62.1"
   }
 }
