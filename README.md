@@ -64,11 +64,11 @@ When a CI build on the `main` branch succeeds the commits are promoted to the `p
 
 ## Downloading production data
 
-This requires you to store the Render database credentials (host, username and password) in environment variables (e.g. in .envrc if using direnv). Get the values from render.com.
+This requires you to store the Render external database URL in an environment variable (e.g. in .envrc if using direnv). Get this from the `jam-db` dashboard on render.com (under the "connect" dropdown).
 
 ```
 # Create a backup of the production database
-PGPASSWORD=${RENDER_DB_PASSWORD} pg_dump -h ${RENDER_DB_HOST} -U ${RENDER_DB_USER} musiccoop > tmp/jam-production-db.sql
+pg_dump --dbname=${RENDER_EXTERNAL_DB_URL} -n public --no-owner > tmp/jam-production-db.sql
 
 # Drop and create the local database
 rails db:drop
