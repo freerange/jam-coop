@@ -36,16 +36,27 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Setup dummy application environment using dotenv
+      - name: Setup application environment (development)
+        run: cp .env.example .env.development
+
+      - name: Setup database (development)
+        env:
+          RAILS_ENV: development
+        run: bin/rails db:create db:schema:load
+
+      - name: Check database seeds (development)
+        env:
+          RAILS_ENV: development
+        run: bin/rails db:seed
+
+      - name: Setup application environment (test)
         run: cp .env.example .env.test
 
-      - name: Setup test database
-        run: |
-          bin/rails db:setup
+      - name: Setup database (test)
+        run: bin/rails db:setup
 
       - name: Run linters
-        run: |
-          bin/rails htmlbeautifier rubocop factory_bot:lint
+        run: bin/rails htmlbeautifier rubocop factory_bot:lint
 
       - name: Run tests
         run: bin/rails test
