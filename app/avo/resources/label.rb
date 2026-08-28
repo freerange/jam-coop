@@ -25,6 +25,7 @@ module Avo
         field :user, as: :belongs_to
         field :releases, as: :has_many
         field :albums, as: :has_many, through: :releases
+        field :featured, as: :boolean
       end
     end
   end
