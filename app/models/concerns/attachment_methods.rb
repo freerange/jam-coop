@@ -29,7 +29,7 @@ module AttachmentMethods
           message: "must be an image file (#{GenericImage.file_types.join(', ')})"
         },
         size: {
-          less_than: 10.megabytes
+          less_than: 75.megabytes
         },
         processable_file: true
       }
