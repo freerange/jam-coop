@@ -42,4 +42,11 @@ class LabelTest < ActiveSupport::TestCase
     assert_includes scope, label_with_albums
     assert_not_includes scope, label_without_albums
   end
+
+  test 'featured' do
+    create(:label)
+    featured_label = create(:label, featured: true)
+
+    assert_equal [featured_label], Label.featured
+  end
 end
