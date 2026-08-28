@@ -39,6 +39,11 @@ class LabelsControllerTestSignedOut < ActionDispatch::IntegrationTest
     create(:release, label: @label, album: @draft_album)
   end
 
+  test '#index' do
+    get labels_path
+    assert_response :success
+  end
+
   test '#show' do
     get label_path(@label)
     assert_response :success

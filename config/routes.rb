@@ -100,7 +100,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :labels, only: %i[show]
+  resources :labels, only: %i[index show]
   resources :tags, only: %i[show]
 
   resources :email_subscription_changes, only: %i[create]
