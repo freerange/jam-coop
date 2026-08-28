@@ -1,0 +1,19 @@
+<%
+  set_meta_tags(
+    title: "Labels",
+  )
+%>
+
+<%= render(SectionComponent.new(title: 'Labels')) do %>
+  <%= render(CardGridComponent.new) do %>
+    <% @labels.each do |label| %>
+      <%= link_to(label_path(label)) do %>
+        <%= render(CardComponent.new(
+        title: label.name,
+        subtitle: pluralize(label.releases.size, 'release'),
+        image: ( cdn_url(label.logo.representation(resize_to_limit: [500, 500])) if label.logo.representable? )
+        )) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
