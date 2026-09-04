@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby file: '.ruby-version'
 
-gem 'active_storage_validations', '~> 3.0'
+gem 'active_storage_validations', '~> 4.1'
 gem 'acts_as_list'
 gem 'authentication-zero', '~> 4.0'
 gem 'aws-sdk-s3'
