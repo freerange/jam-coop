@@ -38,7 +38,7 @@ gem 'rubyzip', '~> 3.5'
 gem 'solid_queue', '~> 1.7'
 gem 'stimulus-rails'
 gem 'stripe', '~> 19.6'
-gem 'tailwindcss-rails', '~> 3.0'
+gem 'tailwindcss-rails', '~> 4.6'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'view_component'
