@@ -197,13 +197,13 @@ GEM
       raabro (~> 1.4)
     globalid (1.4.0)
       activesupport (>= 6.1)
-    google-protobuf (4.35.1-arm64-darwin)
+    google-protobuf (4.36.2-arm64-darwin)
       bigdecimal
       rake (~> 13.3)
-    google-protobuf (4.35.1-x86_64-darwin)
+    google-protobuf (4.36.2-x86_64-darwin)
       bigdecimal
       rake (~> 13.3)
-    google-protobuf (4.35.1-x86_64-linux-gnu)
+    google-protobuf (4.36.2-x86_64-linux-gnu)
       bigdecimal
       rake (~> 13.3)
     hashdiff (1.2.1)
@@ -321,8 +321,8 @@ GEM
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-darwin)
     pg (1.6.3-x86_64-linux)
-    pg_query (6.2.2)
-      google-protobuf (>= 3.25.3)
+    pg_query (6.2.3)
+      google-protobuf (>= 4.34.0)
     playwright-ruby-client (1.62.0)
       base64
       concurrent-ruby (>= 1.1.6)
