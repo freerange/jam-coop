@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import * as cdk from 'aws-cdk-lib';
+import * as cdk from 'aws-cdk-lib/core';
 import { MusicCoopStack } from '../lib/music-coop-stack';
 import { CertificateStack } from '../lib/certificate-stack';
 
