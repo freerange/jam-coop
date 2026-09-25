@@ -32,7 +32,7 @@ jobs:
         uses: ./.github/actions/install-ffmpeg
 
       - name: Setup Ruby and install gems
-        uses: ruby/setup-ruby@v1.321.0
+        uses: ruby/setup-ruby@v1.324.0
         with:
           bundler-cache: true
 
