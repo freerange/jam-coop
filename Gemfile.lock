@@ -269,7 +269,7 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
-    meta-tags (2.23.0)
+    meta-tags (2.24.0)
       actionpack (>= 6.0.0)
     mime-types (3.7.0)
       logger
@@ -546,7 +546,7 @@ DEPENDENCIES
   jbuilder
   letter_opener
   lookbook (>= 2.3.13)
-  meta-tags (~> 2.23)
+  meta-tags (~> 2.24)
   mission_control-jobs
   mocha
   pg (~> 1.6)
