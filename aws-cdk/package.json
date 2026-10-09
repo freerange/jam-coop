@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.16.13",
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.4",
     "aws-cdk": "2.1144.0",
     "tsx": "^4.23.0",
     "typescript": "~7.0.2"
