@@ -4,4 +4,8 @@ class ProfileLinkComponent < ViewComponent::Base
   def initialize(link:)
     @link = link
   end
+
+  def icon
+    'icons/link.svg'
+  end
 end
