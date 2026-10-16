@@ -474,7 +474,7 @@ GEM
     ssrf_filter (1.6.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stripe (19.6.2)
+    stripe (20.0.0)
       bigdecimal
       logger
     strscan (3.1.8)
@@ -575,7 +575,7 @@ DEPENDENCIES
   rubyzip (~> 3.7)
   solid_queue (~> 1.7)
   stimulus-rails
-  stripe (~> 19.6)
+  stripe (~> 20.0)
   tailwindcss-rails (~> 3.0)
   turbo-rails
   tzinfo-data
