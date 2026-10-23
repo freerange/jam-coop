@@ -319,9 +319,9 @@ GEM
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
-    pg (1.6.3-arm64-darwin)
-    pg (1.6.3-x86_64-darwin)
-    pg (1.6.3-x86_64-linux)
+    pg (1.7.0-arm64-darwin)
+    pg (1.7.0-x86_64-darwin)
+    pg (1.7.0-x86_64-linux)
     pg_query (6.2.5)
       google-protobuf (>= 4.34.0)
     playwright-ruby-client (1.62.0)
@@ -552,7 +552,7 @@ DEPENDENCIES
   meta-tags (~> 2.24)
   mission_control-jobs
   mocha
-  pg (~> 1.6)
+  pg (~> 1.7)
   pg_query
   postmark-rails
   propshaft
