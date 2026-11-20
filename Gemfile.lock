@@ -198,6 +198,9 @@ GEM
       raabro (~> 1.4)
     globalid (1.4.0)
       activesupport (>= 6.1)
+    google-protobuf (4.36.2)
+      bigdecimal
+      rake (~> 13.3)
     google-protobuf (4.36.2-arm64-darwin)
       bigdecimal
       rake (~> 13.3)
@@ -277,6 +280,7 @@ GEM
       mime-types-data (~> 3.2025, >= 3.2025.0507)
     mime-types-data (3.2026.1103)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (6.1.0)
       drb (~> 2.0)
       prism (>= 1.5, < 3)
@@ -305,6 +309,9 @@ GEM
     net-smtp (0.5.2)
       net-protocol
     nio4r (2.7.5)
+    nokogiri (1.19.7)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.19.7-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.7-x86_64-darwin)
@@ -319,6 +326,7 @@ GEM
     parser (3.3.13.0)
       ast (~> 2.4.1)
       racc
+    pg (1.7.0)
     pg (1.7.0-arm64-darwin)
     pg (1.7.0-x86_64-darwin)
     pg (1.7.0-x86_64-linux)
@@ -476,13 +484,14 @@ GEM
     ssrf_filter (1.6.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stripe (19.6.2)
+    stripe (21.0.0)
       bigdecimal
       logger
     strscan (3.1.8)
     tailwindcss-rails (3.3.2)
       railties (>= 7.0.0)
       tailwindcss-ruby (~> 3.0)
+    tailwindcss-ruby (3.4.17)
     tailwindcss-ruby (3.4.17-arm64-darwin)
     tailwindcss-ruby (3.4.17-x86_64-darwin)
     tailwindcss-ruby (3.4.17-x86_64-linux)
@@ -577,7 +586,7 @@ DEPENDENCIES
   rubyzip (~> 3.7)
   solid_queue (~> 1.7)
   stimulus-rails
-  stripe (~> 19.6)
+  stripe (~> 21.0)
   tailwindcss-rails (~> 3.0)
   turbo-rails
   tzinfo-data
