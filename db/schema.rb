@@ -154,6 +154,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_04_063351) do
     t.index ["user_id"], name: "index_payouts_on_user_id"
   end
 
+  create_table "profile_links", force: :cascade do |t|
+    t.bigint "artist_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "position"
+    t.datetime "updated_at", null: false
+    t.string "url", null: false
+    t.index ["artist_id"], name: "index_profile_links_on_artist_id"
+  end
+
   create_table "purchase_downloads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "format"
@@ -427,6 +436,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_04_063351) do
   add_foreign_key "password_reset_tokens", "users"
   add_foreign_key "payout_details", "users"
   add_foreign_key "payouts", "users"
+  add_foreign_key "profile_links", "artists"
   add_foreign_key "purchase_downloads", "purchases"
   add_foreign_key "purchases", "albums"
   add_foreign_key "purchases", "payouts"
